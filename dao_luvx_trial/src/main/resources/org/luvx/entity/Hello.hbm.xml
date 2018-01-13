@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="org.luvx.entity.Hello" table="hello">
+        <id name="id" type="java.lang.Integer">
+            <column name="id"/>
+            <!-- 6种生成策略  ： identity,native,sequence,uuid,increment,assigned  -->
+            <generator class="native"/>
+        </id>
+
+        <property name="word" column="word"></property>
+        <property name="num" column="num"></property>
+    </class>
+</hibernate-mapping>
