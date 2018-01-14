@@ -21,9 +21,19 @@
     <!--
         注解驱动
         显示的配置了最新版的注解处理器映射器和处理器适配器
-        这个配置后会出错(BeanCreationException)   2018-01-14
     -->
-    <!--<mvc:annotation-driven conversion-service="conversionService"></mvc:annotation-driven>-->
+    <mvc:annotation-driven conversion-service="conversionService"></mvc:annotation-driven>
+
+    <bean id="conversionService" class="org.springframework.context.support.ConversionServiceFactoryBean">
+        <property name="converters">
+            <list>
+                <!-- 自定义转换器 -->
+                <bean class="org.luvx.converter.StringToDateConverter">
+                    <property name="datePattern" value="yyyy-MM-dd"></property>
+                </bean>
+            </list>
+        </property>
+    </bean>
 
     <!--
         配置视图解析器
