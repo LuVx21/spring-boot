@@ -18,7 +18,7 @@
 
     <package name="default" namespace="/" extends="struts-default">
         <action name="hello_*" class="helloAction" method="{1}">
-           <result>/success.jsp</result>
+           <result>/views/success.jsp</result>
         </action>
     </package>
     

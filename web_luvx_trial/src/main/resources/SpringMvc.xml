@@ -18,17 +18,21 @@
         <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Service"/>
     </context:component-scan>
 
-    <!-- 注解驱动:
-            替我们显示的配置了最新版的注解的处理器映射器和处理器适配器 -->
-    <mvc:annotation-driven conversion-service="conversionService"></mvc:annotation-driven>
+    <!--
+        注解驱动
+        显示的配置了最新版的注解处理器映射器和处理器适配器
+        这个配置后会出错(BeanCreationException)   2018-01-14
+    -->
+    <!--<mvc:annotation-driven conversion-service="conversionService"></mvc:annotation-driven>-->
 
-    <!-- 配置视图解析器
-    作用:在controller中指定页面路径的时候就不用写页面的完整路径名称了,可以直接写页面去掉扩展名的名称
+    <!--
+        配置视图解析器
+        作用:在controller中指定页面路径的时候就不用写页面的完整路径名称了,可以直接写页面去掉扩展名的名称
     -->
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <!-- 真正的页面路径 =  前缀 + 去掉后缀名的页面名称 + 后缀 -->
         <!-- 前缀 -->
-        <property name="prefix" value="/WEB-INF/jsp/"></property>
+        <property name="prefix" value="/WEB-INF/views/"></property>
         <!-- 后缀 -->
         <property name="suffix" value=".jsp"></property>
     </bean>
