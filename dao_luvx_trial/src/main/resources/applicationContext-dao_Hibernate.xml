@@ -16,6 +16,13 @@
 
     <!-- 加载配置文件 -->
     <context:property-placeholder location="classpath:dbcfg.properties"/>
+
+    <!-- 引入配置文件 Spring的方式 -->
+    <!--<bean id="propertyConfigurer"-->
+          <!--class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">-->
+        <!--<property name="location" value="classpath:dbcfg.properties" />-->
+    <!--</bean>-->
+
     <!-- C3P0数据源 -->
     <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
         <property name="driverClass" value="${mysql.driver}"></property>
@@ -29,21 +36,6 @@
         <property name="dataSource" ref="dataSource"></property>
         <property name="configLocation" value="classpath:hibernate.cfg.xml"></property>
     </bean>
-
-
-    <!--&lt;!&ndash; sqlSessionFactory 使用MyBatis &ndash;&gt;-->
-    <!--<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">-->
-        <!--&lt;!&ndash; 数据库连接池 &ndash;&gt;-->
-        <!--<property name="dataSource" ref="dataSource"/>-->
-        <!--&lt;!&ndash; 加载mybatis的全局配置文件 &ndash;&gt;-->
-        <!--<property name="configLocation" value="classpath:SqlMapConfig.xml"/>-->
-    <!--</bean>-->
-
-    <!--&lt;!&ndash; 配置Mapper扫描器 &ndash;&gt;-->
-    <!--<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">-->
-        <!--<property name="basePackage" value="org.luvx.dao"/>-->
-    <!--</bean>-->
-
 
     <!-- HelloDao -->
     <bean id="helloDao" class="org.luvx.dao.impl.HelloDaoImpl">
