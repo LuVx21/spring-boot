@@ -12,6 +12,10 @@
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
+    <!-- 防止Spring内存溢出监听器 -->
+    <listener>
+        <listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>
+    </listener>
 
     <!-- spring提供的一个过滤器,用于解决post乱码问题 -->
     <filter>
@@ -32,22 +36,22 @@
     </filter-mapping>
 
     <!--懒加载 OpenSessionInviewFilter noSession or session is closed-->
-    <filter>
-        <filter-name>openSessionInViewFilter</filter-name>
-        <filter-class>org.springframework.orm.hibernate5.support.OpenSessionInViewFilter</filter-class>
-        <init-param>
-            <param-name>singleSession</param-name>
-            <param-value>true</param-value>
-        </init-param>
-        <init-param>
-            <param-name>sessionFactoryBeanName</param-name>
-            <param-value>sessionFactory</param-value>
-        </init-param>
-    </filter>
-    <filter-mapping>
-        <filter-name>openSessionInViewFilter</filter-name>
-        <url-pattern>/*</url-pattern>
-    </filter-mapping>
+    <!--<filter>-->
+        <!--<filter-name>openSessionInViewFilter</filter-name>-->
+        <!--<filter-class>org.springframework.orm.hibernate5.support.OpenSessionInViewFilter</filter-class>-->
+        <!--<init-param>-->
+            <!--<param-name>singleSession</param-name>-->
+            <!--<param-value>true</param-value>-->
+        <!--</init-param>-->
+        <!--<init-param>-->
+            <!--<param-name>sessionFactoryBeanName</param-name>-->
+            <!--<param-value>sessionFactory</param-value>-->
+        <!--</init-param>-->
+    <!--</filter>-->
+    <!--<filter-mapping>-->
+        <!--<filter-name>openSessionInViewFilter</filter-name>-->
+        <!--<url-pattern>/*</url-pattern>-->
+    <!--</filter-mapping>-->
 
     <!--SpringMVC Start -->
     <!-- spirngMvc前端控制器 -->

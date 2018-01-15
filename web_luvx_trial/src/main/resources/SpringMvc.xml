@@ -24,6 +24,10 @@
     -->
     <mvc:annotation-driven conversion-service="conversionService"></mvc:annotation-driven>
 
+    <!--
+        配置自定义转换器
+        注意: 一定要将自定义的转换器配置到注解驱动上
+    -->
     <bean id="conversionService" class="org.springframework.context.support.ConversionServiceFactoryBean">
         <property name="converters">
             <list>
@@ -47,17 +51,15 @@
         <property name="suffix" value=".jsp"></property>
     </bean>
 
-    <!-- 配置自定义转换器
-    注意: 一定要将自定义的转换器配置到注解驱动上
-    -->
-    <!--<bean id="conversionService"-->
-    <!--class="org.springframework.format.support.FormattingConversionServiceFactoryBean">-->
-    <!--<property name="converters">-->
-    <!--<set>-->
-    <!--&lt;!&ndash; 指定自定义转换器的全路径名称 &ndash;&gt;-->
-    <!--<bean class="org.luvx.controller.converter.CustomGlobalStrToDateConverter"/>-->
-    <!--</set>-->
-    <!--</property>-->
-    <!--</bean>-->
+    <!-- 配置文件上传，如果没有使用文件上传可以不用配置，那么配置文件中也不必引入上传组件包 -->
+    <bean id="multipartResolver"
+          class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <!-- 默认编码 -->
+        <property name="defaultEncoding" value="utf-8"/>
+        <!-- 文件大小最大值 -->
+        <property name="maxUploadSize" value="10485760000"/>
+        <!-- 内存中的最大值 -->
+        <property name="maxInMemorySize" value="40960"/>
+    </bean>
 
 </beans>
