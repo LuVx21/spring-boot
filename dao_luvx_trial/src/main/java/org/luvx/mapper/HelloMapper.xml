@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace属性是名称空间, 必须唯一 -->
+<mapper namespace="org.luvx.entity.Hello">
+
+    <!--
+         resultMap标签:映射实体与表
+         type属性:表示实体全路径名, 下面使用了别名, 对应配置文件<typeAliases></typeAliases>标签
+         id属性:为实体与表的映射取一个任意的唯一的名字
+    -->
+    <resultMap type="hello" id="helloMap">
+        <!--
+             id标签:映射主键属性
+             result标签:映射非主键属性
+             property属性:实体的属性名
+             column属性:表的字段名
+        -->
+        <id property="id" column="id"/>
+        <result property="word" column="word"/>
+        <result property="num" column="num"/>
+    </resultMap>
+
+    <!--
+        insert标签:要书写insert sql语句, 类似还有select, delete, update等
+        id属性:为insert, sql语句取一个任意唯一的名字
+        parameterType:要执行的dao中的方法的参数,
+            如查询时候, 根据什么查询就是什么数据类型,
+            如果是类的话, 必须使用全路径类, 下面的hello对应配置文件中<typeAliases></typeAliases>标签.
+        还有resultType属性, 定义返回值的类型.
+    -->
+    <insert id="add">
+        INSERT INTO hello (id, word, num) VALUES (2, 'LuVx', 4)
+    </insert>
+
+</mapper>
