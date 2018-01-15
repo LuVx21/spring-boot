@@ -7,8 +7,8 @@
     <title>Insert title here</title>
 </head>
 <body>
-MVC
-<br/>
+SpringMVC
+<hr/>
 ${list }
 </body>
 </html>
