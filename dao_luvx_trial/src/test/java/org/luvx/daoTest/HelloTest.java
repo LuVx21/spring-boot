@@ -13,7 +13,7 @@ public class HelloTest {
 
     @Test
     public void testFindAll() {
-        ApplicationContext ac = new ClassPathXmlApplicationContext("classpath:applicationContext-dao.xml");
+        ApplicationContext ac = new ClassPathXmlApplicationContext("classpath:applicationContext-dao_Hibernate.xml");
         HelloDao helloDao = (HelloDao) ac.getBean("helloDao");
 
         List<Hello> list = helloDao.findAll();
