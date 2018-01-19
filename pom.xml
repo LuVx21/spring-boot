@@ -429,6 +429,7 @@
         <module>dao_luvx_trial</module>
         <module>service_luvx_trial</module>
         <module>web_luvx_trial</module>
+        <module>case_luvx_trial</module>
     </modules>
 
 </project>
