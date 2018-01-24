@@ -4,6 +4,7 @@ import org.junit.Test;
 
 public class ProxyTest {
     /**
+     * 静态代理
      * 标准的使用结构
      */
     @Test
@@ -21,5 +22,13 @@ public class ProxyTest {
         new PrinterProxy().getPrinterProxy(methodName).printlog();
     }
 
+    /**
+     * 不增强方法
+     */
+    @Test
+    public void run02() {
+        String methodName = "printlogNo";
+        new PrinterProxy().getPrinterProxy(methodName).printlog();
+    }
 
 }
