@@ -70,23 +70,8 @@
 
     <servlet-mapping>
         <servlet-name>spirngMvc</servlet-name>
-        <url-pattern>*.mvc</url-pattern>
+        <url-pattern>/</url-pattern>
     </servlet-mapping>
     <!--SpringMVC End-->
-
-    <!--Struts Start-->
-    <!--Struts2前端控制器-->
-    <filter>
-        <filter-name>struts2</filter-name>
-        <filter-class>org.apache.struts2.dispatcher.ng.filter.StrutsPrepareAndExecuteFilter</filter-class>
-    </filter>
-    <filter-mapping>
-        <filter-name>struts2</filter-name>
-        <url-pattern>*.do</url-pattern>
-    </filter-mapping>    <filter-mapping>
-        <filter-name>struts2</filter-name>
-        <url-pattern>*.action</url-pattern>
-    </filter-mapping>
-    <!--Struts End-->
 
 </web-app>

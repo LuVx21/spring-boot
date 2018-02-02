@@ -1,5 +1,11 @@
 
 description = ''
 dependencies {
-  compile project(':commons_luvx_trial')
+  compile project(':entity_luvx_trial')
+  compile "org.mybatis:mybatis-spring:1.2.2"
+  compile "org.mybatis:mybatis:3.2.8"
+  compile "c3p0:c3p0:0.9.1.2"
+  compile "mysql:mysql-connector-java:5.1.6"
+  compile "org.springframework:spring-orm:$springVersion"
+  compile "org.springframework:spring-context-support:$springVersion"
 }

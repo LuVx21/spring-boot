@@ -15,7 +15,7 @@
 	http://www.springframework.org/schema/context/spring-context.xsd">
 
     <!-- service -->
-    <bean id="helloAction" class="org.luvx.web.HelloAction">
-        <property name="helloService" ref="helloService"></property>
-    </bean>
+    <!--<bean id="helloAction" class="org.luvx.web.HelloAction">-->
+        <!--<property name="helloService" ref="helloService"></property>-->
+    <!--</bean>-->
 </beans>

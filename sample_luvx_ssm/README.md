@@ -1,14 +1,14 @@
-# luvx_trial
+# sample_luvx_ssm
 
 <!-- TOC -->
 
-- [luvx_trial](#luvx_trial)
+- [sample_luvx_ssm](#sample_luvx_ssm)
 
 <!-- /TOC -->
 
 模板项目.
 
-* commons_luvx_trial:
+* entity_luvx_trial:
 * dao_luvx_trial:持久化,Hibernate,Mybatis
 * service_luvx_trial:业务逻辑,Spring
 * web_luvx_trial:前端控制,Struts,SpringMVC
@@ -23,6 +23,7 @@
 若使用Hibernate,需要
 在`applicationContext.xml`中放开对`applicationContext-dao_Hibernate.xml`的引用,注释掉`applicationContext-dao_MyBatis.xml`的引用
 同时在`applicationContext-service.xml`中放开Hibernate的事务管理配置,注释掉MyBatis的事物配置.
+service层中不用修改
 
 项目同时具有Maven,Gradle构建配置,集成有Tomcat插件
 ```shell

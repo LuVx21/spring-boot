@@ -10,11 +10,8 @@
 <h1>LuVx</h1>
 
 <h3>SpringMVC</h3>
-<a href="${pageContext.request.contextPath}/hello.mvc">SpringMVC</a>
+<a href="${pageContext.request.contextPath}/hello">SpringMVC</a>
 <hr/>
-
-<h3>Struts</h3>
-<a href="${pageContext.request.contextPath}/hello.action">Struts</a>
 
 </body>
 </html>

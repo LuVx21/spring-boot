@@ -9,6 +9,6 @@
 <body>
 SpringMVC
 <hr/>
-${list }
+
 </body>
 </html>

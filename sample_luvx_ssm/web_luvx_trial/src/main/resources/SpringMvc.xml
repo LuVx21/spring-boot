@@ -22,22 +22,22 @@
         注解驱动
         显示的配置了最新版的注解处理器映射器和处理器适配器
     -->
-    <mvc:annotation-driven conversion-service="conversionService"></mvc:annotation-driven>
+    <mvc:annotation-driven />
 
     <!--
         配置自定义转换器
         注意: 一定要将自定义的转换器配置到注解驱动上
     -->
-    <bean id="conversionService" class="org.springframework.context.support.ConversionServiceFactoryBean">
+    <!-- <bean id="conversionService" class="org.springframework.context.support.ConversionServiceFactoryBean">
         <property name="converters">
-            <list>
+            <list> -->
                 <!-- 自定义转换器 -->
-                <bean class="org.luvx.converter.StringToDateConverter">
+                <!-- <bean class="org.luvx.converter.StringToDateConverter">
                     <property name="datePattern" value="yyyy-MM-dd"></property>
                 </bean>
             </list>
         </property>
-    </bean>
+    </bean> -->
 
     <!--
         配置视图解析器
