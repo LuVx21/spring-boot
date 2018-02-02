@@ -1,2 +1,5 @@
 
 description = ''
+dependencies {
+  compile project(':commons_luvx_trial')
+}

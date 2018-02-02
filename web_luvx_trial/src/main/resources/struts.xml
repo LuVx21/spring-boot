@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE struts PUBLIC
-	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
-	"http://struts.apache.org/dtds/struts-2.3.dtd">
+        "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+        "http://struts.apache.org/dtds/struts-2.3.dtd">
 
 <struts>
 
@@ -17,9 +17,21 @@
     <constant name="struts.custom.i18n.resources" value="uploaderror"/>
 
     <package name="default" namespace="/" extends="struts-default">
+        <!--配置自定义拦截器-->
+        <interceptors>
+            <interceptor name="StrutsInterceptor" class="org.luvx.interceptor.StrutsInterceptor"/>
+            <!-- 定义拦截器栈 -->
+            <interceptor-stack name="myStack">
+                <interceptor-ref name="StrutsInterceptor"/>
+                <!-- 自定义拦截器栈后,需配置调用默认栈 -->
+                <interceptor-ref name="defaultStack"/>
+            </interceptor-stack>
+        </interceptors>
+
         <action name="hello_*" class="helloAction" method="{1}">
-           <result>/views/success.jsp</result>
+            <interceptor-ref name="myStack"/>
+            <result>/views/success.jsp</result>
         </action>
     </package>
-    
+
 </struts>
