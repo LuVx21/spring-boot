@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+
+    <!-- 配置常量 -->
+    <!-- 开启动态方法访问 -->
+    <constant name="struts.enable.DynamicMethodInvocation" value="false"/>
+    <!-- 开发模式,可以打印出更详细的错误信息 -->
+    <constant name="struts.devMode" value="true"/>
+    <constant name="struts.multipart.maxSize" value="5000000"/>
+    <!-- 设置struts的Action请求的后缀，支持多个时以逗号隔开。 -->
+    <constant name="struts.action.extension" value="do,action"/>
+    <!-- 加载国际化资源文件的常量配置    value=基名 -->
+    <constant name="struts.custom.i18n.resources" value="uploaderror"/>
+
+    <package name="default" namespace="/" extends="struts-default">
+        <!--配置自定义拦截器-->
+        <interceptors>
+            <interceptor name="StrutsInterceptor" class="org.luvx.interceptor.StrutsInterceptor"/>
+            <!-- 定义拦截器栈 -->
+            <interceptor-stack name="myStack">
+                <interceptor-ref name="StrutsInterceptor"/>
+                <!-- 自定义拦截器栈后,需配置调用默认栈 -->
+                <interceptor-ref name="defaultStack"/>
+            </interceptor-stack>
+        </interceptors>
+        <action name="hello_*" class="helloAction" method="{1}">
+            <interceptor-ref name="myStack"/>
+           <result>/views/success.jsp</result>
+        </action>
+    </package>
+    
+</struts>

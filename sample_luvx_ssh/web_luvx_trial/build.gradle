@@ -1,0 +1,34 @@
+
+apply plugin: 'war'
+apply plugin: 'com.bmuschko.tomcat'
+
+description = ''
+dependencies {
+  compile project(':service_luvx_trial')
+  def tomcatVersion = '7.0.59'
+
+  tomcat "org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}",
+          "org.apache.tomcat.embed:tomcat-embed-logging-juli:${tomcatVersion}",
+          "org.apache.tomcat.embed:tomcat-embed-jasper:${tomcatVersion}"
+
+  compile group: 'org.apache.tomcat.embed', name: 'tomcat-embed-core',version:'8.5.23'
+  compile("org.apache.struts:struts2-core:2.3.24") {
+      exclude(module: 'javassist')
+  }
+  compile "org.apache.struts:struts2-spring-plugin:2.3.24"
+  compile "org.apache.struts:struts2-json-plugin:2.3.24"
+  compile "org.apache.struts:struts2-convention-plugin:2.3.24"
+  compile "jstl:jstl:1.2"
+  compileOnly "javax.servlet:javax.servlet-api:3.1.0"
+  compileOnly "javax.servlet.jsp:javax.servlet.jsp-api:2.2.1"
+}
+
+buildscript {
+    repositories {
+        mavenLocal()
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.bmuschko:gradle-tomcat-plugin:2.2.2'
+    }
+}

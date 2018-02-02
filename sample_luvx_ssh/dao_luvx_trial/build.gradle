@@ -1,0 +1,12 @@
+
+description = ''
+dependencies {
+  compile project(':entity_luvx_trial')
+  compile "org.hibernate:hibernate-core:5.0.7.Final"
+  compile "org.hibernate:hibernate-entitymanager:5.0.7.Final"
+  compile "org.hibernate:hibernate-validator:5.2.1.Final"
+  compile "c3p0:c3p0:0.9.1.2"
+  compile "mysql:mysql-connector-java:5.1.6"
+  compile "org.springframework:spring-orm:$springVersion"
+  compile "org.springframework:spring-context-support:$springVersion"
+}
