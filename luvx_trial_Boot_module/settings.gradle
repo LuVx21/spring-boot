@@ -1,0 +1,12 @@
+rootProject.name = 'luvx_trial_Boot'
+include ':commons_luvx_trial_Boot'
+include ':entity_luvx_trial_Boot'
+include ':repo_luvx_trial_Boot'
+include ':service_luvx_trial_Boot'
+include ':web_luvx_trial_Boot'
+
+project(':commons_luvx_trial_Boot').projectDir = "$rootDir/commons_luvx_trial_Boot" as File
+project(':entity_luvx_trial_Boot').projectDir = "$rootDir/entity_luvx_trial_Boot" as File
+project(':repo_luvx_trial_Boot').projectDir = "$rootDir/repo_luvx_trial_Boot" as File
+project(':service_luvx_trial_Boot').projectDir = "$rootDir/service_luvx_trial_Boot" as File
+project(':web_luvx_trial_Boot').projectDir = "$rootDir/web_luvx_trial_Boot" as File
