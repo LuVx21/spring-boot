@@ -1,2 +1,4 @@
-
 description = ''
+dependencies {
+  compile project(':web_luvx_trial')
+}

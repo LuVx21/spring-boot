@@ -11,5 +11,10 @@
     </parent>
     <artifactId>case_luvx_trial</artifactId>
     <dependencies>
+        <dependency>
+            <groupId>org.luvx</groupId>
+            <artifactId>web_luvx_trial</artifactId>
+            <version>1.0.1-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 </project>

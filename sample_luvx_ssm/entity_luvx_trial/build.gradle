@@ -2,6 +2,8 @@
 description = ''
 dependencies {
     compile "log4j:log4j:1.2.12"
+    compile "org.apache.logging.log4j:log4j-api:2.9.1"
+    compile "org.apache.logging.log4j:log4j-core:2.9.1"
     compile "org.slf4j:slf4j-api:1.6.6"
     compile "org.slf4j:slf4j-log4j12:1.6.6"
 }
