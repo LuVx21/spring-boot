@@ -10,6 +10,7 @@
 *.ttf
 *.rar
 *.zip
+*.gz
 *.iml
 out/
 .gradle/

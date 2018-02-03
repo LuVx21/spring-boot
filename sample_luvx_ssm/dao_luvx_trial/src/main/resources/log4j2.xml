@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration status="OFF">
+    <Properties>
+        <Property name="fileName">log/app.log</Property>
+        <!--<Property name="backupFilePattern">logs/backup-%i.log</Property>-->
+        <Property name="backupFilePattern">logs/$${date:yyyy-MM}/app-%d{yy-MM-dd}-%i.log.gz</Property>
+    </Properties>
+
+    <appenders>
+        <!--控制台-->
+        <Console name="Console" target="SYSTEM_OUT">
+            <!--控制台只输出level及以上级别的信息（onMatch），其他的直接拒绝（onMismatch）-->
+            <!--<ThresholdFilter level="trace" onMatch="ACCEPT" onMismatch="DENY"/>-->
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36}(%M:%L) - %msg%xEx%n"/>
+        </Console>
+
+        <!--文件-->
+        <!--<File name="log" fileName="${fileName}" append="false">-->
+            <!--<PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36}(%M:%L) - %msg%xEx%n"/>-->
+        <!--</File>-->
+
+        <RollingFile name="RollingFile" fileName="${fileName}" filePattern="${backupFilePattern}">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36}(%M:%L) - %msg%xEx%n"/>
+            <SizeBasedTriggeringPolicy size="10MB"/>
+            <!--<DefaultRolloverStrategy max="10"/>-->
+        </RollingFile>
+    </appenders>
+
+    <loggers>
+        <logger name="cn.luvx.api.Log4j2Case" level="trace" additivity="true">
+            <appender-ref ref="Console"/>
+            <!--<appender-ref ref="RollingFile"/>-->
+        </logger>
+        <root level="error">
+            <appender-ref ref="Console"/>
+            <appender-ref ref="RollingFile"/>
+        </root>
+    </loggers>
+</configuration>
