@@ -1,15 +1,16 @@
 
 apply plugin: 'war'
-apply plugin: 'com.bmuschko.tomcat'
+apply from: 'https://raw.github.com/akhikhl/gretty/master/pluginScripts/gretty.plugin'
+// apply plugin: 'com.bmuschko.tomcat'
 
 description = ''
 dependencies {
   compile project(':service_luvx_trial')
-  def tomcatVersion = '7.0.59'
+//   def tomcatVersion = '7.0.59'
 
-  tomcat "org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}",
-          "org.apache.tomcat.embed:tomcat-embed-logging-juli:${tomcatVersion}",
-          "org.apache.tomcat.embed:tomcat-embed-jasper:${tomcatVersion}"
+//   tomcat "org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}",
+//           "org.apache.tomcat.embed:tomcat-embed-logging-juli:${tomcatVersion}",
+//           "org.apache.tomcat.embed:tomcat-embed-jasper:${tomcatVersion}"
 
   compile group: 'org.apache.tomcat.embed', name: 'tomcat-embed-core',version:'8.5.23'
   compile "jstl:jstl:1.2"
@@ -19,12 +20,16 @@ dependencies {
   
 }
 
-buildscript {
-    repositories {
-        mavenLocal()
-        mavenCentral()
-    }
-    dependencies {
-        classpath 'com.bmuschko:gradle-tomcat-plugin:2.2.2'
-    }
+// buildscript {
+//     repositories {
+//         mavenLocal()
+//         mavenCentral()
+//     }
+//     dependencies {
+//         classpath 'com.bmuschko:gradle-tomcat-plugin:2.2.2'
+//     }
+// }
+gretty {
+  // jetty7/8/9，tomcat7/8
+  servletContainer = 'tomcat8'
 }

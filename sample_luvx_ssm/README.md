@@ -28,6 +28,10 @@ service层中不用修改
 项目同时具有Maven,Gradle构建配置,集成有Tomcat插件
 ```shell
 # mvn tomcat7:deploy
-gradle tomcatRunWar
+```
+```shell
+# gradle tomcatRunWar
+# tomcat->Gretty
+gradle appRun
 ```
 即可运行模板项目
