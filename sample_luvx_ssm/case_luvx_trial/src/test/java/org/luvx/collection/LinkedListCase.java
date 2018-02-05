@@ -4,6 +4,7 @@ import org.junit.Test;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 /**
  * LinkedList:
@@ -28,5 +29,17 @@ public class LinkedListCase {
         list.remove(0);
         // list.remove("a");
         System.out.println(list);
+    }
+
+    /**
+     * 队列
+     * 基于链表的队列
+     */
+    @Test
+    public void queueCase() {
+        Queue<String> queue = new LinkedList<String>();
+        queue.offer("a");
+        queue.offer("b");
+        System.out.println(queue);
     }
 }

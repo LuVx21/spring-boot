@@ -1,7 +1,5 @@
 package org.luvx.collection;
 
-
-import com.sun.xml.internal.bind.util.Which;
 import org.junit.Test;
 
 import java.util.Iterator;
