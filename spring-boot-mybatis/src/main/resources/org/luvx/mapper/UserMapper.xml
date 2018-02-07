@@ -3,8 +3,8 @@
 <mapper namespace="org.luvx.mapper.UserMapper">
     <resultMap id="BaseResultMap" type="org.luvx.entity.User">
         <id column="id" property="id" jdbcType="BIGINT"/>
-        <result column="userName" property="user_name" jdbcType="VARCHAR"/>
-        <result column="passWord" property="password" jdbcType="VARCHAR"/>
+        <result column="user_name" property="userName" jdbcType="VARCHAR"/>
+        <result column="password" property="passWord" jdbcType="VARCHAR"/>
         <result column="age" property="age" javaType="INT"/>
     </resultMap>
 
@@ -17,7 +17,7 @@
         into user
             (user_name, password, age)
         values
-            (#{userName}, #{passWord}, #{userSex})
+            (#{userName}, #{passWord}, #{age})
     </insert>
 
     <delete id="deleteById" parameterType="java.lang.Long">
