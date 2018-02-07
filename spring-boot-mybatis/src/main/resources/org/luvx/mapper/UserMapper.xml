@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.luvx.mapper.UserMapper">
+    <resultMap id="BaseResultMap" type="org.luvx.entity.User">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="userName" property="user_name" jdbcType="VARCHAR"/>
+        <result column="passWord" property="password" jdbcType="VARCHAR"/>
+        <result column="age" property="age" javaType="INT"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, user_name, password, age
+    </sql>
+
+    <insert id="add" parameterType="org.luvx.entity.User">
+        insert
+        into user
+            (user_name, password, age)
+        values
+            (#{userName}, #{passWord}, #{userSex})
+    </insert>
+
+    <delete id="deleteById" parameterType="java.lang.Long">
+        delete
+        from user
+        where
+            id = #{id}
+    </delete>
+
+    <delete id="deleteByUserName" parameterType="java.lang.String">
+        delete
+        from user
+        where
+            user_name = #{userName}
+    </delete>
+
+    <update id="update" parameterType="org.luvx.entity.User">
+        update
+        user
+        set
+        <if test="userName != null">user_name = #{userName},</if>
+        <if test="passWord != null">password = #{passWord},</if>
+        <if test="age != null">age = #{age}</if>
+        where
+            id = #{id}
+    </update>
+
+    <select id="getAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from
+            user
+    </select>
+
+    <select id="getById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from
+            user
+        where
+            id = #{id}
+    </select>
+
+</mapper>

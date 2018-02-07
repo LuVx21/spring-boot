@@ -7,12 +7,28 @@ tags:
 
 <!-- TOC -->
 
+- [DB](#db)
 - [注解版本](#注解版本)
 - [xml版本](#xml版本)
 - [注解和xml比较](#注解和xml比较)
 - [多数据源](#多数据源)
 
 <!-- /TOC -->
+
+# DB
+
+```shell
+use boot;
+desc user;
++-----------+--------------+------+-----+---------+----------------+
+| Field     | Type         | Null | Key | Default | Extra          |
++-----------+--------------+------+-----+---------+----------------+
+| id        | bigint(20)   | NO   | PRI | NULL    | auto_increment |
+| age       | int(11)      | NO   |     | NULL    |                |
+| password  | varchar(255) | NO   |     | NULL    |                |
+| user_name | varchar(255) | NO   | UNI | NULL    |                |
++-----------+--------------+------+-----+---------+----------------+
+```
 
 # 注解版本
 
