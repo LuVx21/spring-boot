@@ -1,0 +1,37 @@
+buildscript {
+	ext {
+		springBootVersion = '1.5.9.RELEASE'
+	}
+    repositories {
+        mavenLocal()
+        mavenCentral()
+    }
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+	}
+}
+
+apply plugin: 'java'
+// apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: 'org.springframework.boot'
+
+group = 'org.luvx'
+version = '1.0.1-SNAPSHOT'
+sourceCompatibility = 1.8
+
+repositories {
+	mavenLocal()
+	mavenCentral()
+}
+
+dependencies {
+	compile('org.springframework.boot:spring-boot-starter')
+	compile('org.springframework.boot:spring-boot-starter-web')
+	compile('org.apache.tomcat.embed:tomcat-embed-jasper')
+	compile('javax.servlet:javax.servlet-api')
+	compile('javax.servlet:jstl')
+	compileOnly('org.springframework.boot:spring-boot-starter-tomcat')
+	testCompile('org.springframework.restdocs:spring-restdocs-mockmvc')
+	testCompile('org.springframework.boot:spring-boot-starter-test')
+}
