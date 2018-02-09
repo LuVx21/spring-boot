@@ -56,7 +56,7 @@
     <!--SpringMVC Start -->
     <!-- spirngMvc前端控制器 -->
     <servlet>
-        <servlet-name>spirngMvc</servlet-name>
+        <servlet-name>springMvc</servlet-name>
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
         <!-- 如果没有指定springMvc核心配置文件那么默认会去找/WEB-INF/+<servlet-name>中的内容 + -servlet.xml配置文件 -->
         <!-- 指定springMvc核心配置文件位置 -->
@@ -69,8 +69,12 @@
     </servlet>
 
     <servlet-mapping>
-        <servlet-name>spirngMvc</servlet-name>
+        <servlet-name>springMvc</servlet-name>
         <url-pattern>/</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>springMvc</servlet-name>
+        <url-pattern>*.html</url-pattern>
     </servlet-mapping>
     <!--SpringMVC End-->
 

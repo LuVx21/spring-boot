@@ -43,15 +43,35 @@
         配置视图解析器
         作用:在controller中指定页面路径的时候就不用写页面的完整路径名称了,可以直接写页面去掉扩展名的名称
     -->
-    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+    <!-- <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver"> -->
         <!-- 真正的页面路径 =  前缀 + 去掉后缀名的页面名称 + 后缀 -->
         <!-- 前缀 -->
-        <property name="prefix" value="/views/"></property>
+        <!-- <property name="prefix" value="/views/"></property> -->
         <!-- 后缀 -->
-        <property name="suffix" value=".jsp"></property>
+        <!-- <property name="suffix" value=".jsp"></property> -->
+    <!-- </bean> -->
+
+    <!-- 使用thymeleaf解析 -->
+    <bean id="templateResolver"
+          class="org.thymeleaf.spring4.templateresolver.SpringResourceTemplateResolver">
+        <property name="prefix" value="/WEB-INF/templates/" />
+        <property name="suffix" value=".html" />
+        <property name="templateMode" value="HTML" />
+        <property name="cacheable" value="false" />
+        <property name="characterEncoding" value="UTF-8"/>
     </bean>
 
-    <!-- 配置文件上传，如果没有使用文件上传可以不用配置，那么配置文件中也不必引入上传组件包 -->
+    <bean id="templateEngine" class="org.thymeleaf.spring4.SpringTemplateEngine">
+        <property name="templateResolver" ref="templateResolver" />
+    </bean>
+
+    <bean class="org.thymeleaf.spring4.view.ThymeleafViewResolver">
+        <property name="templateEngine" ref="templateEngine" />
+        <!--解决中文乱码-->
+        <property name="characterEncoding" value="UTF-8"/>
+    </bean>
+
+    <!-- 配置文件上传 -->
     <bean id="multipartResolver"
           class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
         <!-- 默认编码 -->
