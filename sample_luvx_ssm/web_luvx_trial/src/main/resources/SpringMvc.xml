@@ -89,4 +89,13 @@
             <bean class="org.luvx.interceptor.SpringMVCInterceptor"></bean>
         </mvc:interceptor>
     </mvc:interceptors>
+
+    <!-- 静态资源访问 -->
+    <!--
+        mapping：映射,
+        location：本地资源路径,webapp根目录开始。
+        **，映射/static/下的所有文件
+    -->
+    <mvc:resources location="/WEB-INF/static/" mapping="/static/**"/>
+
 </beans>

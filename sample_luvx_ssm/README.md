@@ -3,6 +3,7 @@
 <!-- TOC -->
 
 - [sample_luvx_ssm](#sample_luvx_ssm)
+- [数据库](#数据库)
 
 <!-- /TOC -->
 
@@ -35,3 +36,19 @@ service层中不用修改
 gradle appRun
 ```
 即可运行模板项目
+
+
+# 数据库
+
+```sql
+create table `user` (
+  `userid`    bigint(20) not null auto_increment,
+  `user_name` varchar(255)         default null,
+  `password`  varchar(255)         default null,
+  `age`       int(11)             default null,
+  primary key (`userid`)
+)
+  engine = innodb
+  auto_increment = 2
+  default charset = utf8;
+```

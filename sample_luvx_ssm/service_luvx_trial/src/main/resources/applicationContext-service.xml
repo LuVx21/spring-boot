@@ -46,4 +46,8 @@
     <bean id="helloService" class="org.luvx.service.impl.HelloServiceImpl">
         <property name="helloDao" ref="helloDao"></property>
     </bean>
+
+    <bean id="userService" class="org.luvx.service.impl.UserServiceImpl">
+        <property name="userMapper" ref="userMapper"></property>
+    </bean>
 </beans>
