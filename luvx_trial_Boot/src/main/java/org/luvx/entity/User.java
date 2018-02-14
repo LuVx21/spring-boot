@@ -4,9 +4,12 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import java.io.Serializable;
 
 @Entity
-public class User {
+public class User implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue
     private long id;
@@ -16,6 +19,16 @@ public class User {
     private String password;
     @Column(nullable = false)
     private int age;
+
+    public User() {
+        super();
+    }
+
+    public User(String userName, String password, int age) {
+        this.userName = userName;
+        this.password = password;
+        this.age = age;
+    }
 
     public long getId() {
         return id;
