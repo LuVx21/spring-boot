@@ -8,4 +8,6 @@ dependencies {
   compile "mysql:mysql-connector-java:5.1.6"
   compile "org.springframework:spring-orm:$springVersion"
   compile "org.springframework:spring-context-support:$springVersion"
+  compile "org.springframework.data:spring-data-redis:2.0.2.RELEASE"
+  compile "redis.clients:jedis:2.9.0"
 }

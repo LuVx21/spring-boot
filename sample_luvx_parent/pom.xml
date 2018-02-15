@@ -20,6 +20,9 @@
         <mybatis.version>3.2.8</mybatis.version>
         <mybatis.spring.version>1.2.2</mybatis.spring.version>
         <mysql.version>5.1.6</mysql.version>
+        <!-- Redis -->
+        <redis.spring.version>2.0.2.RELEASE</redis.spring.version>
+        <jedis.version>2.9.0</jedis.version>
         <!-- log4j日志文件管理包版本 -->
         <slf4j.version>1.6.6</slf4j.version>
         <log4j.version>1.2.12</log4j.version>
@@ -37,7 +40,6 @@
         <jstl.version>1.2</jstl.version>
         <servlet.version>3.1.0</servlet.version>
         <jsp.version>2.2.1</jsp.version>
-        <jedis.version>2.7.2</jedis.version>
         <shiro.version>1.2.3</shiro.version>
         <cxf.version>3.0.1</cxf.version>
         <!-- apache commons -->
@@ -103,6 +105,11 @@
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-aspects</artifactId>
                 <version>${spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.data</groupId>
+                <artifactId>spring-data-redis</artifactId>
+                <version>${redis.spring.version}</version>
             </dependency>
             <!-- Struts -->
             <dependency>

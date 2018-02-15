@@ -1,7 +1,13 @@
 package org.luvx.entity;
 
+import java.io.Serializable;
 
-public class User {
+/**
+ * 使用redis的pojo类
+ * <p>
+ * 需要实现Serializable接口
+ */
+public class User implements Serializable {
     private long id;
     // 驼峰式命名
     private String userName;
