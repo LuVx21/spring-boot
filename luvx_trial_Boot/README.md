@@ -1,12 +1,19 @@
+---
+title: Spring-Boot Web
+date:
+tags:
+- Java
+- SpringBoot
+---
+
 <!-- TOC -->
 
-- [Spring-Boot模板项目](#spring-boot模板项目)
 - [DB](#db)
 - [命令行启动](#命令行启动)
 - [多配置文件](#多配置文件)
+- [Redis](#redis)
 
 <!-- /TOC -->
-# Spring-Boot模板项目
 
 # DB
 
@@ -25,9 +32,8 @@ Maven:
 mvn package
 java -jar target/xx.jar
 # 方式2
-mvn spring-boot:run 
+mvn spring-boot:run
 ```
-
 
 # 多配置文件
 
@@ -46,4 +52,26 @@ java -jar target/xx.jar --spring.profiles.active=dev
 ```conf
 spring.profiles.include=dev1,dev2
 ```
+
+# Redis
+
+使用Redis需要添加依赖:
+```xml
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-data-redis</artifactId>
+</dependency>
+```
+
+session共享需要添加依赖:
+```xml
+<dependency>
+    <groupId>org.springframework.session</groupId>
+    <artifactId>spring-session-data-redis</artifactId>
+</dependency>
+```
+
+> 放在缓存中只是session共享的方案之一
+
+
 
