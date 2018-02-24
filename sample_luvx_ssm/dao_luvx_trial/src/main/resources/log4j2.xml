@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration status="OFF">
     <Properties>
-        <Property name="fileName">log/app.log</Property>
+        <Property name="fileName">log/app-log4j2.log</Property>
         <!--<Property name="backupFilePattern">logs/backup-%i.log</Property>-->
         <Property name="backupFilePattern">logs/$${date:yyyy-MM}/app-%d{yy-MM-dd}-%i.log.gz</Property>
     </Properties>
@@ -27,7 +27,7 @@
     </appenders>
 
     <loggers>
-        <logger name="cn.luvx.api.Log4j2Case" level="trace" additivity="true">
+        <logger name="org.luvx.api.Log4j2Case" level="trace" additivity="true">
             <appender-ref ref="Console"/>
             <!--<appender-ref ref="RollingFile"/>-->
         </logger>

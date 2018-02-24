@@ -19,7 +19,7 @@ public class StreamCaseTest {
     {
         try {
             // 项目绝对路径
-            courseFile = directory.getCanonicalPath() + File.separator + "test.log";
+            courseFile = directory.getCanonicalPath() + File.separator + "log/test.log";
         } catch (IOException e) {
             e.printStackTrace();
         }
