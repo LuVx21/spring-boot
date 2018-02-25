@@ -20,7 +20,7 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
 
     @Override
-    @Cacheable(value = "key-Users")
+    // @Cacheable(value = "key-Users")
     public List<User> getUserList() {
         return userRepository.findAll();
     }
