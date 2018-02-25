@@ -14,6 +14,17 @@ public class RedisUtil {
     private RedisTemplate<Serializable, Object> redisTemplate;
 
     /**
+     * 删除对应的value
+     *
+     * @param key
+     */
+    public void remove(final String key) {
+        if (exists(key)) {
+            redisTemplate.delete(key);
+        }
+    }
+
+    /**
      * 批量删除对应的value
      *
      * @param keys
@@ -33,17 +44,6 @@ public class RedisUtil {
         Set<Serializable> keys = redisTemplate.keys(pattern);
         if (keys.size() > 0)
             redisTemplate.delete(keys);
-    }
-
-    /**
-     * 删除对应的value
-     *
-     * @param key
-     */
-    public void remove(final String key) {
-        if (exists(key)) {
-            redisTemplate.delete(key);
-        }
     }
 
     /**

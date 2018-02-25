@@ -56,4 +56,29 @@ public class TypeTest {
         System.out.println(adate);
     }
 
+    @Test
+    public void stringToByte() {
+        String str = "abcdefg";
+        byte[] arr = str.getBytes();
+        for (byte b : arr) {
+            System.out.println(b);
+        }
+    }
+
+    @Test
+    public void intToByteArray() {
+        int a = 999;
+        byte[] b = new byte[]{
+                (byte) ((a >> 24) & 0xFF),
+                (byte) ((a >> 16) & 0xFF),
+                (byte) ((a >> 8) & 0xFF),
+                (byte) (a & 0xFF)
+        };
+
+        int aa = b[3] & 0xFF |
+                (b[2] & 0xFF) << 8 |
+                (b[1] & 0xFF) << 16 |
+                (b[0] & 0xFF) << 24;
+    }
+
 }
