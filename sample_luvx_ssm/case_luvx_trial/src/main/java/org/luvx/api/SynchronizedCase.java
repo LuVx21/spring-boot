@@ -41,7 +41,6 @@ public class SynchronizedCase {
         }
     }
 
-
     public static void main(String[] args) {
         SynchronizedCase aCase = new SynchronizedCase();
         Thread thread1 = new Thread(new Runnable() {
