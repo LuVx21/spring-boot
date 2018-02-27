@@ -31,36 +31,32 @@ public class User implements Serializable {
         return id;
     }
 
-    public User setId(long id) {
+    public void setId(long id) {
         this.id = id;
-        return this;
     }
 
     public String getUserName() {
         return userName;
     }
 
-    public User setUserName(String userName) {
+    public void setUserName(String userName) {
         this.userName = userName;
-        return this;
     }
 
     public String getPassword() {
         return password;
     }
 
-    public User setPassword(String password) {
+    public void setPassword(String password) {
         this.password = password;
-        return this;
     }
 
     public int getAge() {
         return age;
     }
 
-    public User setAge(int age) {
+    public void setAge(int age) {
         this.age = age;
-        return this;
     }
 
     @Override

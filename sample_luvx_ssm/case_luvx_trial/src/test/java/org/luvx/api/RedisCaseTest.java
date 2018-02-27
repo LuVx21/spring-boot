@@ -3,8 +3,8 @@ package org.luvx.api;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.luvx.Serialize.ListTranscoder;
-import org.luvx.Serialize.ObjectTranscoder;
+import org.luvx.serialize.ListTranscoder;
+import org.luvx.serialize.ObjectTranscoder;
 import org.luvx.entity.User;
 import redis.clients.jedis.Jedis;
 
