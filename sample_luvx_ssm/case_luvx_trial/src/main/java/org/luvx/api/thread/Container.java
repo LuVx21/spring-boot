@@ -1,4 +1,4 @@
-package org.luvx.thread;
+package org.luvx.api.thread;
 
 import java.util.ArrayList;
 import java.util.List;

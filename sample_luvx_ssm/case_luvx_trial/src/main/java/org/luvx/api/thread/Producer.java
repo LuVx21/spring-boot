@@ -1,4 +1,4 @@
-package org.luvx.thread;
+package org.luvx.api.thread;
 
 /**
  * 生产者
