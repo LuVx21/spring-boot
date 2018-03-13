@@ -1,4 +1,4 @@
-package org.luvx.algorithm;
+package org.luvx.algorithm.sort;
 
 import org.junit.Test;
 
@@ -18,23 +18,4 @@ public class SortsTest {
         System.out.println("排序后:" + Arrays.toString(arr));
     }
 
-    @Test
-    public void sort4Test() {
-    }
-
-    @Test
-    public void sort3Test() {
-    }
-
-    @Test
-    public void sort2Test() {
-    }
-
-    @Test
-    public void sort1Test() {
-    }
-
-    @Test
-    public void sortTest() {
-    }
 }

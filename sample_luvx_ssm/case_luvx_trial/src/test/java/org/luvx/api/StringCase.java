@@ -52,5 +52,28 @@ public class StringCase {
         sb.delete(1, 2);
     }
 
+    /**
+     * `==`,equals(),hashCode()
+     */
+    @Test
+    public void equalsTest() {
+
+        String aa = "aa";
+        String cc = "aa";
+        // true
+        System.out.println(aa == cc);
+        // true
+        System.out.println(aa.equals(cc));
+        // true
+        System.out.println(aa.hashCode() == cc.hashCode());
+
+
+        aa = new String("aa");
+        cc = new String("aa");
+        // false
+        System.out.println(aa == cc);
+        System.out.println(aa.equals(cc));
+        System.out.println(aa.hashCode() == cc.hashCode());
+    }
 
 }
