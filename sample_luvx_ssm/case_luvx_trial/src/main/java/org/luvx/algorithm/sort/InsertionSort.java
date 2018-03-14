@@ -29,22 +29,26 @@ public class InsertionSort {
      * @param array
      */
     public static void shellSort(int[] array) {
-        int len = array.length / 2;
-        while (len >= 1)// 分组,每组元素为len个
-        {
-            for (int k = 0; k < len; k++)// 组内进行排序
-            {
-                for (int i = k + len; i < array.length; i += len) {
-                    int temp = array[i];
-                    int j = i - len;// 前一个
-                    while (j >= k && array[j] > temp) {
-                        array[j + len] = array[j];
-                        j -= len;
+        int length = array.length;
+        // 分割的组数
+        int groups = 2;
+        int nums = length / groups;
+        while (nums >= 1) {
+            // 循环的次数和组数相同
+            for (int i = 0; i < groups; i++) {
+                for (int j = i + nums; j < length; j += nums) {
+                    int temp = array[j];
+                    int k = j - nums;
+                    // 右移数据用循环
+                    while (k >= i && array[k] > temp) {
+                        array[k + nums] = array[k];
+                        k -= nums;
                     }
-                    array[j + len] = temp;
-                } // 当len = 1 时 可看做直接插入排序
+                    // 插入数据
+                    array[k + nums] = temp;
+                }
             }
-            len = len / 2;// 每组元素为原来的一半
+            nums = nums / 2;
         }
     }
 
