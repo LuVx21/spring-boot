@@ -11,12 +11,28 @@ public class StringCase {
      * String较快的特殊情况
      */
     @Test
-    public void run0() {
+    public void stringTest() {
         // 没有字符串运算,本身就是"a b c"
         String s = "a " + "b " + "c";
-        // 有字符串运算
-        StringBuffer sb = new StringBuffer("a ").append("b ").append("c");
+        String ss = "a b c";
+        String sss = new String("a b c");
+        System.out.println(s == ss);// true
+        System.out.println(ss == sss);// false
+
+        // since jdk7
+        String s0 = new StringBuilder("a ").append("b c").toString();
+        String s1 = new StringBuilder("a ").append("b c1").toString();
+        System.out.println(s0.intern() == s0);// false(常量池中存在),函数返回其实是s
+        System.out.println(s1.intern() == s1);// true(常量池中不存在),jdk7之前为false
     }
+
+
+    @Test
+    public void stringTest1() {
+
+
+    }
+
 
     /**
      * StringBuffer
