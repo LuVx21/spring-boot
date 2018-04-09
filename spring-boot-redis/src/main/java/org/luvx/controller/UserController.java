@@ -1,7 +1,7 @@
 package org.luvx.controller;
 
-import org.luvx.entity.Post;
-import org.luvx.service.impl.PostServiceImpl;
+import org.luvx.entity.User;
+import org.luvx.service.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -9,29 +9,28 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class PostController {
+public class UserController {
     @Autowired
-    private PostServiceImpl postService;
+    private UserServiceImpl userService;
 
-    @RequestMapping("/query/{id}")
+    @RequestMapping("/find/{id}")
     public Object query(@PathVariable int id) {
-        return postService.findById(id);
+        return userService.findById(id);
     }
 
     @RequestMapping("/save")
-    public Object save(@ModelAttribute Post post) {
-        return postService.save(post);
+    public Object save(@ModelAttribute User user) {
+        return userService.save(user);
     }
 
     @RequestMapping("/delete/{id}")
     public Object delete(@PathVariable int id) {
-        return postService.delete(id);
+        return userService.delete(id);
     }
 
     @RequestMapping("/queryPage")
     public Object query(String name, int pageNum, int count) {
-        //根据weight倒序分页查询
-        // Pageable pageable = new PageRequest(pageNum, count, Sort.Direction.DESC, "weight");
+        // Pageable pageable = new PageRequest(pageNum, count, Sort.Direction.DESC, "age");
         // return userRepository.findByName(name, pageable);
         return null;
     }

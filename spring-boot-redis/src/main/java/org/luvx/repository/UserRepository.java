@@ -1,6 +1,6 @@
 package org.luvx.repository;
 
-import org.luvx.entity.Post;
+import org.luvx.entity.User;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
@@ -9,17 +9,19 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.transaction.annotation.Transactional;
 
-@CacheConfig(cacheNames = "post")
-public interface PostRepository extends PagingAndSortingRepository<Post, Integer> {
+
+@CacheConfig(cacheNames = "user")
+public interface UserRepository extends PagingAndSortingRepository<User, Long> {
+
     @Cacheable(key = "#p0")
-    Post findById(int id);
+    User findById(long id);
 
     @CachePut(key = "#p0.id")
     @Override
-    Post save(Post post);
+    User save(User user);
 
     @Transactional
     @Modifying
     @CacheEvict(key = "#p0")
-    int deleteById(int id);
+    long deleteById(long id);
 }
