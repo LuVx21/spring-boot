@@ -3,10 +3,8 @@ include ':entity_luvx_trial'
 include ':dao_luvx_trial'
 include ':service_luvx_trial'
 include ':web_luvx_trial'
-include ':case_luvx_trial'
 
 project(':entity_luvx_trial').projectDir = "$rootDir/entity_luvx_trial" as File
 project(':dao_luvx_trial').projectDir = "$rootDir/dao_luvx_trial" as File
 project(':service_luvx_trial').projectDir = "$rootDir/service_luvx_trial" as File
 project(':web_luvx_trial').projectDir = "$rootDir/web_luvx_trial" as File
-project(':case_luvx_trial').projectDir = "$rootDir/case_luvx_trial" as File
