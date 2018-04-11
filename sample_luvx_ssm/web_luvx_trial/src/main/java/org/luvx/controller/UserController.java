@@ -15,7 +15,7 @@ public class UserController {
     @Resource
     UserService userService;
 
-    @RequestMapping("/")
+    @RequestMapping("/index")
     public String index() {
         return "redirect:/list";
     }

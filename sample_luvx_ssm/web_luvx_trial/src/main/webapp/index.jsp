@@ -12,6 +12,9 @@
 <h3>SpringMVC</h3>
 <a href="${pageContext.request.contextPath}/hello">SpringMVC</a>
 <hr/>
+<h3>Thymeleaf</h3>
+<a href="${pageContext.request.contextPath}/list">Thymeleaf</a>
+<hr/>
 
 </body>
 </html>

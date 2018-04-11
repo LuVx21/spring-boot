@@ -48,7 +48,7 @@
     </dependencies>
 
     <build>
-        <finalName>sample_luvx_ssm</finalName>
+        <finalName>sample_luvx_case</finalName>
         <pluginManagement>
             <plugins>
                 <plugin>
