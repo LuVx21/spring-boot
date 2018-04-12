@@ -8,6 +8,10 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * 使用Redis 缓存
+ * 自动根据方法生成缓存
+ */
 @Service
 public class UserServiceImpl implements UserService {
 

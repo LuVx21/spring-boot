@@ -32,6 +32,12 @@ public class UserController {
         return "user/userAdd";
     }
 
+    /**
+     * 添加用户
+     *
+     * @param user
+     * @return 跳转
+     */
     @RequestMapping("/add")
     public String add(User user) {
         userService.save(user);
