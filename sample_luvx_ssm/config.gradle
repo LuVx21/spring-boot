@@ -1,0 +1,15 @@
+ext{
+    springVersion = '4.3.14.RELEASE'
+    retrofitVersion = '2.0.0-beta3'
+    hibernateVersion = '5.0.7.Final'
+
+    dependencies = [
+                    "retrofit" : 'com.squareup.retrofit2:retrofit:${retrofitVersion}']
+}
+
+// build.gradle
+// apply from: "config.gradle"
+// dependencies {
+//     compile fileTree(dir: 'libs', include: ['*.jar'])
+//     compile rootProject.ext.dependencies["retrofit"]
+// }
