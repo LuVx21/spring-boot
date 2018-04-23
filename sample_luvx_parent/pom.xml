@@ -17,6 +17,7 @@
         <struts2.version>2.3.24</struts2.version>
         <spring.version>4.3.14.RELEASE</spring.version>
         <hibernate.version>5.2.12.Final</hibernate.version>
+        <hibernate-validator.version>6.0.9.Final</hibernate-validator.version>
         <mybatis.version>3.2.8</mybatis.version>
         <mybatis.spring.version>1.2.2</mybatis.spring.version>
         <mysql.version>5.1.6</mysql.version>
@@ -152,6 +153,11 @@
                 <version>5.4.1.Final</version>
             </dependency>
             <!-- hibernate end -->
+            <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate-validator</artifactId>
+                <version>${hibernate-validator.version}</version>
+            </dependency>
             <!-- Apache工具组件 -->
             <dependency>
                 <groupId>commons-beanutils</groupId>
