@@ -1,6 +1,7 @@
-package org.luvx.pattern.Proxy;
+package org.luvx.pattern.Proxy.dynamic;
 
 import org.junit.Test;
+import org.luvx.pattern.Proxy.NewLogPrinter;
 
 public class CglibProxyTest {
 
@@ -9,7 +10,7 @@ public class CglibProxyTest {
      */
     @Test
     public void run01() {
-        LogPrinter logPrinter = (LogPrinter) new CglibProxy().newProxyInstance(new LogPrinter());
+        NewLogPrinter logPrinter = (NewLogPrinter) new CglibProxy().newProxyInstance(new NewLogPrinter());
         logPrinter.printlog();
         logPrinter.pringlogNo();
     }

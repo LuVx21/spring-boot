@@ -1,4 +1,4 @@
-package org.luvx.api.collections;
+package org.luvx.collection;
 
 import org.junit.Test;
 

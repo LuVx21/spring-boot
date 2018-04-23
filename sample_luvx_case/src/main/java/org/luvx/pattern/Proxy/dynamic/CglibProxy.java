@@ -1,5 +1,6 @@
-package org.luvx.pattern.Proxy;
+package org.luvx.pattern.Proxy.dynamic;
 
+import org.luvx.pattern.Proxy.Aspect;
 import org.springframework.cglib.proxy.Enhancer;
 import org.springframework.cglib.proxy.MethodInterceptor;
 import org.springframework.cglib.proxy.MethodProxy;
@@ -14,7 +15,6 @@ import java.lang.reflect.Method;
  * 目标类不能final
  * 目标类的方法有final/static修饰,则不被增强
  * <p>
- * 将LogPrinter修改为 不实现Printer接口
  */
 public class CglibProxy implements MethodInterceptor {
 
@@ -32,23 +32,9 @@ public class CglibProxy implements MethodInterceptor {
 
     @Override
     public Object intercept(Object obj, Method method, Object[] args, MethodProxy proxy) throws Throwable {
-        printBefore();
+        Aspect.printBefore();
         Object interceptor = method.invoke(target, args);
-        printAfter();
+        Aspect.printAfter();
         return interceptor;
-    }
-
-    /**
-     * 打印前操作
-     */
-    private void printBefore() {
-        System.out.println("打印前操作...");
-    }
-
-    /**
-     * 打印后操作
-     */
-    private void printAfter() {
-        System.out.println("打印后操作...");
     }
 }

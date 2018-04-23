@@ -1,4 +1,4 @@
-package org.luvx.pattern.Proxy;
+package org.luvx.pattern.Proxy._static;
 
 import org.junit.Test;
 
@@ -9,7 +9,7 @@ public class ProxyTest {
      */
     @Test
     public void run00() {
-        new PrinterProxy().printlog();
+        new PrinterStaticProxy().printlog();
     }
 
     /**
@@ -19,7 +19,7 @@ public class ProxyTest {
     @Test
     public void run01() {
         String methodName = "printlog";
-        new PrinterProxy().getPrinterProxy(methodName).printlog();
+        new PrinterStaticProxy().getPrinterProxy(methodName).printlog();
     }
 
     /**
@@ -28,7 +28,7 @@ public class ProxyTest {
     @Test
     public void run02() {
         String methodName = "printlogNo";
-        new PrinterProxy().getPrinterProxy(methodName).printlog();
+        new PrinterStaticProxy().getPrinterProxy(methodName).printlog();
     }
 
 }

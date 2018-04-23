@@ -1,4 +1,6 @@
-package org.luvx.pattern.Proxy;
+package org.luvx.pattern.Proxy.dynamic;
+
+import org.luvx.pattern.Proxy.Aspect;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
@@ -22,25 +24,11 @@ public class LogPrinterHandler implements InvocationHandler {
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
         // 对所有方法都进行加强,则没有此if条件
         if ("printlog".equals(method.getName())) {
-            printBefore();
+            Aspect.printBefore();
             Object obj = method.invoke(targetObject, args);
-            printAfter();
+            Aspect.printAfter();
             return obj;
         }
         return method.invoke(targetObject, args);
-    }
-
-    /**
-     * 打印前操作
-     */
-    private void printBefore() {
-        System.out.println("打印前操作...");
-    }
-
-    /**
-     * 打印后操作
-     */
-    private void printAfter() {
-        System.out.println("打印后操作...");
     }
 }

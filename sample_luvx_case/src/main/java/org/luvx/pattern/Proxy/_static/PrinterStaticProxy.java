@@ -1,4 +1,8 @@
-package org.luvx.pattern.Proxy;
+package org.luvx.pattern.Proxy._static;
+
+import org.luvx.pattern.Proxy.Aspect;
+import org.luvx.pattern.Proxy.LogPrinter;
+import org.luvx.pattern.Proxy.Printable;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
@@ -7,10 +11,9 @@ import java.lang.reflect.Proxy;
 /**
  * printer代理类
  */
-public class PrinterProxy implements Printer {
+public class PrinterStaticProxy implements Printable {
 
-
-    final LogPrinter logPrinter = new LogPrinter();
+    final Printable logPrinter = new LogPrinter();
 
     /**
      * 静态代理
@@ -19,9 +22,9 @@ public class PrinterProxy implements Printer {
      */
     @Override
     public void printlog() {
-        printBefore();
+        Aspect.printBefore();
         logPrinter.printlog();
-        printAfter();
+        Aspect.printAfter();
     }
 
     /**
@@ -32,34 +35,20 @@ public class PrinterProxy implements Printer {
      * @param methodName 欲增强功能的方法名
      * @return
      */
-    public Printer getPrinterProxy(String methodName) {
-        Printer logPrinterProxy = (Printer) Proxy.newProxyInstance(LogPrinter.class.getClassLoader(), new Class[]{Printer.class}, new InvocationHandler() {
+    public Printable getPrinterProxy(String methodName) {
+        Printable logPrinterProxy = (Printable) Proxy.newProxyInstance(LogPrinter.class.getClassLoader(), new Class[]{Printable.class}, new InvocationHandler() {
             @Override
             public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
                 // 对所有方法都进行加强,则没有此if条件
                 if (methodName.equals(method.getName())) {
-                    printBefore();
+                    Aspect.printBefore();
                     Object obj = method.invoke(logPrinter, args);
-                    printAfter();
+                    Aspect.printAfter();
                     return obj;
                 }
                 return method.invoke(logPrinter, args);
             }
         });
         return logPrinterProxy;
-    }
-
-    /**
-     * 打印前操作
-     */
-    private void printBefore() {
-        System.out.println("打印前操作...");
-    }
-
-    /**
-     * 打印后操作
-     */
-    private void printAfter() {
-        System.out.println("打印后操作...");
     }
 }

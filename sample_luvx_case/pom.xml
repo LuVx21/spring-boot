@@ -10,9 +10,7 @@
         <version>1.0.1-SNAPSHOT</version>
     </parent>
 
-    <groupId>org.luvx</groupId>
     <artifactId>sample_luvx_case</artifactId>
-    <version>1.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <dependencies>
@@ -44,6 +42,10 @@
         <dependency>
             <groupId>redis.clients</groupId>
             <artifactId>jedis</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjweaver</artifactId>
         </dependency>
     </dependencies>
 
