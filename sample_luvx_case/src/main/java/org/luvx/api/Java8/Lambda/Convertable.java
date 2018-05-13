@@ -9,6 +9,6 @@ package org.luvx.api.Java8.Lambda;
  */
 
 @FunctionalInterface
-public interface FuncInterface<F,T> {
+public interface Convertable<F,T> {
     T convert(F from);
 }
