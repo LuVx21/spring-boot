@@ -1,6 +1,6 @@
 package org.luvx.daoTest;
 
-
+import org.junit.Ignore;
 import org.junit.Test;
 import org.luvx.BaseTest;
 import org.luvx.dao.UserMapper;
@@ -28,6 +28,7 @@ public class UserMapperTest extends BaseTest {
         userMapper.save(user);
     }
 
+    @Ignore
     @Test
     public void findByIdTest() {
         User user = userMapper.findById(1L);
@@ -43,6 +44,7 @@ public class UserMapperTest extends BaseTest {
         }
     }
 
+    @Ignore
     @Test
     public void updateTest() {
         User user = userMapper.findById(1L);
@@ -50,10 +52,10 @@ public class UserMapperTest extends BaseTest {
         userMapper.update(user);
     }
 
+    @Ignore
     @Test
     public void deleteByIdTest() {
         userMapper.deleteById(2L);
-
     }
 
 }
