@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+    xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:rabbit="http://www.springframework.org/schema/rabbit"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/rabbit
+    http://www.springframework.org/schema/rabbit/spring-rabbit-1.7.xsd">
+
+    <rabbit:connection-factory id="connectionFactory"
+        host="${rmq.host}"
+        port="${rmq.port}"
+        virtual-host="${rmq.vhost}"
+        username="${rmq.username}"
+        password="${rmq.password}" />
+
+    <!-- 使用admin在容器启动时,自动获取exchange和queue,并且注册到rabbitmq服务器中 -->
+    <rabbit:admin connection-factory="connectionFactory"/>
+
+    <!-- 配置队列 -->
+    <!--
+    durable:是否持久化
+    exclusive: 仅创建者可以使用的私有队列，断开后自动删除
+    auto-delete: 当所有消费客户端连接断开后，是否自动删除队列
+    -->
+    <rabbit:queue name="rabbit" durable="false" exclusive="false" auto-delete="true"/>
+    <rabbit:queue name="fish" durable="false" exclusive="false" auto-delete="true"/>
+
+    <!-- 绑定exchange和queue -->
+    <rabbit:direct-exchange name="diretcExchange" durable="true" auto-delete="true">
+        <rabbit:bindings>
+            <rabbit:binding queue="rabbit" key="rabbit"/>
+            <rabbit:binding queue="fish" key="fish"/>
+        </rabbit:bindings>
+    </rabbit:direct-exchange>
+
+    <!-- 定义操作模板,还可用 message-converter属性指定消息转换器,此处不配置,spring会给我们使用默认的转换器把消息转换成message对象 -->
+    <rabbit:template id="amqpTemplate" connection-factory="connectionFactory" exchange="diretcExchange"/>
+
+    <!-- 监听器 -->
+    <bean id="queueListenter" class="org.luvx.rabbitmq.listener.QueueListenter"/>
+    <!-- 配置监听queue -->
+    <rabbit:listener-container connection-factory="connectionFactory" acknowledge="auto">
+        <rabbit:listener queues="rabbit" ref="queueListenter"/>
+    </rabbit:listener-container>
+
+</beans>

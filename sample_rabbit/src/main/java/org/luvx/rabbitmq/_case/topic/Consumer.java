@@ -1,4 +1,4 @@
-package org.luvx.rabbitmq.direct;
+package org.luvx.rabbitmq._case.topic;
 
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
@@ -20,11 +20,11 @@ public class Consumer {
         Connection connection = factory.newConnection();
         Channel channel = connection.createChannel();
 
-        channel.exchangeDeclare("LuVx-direct", "direct");
+        channel.exchangeDeclare("LuVx-topic", "topic");
         channel.queueDeclare(RABBIT, false, false, false, null);
-        channel.queueBind(RABBIT, "LuVx-direct", "rabbit");
+        channel.queueBind(RABBIT, "LuVx-topic", "rabbit.*.*");
         channel.queueDeclare(FISH, false, false, false, null);
-        channel.queueBind(FISH, "LuVx-direct", "fish");
+        channel.queueBind(FISH, "LuVx-topic", "fish.*.*");
 
         QueueingConsumer consumer = new QueueingConsumer(channel);
         channel.basicConsume(RABBIT, true, consumer);

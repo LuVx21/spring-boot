@@ -1,4 +1,4 @@
-package org.luvx.rabbitmq.direct;
+package org.luvx.rabbitmq._case.topic;
 
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
@@ -20,15 +20,17 @@ public class Provider {
         Channel channel = connection.createChannel();
 
         // exchange的名字,类型
-        channel.exchangeDeclare("LuVx-direct", "direct");
+        channel.exchangeDeclare("LuVx-topic", "topic");
         channel.queueDeclare(RABBIT, false, false, false, null);
-        channel.queueBind(RABBIT, "LuVx-direct", "rabbit");
+        channel.queueBind(RABBIT, "LuVx-topic", "rabbit.*.*");
         channel.queueDeclare(FISH, false, false, false, null);
-        channel.queueBind(FISH, "LuVx-direct", "fish");
+        channel.queueBind(FISH, "LuVx-topic", "fish.*.*");
 
 
-        channel.basicPublish("LuVx-direct", "rabbit", null, "Hello Rabbit!".getBytes());
-        channel.basicPublish("LuVx-direct", "fish", null, "Hello fish!".getBytes());
+        channel.basicPublish("LuVx-topic", "rabbit.xx.xx", null, "Hello Rabbit!".getBytes());
+        channel.basicPublish("LuVx-topic", "fish.11.22", null, "Hello fish!".getBytes());
+        // 第3条信息不会被分发到队列中,路由规则不符合任何绑定规则
+        channel.basicPublish("LuVx-topic", "xx.11.33", null, "Hello Rabbit fish!".getBytes());
 
         channel.close();
         connection.close();
