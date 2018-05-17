@@ -4,8 +4,8 @@ public interface MQProducer
 {
     /**
      * 发送消息到指定队列
-     * @param queueKey
+     * @param routingKey
      * @param object
      */
-    void sendDataToQueue(String queueKey, Object object);
+    void sendDataToQueue(String routingKey, Object object);
 }

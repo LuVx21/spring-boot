@@ -27,9 +27,8 @@
     </appenders>
 
     <loggers>
-        <logger name="org.luvx.rabbitmq.producer.impl.MQProducerImpl" level="trace" additivity="true">
-            <appender-ref ref="Console"/>
-        </logger>
+        <logger name="org.luvx.rabbitmq.producer.impl.MQProducerImpl" level="trace" additivity="true" />
+        <logger name="org.luvx.rabbitmq.listener.QueueListenter" level="trace" additivity="true" />
         <root level="error">
             <appender-ref ref="Console"/>
             <appender-ref ref="RollingFile"/>

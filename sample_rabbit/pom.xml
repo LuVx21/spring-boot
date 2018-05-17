@@ -11,7 +11,7 @@
     </parent>
 
     <artifactId>sample_rabbit</artifactId>
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
 
     <dependencies>
         <dependency>
