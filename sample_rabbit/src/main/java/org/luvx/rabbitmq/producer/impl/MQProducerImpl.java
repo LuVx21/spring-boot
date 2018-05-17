@@ -15,10 +15,10 @@ public class MQProducerImpl implements MQProducer {
 
     private final static Logger LOGGER = LogManager.getLogger(MQProducerImpl.class.getName());
 
-    public void sendDataToQueue(String queueKey, Object object) {
+    public void sendDataToQueue(String routingKey, Object object) {
         try {
-            LOGGER.info("=========发送消息开始=============\n发送消息内容：" + object.toString());
-            amqpTemplate.convertAndSend(queueKey, object);
+            LOGGER.info("\n=========发送消息开始=============\n发送消息内容：" + object.toString());
+            amqpTemplate.convertAndSend(routingKey, object);
         } catch (Exception e) {
             LOGGER.error(e);
         }
