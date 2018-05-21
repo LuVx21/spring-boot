@@ -11,15 +11,24 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>spring-boot-dubbo-consumer</artifactId>
+    <artifactId>spring-boot-dubbo-consumer-mq</artifactId>
     <packaging>jar</packaging>
-    <name>spring-boot-dubbo-consumer</name>
+    <name>spring-boot-dubbo-consumer-mq</name>
 
     <dependencies>
         <dependency>
             <groupId>org.luvx</groupId>
             <artifactId>spring-boot-dubbo-api</artifactId>
             <version>1.0.1-SNAPSHOT</version>
+        </dependency>
+       <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-amqp</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 
