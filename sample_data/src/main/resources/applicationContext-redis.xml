@@ -39,8 +39,10 @@
           p:timeout="${redis.timeout}"
           p:usePool="true">
     </bean>
-    
+
     <!-- 使用中间类解决RedisCache.jedisConnectionFactory的静态注入，从而使MyBatis实现第三方缓存 -->
-    <bean id="redisCacheTransfer" class="org.luvx.redis.RedisCache"/>
+    <bean id="redisCacheTransfer" class="org.luvx.redis.RedisCacheTransfer">
+        <property name="jedisConnectionFactory" ref="connectionFactory"/>
+    </bean>
 
 </beans>

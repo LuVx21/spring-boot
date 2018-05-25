@@ -15,6 +15,6 @@
     http://www.springframework.org/schema/context/spring-context.xsd">
 
     <import resource="classpath:applicationContext-dao.xml"/>
-    <!--<import resource="classpath:applicationContext-redis.xml"/>-->
+    <import resource="classpath:applicationContext-redis.xml"/>
 
 </beans>

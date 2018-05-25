@@ -4,7 +4,7 @@
 
 <mapper namespace="org.luvx.dao.UserMapper">
 
-    <!--<cache type="org.luvx.redis.RedisCache"/>-->
+    <cache type="org.luvx.redis.RedisCache"/>
 
     <resultMap id="BaseResultMap" type="org.luvx.entity.User">
         <id column="userid" property="id" jdbcType="BIGINT"/>
