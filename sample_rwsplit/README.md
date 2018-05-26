@@ -132,3 +132,19 @@ mysql读写分离的配置:使用docker配置主从数据库
 读之前-先查缓存
 写之后-更新缓存
 
+```sql
+create database master;
+create database slave;
+use master;
+create table `user` (
+  `userid`    bigint(20) not null auto_increment,
+  `user_name` varchar(255)         default null,
+  `password`  varchar(255)         default null,
+  `age`       int(11)             default null,
+  primary key (`userid`)
+)
+  engine = innodb
+  auto_increment = 2
+  default charset = utf8;
+use slave;
+```
