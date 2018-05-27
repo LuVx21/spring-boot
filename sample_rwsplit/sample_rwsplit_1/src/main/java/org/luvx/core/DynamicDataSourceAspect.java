@@ -8,7 +8,7 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 
 @Aspect
-public class MultipleDataSourceAspect {
+public class DynamicDataSourceAspect {
 
     @Resource
     private List<String> useSlaveDataSourceMethodPrefix;
@@ -20,13 +20,13 @@ public class MultipleDataSourceAspect {
         String method = point.getSignature().getName();
         boolean useSlave = useSlaveDataSourceMethodPrefix.stream().anyMatch(i -> method.startsWith(i));
         if (useSlave) {
-            MultipleDataSourceContext.setKey(MultipleDataSourceContext.slave);
+            DynamicDataSourceHolder.setKey(DynamicDataSourceHolder.slave);
             System.out.println("--- slave ---");
             return;
         }
         boolean useMaster = useMasterDataSourceMethodPrefix.stream().anyMatch(i -> method.startsWith(i));
         if (useMaster) {
-            MultipleDataSourceContext.setKey(MultipleDataSourceContext.master);
+            DynamicDataSourceHolder.setKey(DynamicDataSourceHolder.master);
             System.out.println("--- master ---");
             return;
         }

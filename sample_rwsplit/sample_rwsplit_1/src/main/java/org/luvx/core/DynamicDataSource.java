@@ -2,9 +2,9 @@ package org.luvx.core;
 
 import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
 
-public class MultipleDataSource extends AbstractRoutingDataSource {
+public class DynamicDataSource extends AbstractRoutingDataSource {
     @Override
     protected Object determineCurrentLookupKey() {
-        return MultipleDataSourceContext.getKey();
+        return DynamicDataSourceHolder.getKey();
     }
 }
