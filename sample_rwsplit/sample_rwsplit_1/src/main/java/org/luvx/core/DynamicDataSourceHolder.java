@@ -6,14 +6,14 @@ public class DynamicDataSourceHolder {
     public static String slave;
     public static String master;
 
-    private static final ThreadLocal<String> context = new ThreadLocal<>();
+    private static final ThreadLocal<String> holder = new ThreadLocal<>();
 
-    public static void setKey(String name) {
-        context.set(name);
+    public static void putDataSource(String name) {
+        holder.set(name);
     }
 
-    public static String getKey() {
-        return context.get();
+    public static String getDataSouce() {
+        return holder.get();
     }
 
     @Value("${jdbc.key.slave}")

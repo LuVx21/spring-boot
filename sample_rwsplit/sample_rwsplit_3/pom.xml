@@ -10,7 +10,7 @@
         <version>1.0.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>sample_rwsplit1</artifactId>
+    <artifactId>sample_rwsplit3</artifactId>
     <packaging>jar</packaging>
 
     <dependencies>

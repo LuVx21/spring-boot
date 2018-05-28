@@ -20,13 +20,13 @@ public class DynamicDataSourceAspect {
         String method = point.getSignature().getName();
         boolean useSlave = useSlaveDataSourceMethodPrefix.stream().anyMatch(i -> method.startsWith(i));
         if (useSlave) {
-            DynamicDataSourceHolder.setKey(DynamicDataSourceHolder.slave);
+            DynamicDataSourceHolder.putDataSource(DynamicDataSourceHolder.slave);
             System.out.println("--- slave ---");
             return;
         }
         boolean useMaster = useMasterDataSourceMethodPrefix.stream().anyMatch(i -> method.startsWith(i));
         if (useMaster) {
-            DynamicDataSourceHolder.setKey(DynamicDataSourceHolder.master);
+            DynamicDataSourceHolder.putDataSource(DynamicDataSourceHolder.master);
             System.out.println("--- master ---");
             return;
         }

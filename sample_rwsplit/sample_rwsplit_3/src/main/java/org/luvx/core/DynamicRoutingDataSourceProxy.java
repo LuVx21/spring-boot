@@ -6,12 +6,6 @@ import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-/**
- * Created by IDEA
- * User: mashaohua
- * Date: 2016-07-19 16:04
- * Desc:
- */
 public class DynamicRoutingDataSourceProxy extends AbstractDynamicDataSourceProxy {
 
     private AtomicLong counter = new AtomicLong(0);

@@ -4,10 +4,6 @@
 
 <!-- 配置全局属性 -->
 <configuration>
-    <plugins>
-        <plugin interceptor="com.test.api.dao.mybatis.DynamicPlugin">
-        </plugin>
-    </plugins>
     <settings>
         <!-- 全局映射器启用缓存 *主要将此属性设置完成即可-->
         <setting name="cacheEnabled" value="true"/>
@@ -33,4 +29,8 @@
         <!-- 打印查询语句 -->
         <setting name="logImpl" value="STDOUT_LOGGING"/>
     </settings>
+    <plugins>
+        <plugin interceptor="org.luvx.core.DynamicPlugin">
+        </plugin>
+    </plugins>
 </configuration>
