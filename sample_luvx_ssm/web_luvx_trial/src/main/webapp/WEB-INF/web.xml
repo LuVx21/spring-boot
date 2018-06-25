@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xmlns="http://java.sun.com/xml/ns/javaee"
-         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
-         id="WebApp_ID" version="2.5">
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+         id="WebApp_ID" version="3.0">
 
     <!--spring配置文件的加载的监听器-->
     <context-param>
@@ -56,7 +56,7 @@
     <!--SpringMVC Start -->
     <!-- spirngMvc前端控制器 -->
     <servlet>
-        <servlet-name>spirngMvc</servlet-name>
+        <servlet-name>springMvc</servlet-name>
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
         <!-- 如果没有指定springMvc核心配置文件那么默认会去找/WEB-INF/+<servlet-name>中的内容 + -servlet.xml配置文件 -->
         <!-- 指定springMvc核心配置文件位置 -->
@@ -66,11 +66,16 @@
         </init-param>
         <!-- tomcat启动的时候就加载这个servlet -->
         <load-on-startup>1</load-on-startup>
+        <async-supported>true</async-supported>
     </servlet>
 
     <servlet-mapping>
-        <servlet-name>spirngMvc</servlet-name>
+        <servlet-name>springMvc</servlet-name>
         <url-pattern>/</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>springMvc</servlet-name>
+        <url-pattern>*.html</url-pattern>
     </servlet-mapping>
     <!--SpringMVC End-->
 

@@ -11,7 +11,7 @@ public class BaseTest {
 
     @Test
     public void run() {
-        System.out.println("this basetest of dao!");
+        System.out.println("this base test of dao!");
     }
 
 }

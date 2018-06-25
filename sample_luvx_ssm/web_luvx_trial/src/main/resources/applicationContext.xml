@@ -15,7 +15,7 @@
 	http://www.springframework.org/schema/context/spring-context.xsd">
 
 
-     <import resource="classpath:applicationContext-dao.xml"/>
+    <import resource="classpath:applicationContext-dao.xml"/>
     <import resource="classpath:applicationContext-service.xml"/>
     <import resource="classpath:applicationContext-action.xml"/>
 

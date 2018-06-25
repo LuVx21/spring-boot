@@ -10,9 +10,7 @@
         <version>1.0.1-SNAPSHOT</version>
     </parent>
 
-    <groupId>org.luvx</groupId>
     <artifactId>sample_luvx_ssm</artifactId>
-    <version>1.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <modules>
@@ -20,7 +18,6 @@
         <module>dao_luvx_trial</module>
         <module>service_luvx_trial</module>
         <module>web_luvx_trial</module>
-        <module>case_luvx_trial</module>
     </modules>
 
     <dependencies>

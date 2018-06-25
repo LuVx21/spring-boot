@@ -14,7 +14,7 @@ subprojects {
     }
 
     ext {
-        springVersion = '4.2.4.RELEASE'
+        springVersion = '4.3.14.RELEASE'
         hibernateVersion = '5.0.7.Final'
     }
 
@@ -26,7 +26,7 @@ subprojects {
     dependencies {
         compile "org.thymeleaf:thymeleaf-spring4:3.0.3.RELEASE"
         compile "org.luvx:sample_luvx_commons:1.0.1-SNAPSHOT"
-        compile "com.fasterxml.jackson.core:jackson-databind:2.8.9"
+        compile "com.fasterxml.jackson.core:jackson-databind:2.9.4"
         compile "org.apache.httpcomponents:httpclient:4.4"
         compile "com.alibaba:fastjson:1.1.37"
         compile "commons-beanutils:commons-beanutils:1.9.1"

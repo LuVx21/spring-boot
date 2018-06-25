@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+    xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:rabbit="http://www.springframework.org/schema/rabbit"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/rabbit
+    http://www.springframework.org/schema/rabbit/spring-rabbit-1.7.xsd">
+
+    <rabbit:connection-factory id="connectionFactory"
+        host="${rmq.host}"
+        port="${rmq.port}"
+        virtual-host="${rmq.vhost}"
+        username="${rmq.username}"
+        password="${rmq.password}" />
+
+    <rabbit:admin connection-factory="connectionFactory"/>
+
+    <rabbit:queue name="rabbit" durable="false" exclusive="true" auto-delete="true"/>
+    <rabbit:queue name="fish" durable="false" exclusive="true" auto-delete="true"/>
+
+    <rabbit:topic-exchange name="LuVx-topicExchange" durable="false" auto-delete="true">
+        <rabbit:bindings>
+            <rabbit:binding queue="rabbit" pattern="rabbit.*.*"/>
+            <rabbit:binding queue="fish" pattern="*.*.fish"/>
+        </rabbit:bindings>
+    </rabbit:topic-exchange>
+
+    <rabbit:template id="amqpTemplate" connection-factory="connectionFactory" exchange="LuVx-topicExchange"/>
+
+    <bean id="queueListenter" class="org.luvx.rabbitmq.listener.QueueListenter"/>
+
+    <rabbit:listener-container connection-factory="connectionFactory" acknowledge="auto">
+        <rabbit:listener queues="rabbit" ref="queueListenter"/>
+        <rabbit:listener queues="fish" ref="queueListenter"/>
+    </rabbit:listener-container>
+
+</beans>

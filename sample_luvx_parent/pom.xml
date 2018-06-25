@@ -15,29 +15,36 @@
         <project.build.locales>zh_CN</project.build.locales>
         <project.build.jdk>1.8</project.build.jdk>
         <struts2.version>2.3.24</struts2.version>
-        <spring.version>4.2.4.RELEASE</spring.version>
-        <hibernate.version>5.0.7.Final</hibernate.version>
+        <spring.version>4.3.14.RELEASE</spring.version>
+        <hibernate.version>5.2.12.Final</hibernate.version>
         <mybatis.version>3.2.8</mybatis.version>
         <mybatis.spring.version>1.2.2</mybatis.spring.version>
         <mysql.version>5.1.6</mysql.version>
+        <!-- Redis -->
+        <redis.spring.version>2.0.2.RELEASE</redis.spring.version>
+        <jedis.version>2.9.0</jedis.version>
         <!-- log4j日志文件管理包版本 -->
         <slf4j.version>1.6.6</slf4j.version>
         <log4j.version>1.2.12</log4j.version>
         <log4j2.version>2.9.1</log4j2.version>
         <!-- 连接池 -->
-        <c3p0.version>0.9.1.2</c3p0.version>
-        <druid.version>1.0.9</druid.version>
+        <druid.version>1.1.9</druid.version>
+        <hikari.version>2.7.8</hikari.version>
         <!-- 测试 -->
         <junit.version>4.12</junit.version>
         <!-- json -->
-        <jackson.version>2.4.2</jackson.version>
+        <jackson.version>2.9.4</jackson.version>
+        <!-- thymeleaf -->
+        <thymeleaf.version>3.0.9.RELEASE</thymeleaf.version>
         <!-- jsp -->
         <jstl.version>1.2</jstl.version>
         <servlet.version>3.1.0</servlet.version>
         <jsp.version>2.2.1</jsp.version>
-        <jedis.version>2.7.2</jedis.version>
         <shiro.version>1.2.3</shiro.version>
         <cxf.version>3.0.1</cxf.version>
+        <objenesis.version>2.6</objenesis.version>
+        <protostuff.version>1.4.0</protostuff.version>
+        <fastjson.version>1.2.31</fastjson.version>
         <!-- apache commons -->
         <commons-lang3.version>3.3.2</commons-lang3.version>
         <commons-io.version>2.4</commons-io.version>
@@ -102,6 +109,11 @@
                 <artifactId>spring-aspects</artifactId>
                 <version>${spring.version}</version>
             </dependency>
+            <dependency>
+                <groupId>org.springframework.data</groupId>
+                <artifactId>spring-data-redis</artifactId>
+                <version>${redis.spring.version}</version>
+            </dependency>
             <!-- Struts -->
             <dependency>
                 <groupId>org.apache.struts</groupId>
@@ -137,7 +149,7 @@
             <dependency>
                 <groupId>org.hibernate</groupId>
                 <artifactId>hibernate-validator</artifactId>
-                <version>5.2.1.Final</version>
+                <version>5.4.1.Final</version>
             </dependency>
             <!-- hibernate end -->
             <!-- Apache工具组件 -->
@@ -174,7 +186,12 @@
             <dependency>
                 <groupId>com.alibaba</groupId>
                 <artifactId>fastjson</artifactId>
-                <version>1.1.41</version>
+                <version>${fastjson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-core</artifactId>
+                <version>${jackson.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.fasterxml.jackson.core</groupId>
@@ -246,17 +263,36 @@
 -->
             <!-- 连接池 -->
             <dependency>
-                <groupId>c3p0</groupId>
-                <artifactId>c3p0</artifactId>
-                <version>${c3p0.version}</version>
-            </dependency>
-<!--
-            <dependency>
                 <groupId>com.alibaba</groupId>
                 <artifactId>druid</artifactId>
                 <version>${druid.version}</version>
             </dependency>
--->
+            <dependency>
+                <groupId>com.zaxxer</groupId>
+                <artifactId>HikariCP</artifactId>
+                <version>${hikari.version}</version>
+            </dependency>
+            <!-- thymeleaf相关 -->
+            <dependency>
+                <groupId>org.thymeleaf</groupId>
+                <artifactId>thymeleaf</artifactId>
+                <version>${thymeleaf.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.thymeleaf</groupId>
+                <artifactId>thymeleaf-spring4</artifactId>
+                <version>${thymeleaf.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.thymeleaf.extras</groupId>
+                <artifactId>thymeleaf-extras-springsecurity4</artifactId>
+                <version>3.0.2.RELEASE</version>
+            </dependency>
+            <dependency>
+                <groupId>org.thymeleaf.extras</groupId>
+                <artifactId>thymeleaf-extras-java8time</artifactId>
+                <version>3.0.1.RELEASE</version>
+            </dependency>
             <!-- JSP相关 -->
             <dependency>
                 <groupId>jstl</groupId>
@@ -340,6 +376,22 @@
             <version>3.11</version>
         </dependency>
 -->
+        <!-- protostuff序列化，objenesis用来创建对象：不需要默认构造函数 -->
+        <dependency>
+            <groupId>org.objenesis</groupId>
+            <artifactId>objenesis</artifactId>
+            <version>${objenesis.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.protostuff</groupId>
+            <artifactId>protostuff-core</artifactId>
+            <version>${protostuff.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.protostuff</groupId>
+            <artifactId>protostuff-runtime</artifactId>
+            <version>${protostuff.version}</version>
+        </dependency>
         </dependencies>
     </dependencyManagement>
 

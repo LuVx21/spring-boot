@@ -10,6 +10,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 public class BaseTest {
     @Test
     public void run() {
-        System.out.println("this is basetest of service!");
+        System.out.println("this is base test of service!");
     }
 }
