@@ -10,9 +10,7 @@
         <version>1.0.1-SNAPSHOT</version>
     </parent>
 
-    <groupId>org.luvx</groupId>
     <artifactId>sample_luvx_ssm</artifactId>
-    <version>1.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <modules>

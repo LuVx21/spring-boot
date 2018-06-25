@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://code.alibabatech.com/schema/dubbo
+       http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+    <dubbo:application name="listNamesProvider" owner="LuVx" organization="org.luvx"/>
+
+    <!-- <dubbo:registry address="multicast://224.5.6.7:1234"/> -->
+    <dubbo:registry address="zookeeper://localhost:2181"/>
+
+    <dubbo:protocol name="dubbo" port="20880" />
+
+    <dubbo:service interface="org.luvx.service.AppService" ref="appService" protocol="dubbo" />
+
+    <!--具体实现该接口的 bean-->
+    <bean id="appService" class="org.luvx.service.impl.AppServiceImpl"/>
+</beans>

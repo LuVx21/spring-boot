@@ -8,7 +8,6 @@ import java.util.Map;
 
 public class MapCase {
 
-
     /**
      * HashMap
      */
@@ -22,6 +21,12 @@ public class MapCase {
         for (Map.Entry<String, String> entry : map.entrySet()) {
             System.out.println(entry.getKey() + ":" + entry.getValue());
         }
+
+        map.clear();
+        map.putIfAbsent("b", "B");
+        map.putIfAbsent("a", "A");
+        map.putIfAbsent("c", "C");
+        map.forEach((id, val) -> System.out.println(val));
     }
 
     /**
@@ -38,4 +43,5 @@ public class MapCase {
             System.out.println(entry.getKey() + ":" + entry.getValue());
         }
     }
+
 }

@@ -1,5 +1,6 @@
-
-
+![license](https://img.shields.io/packagist/l/doctrine/orm.svg)
+[![stars](https://img.shields.io/github/stars/luvx21/luvx_trial.svg?style=flat&label=Star)](https://github.com/luvx21/luvx_trial/stargazers)
+[![forks](https://img.shields.io/github/forks/luvx21/luvx_trial.svg?style=flat&label=Fork)](https://github.com/luvx21/luvx_trial/fork)
 
 ```
 cd sample_luvx_parent && mvn install
