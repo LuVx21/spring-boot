@@ -4,7 +4,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * ConcurrentHashMap实现缓存
- *
+ * http://www.importnew.com/19627.html
  */
 public class CacheCase {
 
