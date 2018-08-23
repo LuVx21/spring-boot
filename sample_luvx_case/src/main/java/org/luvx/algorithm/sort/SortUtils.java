@@ -2,26 +2,6 @@ package org.luvx.algorithm.sort;
 
 public class SortUtils {
 
-
-
-    /**
-     * 冒泡排序
-     *
-     * @param array 排序数组
-     */
-    public static void bubbleSort(int[] array) {
-        int length = array.length;
-        for (int i = 0; i < length; i++) {
-            for (int j = 1; j < length - i; j++) {
-                if (array[j - 1] > array[j]) {
-                    int temp = array[j];
-                    array[j] = array[j - 1];
-                    array[j - 1] = temp;
-                }
-            }
-        }
-    }
-
     /**
      * 是否有序
      *
