@@ -2,6 +2,7 @@ package org.luvx.api;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.luvx.serialize.ListTranscoder;
 import org.luvx.serialize.ObjectTranscoder;
@@ -25,6 +26,7 @@ public class RedisCaseTest {
     /**
      * 序列化对象
      */
+    @Ignore
     @Test
     public void objTest() {
         ObjectTranscoder<User> objectTranscoder = new ObjectTranscoder<User>();
@@ -41,6 +43,7 @@ public class RedisCaseTest {
     /**
      * 序列化集合
      */
+    @Ignore
     @Test
     public void colTest() throws IOException {
         list.add(user1);
