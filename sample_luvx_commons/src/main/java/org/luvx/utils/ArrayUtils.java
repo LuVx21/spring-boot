@@ -1,5 +1,7 @@
 package org.luvx.utils;
 
+import java.util.List;
+
 public class ArrayUtils {
 
     public static void arraySwap(int[] array, int from, int to) {
@@ -11,7 +13,7 @@ public class ArrayUtils {
     public static int[] listToArray(List list){
         int[] array = new int[list.size()];
         for(int i = 0; i < list.size(); i++){
-            array[i] = list.get(i);
+            array[i] = (int) list.get(i);
         }
         return array;
     }
@@ -22,8 +24,8 @@ public class ArrayUtils {
      * @param array
      * @return
      */
-    public boolean isSorted(int[] array) {
-        return isAscSorted(array) && isDescSorted(array);
+    public static boolean isSorted(int[] array) {
+        return isAscSorted(array) || isDescSorted(array);
     }
 
     /**
@@ -32,7 +34,7 @@ public class ArrayUtils {
      * @param array
      * @return
      */
-    public boolean isAscSorted(int[] array) {
+    public static boolean isAscSorted(int[] array) {
         int i = 0;
         while (i < array.length - 1) {
             if (array[i] <= array[i + 1]) {
@@ -50,7 +52,7 @@ public class ArrayUtils {
      * @param array
      * @return
      */
-    public boolean isDescSorted(int[] array) {
+    public static boolean isDescSorted(int[] array) {
         int i = 0;
         while (i < array.length - 1) {
             if (array[i] >= array[i + 1]) {

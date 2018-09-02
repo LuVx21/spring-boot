@@ -1,6 +1,7 @@
 package org.luvx.algorithm.sort;
 
 import org.junit.Test;
+import org.luvx.utils.ArrayUtils;
 
 import java.util.Arrays;
 
@@ -15,16 +16,11 @@ public class SortsTest {
     @Test
     public void sort5Test() {
         System.out.println("排序前:" + Arrays.toString(arr));
-        System.out.println("排序后:[17, 27, 38, 43, 65, 76, 99]");
-        Sorts.sort5(arr);
+        // Sorts.sort5(arr);
+        // HeapSort.sort0(arr);
+        MergeSort.mergeSort(arr);
+        System.out.println(ArrayUtils.isSorted(arr));
         System.out.println("排序后:" + Arrays.toString(arr));
-    }
-
-    @Test
-    public void heapSortTest() {
-        System.out.println(Arrays.toString(arr));
-        HeapSort.sort0(arr);
-        System.out.println(Arrays.toString(arr));
     }
 
 }
