@@ -27,25 +27,48 @@ public class HeapSort {
     }
 
     /**
-     * 调整大顶堆
+     * 调整大顶堆:写法1
+     *
+     * @param array  待排序数组
+     * @param i
+     * @param length
+     */
+    private static void adjustHeap0(int[] array, int i, int length) {
+        int parent = array[i];
+        for (int left = i * 2 + 1; left < length; left = left * 2 + 1) {
+            if (left + 1 < length && array[left] < array[left + 1]) {
+                left++;
+            }
+            if (array[left] > parent) {
+                array[i] = array[left];
+                i = left;
+            } else {
+                break;
+            }
+        }
+        array[i] = parent;
+    }
+
+    /**
+     * 调整大顶堆:写法2(本质和1相同,但容易理解)
      *
      * @param array  待排序数组
      * @param i
      * @param length
      */
     private static void adjustHeap(int[] array, int i, int length) {
-        int parent = array[i];
-        for (int k = i * 2 + 1; k < length; k = k * 2 + 1) {
-            if (k + 1 < length && array[k] < array[k + 1]) {
-                k++;
-            }
-            if (array[k] > parent) {
-                array[i] = array[k];
-                i = k;
-            } else {
-                break;
-            }
+        int parent = i;
+        int left = 2 * i + 1;
+        int right = 2 * i + 2;
+
+        if (left < length && array[left] > array[parent])
+            parent = left;
+        if (right < length && array[right] > array[parent])
+            parent = right;
+
+        if (parent != i) {
+            ArrayUtils.arraySwap(array, i, parent);
+            adjustHeap(array, parent, length);
         }
-        array[i] = parent;
     }
 }
