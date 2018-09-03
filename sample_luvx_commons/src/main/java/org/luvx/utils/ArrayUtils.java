@@ -10,15 +10,15 @@ public class ArrayUtils {
         array[to] = temp;
     }
 
-    public static int[] listToArray(List list){
+    public static int[] listToArray(List list) {
         int[] array = new int[list.size()];
-        for(int i = 0; i < list.size(); i++){
+        for (int i = 0; i < list.size(); i++) {
             array[i] = (int) list.get(i);
         }
         return array;
     }
 
-     /**
+    /**
      * 是否有序
      *
      * @param array
@@ -62,5 +62,37 @@ public class ArrayUtils {
             }
         }
         return true;
+    }
+
+    /**
+     * 数组中最大元素
+     *
+     * @param array
+     * @return
+     */
+    public static int maxElement(int[] array) {
+        int max = array[0];
+        for (int i = 1; i < array.length; i++) {
+            if (max < array[i]) {
+                max = array[i];
+            }
+        }
+        return max;
+    }
+
+    /**
+     * 数组中最小元素
+     *
+     * @param array
+     * @return
+     */
+    public static int minElement(int[] array) {
+        int min = array[0];
+        for (int i = 1; i < array.length; i++) {
+            if (min > array[i]) {
+                min = array[i];
+            }
+        }
+        return min;
     }
 }
