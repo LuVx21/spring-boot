@@ -37,16 +37,19 @@ public class CountingSort {
      */
     private static void countSort1(int[] array, int maxElement) {
         int[] countArray = genCountArray(array, maxElement);
-        int[] output = new int[array.length];
+        int[] tempArray = new int[array.length];
 
         getIndex(countArray);
 
+        // 为了稳定性而使用倒序
         for (int i = array.length - 1; i >= 0; i--) {
-            output[countArray[array[i]]] = array[i];
+            // 改为使用jdk提供的方法
+            // tempArray[countArray[array[i]]] = array[i];
+            System.arraycopy(array, i, tempArray, countArray[array[i]], 1);
             countArray[array[i]]--;
         }
 
-        System.arraycopy(output, 0, array, 0, array.length);
+        System.arraycopy(tempArray, 0, array, 0, array.length);
     }
 
 

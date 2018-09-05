@@ -20,9 +20,15 @@ public class RadixSort {
             countSort(array, exp);
     }
 
+    /**
+     * 相同位之间采用计数排序
+     *
+     * @param array
+     * @param exp
+     */
     private static void countSort(int[] array, int exp) {
         int length = array.length;
-        int[] output = new int[length];
+        int[] tempArray = new int[length];
         int[] countArray = new int[10];
 
         for (int i = 0; i < length; i++)
@@ -33,14 +39,32 @@ public class RadixSort {
 
         // 为了稳定性而使用倒序
         for (int i = length - 1; i >= 0; i--) {
-            output[countArray[(array[i] / exp) % 10] - 1] = array[i];
+            tempArray[countArray[(array[i] / exp) % 10] - 1] = array[i];
             countArray[(array[i] / exp) % 10]--;
         }
 
-        for (int i = 0; i < length; i++)
-            array[i] = output[i];
+        System.arraycopy(tempArray, 0, array, 0, length);
+    }
 
-        output = null;
-        countArray = null;
+    /**
+     * 获得给定数字的指定位的数字
+     *
+     * @param num 原数字
+     * @param i   位数, 0:个位 1:十位
+     * @return
+     */
+    private static int getNumIn(int num, int i) {
+        if (i > 9) {
+            return 0;
+        } else {
+            int div = 1;
+            for (; i > 0; i--) {
+                div *= 10;
+            }
+            return (num / div) % 10;
+        }
+
+        // 或使用jdk
+        // return (num / (int) Math.pow(10, i)) % 10;
     }
 }
