@@ -1,5 +1,6 @@
 package org.luvx.api;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.*;
@@ -31,6 +32,7 @@ public class StreamCaseTest {
      *
      * @throws IOException IO异常
      */
+    @Ignore
     @Test
     public void run01() throws IOException {
         File f = new File(courseFile);
@@ -49,6 +51,7 @@ public class StreamCaseTest {
      *
      * @throws IOException IO异常
      */
+    @Ignore
     @Test
     public void run02() throws IOException {
         File f = new File(courseFile);

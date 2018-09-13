@@ -21,23 +21,4 @@ public class Sorts {
         }
     }
 
-    // 冒泡排序
-    public static void sort3(int[] array) {
-        boolean flag = false;
-        for (int i = 0; i < array.length; i++) {
-            for (int j = 1; j < array.length - i; j++) {
-                if (array[j] < array[j - 1]) {
-                    flag = true;
-                    int temp = array[j];
-                    array[j] = array[j - 1];
-                    array[j - 1] = temp;
-                }
-            }
-            if (flag == false)
-                return;
-        }
-    }
-
-
-
 }
