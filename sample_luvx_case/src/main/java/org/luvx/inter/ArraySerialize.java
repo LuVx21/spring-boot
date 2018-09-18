@@ -54,7 +54,7 @@ public class ArraySerialize {
      *
      * @return 组装结果
      */
-    public static String mapAssemble(Map<String, String> map) {
+    private static String mapAssemble(Map<String, String> map) {
         if (map == null) {
             return "";
         }
@@ -68,7 +68,14 @@ public class ArraySerialize {
         return sb.toString();
     }
 
-    public static String[] split(String str, String regex) {
+    /**
+     * 实现String的split方法(功能待完善)
+     *
+     * @param str   待分割字符串
+     * @param regex 分隔符
+     * @return 数组
+     */
+    private static String[] split(String str, String regex) {
         String[] result = null;
         if (str.length() <= regex.length()) {
             return new String[0];
