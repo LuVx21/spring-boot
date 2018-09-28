@@ -9,4 +9,6 @@ spring:
 mybatis-plus:
   #实体扫描，多个package用逗号或者分号分隔
   typeAliasesPackage: org.luvx.entity
+  type-aliases-super-type: java.lang.Object
+  config-location: classpath:mybatis/mybatis-config.xml
   mapper-locations: classpath:org/luvx/mapper/*.xml

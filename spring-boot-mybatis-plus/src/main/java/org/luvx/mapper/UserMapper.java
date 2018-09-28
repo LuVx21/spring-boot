@@ -2,11 +2,12 @@ package org.luvx.mapper;
 
 import java.util.List;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.luvx.entity.User;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface UserMapper {
+public interface UserMapper extends BaseMapper<User> {
 
     void add(User user);
 
