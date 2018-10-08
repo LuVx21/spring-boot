@@ -14,7 +14,6 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>entity_luvx_trial</module>
         <module>dao_luvx_trial</module>
         <module>service_luvx_trial</module>
         <module>web_luvx_trial</module>

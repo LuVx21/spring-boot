@@ -1,7 +1,6 @@
 
 description = ''
 dependencies {
-  compile project(':entity_luvx_trial')
   compile "org.mybatis:mybatis-spring:1.2.2"
   compile "org.mybatis:mybatis:3.2.8"
   // compile "com.alibaba:druid:1.1.9"
@@ -11,4 +10,9 @@ dependencies {
   compile "org.springframework:spring-context-support:$springVersion"
   compile "org.springframework.data:spring-data-redis:2.0.2.RELEASE"
   compile "redis.clients:jedis:2.9.0"
+  compile "log4j:log4j:1.2.12"
+  compile "org.apache.logging.log4j:log4j-api:2.9.1"
+  compile "org.apache.logging.log4j:log4j-core:2.9.1"
+  compile "org.slf4j:slf4j-api:1.6.6"
+  compile "org.slf4j:slf4j-log4j12:1.6.6"
 }
