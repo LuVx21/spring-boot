@@ -52,3 +52,6 @@ create table `user` (
   auto_increment = 2
   default charset = utf8;
 ```
+
+
+http://localhost:8080/swagger-ui.html

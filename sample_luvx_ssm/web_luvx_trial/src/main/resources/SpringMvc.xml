@@ -98,4 +98,17 @@
     -->
     <mvc:resources location="/WEB-INF/static/" mapping="/static/**"/>
 
+    <!--将静态资源交由默认的servlet处理-->
+    <mvc:default-servlet-handler />
+    <!--向容器自动注入配置-->
+    <context:annotation-config />
+    <!--自动扫描，使springMVC认为包下用了@controller注解的类是控制器-->
+    <!--<context:component-scan base-package="org.luvx"/>-->
+    <!--重要！将你的SwaggerConfig配置类注入-->
+    <bean class="org.luvx.config.SwaggerConfig"/>
+    <!--重要！配置swagger资源不被拦截-->
+    <mvc:resources mapping="swagger-ui.html" location="classpath:/META-INF/resources/" />
+    <mvc:resources mapping="/webjars/**" location="classpath:/META-INF/resources/webjars/" />
+
+
 </beans>
