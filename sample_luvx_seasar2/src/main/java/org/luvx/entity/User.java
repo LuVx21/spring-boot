@@ -2,15 +2,15 @@ package org.luvx.entity;
 
 import java.util.Date;
 
-public class DataBean {
+public class User {
     private String title;
     private Date time;
     private String memo;
 
-    public DataBean() {
+    public User() {
     }
 
-    public DataBean(String title, Date time, String memo) {
+    public User(String title, Date time, String memo) {
         this.title = title;
         this.time = time;
         this.memo = memo;

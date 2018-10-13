@@ -1,32 +1,32 @@
-package org.luvx.dao;
+package org.luvx.service.impl;
 
-import org.luvx.entity.DataBean;
+import org.luvx.entity.User;
+import org.luvx.service.TestBean;
 
 import java.util.ArrayList;
 import java.util.Date;
 
 public class TestBeanImpl implements TestBean {
 
-    private ArrayList<DataBean> datalist;
+    private ArrayList<User> datalist;
 
     public TestBeanImpl() {
-        datalist = new ArrayList<DataBean>();
+        datalist = new ArrayList<User>();
     }
 
     @Override
-    public ArrayList<DataBean> getDatalist() {
+    public ArrayList<User> getDatalist() {
         return datalist;
     }
 
     @Override
-    public void setDatalist(ArrayList<DataBean> list) {
+    public void setDatalist(ArrayList<User> list) {
         datalist = list;
-
     }
 
     @Override
     public void addData(String title, Date time, String memo) {
-        datalist.add(new DataBean(title, time, memo));
+        datalist.add(new User(title, time, memo));
 
     }
 
@@ -39,7 +39,7 @@ public class TestBeanImpl implements TestBean {
     public String toString() {
         String result = "<table border=\" 1 \">";
 
-        for (DataBean bean : datalist) {
+        for (User bean : datalist) {
             result += "<tr>";
             result += "<td>" + bean.getTitle() + "</td>";
             result += "<td>" + bean.getTime().toString() + "</td>";
