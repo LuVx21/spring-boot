@@ -1,0 +1,40 @@
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<!-- 修改后缀名称 ，填写空，就表示去掉默认后缀操作-->
+	<constant name="struts.action.extension" value=""/>
+		
+	<package name="default" extends="seasar-default">
+		<interceptors>
+			<interceptor-stack name="s2componentStack">
+				<interceptor-ref name="alias" />
+				<interceptor-ref name="prepare" />
+				<interceptor-ref name="i18n" />
+				<interceptor-ref name="chain" />
+				<interceptor-ref name="s2component" />
+				<interceptor-ref name="modelDriven" /> 
+				<interceptor-ref name="fileUpload" />
+				<interceptor-ref name="staticParams" />
+				<interceptor-ref name="params" />
+				<interceptor-ref name="conversionError" />
+				<interceptor-ref name="validation">
+					<param name="excludeMethods">
+						input,back,cancel,browse
+					</param>
+				</interceptor-ref>
+				<interceptor-ref name="workflow">
+					<param name="excludeMethods">
+						input,back,cancel,browse
+					</param>
+				</interceptor-ref>
+			</interceptor-stack>
+		</interceptors>
+		<default-interceptor-ref name="s2componentStack" />
+		<action name="list"  method ="list" class="org.luvx.controller.UserAction">
+			<result type="velocity"  name="success">
+				 page/user/list.jsp
+			</result>
+		</action>
+	</package>
+</struts>

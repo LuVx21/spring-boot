@@ -1,48 +1,67 @@
 package org.luvx.entity;
 
-import java.util.Date;
+import java.io.Serializable;
 
-public class User {
-    private String title;
-    private Date time;
-    private String memo;
+/**
+ * 使用redis的pojo类
+ * <p>
+ * 需要实现Serializable接口
+ */
+public class User implements Serializable {
+    private long id;
+    // 驼峰式命名
+    private String userName;
+    // 非驼峰式命名
+    private String password;
+    private int age;
+
 
     public User() {
     }
 
-    public User(String title, Date time, String memo) {
-        this.title = title;
-        this.time = time;
-        this.memo = memo;
+
+    public User(String userName, String password, int age) {
+        this.userName = userName;
+        this.password = password;
+        this.age = age;
     }
 
-    public String getTitle() {
-        return title;
+
+    public long getId() {
+        return id;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setId(long id) {
+        this.id = id;
     }
 
-    public java.util.Date getTime() {
-        return time;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setTime(java.util.Date time) {
-        this.time = time;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
-    public String getMemo() {
-        return memo;
+    public String getPassword() {
+        return password;
     }
 
-    public void setMemo(String memo) {
-        this.memo = memo;
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
     }
 
     @Override
     public String toString() {
-        return "Title:" + title + ",Date:" + time + ",Memo:" + memo;
+        return id + " - " + userName + " - " + password + " - " + age;
     }
-
 }
+
