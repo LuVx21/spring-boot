@@ -1,4 +1,4 @@
-package org.luvx.pattern.Factory.Bean;
+package org.luvx.pattern.creational.Factory.Bean;
 
 public abstract class Product {
     //所有产品类的公共业务方法

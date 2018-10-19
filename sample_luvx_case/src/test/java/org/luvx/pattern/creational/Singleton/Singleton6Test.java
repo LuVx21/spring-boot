@@ -1,7 +1,6 @@
-package org.luvx.pattern.SingletonTest;
+package org.luvx.pattern.creational.Singleton;
 
 import org.junit.Test;
-import org.luvx.pattern.Singleton.Singleton6;
 
 import java.io.*;
 

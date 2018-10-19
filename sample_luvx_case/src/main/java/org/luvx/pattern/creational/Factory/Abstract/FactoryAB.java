@@ -1,8 +1,8 @@
-package org.luvx.pattern.Factory.Abstract;
+package org.luvx.pattern.creational.Factory.Abstract;
 
-import org.luvx.pattern.Factory.Bean.AbstractFactory;
-import org.luvx.pattern.Factory.Bean.ProductA;
-import org.luvx.pattern.Factory.Bean.ProductB;
+import org.luvx.pattern.creational.Factory.Bean.AbstractFactory;
+import org.luvx.pattern.creational.Factory.Bean.ProductA;
+import org.luvx.pattern.creational.Factory.Bean.ProductB;
 
 
 /**

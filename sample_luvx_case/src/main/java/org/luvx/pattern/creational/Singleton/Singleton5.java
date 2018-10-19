@@ -1,4 +1,4 @@
-package org.luvx.pattern.Singleton;
+package org.luvx.pattern.creational.Singleton;
 
 /**
  * 静态内部类实现单例模式

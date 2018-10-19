@@ -1,4 +1,4 @@
-package org.luvx.pattern.Singleton;
+package org.luvx.pattern.creational.Singleton;
 
 public class Singleton2 {
 

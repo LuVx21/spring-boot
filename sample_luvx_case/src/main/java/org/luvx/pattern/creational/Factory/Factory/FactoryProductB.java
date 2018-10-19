@@ -1,9 +1,9 @@
-package org.luvx.pattern.Factory.Factory;
+package org.luvx.pattern.creational.Factory.Factory;
 
 
-import org.luvx.pattern.Factory.Bean.FactoryInter;
-import org.luvx.pattern.Factory.Bean.Product;
-import org.luvx.pattern.Factory.Bean.ProductB;
+import org.luvx.pattern.creational.Factory.Bean.FactoryInter;
+import org.luvx.pattern.creational.Factory.Bean.Product;
+import org.luvx.pattern.creational.Factory.Bean.ProductB;
 
 /**
  * 工厂方法模式

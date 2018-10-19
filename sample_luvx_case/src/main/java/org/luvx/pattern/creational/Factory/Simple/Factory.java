@@ -1,11 +1,8 @@
-package org.luvx.pattern.Factory.Simple;
+package org.luvx.pattern.creational.Factory.Simple;
 
-import org.luvx.pattern.Factory.Bean.Product;
-import org.luvx.pattern.Factory.Bean.ProductA;
-import org.luvx.pattern.Factory.Bean.ProductB;
-import org.luvx.pattern.Factory.Bean.Product;
-import org.luvx.pattern.Factory.Bean.ProductA;
-import org.luvx.pattern.Factory.Bean.ProductB;
+import org.luvx.pattern.creational.Factory.Bean.Product;
+import org.luvx.pattern.creational.Factory.Bean.ProductA;
+import org.luvx.pattern.creational.Factory.Bean.ProductB;
 
 /**
  * 简单工厂模式,也被称为静态工厂方法模式

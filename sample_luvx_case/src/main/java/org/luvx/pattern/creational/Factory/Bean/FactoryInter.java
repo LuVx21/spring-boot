@@ -1,4 +1,4 @@
-package org.luvx.pattern.Factory.Bean;
+package org.luvx.pattern.creational.Factory.Bean;
 
 
 /**

@@ -1,6 +1,5 @@
-package org.luvx.pattern.SingletonTest;
+package org.luvx.pattern.creational.Singleton;
 
-import org.luvx.pattern.Singleton.Singleton5;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
