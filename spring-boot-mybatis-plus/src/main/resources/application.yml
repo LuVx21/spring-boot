@@ -1,0 +1,14 @@
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1/boot?useUnicode=true&characterEncoding=utf-8&serverTimezone=UTC&useSSL=true
+    username: root
+    password: 1121
+
+mybatis-plus:
+  #实体扫描，多个package用逗号或者分号分隔
+  typeAliasesPackage: org.luvx.entity
+  type-aliases-super-type: java.lang.Object
+  config-location: classpath:mybatis/mybatis-config.xml
+  mapper-locations: classpath:org/luvx/mapper/*.xml

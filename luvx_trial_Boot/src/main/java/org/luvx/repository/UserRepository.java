@@ -12,13 +12,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 public interface UserRepository extends JpaRepository<User, Long> {
 
-    @Cacheable(key = "#p0", value = "key-User")
+    // @Cacheable(key = "#p0", value = "key-User")
     User findById(long id);
 
     @Cacheable(value = "key-Users")
     List<User> findAll();
 
-    @CachePut(key = "#p0.id")
+    // @CachePut(key = "#p0.id")
     @Override
     User save(User user);
 
