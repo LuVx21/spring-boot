@@ -1,5 +1,6 @@
 package org.luvx.service.impl;
 
+import org.luvx.annotation.MeasurementAnno;
 import org.luvx.entity.User;
 import org.luvx.repository.UserRepository;
 import org.luvx.service.UserService;
@@ -24,6 +25,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @MeasurementAnno
     public User findUserById(long id) {
         return userRepository.findById(id);
     }

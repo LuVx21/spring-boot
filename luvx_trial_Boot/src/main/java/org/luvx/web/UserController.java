@@ -1,5 +1,6 @@
 package org.luvx.web;
 
+import org.luvx.annotation.MeasurementAnno;
 import org.luvx.entity.User;
 import org.luvx.service.UserService;
 import org.springframework.stereotype.Controller;
@@ -20,6 +21,7 @@ public class UserController {
         return "redirect:/list";
     }
 
+    @MeasurementAnno
     @RequestMapping("/list")
     public String list(Model model) {
         List<User> users = userService.getUserList();
