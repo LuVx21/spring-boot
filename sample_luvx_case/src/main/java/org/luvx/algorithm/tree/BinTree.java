@@ -24,32 +24,6 @@ public class BinTree {
     }
 
     /**
-     * 中序遍历:递归方式
-     *
-     * @param root 根节点
-     */
-    public static void inSearch(Node root) {
-        if (root == null)
-            return;
-        inSearch(root.getLeft());
-        System.out.println(root.getData());
-        inSearch(root.getRight());
-    }
-
-    /**
-     * 后序遍历:递归方式
-     *
-     * @param root 根节点
-     */
-    public static void postSearch(Node root) {
-        if (root == null)
-            return;
-        postSearch(root.getLeft());
-        postSearch(root.getRight());
-        System.out.println(root.getData());
-    }
-
-    /**
      * 前序遍历:循环方式
      *
      * @param root
@@ -69,6 +43,37 @@ public class BinTree {
         }
     }
 
+    /**
+     * 前序遍历:循环方式
+     *
+     * @param root
+     */
+    public static void preSearchByLoop1(Node root) {
+        Stack<Node> stack = new Stack<>();
+        if (root != null)
+            stack.push(root);
+        while (!stack.isEmpty()) {
+            root = stack.pop();
+            System.out.println(root.getData());
+            if (root.getRight() != null)
+                stack.push(root.getRight());
+            if (root.getLeft() != null)
+                stack.push(root.getLeft());
+        }
+    }
+
+    /**
+     * 中序遍历:递归方式
+     *
+     * @param root 根节点
+     */
+    public static void inSearch(Node root) {
+        if (root == null)
+            return;
+        inSearch(root.getLeft());
+        System.out.println(root.getData());
+        inSearch(root.getRight());
+    }
 
     /**
      * 中序遍历:循环方式
@@ -89,6 +94,21 @@ public class BinTree {
             System.out.println(root.getData());
             root = root.getRight();
         }
+    }
+
+
+
+    /**
+     * 后序遍历:递归方式
+     *
+     * @param root 根节点
+     */
+    public static void postSearch(Node root) {
+        if (root == null)
+            return;
+        postSearch(root.getLeft());
+        postSearch(root.getRight());
+        System.out.println(root.getData());
     }
 
     /**

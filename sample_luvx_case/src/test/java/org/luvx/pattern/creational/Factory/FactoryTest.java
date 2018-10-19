@@ -1,10 +1,10 @@
 package org.luvx.pattern.creational.Factory;
 
 import org.junit.Test;
-import org.luvx.pattern.Factory.Abstract.FactoryAB;
-import org.luvx.pattern.Factory.Factory.FactoryProductA;
-import org.luvx.pattern.Factory.Factory.FactoryProductB;
-import org.luvx.pattern.Factory.Simple.Factory;
+import org.luvx.pattern.creational.Factory.Abstract.FactoryAB;
+import org.luvx.pattern.creational.Factory.Factory.FactoryProductA;
+import org.luvx.pattern.creational.Factory.Factory.FactoryProductB;
+import org.luvx.pattern.creational.Factory.Simple.Factory;
 
 public class FactoryTest {
 
