@@ -1,4 +1,4 @@
-package org.luvx.pattern.Proxy.dynamic;
+package org.luvx.pattern.structural.Proxy.dynamic;
 
 import org.luvx.pattern.Proxy.Aspect;
 import org.springframework.cglib.proxy.Enhancer;

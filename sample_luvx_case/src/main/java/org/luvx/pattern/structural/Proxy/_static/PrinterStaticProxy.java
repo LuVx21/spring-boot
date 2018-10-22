@@ -1,8 +1,9 @@
-package org.luvx.pattern.Proxy._static;
+package org.luvx.pattern.structural.Proxy._static;
 
-import org.luvx.pattern.Proxy.Aspect;
-import org.luvx.pattern.Proxy.LogPrinter;
-import org.luvx.pattern.Proxy.Printable;
+
+import org.luvx.pattern.structural.Proxy.Aspect;
+import org.luvx.pattern.structural.Proxy.LogPrinter;
+import org.luvx.pattern.structural.Proxy.Printable;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;

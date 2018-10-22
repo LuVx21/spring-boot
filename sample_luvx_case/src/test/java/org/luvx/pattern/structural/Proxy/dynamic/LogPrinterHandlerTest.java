@@ -1,8 +1,8 @@
-package org.luvx.pattern.Proxy.dynamic;
+package org.luvx.pattern.structural.Proxy.dynamic;
 
 import org.junit.Test;
-import org.luvx.pattern.Proxy.LogPrinter;
-import org.luvx.pattern.Proxy.Printable;
+import org.luvx.pattern.structural.Proxy.LogPrinter;
+import org.luvx.pattern.structural.Proxy.Printable;
 
 public class LogPrinterHandlerTest {
 

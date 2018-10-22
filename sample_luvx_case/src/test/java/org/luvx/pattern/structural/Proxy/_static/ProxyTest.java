@@ -1,4 +1,4 @@
-package org.luvx.pattern.Proxy._static;
+package org.luvx.pattern.structural.Proxy._static;
 
 import org.junit.Test;
 

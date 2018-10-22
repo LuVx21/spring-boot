@@ -1,4 +1,4 @@
-package org.luvx.pattern.Proxy;
+package org.luvx.pattern.structural.Proxy;
 
 /**
  * 假设此类不可修改和直接访问

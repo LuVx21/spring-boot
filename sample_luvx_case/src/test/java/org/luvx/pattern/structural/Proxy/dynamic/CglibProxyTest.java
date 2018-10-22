@@ -1,7 +1,7 @@
-package org.luvx.pattern.Proxy.dynamic;
+package org.luvx.pattern.structural.Proxy.dynamic;
 
 import org.junit.Test;
-import org.luvx.pattern.Proxy.NewLogPrinter;
+import org.luvx.pattern.structural.Proxy.NewLogPrinter;
 
 public class CglibProxyTest {
 

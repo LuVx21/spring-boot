@@ -1,4 +1,4 @@
-package org.luvx.pattern.Proxy;
+package org.luvx.pattern.structural.Proxy;
 
 public class Aspect {
 

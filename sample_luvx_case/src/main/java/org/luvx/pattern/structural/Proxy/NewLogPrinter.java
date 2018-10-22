@@ -1,4 +1,4 @@
-package org.luvx.pattern.Proxy;
+package org.luvx.pattern.structural.Proxy;
 
 /**
  * Cglib动态代理时,可以不实现接口

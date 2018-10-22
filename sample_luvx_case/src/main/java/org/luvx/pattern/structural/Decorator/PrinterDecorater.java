@@ -1,4 +1,4 @@
-package org.luvx.pattern.Decorator;
+package org.luvx.pattern.structural.Decorator;
 
 /**
  * 装饰器,和具体被装饰者实现共同接口

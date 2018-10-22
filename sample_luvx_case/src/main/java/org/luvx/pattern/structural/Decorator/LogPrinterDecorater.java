@@ -1,4 +1,4 @@
-package org.luvx.pattern.Decorator;
+package org.luvx.pattern.structural.Decorator;
 
 /**
  * 具体装饰器
