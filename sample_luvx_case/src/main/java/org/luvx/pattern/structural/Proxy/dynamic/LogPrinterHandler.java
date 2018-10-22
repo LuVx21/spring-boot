@@ -1,6 +1,6 @@
 package org.luvx.pattern.structural.Proxy.dynamic;
 
-import org.luvx.pattern.Proxy.Aspect;
+import org.luvx.pattern.structural.Proxy.Aspect;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
