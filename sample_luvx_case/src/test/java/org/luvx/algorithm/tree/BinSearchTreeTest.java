@@ -1,6 +1,7 @@
 package org.luvx.algorithm.tree;
 
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -33,8 +34,16 @@ public class BinSearchTreeTest {
 
     @Test
     public void run01() {
-        BinSearchTree.search(root,1);
+        BinSearchTree.search(root, 1);
 
+    }
+
+    @Test
+    public void run02() {
+        int height = BTHeight.comHeight(root);
+        Assert.assertEquals(height, 3);
+        height = BTHeight.comHeightByLoop(root);
+        Assert.assertEquals(height, 3);
     }
 
 }

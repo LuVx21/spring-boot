@@ -2,6 +2,7 @@ package org.luvx.algorithm.tree;
 
 /**
  * 二叉树节点类
+ *
  * @param <T>
  */
 public class Node<T> {
@@ -39,5 +40,9 @@ public class Node<T> {
 
     public void setData(T data) {
         this.data = data;
+    }
+
+    public boolean isLeaf() {
+        return this.getLeft() == null && this.getRight() == null;
     }
 }
