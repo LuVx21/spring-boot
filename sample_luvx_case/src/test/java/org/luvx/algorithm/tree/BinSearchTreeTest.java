@@ -46,4 +46,14 @@ public class BinSearchTreeTest {
         Assert.assertEquals(height, 3);
     }
 
+    @Test
+    public void run03() {
+        int nums = BTLeafNum.comLeafNums(root);
+        System.out.println(nums);
+        // Assert.assertEquals(nums, 3);
+        nums = BTLeafNum.comLeafNumsByLoop(root);
+        System.out.println(nums);
+        // Assert.assertEquals(nums, 3);
+    }
+
 }
