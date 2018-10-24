@@ -1,4 +1,4 @@
-package org.luvx.algorithm;
+package org.luvx.algorithm.queue;
 
 /**
  * 队列:基于链表实现
@@ -6,6 +6,15 @@ package org.luvx.algorithm;
  * @param <E>
  */
 public class LinkQueue<E> {
+    // 结点类
+    private class Node {
+        private Object obj;
+        private Node pre;
+
+        Node(Object obj) {
+            this.obj = obj;
+        }
+    }
 
     public LinkQueue() {
     }
@@ -26,14 +35,10 @@ public class LinkQueue<E> {
      * @return
      */
     public E peek() {
-
-
         return (E) new Object();
     }
 
     public E pool() {
-
-
         return (E) new Object();
     }
 }

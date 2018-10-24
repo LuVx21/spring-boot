@@ -1,4 +1,4 @@
-package org.luvx.algorithm;
+package org.luvx.algorithm.stack;
 
 /**
  * 栈:基于链表实现

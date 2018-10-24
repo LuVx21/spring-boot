@@ -1,4 +1,4 @@
-package org.luvx.algorithm;
+package org.luvx.algorithm.queue;
 
 import java.util.LinkedList;
 import java.util.concurrent.atomic.AtomicInteger;
