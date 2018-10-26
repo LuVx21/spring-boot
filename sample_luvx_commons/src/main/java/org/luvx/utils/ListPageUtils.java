@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class ListPageUtil<T> {
+public class ListPageUtils<T> {
     /**
      * 原集合
      */
