@@ -1,13 +1,13 @@
 package org.luvx.algorithm.linkarray;
 
 /**
- * 1 -> 2 -> 3 -> 3 -> 4 -> 5
+ * 1 -> 1 -> 3 -> 4 -> 4 -> 5
  * 删除链表中的重复元素
  */
 public class RemoveMul {
     /**
-     * @param head
-     * @return
+     * @param head 头结点
+     * @return 删除后头结点
      */
     public static Node removeMul(Node head) {
         Node current = head;

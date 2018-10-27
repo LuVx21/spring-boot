@@ -1,7 +1,5 @@
 package org.luvx.algorithm.array;
 
-import com.sun.org.apache.xalan.internal.xsltc.dom.SortingIterator;
-
 /**
  * int型数组中，任取2个数据将数组分成3个区域的数据和相等
  * 请找出这2个数据
