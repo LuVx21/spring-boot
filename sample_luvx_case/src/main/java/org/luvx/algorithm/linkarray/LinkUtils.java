@@ -8,9 +8,30 @@ public class LinkUtils {
      */
     public static void printLink(Node head) {
         while (head != null) {
-            System.out.print(head.date + "->");
+            System.out.print(head.data + "->");
             head = head.next;
         }
         System.out.println("\n--------------");
     }
+
+    /**
+     * 修改节点的下一个指向:from -> to
+     *
+     * @param from
+     * @param to
+     */
+    public static void changeNext(Node from, Node to) {
+        from.next = to;
+    }
+
+    /**
+     * 修改节点的上一个指向:from -> to
+     *
+     * @param from
+     * @param to
+     */
+    public static void changepre(Node from, Node to) {
+        from.pre = to;
+    }
+
 }

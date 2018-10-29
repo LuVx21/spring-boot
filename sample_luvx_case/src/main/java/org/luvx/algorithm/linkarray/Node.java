@@ -6,14 +6,14 @@ package org.luvx.algorithm.linkarray;
 public class Node {
     Node pre;
     Node next;
-    int date;
+    int data;
 
     Node() {
     }
 
-    Node(Node pre, Node next, int date) {
+    Node(Node pre, Node next, int data) {
         this.pre = pre;
         this.next = next;
-        this.date = date;
+        this.data = data;
     }
 }
