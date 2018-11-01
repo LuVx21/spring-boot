@@ -1,4 +1,4 @@
-package org.luvx.api;
+package org.luvx.type;
 
 public class TypeCase1 {
     private int i01 = 42;

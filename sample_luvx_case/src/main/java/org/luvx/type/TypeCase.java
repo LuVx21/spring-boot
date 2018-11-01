@@ -1,4 +1,4 @@
-package org.luvx.api;
+package org.luvx.type;
 
 import java.math.BigDecimal;
 

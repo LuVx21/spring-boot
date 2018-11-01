@@ -56,4 +56,11 @@ public class BinSearchTreeTest {
         // Assert.assertEquals(nums, 3);
     }
 
+    @Test
+    public void run04() {
+        int nums = BTNonLeafNum.comNonLeafNums(root);
+        System.out.println(nums);
+        nums = BTNonLeafNum.comNonLeafNumsByLoop(root);
+        System.out.println(nums);
+    }
 }
