@@ -3,6 +3,13 @@ package org.luvx.utils;
 import java.util.List;
 
 public class ArrayUtils {
+    public static int[] initArray(int size) {
+        int[] array = new int[size];
+        for (int i = 0; i < size; i++) {
+            array[i] = (int) (Math.random() * 10);
+        }
+        return array;
+    }
 
     public static void arraySwap(int[] array, int from, int to) {
         int temp = array[from];
