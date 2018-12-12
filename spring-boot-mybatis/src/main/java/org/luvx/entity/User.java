@@ -1,14 +1,18 @@
 package org.luvx.entity;
 
-import java.io.Serializable;
+import org.luvx.common.BaseQueryEntity;
 
-public class User implements Serializable {
+import java.io.Serializable;
+import java.util.List;
+
+public class User extends BaseQueryEntity implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    private Long id;
+    private Long userId;
     private String userName;
     private String passWord;
     private Integer age;
+    private List<Article> articles;
 
     public User() {
         super();
@@ -20,12 +24,12 @@ public class User implements Serializable {
         this.age = age;
     }
 
-    public Long getId() {
-        return id;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public String getUserName() {
@@ -52,9 +56,11 @@ public class User implements Serializable {
         this.age = age;
     }
 
-    @Override
-    public String toString() {
-        return "userName " + this.userName + ", pasword " + this.passWord + "age " + this.age.intValue();
+    public List<Article> getArticles() {
+        return articles;
     }
 
+    public void setArticles(List<Article> articles) {
+        this.articles = articles;
+    }
 }

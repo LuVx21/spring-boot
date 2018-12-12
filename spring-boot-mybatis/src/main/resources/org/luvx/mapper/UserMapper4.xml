@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.luvx.mapper.UserMapper4">
+    <resultMap id="BaseResultMap" type="org.luvx.entity.User">
+        <id column="id" property="userId" jdbcType="BIGINT"/>
+        <result column="user_name" property="userName" jdbcType="VARCHAR"/>
+        <result column="password" property="passWord" jdbcType="VARCHAR"/>
+        <result column="age" property="age" javaType="INT"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,
+        user_name,
+        password,
+        age
+    </sql>
+
+    <insert id="batInsert" parameterType="java.util.List">
+        insert into user
+        (user_name, password, age)
+        values
+        <foreach collection="userList" item="item" index="index" separator=",">
+            (#{item.userName,jdbcType=VARCHAR},#{item.passWord,jdbcType=VARCHAR},#{item.age,javaType=INT})
+        </foreach>
+    </insert>
+    <insert id="batInsertSelective" parameterType="java.util.List">
+        insert into user
+        (user_name, password, age)
+        values
+        <foreach collection="userList" item="item" index="index" separator=",">
+            (#{item.userName,jdbcType=VARCHAR},#{item.passWord,jdbcType=VARCHAR},#{item.age,javaType=INT})
+        </foreach>
+    </insert>
+
+    <delete id="batDeleteSelective">
+
+    </delete>
+    <update id="batUpdateSelective" parameterType="java.util.List">
+        update
+        user
+        <set>
+            <trim suffixOverrides=",">
+                <if test="userName != null">
+                    user_name = #{userName},
+                </if>
+                <if test="passWord != null">
+                    password = #{passWord},
+                </if>
+                <if test="age != null">
+                    age = #{age}
+                </if>
+            </trim>
+            <where>
+                <trim suffixOverrides="AND">
+                    <if test="id != null">
+                        id = #{id}
+                    </if>
+                </trim>
+            </where>
+        </set>
+    </update>
+
+    <select id="batSelectSelective" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        user
+        where user_name in
+        <foreach collection="userList" item="item" index="index" open="(" separator="," close=")">
+            #{item.userName}
+        </foreach>
+    </select>
+</mapper>
