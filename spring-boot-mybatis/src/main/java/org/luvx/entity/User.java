@@ -63,4 +63,15 @@ public class User extends BaseQueryEntity implements Serializable {
     public void setArticles(List<Article> articles) {
         this.articles = articles;
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "userId=" + userId +
+                ", userName='" + userName + '\'' +
+                ", passWord='" + passWord + '\'' +
+                ", age=" + age +
+                ", articles=" + articles +
+                '}';
+    }
 }

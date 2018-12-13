@@ -16,13 +16,18 @@
     </sql>
 
     <delete id="batDeleteByPrimaryKey">
-
+        delete from user
+        <where>
+            <foreach open="id in (" collection="userNameList" item="userName" separator="," close=");">
+                #{userName}
+            </foreach>
+        </where>
     </delete>
 
     <update id="batUpdateByPrimaryKey">
         update user set password = #{password}
         <where>
-            <foreach open="user_name in (" collection="userNameList" item="userName" separator="," close=");">
+            <foreach open="id in (" collection="userNameList" item="userName" separator="," close=");">
                 #{userName}
             </foreach>
         </where>

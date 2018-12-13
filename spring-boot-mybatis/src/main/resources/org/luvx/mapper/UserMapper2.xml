@@ -18,14 +18,17 @@
     <insert id="insert" parameterType="org.luvx.entity.User">
         insert
         into user
-            (user_name, password, age)
-        values (#{userName}, #{passWord}, #{age})
+            (id, user_name, password, age)
+        values (#{userId}, #{userName}, #{passWord}, #{age})
     </insert>
 
     <insert id="insertSelective" parameterType="org.luvx.entity.User">
         insert
         into user
         <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">
+                id,
+            </if>
             <if test="userName != null">
                 user_name,
             </if>
@@ -37,6 +40,9 @@
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null">
+                #{userId},
+            </if>
             <if test="userName != null">
                 #{userName},
             </if>
@@ -48,9 +54,13 @@
             </if>
         </trim>
     </insert>
+
     <delete id="deleteSelective" parameterType="org.luvx.entity.User">
         delete from user
         <where>
+            <if test="userId != null">
+                and id = #{userId}
+            </if>
             <if test="userName != null">
                 and user_name = #{userName}
             </if>
@@ -63,14 +73,55 @@
         </where>
     </delete>
 
+    <!--写法1-->
+    <!--<update id="updateSelective" parameterType="org.luvx.entity.User">-->
+    <!--update-->
+    <!--user-->
+    <!--set-->
+    <!--<if test="userId != null">id = #{userId},</if>-->
+    <!--<if test="userName != null">user_name = #{userName},</if>-->
+    <!--<if test="passWord != null">password = #{passWord},</if>-->
+    <!--<if test="age != null">age = #{age}</if>-->
+    <!--<where>-->
+    <!--<if test="userId != null">-->
+    <!--and id = #{userId}-->
+    <!--</if>-->
+    <!--</where>-->
+    <!--</update>-->
+
+    <!--写法2-->
     <update id="updateSelective" parameterType="org.luvx.entity.User">
         update
         user
-        set
-        <if test="userName != null">user_name = #{userName},</if>
-        <if test="passWord != null">password = #{passWord},</if>
-        <if test="age != null">age = #{age}</if>
+        <set>
+            <if test="userId != null">
+                id = #{userId},
+            </if>
+            <if test="userName != null">
+                user_name = #{userName},
+            </if>
+            <if test="passWord != null">
+                password= #{passWord},
+            </if>
+            <if test="age != null">
+                age = #{age},
+            </if>
+        </set>
         <where>
+            <if test="userId != null">
+                and id = #{userId}
+            </if>
+        </where>
+    </update>
+
+    <select id="selectSelective" resultMap="BaseResultMap" parameterType="org.luvx.entity.User">
+        select
+        <include refid="Base_Column_List"/>
+        from user
+        <where>
+            <if test="userId != null">
+                and id = #{userId}
+            </if>
             <if test="userName != null">
                 and user_name = #{userName}
             </if>
@@ -81,5 +132,6 @@
                 and age = #{age}
             </if>
         </where>
-    </update>
+    </select>
+
 </mapper>

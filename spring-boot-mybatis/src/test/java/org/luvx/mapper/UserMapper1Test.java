@@ -1,23 +1,37 @@
 package org.luvx.mapper;
 
+import org.junit.Ignore;
 import org.junit.Test;
-
 import org.junit.runner.RunWith;
 import org.luvx.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.Arrays;
-import java.util.List;
-
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class UserMapper1Test {
-/*
+
     @Autowired
     private UserMapper1 userMapper;
 
+    @Test
+    @Ignore
+    public void SingleTest() {
+        // 查看
+        User user = userMapper.selectByPrimaryKey(3L);
+        System.out.println(user);
+        // 更新
+        userMapper.updateByPrimaryKey(3L);
+        user = userMapper.selectByPrimaryKey(3L);
+        System.out.println(user);
+        // 删除
+        userMapper.deleteByPrimaryKey(3L);
+        user = userMapper.selectByPrimaryKey(3L);
+        System.out.println(user);
+    }
+
+/*
     @Test
     public void deleteTest() {
         userMapper.deleteByUserName("LuVx");
