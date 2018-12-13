@@ -3,7 +3,7 @@ package org.luvx.entity;
 import org.luvx.common.BaseQueryEntity;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.sql.Date;
 
 public class Article extends BaseQueryEntity implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -38,5 +38,14 @@ public class Article extends BaseQueryEntity implements Serializable {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    @Override
+    public String toString() {
+        return "Article{" +
+                "articleId=" + articleId +
+                ", articleName='" + articleName + '\'' +
+                ", createTime=" + createTime +
+                '}';
     }
 }
