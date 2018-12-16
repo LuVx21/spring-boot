@@ -116,7 +116,14 @@
 
     <select id="selectSelective" resultMap="BaseResultMap" parameterType="org.luvx.entity.User">
         select
-        <include refid="Base_Column_List"/>
+        <choose>
+            <when test="selectColumns!=null and selectColumns != '' ">
+                <![CDATA[ ${selectColumns} ]]>
+            </when>
+            <otherwise>
+                <include refid="Base_Column_List"/>
+            </otherwise>
+        </choose>
         from user
         <where>
             <if test="userId != null">
@@ -131,7 +138,13 @@
             <if test="age != null">
                 and age = #{age}
             </if>
+            <if test="whereCon!=null and whereCon != ''">
+                <![CDATA[ ${whereCon} ]]>
+            </if>
         </where>
+        <if test="orderCon!=null and orderCon != ''">
+            <![CDATA[ ${orderCon} ]]>
+        </if>
     </select>
 
 </mapper>

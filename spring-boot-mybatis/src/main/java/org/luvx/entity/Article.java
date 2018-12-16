@@ -12,6 +12,11 @@ public class Article extends BaseQueryEntity implements Serializable {
     private String articleName;
     private Date createTime;
 
+    public Article(String articleName, Date createTime) {
+        this.articleName = articleName;
+        this.createTime = createTime;
+    }
+
     public static long getSerialVersionUID() {
         return serialVersionUID;
     }

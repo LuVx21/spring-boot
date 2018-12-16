@@ -54,4 +54,18 @@ public class UserMapper2Test {
         userMapper.updateSelective(user);
     }
 
+    /**
+     * 条件查询
+     */
+    @Test
+    public void selectSelective() {
+        User user = new User();
+        user.setSelectColumns("user_name, password, age");
+        user.setUserName("Luvx");
+        user.setWhereCon(" and id = 9999 ");
+        user.setOrderCon(" order by id ");
+        List<User> list = userMapper.selectSelective(user);
+        user = list.get(0);
+        System.out.println(user);
+    }
 }

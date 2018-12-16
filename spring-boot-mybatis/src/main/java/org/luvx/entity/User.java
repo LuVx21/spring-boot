@@ -18,6 +18,11 @@ public class User extends BaseQueryEntity implements Serializable {
         super();
     }
 
+    public User(Long userId) {
+        this.userId = userId;
+
+    }
+
     public User(String userName, String passWord, Integer age) {
         this.passWord = passWord;
         this.userName = userName;
