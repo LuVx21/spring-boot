@@ -18,17 +18,17 @@
     <delete id="batDeleteByPrimaryKey">
         delete from user
         <where>
-            <foreach open="id in (" collection="userNameList" item="userName" separator="," close=");">
-                #{userName}
+            <foreach open="id in (" collection="collection" item="id" separator="," close=");">
+                #{id}
             </foreach>
         </where>
     </delete>
 
     <update id="batUpdateByPrimaryKey">
-        update user set password = #{password}
+        update user set password = #{param}
         <where>
-            <foreach open="id in (" collection="userNameList" item="userName" separator="," close=");">
-                #{userName}
+            <foreach open="id in (" collection="ids" item="id" separator="," close=");">
+                #{id}
             </foreach>
         </where>
     </update>
@@ -38,9 +38,10 @@
         <include refid="Base_Column_List"/>
         from
         user
-        where user_name in
-        <foreach collection="userList" item="item" index="index" open="(" separator="," close=")">
-            #{item.userName}
-        </foreach>
+        <where>
+            <foreach open="id in (" collection="collection" item="id" index="index" separator="," close=");">
+                #{id}
+            </foreach>
+        </where>
     </select>
 </mapper>

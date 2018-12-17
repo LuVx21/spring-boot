@@ -21,20 +21,22 @@ public class UserMapper4Test {
 
     @Before
     public void initData() {
-        User user1 = new User(3L);
-        User user2 = new User(4L);
-        User user3 = new User(5L);
+        User user1 = new User(3L, "Luvx1", "1234_1", 20);
+        User user2 = new User(4L, "Luvx2", "1234_2", 21);
+        User user3 = new User(5L, "Luvx3", "1234_3", 22);
         users = Arrays.asList(user1, user2, user3);
     }
 
     @Test
     public void batInsert() {
-        userMapper.batInsert(users);
+        int nums = userMapper.batInsert(users);
+        System.out.println(nums);
     }
 
     @Test
     public void batInsertSelective() {
-        userMapper.batInsertSelective(users);
+        int nums = userMapper.batInsertSelective(users);
+        System.out.println(nums);
     }
 
     @Test
@@ -49,6 +51,7 @@ public class UserMapper4Test {
 
     @Test
     public void batSelectSelective() {
-        userMapper.batSelectSelective(users);
+        List<User> userList = userMapper.batSelectSelective(users);
+        userList.stream().forEach(System.out::println);
     }
 }

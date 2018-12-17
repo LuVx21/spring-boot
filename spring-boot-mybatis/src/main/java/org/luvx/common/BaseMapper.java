@@ -1,5 +1,7 @@
 package org.luvx.common;
 
+import org.apache.ibatis.annotations.Param;
+
 import java.util.Collection;
 import java.util.List;
 
@@ -30,7 +32,7 @@ public interface BaseMapper<T> {
     // 批量操作
     int batDeleteByPrimaryKey(Collection<Object> ids);
 
-    int batUpdateByPrimaryKey(Collection<Object> ids);
+    int batUpdateByPrimaryKey(@Param("ids") Collection<Object> ids, @Param("param") String param);
 
     List<T> batSelectByPrimaryKey(Collection<Object> ids);
 
@@ -40,7 +42,7 @@ public interface BaseMapper<T> {
 
     int batDeleteSelective(Collection<T> records);
 
-    int batUpdateSelective(Collection<T> records);
+    int batUpdateSelective(@Param("records") Collection<T> records);
 
     List<T> batSelectSelective(Collection<T> records);
 }

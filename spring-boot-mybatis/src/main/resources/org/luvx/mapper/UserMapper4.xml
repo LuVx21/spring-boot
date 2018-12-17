@@ -19,22 +19,29 @@
         insert into user
         (user_name, password, age)
         values
-        <foreach collection="userList" item="item" index="index" separator=",">
+        <foreach collection="collection" item="item" index="index" separator=",">
             (#{item.userName,jdbcType=VARCHAR},#{item.passWord,jdbcType=VARCHAR},#{item.age,javaType=INT})
         </foreach>
     </insert>
+
     <insert id="batInsertSelective" parameterType="java.util.List">
         insert into user
         (user_name, password, age)
         values
-        <foreach collection="userList" item="item" index="index" separator=",">
+        <foreach collection="collection" item="item" index="index" separator=",">
             (#{item.userName,jdbcType=VARCHAR},#{item.passWord,jdbcType=VARCHAR},#{item.age,javaType=INT})
         </foreach>
     </insert>
 
     <delete id="batDeleteSelective">
-
+        delete from user
+        <where>
+            <foreach open="id in (" collection="collection" item="item" separator="," close=");">
+                #{item.userId}
+            </foreach>
+        </where>
     </delete>
+
     <update id="batUpdateSelective" parameterType="java.util.List">
         update
         user
@@ -52,8 +59,8 @@
             </trim>
             <where>
                 <trim suffixOverrides="AND">
-                    <if test="id != null">
-                        id = #{id}
+                    <if test="userId != null">
+                        id = #{userId}
                     </if>
                 </trim>
             </where>
@@ -65,9 +72,21 @@
         <include refid="Base_Column_List"/>
         from
         user
-        where user_name in
-        <foreach collection="userList" item="item" index="index" open="(" separator="," close=")">
-            #{item.userName}
+        <foreach open="" collection="collection" item="item" index="index" separator="" close=");">
+            <where>
+                <if test="item.userId != null">
+                    and id = #{item.userId}
+                </if>
+                <if test="item.userName != null">
+                    and user_name = #{item.userName}
+                </if>
+                <if test="item.passWord != null">
+                    and password= #{item.passWord}
+                </if>
+                <if test="item.age != null">
+                    and age = #{item.age}
+                </if>
+            </where>
         </foreach>
     </select>
 </mapper>
