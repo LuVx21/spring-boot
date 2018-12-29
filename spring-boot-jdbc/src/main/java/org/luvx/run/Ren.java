@@ -13,7 +13,6 @@ public class Ren {
     }
 
     public static void main(String[] args) throws Exception {
-
         // 入库
         Connection setInfoConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/boot", "root", "1121");
         String insertTable = "insert into t_tables values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
@@ -50,7 +49,7 @@ public class Ren {
                 setInfoStmt2.setString(1, rs.getString(1));
                 setInfoStmt2.setString(2, rs.getString(2));
                 setInfoStmt2.setString(3, rs.getString(3));
-// /*
+
                 String schemaName = rs.getString(2);
                 String tableName = rs.getString(3);
 
@@ -75,12 +74,11 @@ public class Ren {
                 System.out.println(count++ + ": 获取到表: " + schemaName + "." + tableName + " 的行数: " + rowNums);
                 if (getRowRs != null) getRowRs.close();
                 schemaNamePre = schemaName;
-// */
+
                 setInfoStmt2.setString(4, rs.getString(4));
                 setInfoStmt2.setString(5, rs.getString(5));
                 setInfoStmt2.setBigDecimal(6, rs.getBigDecimal(6));
                 setInfoStmt2.setString(7, rs.getString(7));
-                // setInfoStmt2.setString(8, rs.getString(8));
                 setInfoStmt2.setBigDecimal(8, new BigDecimal(rowNums));
                 setInfoStmt2.setBigDecimal(9, rs.getBigDecimal(9));
                 setInfoStmt2.setBigDecimal(10, rs.getBigDecimal(10));
@@ -97,7 +95,7 @@ public class Ren {
                 setInfoStmt2.setString(21, rs.getString(21));
                 setInfoStmt2.addBatch();
             }
-            // setInfoStmt2.executeBatch();
+            setInfoStmt2.executeBatch();
             if (rs != null) rs.close();
             System.out.println("获取该用户下所有表的表信息 END");
             if (getRowNumStmt != null) getRowNumStmt.close();
@@ -130,7 +128,7 @@ public class Ren {
                 setInfoStmt3.setString(20, rs1.getString(20));
                 setInfoStmt3.addBatch();
             }
-            // setInfoStmt3.executeBatch();
+            setInfoStmt3.executeBatch();
             if (rs1 != null) rs1.close();
             System.out.println("获取该用户下所有表的列信息 END");
 
