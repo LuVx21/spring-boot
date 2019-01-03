@@ -42,7 +42,7 @@
         </where>
     </delete>
 
-    <update id="batUpdateSelective" parameterType="java.util.List">
+    <update id="batUpdateSelective" parameterType="java.util.Collection">
         update
         user
         <set>
@@ -67,7 +67,7 @@
         </set>
     </update>
 
-    <select id="batSelectSelective" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    <select id="batSelectSelective" parameterType="java.util.Collection" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from

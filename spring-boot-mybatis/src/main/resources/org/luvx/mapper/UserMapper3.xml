@@ -33,7 +33,7 @@
         </where>
     </update>
 
-    <select id="batSelectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    <select id="batSelectByPrimaryKey" parameterType="java.util.Collection" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from
