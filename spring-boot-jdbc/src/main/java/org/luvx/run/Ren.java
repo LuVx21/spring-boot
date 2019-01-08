@@ -15,8 +15,8 @@ public class Ren {
     public static void main(String[] args) throws Exception {
         // 入库
         Connection setInfoConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/boot", "root", "1121");
-        String insertTable = "insert into t_tables values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-        String insertColumn = "insert into t_columns values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        String insertTable = "insert into t_tables values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        String insertColumn = "insert into t_columns values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
         PreparedStatement setInfoStmt2 = setInfoConn.prepareStatement(insertTable);
         PreparedStatement setInfoStmt3 = setInfoConn.prepareStatement(insertColumn);
         // 读取配置
@@ -46,9 +46,10 @@ public class Ren {
             System.out.println("获取该用户下所有表的表信息 START");
             int count = 1;
             while (rs.next()) {
-                setInfoStmt2.setString(1, rs.getString(1));
-                setInfoStmt2.setString(2, rs.getString(2));
-                setInfoStmt2.setString(3, rs.getString(3));
+                setInfoStmt2.setString(1, host + ":" + port + " " + username);
+                setInfoStmt2.setString(2, rs.getString(1));
+                setInfoStmt2.setString(3, rs.getString(2));
+                setInfoStmt2.setString(4, rs.getString(3));
 
                 String schemaName = rs.getString(2);
                 String tableName = rs.getString(3);
@@ -75,24 +76,24 @@ public class Ren {
                 if (getRowRs != null) getRowRs.close();
                 schemaNamePre = schemaName;
 
-                setInfoStmt2.setString(4, rs.getString(4));
-                setInfoStmt2.setString(5, rs.getString(5));
-                setInfoStmt2.setBigDecimal(6, rs.getBigDecimal(6));
-                setInfoStmt2.setString(7, rs.getString(7));
-                setInfoStmt2.setBigDecimal(8, new BigDecimal(rowNums));
-                setInfoStmt2.setBigDecimal(9, rs.getBigDecimal(9));
-                setInfoStmt2.setBigDecimal(10, rs.getBigDecimal(10));
-                setInfoStmt2.setBigDecimal(11, rs.getBigDecimal(11));
-                setInfoStmt2.setBigDecimal(12, rs.getBigDecimal(12));
-                setInfoStmt2.setBigDecimal(13, rs.getBigDecimal(13));
-                setInfoStmt2.setBigDecimal(14, rs.getBigDecimal(14));
-                setInfoStmt2.setTimestamp(15, rs.getTimestamp(15));
-                setInfoStmt2.setTimestamp(16, rs.getTimestamp(16));
-                setInfoStmt2.setTimestamp(17, rs.getTimestamp(17));
-                setInfoStmt2.setString(18, rs.getString(18));
-                setInfoStmt2.setBigDecimal(19, rs.getBigDecimal(19));
-                setInfoStmt2.setString(20, rs.getString(20));
-                setInfoStmt2.setString(21, rs.getString(21));
+                setInfoStmt2.setString(5, rs.getString(4));
+                setInfoStmt2.setString(6, rs.getString(5));
+                setInfoStmt2.setBigDecimal(7, rs.getBigDecimal(6));
+                setInfoStmt2.setString(8, rs.getString(7));
+                setInfoStmt2.setBigDecimal(9, new BigDecimal(rowNums));
+                setInfoStmt2.setBigDecimal(10, rs.getBigDecimal(9));
+                setInfoStmt2.setBigDecimal(11, rs.getBigDecimal(10));
+                setInfoStmt2.setBigDecimal(12, rs.getBigDecimal(11));
+                setInfoStmt2.setBigDecimal(13, rs.getBigDecimal(12));
+                setInfoStmt2.setBigDecimal(14, rs.getBigDecimal(13));
+                setInfoStmt2.setBigDecimal(15, rs.getBigDecimal(14));
+                setInfoStmt2.setTimestamp(16, rs.getTimestamp(15));
+                setInfoStmt2.setTimestamp(17, rs.getTimestamp(16));
+                setInfoStmt2.setTimestamp(18, rs.getTimestamp(17));
+                setInfoStmt2.setString(19, rs.getString(18));
+                setInfoStmt2.setBigDecimal(20, rs.getBigDecimal(19));
+                setInfoStmt2.setString(21, rs.getString(20));
+                setInfoStmt2.setString(22, rs.getString(21));
                 setInfoStmt2.addBatch();
             }
             setInfoStmt2.executeBatch();
@@ -106,26 +107,27 @@ public class Ren {
             ResultSet rs1 = getInfoStmt.executeQuery(sqlColumns);
             System.out.println("获取该用户下所有表的列信息 START");
             while (rs1.next()) {
-                setInfoStmt3.setString(1, rs1.getString(1));
-                setInfoStmt3.setString(2, rs1.getString(2));
-                setInfoStmt3.setString(3, rs1.getString(3));
-                setInfoStmt3.setString(4, rs1.getString(4));
-                setInfoStmt3.setBigDecimal(5, rs1.getBigDecimal(5));
-                setInfoStmt3.setString(6, rs1.getString(6));
-                setInfoStmt3.setString(7, rs1.getString(7));
-                setInfoStmt3.setString(8, rs1.getString(8));
-                setInfoStmt3.setBigDecimal(9, rs1.getBigDecimal(9));
-                setInfoStmt3.setBigDecimal(10, rs1.getBigDecimal(10));
-                setInfoStmt3.setBigDecimal(11, rs1.getBigDecimal(11));
-                setInfoStmt3.setBigDecimal(12, rs1.getBigDecimal(12));
-                setInfoStmt3.setBigDecimal(13, rs1.getBigDecimal(13));
-                setInfoStmt3.setString(14, rs1.getString(14));
-                setInfoStmt3.setString(15, rs1.getString(15));
-                setInfoStmt3.setString(16, rs1.getString(16));
-                setInfoStmt3.setString(17, rs1.getString(17));
-                setInfoStmt3.setString(18, rs1.getString(18));
-                setInfoStmt3.setString(19, rs1.getString(19));
-                setInfoStmt3.setString(20, rs1.getString(20));
+                setInfoStmt3.setString(1, host + ":" + port + " " + username);
+                setInfoStmt3.setString(2, rs1.getString(1));
+                setInfoStmt3.setString(3, rs1.getString(2));
+                setInfoStmt3.setString(4, rs1.getString(3));
+                setInfoStmt3.setString(5, rs1.getString(4));
+                setInfoStmt3.setBigDecimal(6, rs1.getBigDecimal(5));
+                setInfoStmt3.setString(7, rs1.getString(6));
+                setInfoStmt3.setString(8, rs1.getString(7));
+                setInfoStmt3.setString(9, rs1.getString(8));
+                setInfoStmt3.setBigDecimal(10, rs1.getBigDecimal(9));
+                setInfoStmt3.setBigDecimal(11, rs1.getBigDecimal(10));
+                setInfoStmt3.setBigDecimal(12, rs1.getBigDecimal(11));
+                setInfoStmt3.setBigDecimal(13, rs1.getBigDecimal(12));
+                setInfoStmt3.setBigDecimal(14, rs1.getBigDecimal(13));
+                setInfoStmt3.setString(15, rs1.getString(14));
+                setInfoStmt3.setString(16, rs1.getString(15));
+                setInfoStmt3.setString(17, rs1.getString(16));
+                setInfoStmt3.setString(18, rs1.getString(17));
+                setInfoStmt3.setString(19, rs1.getString(18));
+                setInfoStmt3.setString(20, rs1.getString(19));
+                setInfoStmt3.setString(21, rs1.getString(20));
                 setInfoStmt3.addBatch();
             }
             setInfoStmt3.executeBatch();
