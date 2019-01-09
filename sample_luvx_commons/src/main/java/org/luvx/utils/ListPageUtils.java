@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class ListPageUtil<T> {
+public class ListPageUtils<T> {
     /**
      * 原集合
      */
@@ -40,7 +40,7 @@ public class ListPageUtil<T> {
      */
     private int totalCount;
 
-    public ListPageUtil(List<T> data, int nowPage, int pageSize) {
+    public ListPageUtils(List<T> data, int nowPage, int pageSize) {
         if (data == null || data.isEmpty()) {
             throw new IllegalArgumentException("data must be not empty!");
         }
