@@ -1,6 +1,7 @@
 package org.luvx.algorithm.tree;
 
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -33,8 +34,33 @@ public class BinSearchTreeTest {
 
     @Test
     public void run01() {
-        BinSearchTree.search(root,1);
+        BinSearchTree.search(root, 1);
 
     }
 
+    @Test
+    public void run02() {
+        int height = BTHeight.comHeight(root);
+        Assert.assertEquals(height, 3);
+        height = BTHeight.comHeightByLoop(root);
+        Assert.assertEquals(height, 3);
+    }
+
+    @Test
+    public void run03() {
+        int nums = BTLeafNum.comLeafNums(root);
+        System.out.println(nums);
+        // Assert.assertEquals(nums, 3);
+        nums = BTLeafNum.comLeafNumsByLoop(root);
+        System.out.println(nums);
+        // Assert.assertEquals(nums, 3);
+    }
+
+    @Test
+    public void run04() {
+        int nums = BTNonLeafNum.comNonLeafNums(root);
+        System.out.println(nums);
+        nums = BTNonLeafNum.comNonLeafNumsByLoop(root);
+        System.out.println(nums);
+    }
 }

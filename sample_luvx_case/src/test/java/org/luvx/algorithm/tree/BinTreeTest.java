@@ -39,4 +39,20 @@ public class BinTreeTest {
         System.out.println("-----------");
         BinTree.postSearch(root);
     }
+
+    @Test
+    public void searchByLoopTest() {
+        BinTree.preSearchByLoop(root);
+        System.out.println("-----------");
+        BinTree.inSearchByLoop(root);
+        System.out.println("-----------");
+        BinTree.postSearchByLoop(root);
+    }
+
+    @Test
+    public void levelTest() {
+        BinTree.levelSearch(root);
+        System.out.println("-----------");
+        BinTree.levelOrder(root);
+    }
 }
