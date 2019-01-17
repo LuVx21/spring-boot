@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.luvx.mapper.UserMapper5">
+    <resultMap id="BaseResultMap" type="org.luvx.entity.User">
+        <id column="id" property="userId" jdbcType="BIGINT"/>
+        <result column="user_name" property="userName" jdbcType="VARCHAR"/>
+        <result column="password" property="passWord" jdbcType="VARCHAR"/>
+        <result column="age" property="age" javaType="INT"/>
+        <collection property="articles" ofType="org.luvx.entity.Article">
+            <result property="articleId" column="article_id" jdbcType="VARCHAR"/>
+            <result property="articleName" column="article_name" jdbcType="VARCHAR"/>
+            <result property="createTime" column="create_time" jdbcType="DATE"/>
+        </collection>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,
+        user_name,
+        password,
+        age
+    </sql>
+
+    <select id="selectSelective" resultMap="BaseResultMap" parameterType="org.luvx.entity.User">
+        select
+            id,
+            user_name,
+            password,
+            age,
+            R2.article_id,
+            R2.article_name
+        from user R1,article R2
+    </select>
+
+</mapper>

@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.luvx.mapper.UserMapper2">
+    <resultMap id="BaseResultMap" type="org.luvx.entity.User">
+        <id column="id" property="userId" jdbcType="BIGINT"/>
+        <result column="user_name" property="userName" jdbcType="VARCHAR"/>
+        <result column="password" property="passWord" jdbcType="VARCHAR"/>
+        <result column="age" property="age" javaType="INT"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,
+        user_name,
+        password,
+        age
+    </sql>
+
+    <insert id="insert" parameterType="org.luvx.entity.User">
+        insert
+        into user
+            (id, user_name, password, age)
+        values (#{userId}, #{userName}, #{passWord}, #{age})
+    </insert>
+
+    <insert id="insertSelective" parameterType="org.luvx.entity.User">
+        insert
+        into user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">
+                id,
+            </if>
+            <if test="userName != null">
+                user_name,
+            </if>
+            <if test="passWord != null">
+                password,
+            </if>
+            <if test="age != null">
+                age,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null">
+                #{userId},
+            </if>
+            <if test="userName != null">
+                #{userName},
+            </if>
+            <if test="passWord != null">
+                #{passWord},
+            </if>
+            <if test="age != null">
+                #{age},
+            </if>
+        </trim>
+    </insert>
+
+    <delete id="deleteSelective" parameterType="org.luvx.entity.User">
+        delete from user
+        <where>
+            <if test="userId != null">
+                and id = #{userId}
+            </if>
+            <if test="userName != null">
+                and user_name = #{userName}
+            </if>
+            <if test="passWord != null">
+                and password= #{passWord}
+            </if>
+            <if test="age != null">
+                and age = #{age}
+            </if>
+        </where>
+    </delete>
+
+    <!--写法1-->
+    <!--<update id="updateSelective" parameterType="org.luvx.entity.User">-->
+    <!--update-->
+    <!--user-->
+    <!--set-->
+    <!--<if test="userId != null">id = #{userId},</if>-->
+    <!--<if test="userName != null">user_name = #{userName},</if>-->
+    <!--<if test="passWord != null">password = #{passWord},</if>-->
+    <!--<if test="age != null">age = #{age}</if>-->
+    <!--<where>-->
+    <!--<if test="userId != null">-->
+    <!--and id = #{userId}-->
+    <!--</if>-->
+    <!--</where>-->
+    <!--</update>-->
+
+    <!--写法2-->
+    <update id="updateSelective" parameterType="org.luvx.entity.User">
+        update
+        user
+        <set>
+            <if test="userId != null">
+                id = #{userId},
+            </if>
+            <if test="userName != null">
+                user_name = #{userName},
+            </if>
+            <if test="passWord != null">
+                password= #{passWord},
+            </if>
+            <if test="age != null">
+                age = #{age},
+            </if>
+        </set>
+        <where>
+            <if test="userId != null">
+                and id = #{userId}
+            </if>
+        </where>
+    </update>
+
+    <select id="selectSelective" resultMap="BaseResultMap" parameterType="org.luvx.entity.User">
+        select
+        <choose>
+            <when test="selectColumns!=null and selectColumns != '' ">
+                <![CDATA[ ${selectColumns} ]]>
+            </when>
+            <otherwise>
+                <include refid="Base_Column_List"/>
+            </otherwise>
+        </choose>
+        from user
+        <where>
+            <if test="userId != null">
+                and id = #{userId}
+            </if>
+            <if test="userName != null">
+                and user_name = #{userName}
+            </if>
+            <if test="passWord != null">
+                and password= #{passWord}
+            </if>
+            <if test="age != null">
+                and age = #{age}
+            </if>
+            <if test="whereCon!=null and whereCon != ''">
+                <![CDATA[ ${whereCon} ]]>
+            </if>
+        </where>
+        <if test="orderCon!=null and orderCon != ''">
+            <![CDATA[ ${orderCon} ]]>
+        </if>
+    </select>
+
+</mapper>

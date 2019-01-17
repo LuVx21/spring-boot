@@ -19,17 +19,24 @@ tags:
 
 # DB
 
-```shell
+```sql
 use boot;
-desc user;
-+-----------+--------------+------+-----+---------+----------------+
-| Field     | Type         | Null | Key | Default | Extra          |
-+-----------+--------------+------+-----+---------+----------------+
-| id        | bigint(20)   | NO   | PRI | NULL    | auto_increment |
-| age       | int(11)      | NO   |     | NULL    |                |
-| password  | varchar(255) | NO   |     | NULL    |                |
-| user_name | varchar(255) | NO   | UNI | NULL    |                |
-+-----------+--------------+------+-----+---------+----------------+
+CREATE TABLE `user` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `age` int(11) DEFAULT NULL,
+  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+  `user_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `idx_id_age` (`id`,`age`,`password`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8;
+
+CREATE TABLE `article` (
+  `article_id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `article_name` varchar(255) NOT NULL,
+  `create_time` date DEFAULT NULL,
+  `user_id` bigint(20) NOT NULL,
+  PRIMARY KEY (`article_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 ```
 
 # 注解版本
@@ -76,3 +83,9 @@ git checkout mybatis-xml
 git checkout mybatis-muldatasource
 ```
 使用上述命令检出多数据源代码实现
+
+# todo
+
+* myabtis 部分查询 不修改mapper 在java中指定查询的列和查询条件
+* mybatis 条件查询
+* 传递多个参数
