@@ -14,14 +14,14 @@ public class Ren {
 
     public static void main(String[] args) throws Exception {
         // 入库
-        Connection setInfoConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/boot", "root", "1121");
+        Connection setInfoConn = DriverManager.getConnection("jdbc:mysql://localhost:3306/temp", "root", "1121");
         String insertTable = "insert into t_tables values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
         String insertColumn = "insert into t_columns values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
         PreparedStatement setInfoStmt2 = setInfoConn.prepareStatement(insertTable);
         PreparedStatement setInfoStmt3 = setInfoConn.prepareStatement(insertColumn);
         // 读取配置
         Statement stmt0 = setInfoConn.createStatement();
-        ResultSet rs0 = stmt0.executeQuery("select * from t_config where isparse = 1 ");
+        ResultSet rs0 = stmt0.executeQuery("select * from t_config where isparse = 1 order by rownums ");
 
         while (rs0.next()) {
             String host = rs0.getString(1);
@@ -36,7 +36,7 @@ public class Ren {
             Connection getInfoConn = DriverManager.getConnection(url + "?autoReconnect=true", username, password);
             Statement getInfoStmt = getInfoConn.createStatement();
 
-            String sqlTable = "select * from INFORMATION_SCHEMA.tables where table_schema not in ('information_schema', 'mysql', 'performance_schema') ";
+            String sqlTable = "select * from INFORMATION_SCHEMA.tables where table_schema not in ('information_schema', 'mysql', 'performance_schema') and table_type = 'BASE TABLE' ";
             ResultSet rs = getInfoStmt.executeQuery(sqlTable);
 
             String schemaNamePre = "";
