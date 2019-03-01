@@ -18,7 +18,7 @@ public class Test01ForEach {
 
 		System.out.println("\n=== Custom Phone List ===");
 		pl.forEach(p -> {
-			System.out.println(p.printCustom(r -> "Name: " + r.getGivenName() + " EMail: " + r.getEmail()));
+			System.out.println(p.printCustom(r -> "Name: " + r.getGivenName() + " EMail: " + r.getEMail()));
 		});
 
 	}

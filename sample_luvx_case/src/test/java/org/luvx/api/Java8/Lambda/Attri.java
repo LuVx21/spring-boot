@@ -1,10 +1,10 @@
 package org.luvx.api.Java8.Lambda;
 
 import org.junit.Test;
+import org.luvx.api.Java8.StaticReference.Convertable;
 
 /**
  * Lambda的范围
- *
  */
 public class Attri {
 
@@ -16,9 +16,7 @@ public class Attri {
         int aa = 233;
 
         // 访问局部变量
-        Convertable<Integer, String> stringConverter0 = (from) -> {
-            return String.valueOf(from + aa);
-        };
+        Convertable<Integer, String> stringConverter0 = (from) -> String.valueOf(from + aa);
 
         // 访问成员普通变量
         Convertable<Integer, String> stringConverter1 = (from) -> {

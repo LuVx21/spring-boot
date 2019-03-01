@@ -29,8 +29,8 @@ public class StringCase {
 
     @Test
     public void stringTest1() {
-
-
+        StringBuilder sb = new StringBuilder();
+        System.out.println(sb.toString().equals(""));
     }
 
 

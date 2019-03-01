@@ -1,5 +1,6 @@
 package org.luvx.api.Java8.Lambda;
 
+import org.luvx.api.Java8.StaticReference.Convertable;
 import org.luvx.api.Java8.StaticReference.Refrenced;
 import org.junit.Test;
 
@@ -28,6 +29,10 @@ public class ConvertableTest {
         Convertable<String, String> converter = something::startsWith;
 
         String converted = converter.convert("Java");
+        System.out.println(converted);
+
+        converter = Refrenced::toLowerCase;
+        converted = converter.convert("Java");
         System.out.println(converted);
     }
 

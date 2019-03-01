@@ -52,4 +52,12 @@ public class MapCase {
 
     }
 
+
+    @Test
+    public void run03() {
+        Map<String, String> map = new HashMap<>();
+        map.put("a", "aa");
+        map.forEach((k, v) -> System.out.println(k + ":" + v));
+    }
+
 }
