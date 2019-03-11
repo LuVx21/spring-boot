@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.luvx.module.user.mapper.UserMapper">
+
+    <resultMap id="BaseResultMap" type="org.luvx.module.user.entity.User">
+        <result property="userId" column="user_id" jdbcType="BIGINT"/>
+        <result property="userName" column="user_name" jdbcType="VARCHAR"/>
+        <result property="password" column="password" jdbcType="VARCHAR"/>
+        <result property="age" column="age" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        user_id, user_name, password, age
+    </sql>
+
+    <insert id="insertBatch" parameterType="java.util.List">
+        insert into user(
+        user_name, password, age
+        )values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.userName}, #{item.password}, #{item.age})
+        </foreach>
+    </insert>
+
+</mapper>
