@@ -38,11 +38,11 @@ spring-boot的出现确实是降低了开发的门槛和难度,但同时也让�
 运行本库的代码前需要安装依赖的版本定义和共通方法
 
 ```Shell
-cd sample_luvx_parent && mvn install
-cd ../sample_luvx_commons && mvn install
+mvn install -f sample_luvx_parent/pom.xml
+mvn install -f sample_luvx_commons/pom.xml
 # cd ../sample_luvx_ssh && gradle tomcatRunWar
 ```
 
 本库下数据库名:
 * sample*:java
-* Sspring-boot*:boot
+* spring-boot*:boot
