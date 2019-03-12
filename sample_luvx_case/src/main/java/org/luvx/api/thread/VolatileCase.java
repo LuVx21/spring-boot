@@ -1,9 +1,5 @@
 package org.luvx.api.thread;
 
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
-
 /**
  * volatile 未能保证原子性
  */
