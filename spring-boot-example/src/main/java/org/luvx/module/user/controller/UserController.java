@@ -8,7 +8,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.luvx.common.annotation.MeasurementAnnotation;
 import org.luvx.module.user.entity.User;
-import org.luvx.module.user.model.UserModel;
+import org.luvx.module.user.pojo.model.UserModel;
 import org.luvx.module.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @Api(value = "UserController", description = "用户", produces = MediaType.APPLICATION_JSON_VALUE)
 @Slf4j
+@RestController
 @RequestMapping(value = "/user")
 public class UserController {
 
@@ -38,7 +39,7 @@ public class UserController {
 
     @ApiOperation(value = "删除指定用户", notes = "删除指定用户")
     @ApiImplicitParam(name = "id", value = "用户ID", required = true, dataType = "Long", paramType = "Long")
-    @RequestMapping(value = {"/delete/{id}"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"/delete/{id}"}, method = RequestMethod.DELETE)
     public String deleteUserById(@PathVariable Long id) {
         int num = service.deleteUserById(id);
         return num + "";
@@ -67,8 +68,8 @@ public class UserController {
     @ApiOperation(value = "获取全部用户信息", notes = "获取全部用户信息")
     @ApiImplicitParam(name = "userModel", value = "用户model", required = true)
     @MeasurementAnnotation
-    @RequestMapping(value = {"/select"}, method = RequestMethod.GET)
-    public String selectUsers(UserModel userModel) {
+    @RequestMapping(value = {"/select"}, method = RequestMethod.POST)
+    public String selectUsers(@RequestBody UserModel userModel) {
         IPage<User> page = service.selectUsers(userModel);
         return page.getRecords().toString();
     }

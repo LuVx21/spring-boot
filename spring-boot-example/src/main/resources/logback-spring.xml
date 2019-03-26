@@ -85,6 +85,7 @@
         <root level="${logging.level}">
             <appender-ref ref="ROOT-APPENDER"/>
             <appender-ref ref="ERROR-APPENDER"/>
+            <appender-ref ref="CONSOLE-APPENDER"/>
         </root>
     </springProfile>
 

@@ -7,9 +7,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.luvx.common.annotation.MeasurementAnnotation;
 import org.luvx.module.user.entity.User;
 import org.luvx.module.user.mapper.UserMapper;
-import org.luvx.module.user.model.UserModel;
+import org.luvx.module.user.pojo.model.UserModel;
 import org.luvx.module.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,6 +26,7 @@ import java.util.List;
  */
 @Slf4j
 @Service
+@CacheConfig(cacheNames = "local")
 public class UserServiceImpl implements UserService {
     @Autowired
     private UserMapper userMapper;
@@ -32,12 +37,14 @@ public class UserServiceImpl implements UserService {
         return user.getUserId().intValue();
     }
 
+    @CacheEvict
     @Override
     public int deleteUserById(Long id) {
         int num = userMapper.deleteById(id);
         return num;
     }
 
+    @CachePut
     @Override
     public int updateUser(Long id, User user) {
         user.setUserId(id);
@@ -46,6 +53,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @MeasurementAnnotation
+    @Cacheable
     @Override
     public User getUserById(Long id) {
         User user = userMapper.selectById(id);

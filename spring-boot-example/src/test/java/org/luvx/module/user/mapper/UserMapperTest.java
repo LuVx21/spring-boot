@@ -3,6 +3,7 @@ package org.luvx.module.user.mapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.luvx.base.BaseTest;
 import org.luvx.module.user.entity.User;
@@ -17,6 +18,7 @@ import java.util.List;
  * @Author: Ren, Xie
  * @Date: 2019/3/11 15:58
  */
+@Ignore
 public class UserMapperTest extends BaseTest {
     @Autowired
     UserMapper userMapper;

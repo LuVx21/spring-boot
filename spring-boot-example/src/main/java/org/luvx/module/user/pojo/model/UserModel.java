@@ -1,9 +1,9 @@
-package org.luvx.module.user.model;
+package org.luvx.module.user.pojo.model;
 
 import lombok.Data;
 
 /**
- * @ClassName: org.luvx.module.user.model.UserModel
+ * @ClassName: org.luvx.module.user.pojo.model.UserModel
  * @Description:
  * @Author: Ren, Xie
  * @Date: 2019/3/11 21:10

@@ -2,7 +2,7 @@ package org.luvx.module.user.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.luvx.module.user.entity.User;
-import org.luvx.module.user.model.UserModel;
+import org.luvx.module.user.pojo.model.UserModel;
 
 /**
  * @ClassName: org.luvx.module.user.service
