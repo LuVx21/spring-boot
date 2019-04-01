@@ -1,0 +1,36 @@
+
+
+### 新增配置
+POST http://127.0.0.1:8090/config/save HTTP/1.1
+content-type: application/json
+
+{
+  "configKey": "foo",
+  "configValue": "bar"
+}
+
+### 删除配置
+POST http://127.0.0.1:8090/config/delete HTTP/1.1
+content-type: application/json
+
+{
+  "configId": "8",
+  "configKey": "foo"
+}
+
+
+### 更新配置
+POST http://127.0.0.1:8090/config/update HTTP/1.1
+content-type: application/json
+
+{
+  "configKey": "foo",
+  "configValue": "bar1"
+}
+
+### 获取配置
+GET http://127.0.0.1:8090/config/select/foo HTTP/1.1
+
+
+
+

@@ -5,6 +5,7 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 /**
@@ -16,7 +17,9 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Aspect
 @Component
+@Profile({"dev", "test"})
 public class MeasurementAspect {
+
     @Pointcut("@annotation(org.luvx.common.annotation.MeasurementAnnotation)")
     public void annotationPointCut() {
     }

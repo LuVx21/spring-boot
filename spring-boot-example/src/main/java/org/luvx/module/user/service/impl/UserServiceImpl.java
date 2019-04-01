@@ -16,8 +16,6 @@ import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 /**
  * @ClassName: org.luvx.module.user.service.impl
  * @Description:
@@ -31,6 +29,7 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserMapper userMapper;
 
+    @CachePut(value = "local")
     @Override
     public int insertUser(User user) {
         userMapper.insert(user);
@@ -44,7 +43,7 @@ public class UserServiceImpl implements UserService {
         return num;
     }
 
-    @CachePut
+    @CachePut(value = "local")
     @Override
     public int updateUser(Long id, User user) {
         user.setUserId(id);

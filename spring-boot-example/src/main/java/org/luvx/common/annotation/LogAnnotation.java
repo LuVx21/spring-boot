@@ -14,5 +14,10 @@ import java.lang.annotation.Target;
 @Target({ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface LogAnnotation {
+    /**
+     * 操作类型
+     *
+     * @return
+     */
     String value() default "";
 }

@@ -1,24 +1,12 @@
 
-###
-GET http://211.159.175.179/ HTTP/1.1
-
-
 ### GET
 GET http://127.0.0.1:8090/user/0 HTTP/1.1
 
 ### POST
-POST https://127.0.0.1:8090/user/select HTTP/1.1
+POST http://127.0.0.1:8090/user/select HTTP/1.1
 content-type: application/json
 
 {
     "currentPage": 0,
     "size": 3
 }
-
-
-### PUT
-
-
-
-### DELETE
-
