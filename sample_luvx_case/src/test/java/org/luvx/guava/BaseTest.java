@@ -56,22 +56,6 @@ public class BaseTest {
      */
     @Test
     public void method1() {
-        // key可以重复
-        Multimap<String, Integer> map = ArrayListMultimap.create();
-        map.put("aa", 1);
-        map.put("aa", 2);
-        // [1, 2]
-        System.out.println(map.get("aa"));
-
-        // 无序+可重复
-        Multiset<String> set = HashMultiset.create();
-
-        // 双向Map(Bidirectional Map) 键与值都不能重复
-        BiMap<String, String> biMap = HashBiMap.create();
-
-        // 双键Map
-        Table<String, String, Integer> tables = HashBasedTable.create();
-
     }
 
     /**

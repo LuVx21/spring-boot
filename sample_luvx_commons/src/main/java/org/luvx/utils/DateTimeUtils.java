@@ -15,6 +15,10 @@ import org.apache.log4j.Logger;
 public class DateTimeUtils {
     private static Logger logger = Logger.getLogger(DateTimeUtils.class);
 
+    public static final SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
+
+    public static final SimpleDateFormat formatter1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
     public static Date parseTime(String timeString) {
         Date time = null;
         try {
