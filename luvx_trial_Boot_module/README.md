@@ -21,8 +21,8 @@ gradle bootRun [--debug-jvm]
 Maven:
 ```shell
 # 方式1
-mvn package
-java -jar target/xx.jar
+mvn clean package -DskipTests
+java -jar web_luvx_trial_Boot/target/web_luvx_trial_Boot-1.0.1-SNAPSHOT.jar
 # 方式2
 mvn spring-boot:run
 ```

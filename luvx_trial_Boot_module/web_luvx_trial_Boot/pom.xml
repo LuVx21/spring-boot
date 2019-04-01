@@ -11,7 +11,12 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
     <artifactId>web_luvx_trial_Boot</artifactId>
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
+
+    <properties>
+        <start-class>org.luvx.Application</start-class>
+        <!--<final-name>example</final-name>-->
+    </properties>
 
     <dependencies>
         <dependency>
@@ -20,4 +25,31 @@
             <version>1.0.1-SNAPSHOT</version>
         </dependency>
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <!--<fork>true</fork>-->
+                    <mainClass>${start-class}</mainClass>
+                    <!--<layout>ZIP</layout>-->
+                    <!-- <outputDirectory>../target</outputDirectory> -->
+                    <!-- <classifier>executable</classifier> -->
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                        <configuration>
+                            <!--<finalName>${final-name}</finalName>-->
+                            <layout>ZIP</layout>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 </project>

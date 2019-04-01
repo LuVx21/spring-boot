@@ -126,33 +126,24 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.4</version>
-            <optional>true</optional>
+            <version>1.18.6</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 
     <build>
         <plugins>
             <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.1</version>
                 <configuration>
                     <source>${project.build.jdk}</source>
                     <target>${project.build.jdk}</target>
-                    <encoding>${project.build.sourceEncoding}</encoding>
-                    <showWarnings>true</showWarnings>
-                    <fork>true</fork>
-                    <mainClass>${start-class}</mainClass>
-                    <layout>ZIP</layout>
                 </configuration>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>repackage</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
+
+            
             <!-- 配置测试错误不影响package等 -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
