@@ -23,6 +23,7 @@ https://github.com/alibaba/canal/wiki/ClientExample
 
 实时Binlog采集 + 离线处理Binlog + 还原业务数据
 
+好像文档有说吧,一个client只支持单个instance
 
 
 # 处理Binlog
