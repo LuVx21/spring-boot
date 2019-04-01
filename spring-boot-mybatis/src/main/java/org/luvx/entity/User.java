@@ -1,5 +1,6 @@
 package org.luvx.entity;
 
+import lombok.Builder;
 import org.luvx.common.BaseQueryEntity;
 
 import java.io.Serializable;
@@ -8,10 +9,10 @@ import java.util.List;
 public class User extends BaseQueryEntity implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    private Long userId;
-    private String userName;
-    private String passWord;
-    private Integer age;
+    private Long          userId;
+    private String        userName;
+    private String        passWord;
+    private Integer       age;
     private List<Article> articles;
 
     public User() {

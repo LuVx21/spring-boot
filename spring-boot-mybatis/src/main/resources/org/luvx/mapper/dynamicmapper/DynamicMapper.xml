@@ -3,15 +3,94 @@
 <mapper namespace="org.luvx.mapper.dynamicmapper.DynamicMapper">
 
     <resultMap id="BaseResultMap" type="org.luvx.entity.User">
-        <id column="id" property="userId" jdbcType="BIGINT"/>
+        <id column="user_id" property="userId" jdbcType="BIGINT"/>
         <result column="user_name" property="userName" jdbcType="VARCHAR"/>
         <result column="password" property="passWord" jdbcType="VARCHAR"/>
         <result column="age" property="age" javaType="INT"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-        id, user_name, password, age
+        user_id, user_name, password, age
     </sql>
+
+
+    <insert id="insertByCon">
+        insert into ${tableName} (
+            user_name, password, age
+        )values
+        (
+        #{user.userName}, #{user.passWord}, #{user.age}
+        )
+    </insert>
+
+    <insert id="insertListByCon">
+        insert into ${tableName} (
+            user_name, password, age
+        )values
+        <foreach collection="user" item="item" index="index" separator=",">
+            (
+            #{item.userName}, #{item.passWord}, #{item.age}
+            )
+        </foreach>
+    </insert>
+
+    <delete id="deleteByCon">
+        delete from ${tableName}
+        <where>
+            <if test='user.userId != null'>
+                and user_id = #{user.userId}
+            </if>
+            <if test='user.userName != null'>
+                and user_name = #{user.userName}
+            </if>
+            <if test='user.passWord != null'>
+                and password= #{user.passWord}
+            </if>
+            <if test='user.age != null'>
+                and age = #{user.age}
+            </if>
+        </where>
+    </delete>
+
+    <delete id="deleteByCon1">
+        delete from ${tableName}
+        <where>
+            <if test='user.userId != null'>
+                and user_id = #{user.userId}
+            </if>
+            <if test='user.userName != null'>
+                and user_name = #{user.userName}
+            </if>
+            <if test='user.passWord != null'>
+                and password= #{user.passWord}
+            </if>
+            <if test='user.age != null'>
+                and age = #{user.age}
+            </if>
+        </where>
+    </delete>
+
+    <update id="updateByCon">
+        update ${tableName}
+        set
+            <if test='newUser.userName != null'>
+                user_name = #{newUser.userName}
+            </if>
+        <where>
+            <if test='user.userId != null'>
+                and user_id = #{user.userId}
+            </if>
+            <if test='user.userName != null'>
+                and user_name = #{user.userName}
+            </if>
+            <if test='user.passWord != null'>
+                and password= #{user.passWord}
+            </if>
+            <if test='user.age != null'>
+                and age = #{user.age}
+            </if>
+        </where>
+    </update>
 
     <select id="selectByCon" resultMap="BaseResultMap">
         select
@@ -19,7 +98,7 @@
         from ${tableName}
         <where>
             <if test='user.userId != null'>
-                and id = #{user.userId}
+                and user_id = #{user.userId}
             </if>
             <if test='user.userName != null'>
                 and user_name = #{user.userName}
