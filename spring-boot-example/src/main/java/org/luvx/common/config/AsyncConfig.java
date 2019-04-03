@@ -11,6 +11,12 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ThreadPoolExecutor;
 
+/**
+ * @ClassName: org.luvx.common.config
+ * @Description:
+ * @Author: Ren, Xie
+ * @Date: 2019/4/2 15:38
+ */
 @Slf4j
 @EnableAsync
 @Configuration
