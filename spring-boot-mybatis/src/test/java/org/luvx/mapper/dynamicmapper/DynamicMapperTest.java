@@ -28,7 +28,7 @@ public class DynamicMapperTest {
     public void insertTest() {
         User user = new User();
         user.setUserName("foobar");
-        user.setPassWord("1234");
+        user.setPassword("1234");
         user.setAge(16);
 
         ImmutableMap<String, Object> iMap = ImmutableMap.of("tableName", "user", "user", user);
@@ -39,7 +39,7 @@ public class DynamicMapperTest {
     public void insertListByConTest() {
         User user = new User();
         user.setUserName("foobar");
-        user.setPassWord("1234");
+        user.setPassword("1234");
         user.setAge(16);
 
         ImmutableList<User> iList = ImmutableList.of(user, user);
@@ -75,7 +75,7 @@ public class DynamicMapperTest {
     @Test
     public void selectByCon() {
         User user = new User();
-        user.setUserId(4L);
+        user.setId(4L);
         user.setUserName("default");
 
         ImmutableMap<String, Object> iMap = ImmutableMap.of("tableName", "user", "user", user);

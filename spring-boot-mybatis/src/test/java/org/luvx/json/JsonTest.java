@@ -16,12 +16,12 @@ import java.util.Map;
 
 public class JsonTest {
 
-    private String json = "{\"age\":26,\"articles\":[{\"articleName\":\"test1\",\"createTime\":1544779082310},{\"articleName\":\"test2\",\"createTime\":1544779082311}],\"passWord\":\"1234\",\"userId\":999,\"userName\":\"Luvx\"}";
+    private String json = "{\"age\":26,\"articles\":[{\"articleName\":\"test1\",\"createTime\":1544779082310},{\"articleName\":\"test2\",\"createTime\":1544779082311}],\"password\":\"1234\",\"userId\":999,\"userName\":\"Luvx\"}";
 
     @Test
     public void toStr() {
         User user = new User("Luvx", "1234", 26);
-        user.setUserId(999L);
+        user.setId(999L);
         List<Article> articles = new ArrayList<>();
         Article article = new Article("test1", new Date(System.currentTimeMillis()));
         Article article1 = new Article("test2", new Date(System.currentTimeMillis() + 1));

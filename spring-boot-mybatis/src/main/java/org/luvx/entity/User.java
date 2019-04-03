@@ -1,90 +1,35 @@
 package org.luvx.entity;
 
-import lombok.Builder;
+import lombok.*;
 import org.luvx.common.BaseQueryEntity;
 
 import java.io.Serializable;
 import java.util.List;
 
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode(callSuper = false)
 public class User extends BaseQueryEntity implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    private Long          userId;
+    private Long          id;
     private String        userName;
-    private String        passWord;
+    private String        password;
     private Integer       age;
     private List<Article> articles;
 
-    public User() {
-        super();
-    }
-
-    public User(Long userId) {
-        this.userId = userId;
-
-    }
-
-    public User(String userName, String passWord, Integer age) {
-        this.passWord = passWord;
+    public User(Long id, String userName, String password, Integer age) {
+        this.id = id;
         this.userName = userName;
+        this.password = password;
         this.age = age;
     }
 
-    public User(Long userId, String userName, String passWord, Integer age) {
-        this.userId = userId;
+    public User(String userName, String password, Integer age) {
         this.userName = userName;
-        this.passWord = passWord;
+        this.password = password;
         this.age = age;
-    }
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public String getPassWord() {
-        return passWord;
-    }
-
-    public void setPassWord(String passWord) {
-        this.passWord = passWord;
-    }
-
-    public Integer getAge() {
-        return age;
-    }
-
-    public void setAge(Integer age) {
-        this.age = age;
-    }
-
-    public List<Article> getArticles() {
-        return articles;
-    }
-
-    public void setArticles(List<Article> articles) {
-        this.articles = articles;
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "userId=" + userId +
-                ", userName='" + userName + '\'' +
-                ", passWord='" + passWord + '\'' +
-                ", age=" + age +
-                ", articles=" + articles +
-                '}';
     }
 }
