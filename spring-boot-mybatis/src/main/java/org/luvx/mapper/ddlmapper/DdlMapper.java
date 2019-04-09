@@ -1,40 +1,14 @@
 package org.luvx.mapper.ddlmapper;
 
-import org.apache.ibatis.annotations.Param;
-import org.springframework.jdbc.BadSqlGrammarException;
-import org.springframework.jdbc.UncategorizedSQLException;
+import org.luvx.common.BaseDdlMapper;
 import org.springframework.stereotype.Repository;
 
+/**
+ * @ClassName: org.luvx.mapper.ddlmapper
+ * @Description: DDL Mapper
+ * @Author: Ren, Xie
+ * @Date: 2019/2/21 17:28
+ */
 @Repository
-public interface DdlMapper {
-    /**
-     * 重命名表
-     *
-     * @param oldTableName
-     * @param newTableName
-     * @return
-     * @throws BadSqlGrammarException 创建新表需要的现有表不存在
-     */
-    int renameTable(@Param("oldTableName") String oldTableName, @Param("newTableName") String newTableName)
-            throws BadSqlGrammarException;
-
-    /**
-     * 以现有表创建新表
-     *
-     * @param oldTableName
-     * @param newTableName
-     * @return
-     * @throws UncategorizedSQLException 欲重命名的表不存在
-     * @throws BadSqlGrammarException 重命名后的表已存在
-     */
-    int createTable(@Param("oldTableName") String oldTableName, @Param("newTableName") String newTableName)
-            throws UncategorizedSQLException, BadSqlGrammarException;
-
-    /**
-     * 删除表
-     *
-     * @param oldTableName
-     * @return
-     */
-    int dropTable(@Param("oldTableName") String oldTableName);
+public interface DdlMapper extends BaseDdlMapper {
 }

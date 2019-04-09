@@ -19,12 +19,24 @@ public class UpdateMapperTest {
     @Test
     public void updateByPrimaryKeyTest() {
         User user = User.builder()
+                .id(10043L)
                 .userName("foo")
                 .password("bar")
                 .age(19)
                 .build();
 
-        userMapper.updateByPrimaryKey(10043, user);
+        userMapper.updateByPrimaryKey(user);
+    }
+
+    @Test
+    public void updateByPrimaryKeySelectiveTest() {
+        User user = User.builder()
+                .id(10044L)
+                .userName("foo")
+                .password("bar")
+                .build();
+
+        userMapper.updateByPrimaryKeySelective(user);
     }
 
     @Test

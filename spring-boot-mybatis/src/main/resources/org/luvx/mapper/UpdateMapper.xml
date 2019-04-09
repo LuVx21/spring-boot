@@ -17,7 +17,23 @@
         set user_name = #{record.userName},
             password  = #{record.password},
             age       = #{record.age}
-        where id = #{id}
+        where id = #{record.id}
+    </update>
+
+    <update id="updateByPrimaryKeySelective" parameterType="org.luvx.entity.User">
+        update user
+        <set>
+            <if test="record.userName != null">
+                user_name = #{record.userName,jdbcType=VARCHAR},
+            </if>
+            <if test="record.password != null">
+                password = #{record.password,jdbcType=VARCHAR},
+            </if>
+            <if test="record.age != null">
+                age = #{record.age,jdbcType=INTEGER},
+            </if>
+        </set>
+        where id = #{record.id,jdbcType=BIGINT}
     </update>
 
     <update id="updateSelective" parameterType="org.luvx.entity.User">

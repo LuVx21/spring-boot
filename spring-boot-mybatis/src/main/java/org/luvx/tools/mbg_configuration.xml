@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+
+    <classPathEntry
+            location="C:\Users\xinmei\.m2\repository\mysql\mysql-connector-java\5.1.44\mysql-connector-java-5.1.44.jar"/>
+
+    <context id="DB2Tables" targetRuntime="MyBatis3">
+        <!-- 控制注释 -->
+        <commentGenerator>
+            <!-- 是否去除所有自动生成的注释文件 -->
+            <property name="suppressAllComments" value="true"/>
+            <!-- 是否去除所有自动生成的文件的时间戳，默认为false -->
+            <property name="suppressDate" value="true"/>
+        </commentGenerator>
+
+        <!-- 控制数据库 -->
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://127.0.0.1:3306/boot?nullCatalogMeansCurrent=true&amp;serverTimezone=UTC"
+                        userId="root"
+                        password="1121">
+        </jdbcConnection>
+
+        <javaTypeResolver>
+            <!-- 把jdbc中的decimal与numberic类型转化为integer类型 -->
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+
+        <!-- 数据库表对应的model -->
+        <javaModelGenerator
+                targetProject="src/main/java" targetPackage="org.luvx.test.entity">
+            <property name="enableSubPackages" value="true"/>
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+
+        <!-- 控制Model的xmlMapper文件 -->
+        <sqlMapGenerator
+                targetProject="src/main/java" targetPackage="org.luvx.test.xml">
+            <property name="enableSubPackages" value="true"/>
+        </sqlMapGenerator>
+
+        <!-- 控制mapper接口 -->
+        <javaClientGenerator
+                type="XMLMAPPER" targetProject="src/main/java" targetPackage="org.luvx.test.mapper">
+            <property name="enableSubPackages" value="true"/>
+            <property name="methodNameCalculator" value="extended"/>
+        </javaClientGenerator>
+
+        <!-- 要生成哪些表（更改tableName和domainObjectName就可以）-->
+        <table tableName="user"
+               domainObjectName="User"
+               enableCountByExample="false"
+               enableUpdateByExample="false"
+               enableDeleteByExample="false"
+               enableSelectByExample="false"
+               selectByExampleQueryId="false">
+        </table>
+    </context>
+
+</generatorConfiguration>

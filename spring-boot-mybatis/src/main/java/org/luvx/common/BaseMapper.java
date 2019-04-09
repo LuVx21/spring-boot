@@ -82,11 +82,18 @@ public interface BaseMapper<T> {
     /**
      * 更新数据(不判空)
      *
-     * @param id
      * @param record
      * @return
      */
-    int updateByPrimaryKey(@Param("id") Serializable id, @Param("record") T record);
+    int updateByPrimaryKey(@Param("record") T record);
+
+    /**
+     * 更新数据
+     *
+     * @param record
+     * @return
+     */
+    int updateByPrimaryKeySelective(@Param("record") T record);
 
     /**
      * 更新
