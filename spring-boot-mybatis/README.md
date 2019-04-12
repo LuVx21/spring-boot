@@ -21,15 +21,17 @@ tags:
 
 ```sql
 use boot;
+drop table if exists user;
 CREATE TABLE `user` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `age` int(11) DEFAULT NULL,
-  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
   `user_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
+  `age` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `idx_id_age` (`id`,`age`,`password`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
+drop table if exists article;
 CREATE TABLE `article` (
   `article_id` bigint(20) NOT NULL AUTO_INCREMENT,
   `article_name` varchar(255) NOT NULL,

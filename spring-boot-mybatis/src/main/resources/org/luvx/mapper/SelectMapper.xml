@@ -23,6 +23,9 @@
 
     <select id="selectSelective" resultMap="BaseResultMap" parameterType="org.luvx.entity.User">
         select
+            <if test="record.distinctCon">
+                distinct
+            </if>
             <choose>
                 <when test="record.selectColumns != null and record.selectColumns != '' ">
                     <![CDATA[ ${record.selectColumns} ]]>
@@ -49,8 +52,17 @@
                 <![CDATA[ ${record.whereCon} ]]>
             </if>
         </where>
+        <if test="record.groupCon != null and record.groupCon != '' ">
+            <![CDATA[ ${record.groupCon} ]]>
+        </if>
+        <if test="record.havingCon != null and record.havingCon != '' ">
+            <![CDATA[ ${record.havingCon} ]]>
+        </if>
         <if test="record.orderCon != null and record.orderCon != '' ">
             <![CDATA[ ${record.orderCon} ]]>
+        </if>
+        <if test="record.limitCon != null and record.limitCon != '' ">
+            <![CDATA[ ${record.limitCon} ]]>
         </if>
     </select>
 

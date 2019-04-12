@@ -1,39 +1,44 @@
 package org.luvx.common;
 
+import lombok.Data;
+
 /**
  * 基础查询实体
  */
+@Data
 public class BaseQueryEntity {
-    // 要查询的列
-    private String selectColumns;
+    /**
+     * 去重复
+     */
+    protected Boolean distinctCon;
 
-    // 查询条件
-    private String whereCon;
+    /**
+     * 要查询的列
+     */
+    protected String selectColumns;
 
-    // 排序
-    private String orderCon;
+    /**
+     * 查询条件
+     */
+    protected String whereCon;
 
-    public String getSelectColumns() {
-        return selectColumns;
-    }
+    /**
+     * 排序
+     */
+    protected String orderCon;
 
-    public void setSelectColumns(String selectColumns) {
-        this.selectColumns = selectColumns;
-    }
+    /**
+     * 分组
+     */
+    protected String groupCon;
 
-    public String getWhereCon() {
-        return whereCon;
-    }
+    /**
+     * having
+     */
+    protected String havingCon;
 
-    public void setWhereCon(String whereCon) {
-        this.whereCon = whereCon;
-    }
-
-    public String getOrderCon() {
-        return orderCon;
-    }
-
-    public void setOrderCon(String orderCon) {
-        this.orderCon = orderCon;
-    }
+    /**
+     * limit
+     */
+    protected String limitCon;
 }

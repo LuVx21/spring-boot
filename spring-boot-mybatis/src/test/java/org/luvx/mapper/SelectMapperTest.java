@@ -62,10 +62,17 @@ public class SelectMapperTest {
     @Test
     public void selectSelective() {
         User user = new User();
-        user.setSelectColumns("user_name, password, age");
-        user.setUserName("foo");
-        user.setWhereCon(" and id > 9999 ");
+
+        user.setDistinctCon(true);
+        user.setSelectColumns("user_name ");
+
+        // user.setSelectColumns("user_name, group_concat(password) as password");
+        // user.setGroupCon("group by user_name ");
+        // user.setHavingCon("having count(1) > 1 ");
+
+        user.setWhereCon("and id > 10043 ");
         user.setOrderCon(" order by id ");
+        user.setLimitCon("limit 2 ");
         List<User> list = userMapper.selectSelective(user);
         System.out.println(list);
     }
