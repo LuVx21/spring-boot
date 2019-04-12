@@ -18,18 +18,12 @@ public class User extends BaseQueryEntity implements Serializable {
     private String        userName;
     private String        password;
     private Integer       age;
+    /**
+     * 一对一
+     */
+    // private Article       article;
+    /**
+     * 一对多
+     */
     private List<Article> articles;
-
-    public User(Long id, String userName, String password, Integer age) {
-        this.id = id;
-        this.userName = userName;
-        this.password = password;
-        this.age = age;
-    }
-
-    public User(String userName, String password, Integer age) {
-        this.userName = userName;
-        this.password = password;
-        this.age = age;
-    }
 }
