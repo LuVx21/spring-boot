@@ -33,11 +33,11 @@ CREATE TABLE `user` (
 
 drop table if exists article;
 CREATE TABLE `article` (
-  `article_id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `article_name` varchar(255) NOT NULL,
   `create_time` date DEFAULT NULL,
   `user_id` bigint(20) NOT NULL,
-  PRIMARY KEY (`article_id`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 ```
 

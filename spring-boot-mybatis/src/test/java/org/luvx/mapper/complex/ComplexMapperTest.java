@@ -36,7 +36,7 @@ public class ComplexMapperTest {
         Article article = articleMapper.selectByPrimaryKey(1L);
         System.out.println(article);
 
-        List<Article> list = articleMapper.selectArticleByUserId(10043L);
+        List<Article> list = articleMapper.selectArticleByUserId(1L);
         System.out.println(list);
     }
 }

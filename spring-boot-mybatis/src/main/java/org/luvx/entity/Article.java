@@ -6,7 +6,6 @@ import org.luvx.common.BaseQueryEntity;
 import java.io.Serializable;
 import java.sql.Date;
 
-
 @Data
 @Builder
 @NoArgsConstructor
@@ -15,13 +14,8 @@ import java.sql.Date;
 public class Article extends BaseQueryEntity implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    private Long   articleId;
+    private Long id;
     private String articleName;
-    private Date   createTime;
-    private Long   userId;
-
-    public Article(String articleName, Date createTime) {
-        this.articleName = articleName;
-        this.createTime = createTime;
-    }
+    private Date createTime;
+    private Long userId;
 }

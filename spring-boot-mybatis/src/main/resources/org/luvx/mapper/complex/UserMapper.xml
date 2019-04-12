@@ -9,7 +9,7 @@
         <result column="age" property="age" javaType="INT"/>
         <!--方式1-->
         <!--<collection property="articles"  javaType="List" ofType="org.luvx.entity.Article" >-->
-        <!--<id column="article_id" property="articleId" jdbcType="BIGINT"/>-->
+        <!--<id column="id" property="id" jdbcType="BIGINT"/>-->
         <!--<result column="article_name" property="articleName" jdbcType="VARCHAR"/>-->
         <!--<result column="create_time" property="createTime" jdbcType="DATE"/>-->
         <!--<result column="user_id" property="userId" jdbcType="BIGINT"/>-->
@@ -19,7 +19,6 @@
         <!--<collection property="articles" javaType="List" ofType="org.luvx.entity.Article" resultMap="ArticleResultMap" />-->
 
         <!--方式3-->
-        <!--        resultMap="ArticleResultMap"-->
         <collection property="articles" column="id" javaType="ArrayList" ofType="org.luvx.entity.Article"
                     select="org.luvx.mapper.complex.ArticleMapper.selectArticleByUserId"/>
     </resultMap>
@@ -31,16 +30,25 @@
 
     <!-- ==============================Article 相关元素 start===================================== -->
     <resultMap id="ArticleResultMap" type="org.luvx.entity.Article">
-        <id column="article_id" property="articleId" jdbcType="BIGINT"/>
+        <id column="id" property="id" jdbcType="BIGINT"/>
         <result column="article_name" property="articleName" jdbcType="VARCHAR"/>
         <result column="create_time" property="createTime" jdbcType="DATE"/>
         <result column="user_id" property="userId" jdbcType="BIGINT"/>
     </resultMap>
 
     <sql id="Article_Column_List">
-        article_id, article_name, create_time, user_id
+        id, article_name, create_time, user_id
     </sql>
     <!-- ==============================Article 相关元素 end===================================== -->
+
+<!--    <select id="selectByPrimaryKey" resultMap="UserResultMap">-->
+<!--        select-->
+<!--        <include refid="User_Column_List"/>,-->
+<!--        <include refid="Article_Column_List"/>-->
+<!--        from user R1 inner join article R2 on R1.id = R2.user_id-->
+<!--        where-->
+<!--        R1.id = #{id}-->
+<!--    </select>-->
 
     <select id="selectByPrimaryKey" resultMap="UserResultMap">
         <!--    select-->

@@ -23,8 +23,9 @@ public class JsonTest {
         User user = new User("Luvx", "1234", 26);
         user.setId(999L);
         List<Article> articles = new ArrayList<>();
-        Article article = new Article("test1", new Date(System.currentTimeMillis()));
-        Article article1 = new Article("test2", new Date(System.currentTimeMillis() + 1));
+
+        Article article = Article.builder().articleName("test1").createTime(new Date(System.currentTimeMillis())).build();
+        Article article1 = Article.builder().articleName("test2").createTime(new Date(System.currentTimeMillis() + 1)).build();
         articles.add(article);
         articles.add(article1);
         user.setArticles(articles);
