@@ -21,7 +21,7 @@ public class User extends BaseQueryEntity implements Serializable {
     /**
      * 一对一
      */
-    // private Article       article;
+    private Article       article;
     /**
      * 一对多
      */
