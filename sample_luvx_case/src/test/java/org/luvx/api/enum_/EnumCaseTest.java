@@ -1,6 +1,7 @@
-package org.luvx.api;
+package org.luvx.api.enum_;
 
 import org.junit.Test;
+import org.luvx.api.enum_.EnumCase;
 
 import java.util.EnumMap;
 import java.util.EnumSet;

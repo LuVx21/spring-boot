@@ -1,4 +1,4 @@
-package org.luvx.api.Java8.Lambda;
+package org.luvx.api.java8.lambda;
 
 import java.util.List;
 import java.util.OptionalDouble;

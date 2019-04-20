@@ -1,4 +1,4 @@
-package org.luvx.api;
+package org.luvx.api.enum_;
 
 /**
  * 枚举类实际是一个普通类

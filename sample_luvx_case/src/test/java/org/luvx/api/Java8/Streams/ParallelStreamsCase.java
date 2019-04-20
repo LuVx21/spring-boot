@@ -1,12 +1,15 @@
-package org.luvx.api.Java8.Streams;
+package org.luvx.api.java8.Streams;
+
+import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
-import org.junit.Test;
-
+/**
+ * 并行流
+ */
 public class ParallelStreamsCase {
 
     @Test
@@ -19,14 +22,12 @@ public class ParallelStreamsCase {
         }
         long t0 = System.nanoTime();
 
-        // long count = values.stream().sorted().count();
-        long count = values.parallelStream().sorted().count();
-        System.out.println(count);
+        // values.stream().forEachOrdered(System.out::println);
+        values.parallelStream().forEachOrdered(System.out::println);
 
         long t1 = System.nanoTime();
 
         long millis = TimeUnit.NANOSECONDS.toMillis(t1 - t0);
         System.out.println(String.format("sequential sort took: %d ms", millis));
     }
-
 }

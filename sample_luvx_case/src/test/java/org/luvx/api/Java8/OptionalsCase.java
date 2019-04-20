@@ -1,4 +1,4 @@
-package org.luvx.api.Java8.FunctionalInterface;
+package org.luvx.api.java8;
 
 import java.util.Optional;
 

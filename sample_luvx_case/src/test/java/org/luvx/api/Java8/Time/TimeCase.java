@@ -1,4 +1,4 @@
-package org.luvx.api.Java8.Time;
+package org.luvx.api.java8.Time;
 
 import java.time.Clock;
 import java.time.Instant;
