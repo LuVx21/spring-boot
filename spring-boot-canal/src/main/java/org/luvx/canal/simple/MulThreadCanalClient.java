@@ -1,4 +1,4 @@
-package org.luvx.canal;
+package org.luvx.canal.simple;
 
 import org.luvx.utils.CanalUtils;
 import org.springframework.beans.factory.annotation.Value;

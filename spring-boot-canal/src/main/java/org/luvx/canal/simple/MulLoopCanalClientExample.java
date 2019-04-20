@@ -1,4 +1,4 @@
-package org.luvx.canal;
+package org.luvx.canal.simple;
 
 import com.alibaba.otter.canal.client.CanalConnector;
 import com.alibaba.otter.canal.client.CanalConnectors;

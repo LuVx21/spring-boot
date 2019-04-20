@@ -1,4 +1,4 @@
-package org.luvx.canal;
+package org.luvx.canal.simple;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

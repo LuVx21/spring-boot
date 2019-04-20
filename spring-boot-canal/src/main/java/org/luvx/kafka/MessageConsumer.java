@@ -17,18 +17,34 @@ import java.util.Map;
  * @Date: 2019/3/5 11:17
  */
 public interface MessageConsumer<K, V> extends InitializingBean {
-
+    /**
+     * 获取消费者
+     *
+     * @return
+     */
     KafkaConsumer<K, V> getNativeConsumer();
-
-    ConsumerRecords<K, V> poll();
-
-    ConsumerRecords<K, V> poll(long timeout);
-
-    void seek(TopicPartition topicPartition, long offset);
 
     void subscribe(Collection<String> topics);
 
     void subscribe(Collection<String> topics, ConsumerRebalanceListener listener);
+
+    /**
+     * 拉取数据
+     *
+     * @return
+     */
+    ConsumerRecords<K, V> poll();
+
+
+    /**
+     * 拉取数据
+     *
+     * @param timeout
+     * @return
+     */
+    ConsumerRecords<K, V> poll(long timeout);
+
+    void seek(TopicPartition topicPartition, long offset);
 
     void commitSync();
 
