@@ -1,4 +1,4 @@
-package org.luvx.api.thread.lock;
+package org.luvx.api.thread.unsafe;
 
 /**
  * 死锁实现例1

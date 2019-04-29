@@ -12,26 +12,28 @@ import java.util.concurrent.*;
  */
 public class ThreadUtils {
 
+    private static final int size = 5;
+
+    /**
+     * @return
+     */
     public static ExecutorService getThreadPool() {
         ThreadFactory namedThreadFactory = new ThreadFactoryBuilder().setNameFormat("demo-pool-%d").build();
 
-        ThreadFactory factory = new ThreadFactory() {
-            @Override
-            public Thread newThread(Runnable r) {
-                Thread thread = new Thread(r);
-                thread.setName(r.getClass().getName());
-                return thread;
-            }
-        };
+        ///
+        // ThreadFactory factory = (Runnable r) -> {
+        //     Thread thread = new Thread(r);
+        //     thread.setName(r.getClass().getName());
+        //     return thread;
+        // };
 
-        ExecutorService service = new ThreadPoolExecutor(5,
-                5,
+        ExecutorService service = new ThreadPoolExecutor(size,
+                size << 1,
                 0L,
                 TimeUnit.MILLISECONDS,
-                new LinkedBlockingQueue<>(10),
-                factory,
+                new LinkedBlockingQueue<>(100),
+                namedThreadFactory,
                 new ThreadPoolExecutor.AbortPolicy());
         return service;
     }
-
 }

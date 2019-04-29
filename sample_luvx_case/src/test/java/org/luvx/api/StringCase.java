@@ -2,6 +2,8 @@ package org.luvx.api;
 
 import org.junit.Test;
 
+import java.text.MessageFormat;
+
 /**
  * @author renxie
  */
@@ -92,4 +94,21 @@ public class StringCase {
         System.out.println(aa.hashCode() == cc.hashCode());
     }
 
+    @Test
+    public void method() {
+        String str = "from {0} to {1};";
+        String result = MessageFormat.format(str, 10001 + "", 20000 + "");
+        System.out.println(result);
+
+    }
+
+    @Test
+    public void method1() {
+        for (int i = 1; i < 5; i++) {
+            System.out.print((i - 1) * 10000 + 1);
+            System.out.print(":");
+            System.out.println(i * 10000);
+        }
+
+    }
 }
