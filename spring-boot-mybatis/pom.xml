@@ -4,11 +4,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.luvx</groupId>
-    <artifactId>Spring-Boot</artifactId>
+    <artifactId>spring-boot-mybatis</artifactId>
     <version>1.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>Spring-Boot</name>
+    <name>spring-boot-mybatis</name>
     <description>Demo project for Spring Boot</description>
 
     <parent>

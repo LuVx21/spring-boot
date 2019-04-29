@@ -42,16 +42,19 @@ update 操作:
 
 Linkedin的开源项目Camus, --> gobblin
 
-
-
-
-
-
 面临的问题:
 
 * 服务所在的主机和DB Server 时间不一致
 * 首次全量数据同步过程中产生的增量数据
 
+## kafka
+
+一个topic对应一个库还是对应一个表比较好?
+
+库: 所有表的记录都在同一个topic下
+表: 一个topic存储一个表的binlog, 会产生很多topic
+
+→ topic以库为单位, 以分区为表单位(canal好像存在问题, 无法投递到对应分区)
 
 
 阅读资料
