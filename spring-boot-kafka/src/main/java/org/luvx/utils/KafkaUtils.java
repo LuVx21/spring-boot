@@ -19,7 +19,7 @@ import java.util.regex.Pattern;
  * @ClassName: org.luvx.utils
  * @Description:
  * @Author: Ren, Xie
- * @Date: 2019/3/5 11:10
+ * @Date: 2019/1/5 11:10
  */
 @Slf4j
 public class KafkaUtils {

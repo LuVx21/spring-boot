@@ -10,7 +10,7 @@ import java.util.Properties;
  * @ClassName: org.luvx.utils
  * @Description:
  * @Author: Ren, Xie
- * @Date: 2019/4/29 15:45
+ * @Date: 2019/1/29 15:45
  */
 public class KafkaUtilsTest {
     @Test

@@ -4,6 +4,9 @@ import org.apache.kafka.clients.consumer.Consumer;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
+import org.apache.kafka.clients.producer.KafkaProducer;
+import org.apache.kafka.clients.producer.Producer;
+import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.common.TopicPartition;
 import org.junit.Test;
 import org.luvx.utils.KafkaUtils;
@@ -17,14 +20,27 @@ import java.util.Properties;
  * @ClassName: org.luvx.demo
  * @Description:
  * @Author: Ren, Xie
- * @Date: 2019/4/29 16:12
+ * @Date: 2019/1/29 16:11
  */
-public class ConsumerTest {
+public class SimpleTest {
     final String topicName = "foo";
 
     @Test
-    public void run00() throws Exception {
-        Resource resource = new ClassPathResource("kafka/kafka-consumer.properties");
+    public void run01() {
+        Resource resource = new ClassPathResource("config/kafka/kafka-producer.properties");
+        Properties properties = KafkaUtils.convertToProperties(resource);
+
+        try (Producer<String, String> producer = new KafkaProducer<>(properties);) {
+            for (int i = 0; i < 10; i++) {
+                producer.send(new ProducerRecord<>(topicName, "key:" + i, "value:" + i));
+            }
+            System.out.println("Message sent successfully");
+        }
+    }
+
+    @Test
+    public void run02() throws Exception {
+        Resource resource = new ClassPathResource("config/kafka/kafka-consumer.properties");
         Properties properties = KafkaUtils.convertToProperties(resource);
 
         try (Consumer<String, String> consumer = new KafkaConsumer<>(properties)) {
