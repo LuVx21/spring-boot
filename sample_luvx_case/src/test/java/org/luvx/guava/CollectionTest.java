@@ -3,6 +3,9 @@ package org.luvx.guava;
 import com.google.common.collect.*;
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @ClassName: org.luvx.guava
  * @Description:
@@ -56,5 +59,24 @@ public class CollectionTest {
     @Test
     public void method3() {
         Multiset<String> set = HashMultiset.create();
+    }
+
+    /**
+     * 分割List
+     */
+    @Test
+    public void method4() {
+        List<String> list = new ArrayList<>();
+        list.add("a");
+        list.add("b");
+        list.add("c");
+
+        List<List<String>> temp = Lists.partition(list, 2);
+        System.out.println(temp);
+        // 更改子串会影响原来的
+        temp.get(1).add("d");
+
+        Iterable<List<String>> temp1 = Iterables.partition(list, 2);
+        System.out.println(temp1);
     }
 }
