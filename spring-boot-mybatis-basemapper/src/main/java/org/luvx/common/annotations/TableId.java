@@ -7,12 +7,12 @@ import java.lang.annotation.Target;
 
 /**
  * @ClassName: org.luvx.common.annotations
- * @Description:
+ * @Description: 表的主键id, 仅支持唯一主键
  * @Author: Ren, Xie
  * @Date: 2019/5/27 20:18
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ElementType.TYPE})
+@Target({ElementType.FIELD})
 public @interface TableId {
-    String value();
+    String value() default "id";
 }

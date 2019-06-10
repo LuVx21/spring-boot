@@ -34,12 +34,12 @@ public class BaseSelectProvider {
      */
     public String selectByPrimaryKey(ProviderContext context) {
         Class clazz = ProviderUtils.getEntityClass(context);
-        assert clazz != null;
+        String pk = ProviderUtils.getPrimaryKey(clazz);
         Objects.requireNonNull(clazz, "类对象不可为空");
         return new SQL()
-                .SELECT(ProviderUtils.getColumns(clazz))
+                .SELECT(ProviderUtils.getSelectColumns(clazz))
                 .FROM(ProviderUtils.getTableName(clazz))
-                .WHERE("`id`=#{id}")
+                .WHERE(pk + " = #{id}")
                 .toString();
     }
 
@@ -49,7 +49,7 @@ public class BaseSelectProvider {
         Objects.requireNonNull(clazz, "类对象不可为空");
 
         return new SQL()
-                .SELECT(ProviderUtils.getColumns(clazz))
+                .SELECT(ProviderUtils.getSelectColumns(clazz))
                 .FROM(ProviderUtils.getTableName(clazz))
                 .WHERE("id = #{ids}")
                 .toString();
@@ -74,7 +74,7 @@ public class BaseSelectProvider {
         Class clazz = ProviderUtils.getEntityClass(context);
         assert clazz != null;
         StringBuilder sql = new StringBuilder(new SQL()
-                .SELECT(ProviderUtils.getColumns(clazz))
+                .SELECT(ProviderUtils.getSelectColumns(clazz))
                 .FROM(ProviderUtils.getTableName(clazz))
                 .WHERE(ProviderUtils.getWheres(query, clazz))
                 .toString());

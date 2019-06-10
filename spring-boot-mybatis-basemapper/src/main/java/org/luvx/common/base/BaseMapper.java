@@ -1,8 +1,10 @@
 package org.luvx.common.base;
 
 import org.apache.ibatis.annotations.*;
+import org.luvx.common.provider.BaseDeleteProvider;
+import org.luvx.common.provider.BaseInsertProvider;
 import org.luvx.common.provider.BaseSelectProvider;
-import org.springframework.jdbc.core.SqlProvider;
+import org.luvx.common.provider.BaseUpdateProvider;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -25,8 +27,8 @@ public interface BaseMapper<T> {
      * @param record entity
      * @return int
      */
-    @InsertProvider(type = SqlProvider.class, method = "insert")
-    @Options(useGeneratedKeys = true, keyColumn = "id")
+    @InsertProvider(type = BaseInsertProvider.class, method = "insert")
+    /// @Options(useGeneratedKeys = true, keyColumn = "id")
     int insert(@Param("record") T record);
 
     /**
@@ -35,6 +37,7 @@ public interface BaseMapper<T> {
      * @param record entity
      * @return int
      */
+    @InsertProvider(type = BaseInsertProvider.class, method = "insertSelective")
     int insertSelective(@Param("record") T record);
 
     /**
@@ -43,6 +46,7 @@ public interface BaseMapper<T> {
      * @param records
      * @return
      */
+    @InsertProvider(type = BaseInsertProvider.class, method = "insertList")
     int insertList(@Param("records") Collection<T> records);
 
     /**
@@ -60,7 +64,7 @@ public interface BaseMapper<T> {
      * @param id
      * @return int
      */
-    @DeleteProvider(type = SqlProvider.class, method = "deleteByPrimaryKey")
+    @DeleteProvider(type = BaseDeleteProvider.class, method = "deleteByPrimaryKey")
     int deleteByPrimaryKey(@Param("id") Serializable id);
 
     /**
@@ -69,6 +73,7 @@ public interface BaseMapper<T> {
      * @param record
      * @return
      */
+    @DeleteProvider(type = BaseDeleteProvider.class, method = "deleteSelective")
     int deleteSelective(@Param("record") T record);
 
     /**
@@ -77,6 +82,7 @@ public interface BaseMapper<T> {
      * @param ids
      * @return
      */
+    @DeleteProvider(type = BaseDeleteProvider.class, method = "deleteByPrimaryKeyList")
     int deleteByPrimaryKeyList(@Param("ids") Collection<Serializable> ids);
 
     /**
@@ -85,6 +91,7 @@ public interface BaseMapper<T> {
      * @param records
      * @return
      */
+    @DeleteProvider(type = BaseDeleteProvider.class, method = "deleteSelectiveList")
     int deleteSelectiveList(@Param("records") Collection<T> records);
 
     /**
@@ -93,7 +100,7 @@ public interface BaseMapper<T> {
      * @param record
      * @return
      */
-    @UpdateProvider(type = SqlProvider.class, method = "updateByPrimaryKey")
+    @UpdateProvider(type = BaseUpdateProvider.class, method = "updateByPrimaryKey")
     int updateByPrimaryKey(@Param("record") T record);
 
     /**
@@ -111,6 +118,7 @@ public interface BaseMapper<T> {
      * @param target
      * @return
      */
+    @UpdateProvider(type = BaseUpdateProvider.class, method = "updateSelective")
     int updateSelective(@Param("record") T record, @Param("target") T target);
 
     /**
@@ -120,6 +128,7 @@ public interface BaseMapper<T> {
      * @param record
      * @return
      */
+    @UpdateProvider(type = BaseUpdateProvider.class, method = "updateByPrimaryKeyList")
     int updateByPrimaryKeyList(@Param("ids") Collection<Serializable> ids, @Param("record") T record);
 
     /**
@@ -129,6 +138,7 @@ public interface BaseMapper<T> {
      * @param target
      * @return
      */
+    @UpdateProvider(type = BaseUpdateProvider.class, method = "updateSelectiveList")
     int updateSelectiveList(@Param("records") Collection<T> records, @Param("target") T target);
 
     /**

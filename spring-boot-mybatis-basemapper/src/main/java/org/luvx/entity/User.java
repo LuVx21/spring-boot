@@ -1,6 +1,8 @@
 package org.luvx.entity;
 
 import lombok.*;
+import org.luvx.common.annotations.Table;
+import org.luvx.common.annotations.TableId;
 
 import java.io.Serializable;
 
@@ -9,10 +11,12 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = false)
+@Table("user")
 public class User implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    private Long    id;
+    @TableId("user_id")
+    private Long    userId;
     private String  userName;
     private String  password;
     private Integer age;

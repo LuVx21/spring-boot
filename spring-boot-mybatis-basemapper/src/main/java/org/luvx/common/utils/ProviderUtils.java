@@ -2,17 +2,25 @@ package org.luvx.common.utils;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.serializer.SerializerFeature;
+import com.google.common.collect.BiMap;
+import com.google.common.collect.HashBiMap;
+import com.google.common.collect.ImmutableBiMap;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.builder.annotation.ProviderContext;
 import org.luvx.common.annotations.Ignore;
 import org.luvx.common.annotations.Table;
+import org.luvx.common.annotations.TableId;
 import org.luvx.common.base.BaseMapper;
 import org.luvx.common.query.Query;
 import org.springframework.core.ResolvableType;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @ClassName: org.luvx.common.utils
@@ -31,9 +39,20 @@ public class ProviderUtils {
         if (object == null) {
             return new JSONObject();
         }
-        return JSON.parseObject(JSON.toJSONString(object));
+        return JSON.parseObject(
+                JSON.toJSONString(object,
+                        SerializerFeature.WriteMapNullValue,
+                        SerializerFeature.QuoteFieldNames,
+                        SerializerFeature.DisableCircularReferenceDetect)
+        );
     }
 
+    /**
+     * 获取实体类对象
+     *
+     * @param context
+     * @return
+     */
     public static Class getEntityClass(ProviderContext context) {
         for (Type type : context.getMapperType().getGenericInterfaces()) {
             ResolvableType resolvableType = ResolvableType.forType(type);
@@ -49,22 +68,9 @@ public class ProviderUtils {
     }
 
     /**
-     * 获取查询列
-     *
-     * @param clazz
-     * @return
-     */
-    public static String[] getColumns(Class clazz) {
-        List<String> columns = new ArrayList<>();
-        for (String variableName : getWriteVariables(clazz)) {
-            columns.add(String.format("`%s` as `%s`", conversionName(variableName), variableName));
-        }
-        return columns.toArray(new String[]{});
-    }
-
-    /**
-     * 1. 使用了`Table`注解
-     * 2. 未使用此注解
+     * 获取实体类对应的表名称
+     * 1. 使用了`Table`注解取配置的
+     * 2. 未使用此注解取类名消驼峰
      *
      * @param clazz entity类对象
      * @return
@@ -75,6 +81,66 @@ public class ProviderUtils {
             return String.format("`%s`", annotation.value());
         }
         return String.format("`%s`", conversionName(clazz.getSimpleName()));
+    }
+
+    /**
+     * 获取主键属性
+     *
+     * @param clazz
+     * @return
+     */
+    public static String getPrimaryKeyField(Class clazz) {
+        Field[] fields = clazz.getDeclaredFields();
+        for (Field field : fields) {
+            TableId tableId = field.getAnnotation(TableId.class);
+            if (tableId != null) {
+                return field.getName();
+            }
+        }
+        throw new RuntimeException("无法获取实体对应的主键信息");
+    }
+
+    /**
+     * 获取实体对应表的主键(仅支持唯一主键)
+     *
+     * @param clazz
+     * @return 主键字段名, 如`user_id`
+     */
+    public static String getPrimaryKey(Class clazz) {
+        Field[] fields = clazz.getDeclaredFields();
+        for (Field field : fields) {
+            TableId tableId = field.getAnnotation(TableId.class);
+            if (tableId != null) {
+                String pk = tableId.value();
+                if (StringUtils.isEmpty(pk)) {
+                    pk = conversionName(field.getName());
+                }
+                return String.format("`%s`", pk);
+            }
+        }
+        throw new RuntimeException("无法获取实体对应的主键信息");
+    }
+
+    /**
+     * 获取查询列
+     *
+     * @param clazz
+     * @return
+     */
+    public static String[] getSelectColumns(Class clazz) {
+        List<String> columns = new ArrayList<>();
+        for (String variableName : getWriteFields(clazz)) {
+            columns.add(String.format("`%s` as `%s`", conversionName(variableName), variableName));
+        }
+        return columns.toArray(new String[]{});
+    }
+
+    public static String[] getColumns(Class clazz) {
+        List<String> columns = new ArrayList<>();
+        for (String variableName : getWriteFields(clazz)) {
+            columns.add(String.format("`%s`", conversionName(variableName)));
+        }
+        return columns.toArray(new String[]{});
     }
 
     /**
@@ -110,7 +176,7 @@ public class ProviderUtils {
      * @param clazz
      * @return
      */
-    public static String[] getReadVariables(Class clazz) {
+    public static String[] getReadFields(Class clazz) {
         return getVariables(clazz, new String[]{"is", "get"});
     }
 
@@ -120,7 +186,7 @@ public class ProviderUtils {
      * @param clazz
      * @return
      */
-    public static String[] getWriteVariables(Class clazz) {
+    public static String[] getWriteFields(Class clazz) {
         return getVariables(clazz, new String[]{"set"});
     }
 
@@ -156,7 +222,7 @@ public class ProviderUtils {
     }
 
     /**
-     * 属性名 -> 表字段名
+     * 消驼峰:属性名 -> 表字段名
      * 例: userName -> user_name
      *
      * @param name
@@ -177,6 +243,27 @@ public class ProviderUtils {
         }
         return stringBuilder.toString();
     }
+
+    /**
+     * 属性名-字段名对应map
+     *
+     * @param clazz
+     * @return
+     */
+    public static Map<String, String> nameMap(Class<?> clazz) {
+        // 使用guava的双向map
+        BiMap<String, String> biMap = HashBiMap.create();
+        BiMap<String, String> map = ImmutableBiMap.of("foo", "bar", "A", "a");
+        return null;
+    }
+
+    /**
+     * 获取实体内所有属性(排除序列化字段, Ignore修饰的字段)
+     * 1. 直接获取属性字段
+     * 2. 获取所有的set方法, 间接获取属性字段
+     */
+
+
 }
 
 
