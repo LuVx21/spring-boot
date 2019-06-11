@@ -4,7 +4,6 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.google.common.collect.BiMap;
-import com.google.common.collect.HashBiMap;
 import com.google.common.collect.ImmutableBiMap;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.builder.annotation.ProviderContext;
@@ -21,6 +20,7 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * @ClassName: org.luvx.common.utils
@@ -57,10 +57,7 @@ public class ProviderUtils {
         for (Type type : context.getMapperType().getGenericInterfaces()) {
             ResolvableType resolvableType = ResolvableType.forType(type);
 
-            if (resolvableType.getRawClass() == BaseMapper.class
-                // || resolvableType.getRawClass() == DODao.class
-                // || resolvableType.getRawClass() == VODao.class
-            ) {
+            if (resolvableType.getRawClass() == BaseMapper.class) {
                 return resolvableType.getGeneric(0).getRawClass();
             }
         }
@@ -78,9 +75,9 @@ public class ProviderUtils {
     public static String getTableName(Class clazz) {
         Table annotation = (Table) clazz.getAnnotation(Table.class);
         if (annotation != null) {
-            return String.format("`%s`", annotation.value());
+            return annotation.value();
         }
-        return String.format("`%s`", conversionName(clazz.getSimpleName()));
+        return nameConvert(clazz.getSimpleName());
     }
 
     /**
@@ -113,9 +110,9 @@ public class ProviderUtils {
             if (tableId != null) {
                 String pk = tableId.value();
                 if (StringUtils.isEmpty(pk)) {
-                    pk = conversionName(field.getName());
+                    pk = nameConvert(field.getName());
                 }
-                return String.format("`%s`", pk);
+                return pk;
             }
         }
         throw new RuntimeException("无法获取实体对应的主键信息");
@@ -129,16 +126,24 @@ public class ProviderUtils {
      */
     public static String[] getSelectColumns(Class clazz) {
         List<String> columns = new ArrayList<>();
-        for (String variableName : getWriteFields(clazz)) {
-            columns.add(String.format("`%s` as `%s`", conversionName(variableName), variableName));
+        List<String> allFields = getAllFields(clazz);
+        for (String fieldName : allFields) {
+            columns.add(String.format("%s", nameConvert(fieldName), fieldName));
         }
         return columns.toArray(new String[]{});
     }
 
+    /**
+     * 获取update操作的插入列
+     *
+     * @param clazz
+     * @return
+     */
     public static String[] getColumns(Class clazz) {
         List<String> columns = new ArrayList<>();
-        for (String variableName : getWriteFields(clazz)) {
-            columns.add(String.format("`%s`", conversionName(variableName)));
+        List<String> allFields = getAllFields(clazz);
+        for (String variableName : allFields) {
+            columns.add(nameConvert(variableName));
         }
         return columns.toArray(new String[]{});
     }
@@ -159,15 +164,101 @@ public class ProviderUtils {
                     && name.charAt(3) >= 'A' && name.charAt(3) <= 'Z') {
                 String fieldName = (char) (name.charAt(3) - 'A' + 'a') + name.substring(4);
                 if (queryObj.get(fieldName) != null) {
-                    wheres.add(String.format("`%s`=#{%s}", conversionName(fieldName), fieldName));
+                    wheres.add(String.format("`%s`=#{%s}", nameConvert(fieldName), fieldName));
                 }
                 if (method.getReturnType().equals(String.class)
                         && queryObj.get(fieldName + "Like") != null) {
-                    wheres.add(String.format("`%s` like CONCAT('%%',#{%sLike}, '%%')", conversionName(fieldName), fieldName));
+                    wheres.add(String.format("`%s` like CONCAT('%%',#{%sLike}, '%%')", nameConvert(fieldName), fieldName));
                 }
             }
         }
         return wheres.toArray(new String[]{});
+    }
+
+    /**
+     * 消驼峰:属性名 -> 表字段名
+     * 例: userName -> user_name
+     *
+     * @param name
+     * @return
+     */
+    public static String nameConvert(String name) {
+        char[] chars = name.toCharArray();
+        StringBuilder stringBuilder = new StringBuilder();
+        for (char ch : chars) {
+            if (ch >= 'A' && ch <= 'Z') {
+                if (stringBuilder.length() > 0) {
+                    stringBuilder.append('_');
+                }
+                stringBuilder.append((char) (ch - 'A' + 'a'));
+            } else {
+                stringBuilder.append(ch);
+            }
+        }
+        return stringBuilder.toString();
+    }
+
+    /**
+     * 属性名-字段名对应map
+     *
+     * @param allFields
+     * @param clazz
+     * @return
+     */
+    public static Map<String, String> nameMap(List<String> allFields, Class<?> clazz) {
+        ImmutableBiMap.Builder<String, String> builder = ImmutableBiMap.builder();
+        if (allFields == null || allFields.size() == 0) {
+            allFields = getAllFields(clazz);
+        }
+        for (String fieldName : allFields) {
+            builder.put(fieldName, nameConvert(fieldName));
+        }
+        BiMap<String, String> map = builder.build();
+        System.out.println(map);
+        return map;
+    }
+
+    /**
+     * 获取实体内所有属性(排除序列化字段, Ignore修饰的字段)
+     * 属性有序
+     * 有以下方式:
+     * 1. 直接获取属性字段
+     * 2. 获取所有的set方法, 间接获取属性字段
+     */
+    public static List<String> getAllFields(Class<?> clazz) {
+        Field[] fields = clazz.getDeclaredFields();
+        List<String> fieldNames = new ArrayList<>();
+        for (Field field : fields) {
+            Ignore ignore = field.getAnnotation(Ignore.class);
+            if (ignore != null) {
+                continue;
+            }
+            String fieldName = field.getName();
+            if (Objects.equals(fieldName, "serialVersionUID")) {
+                continue;
+            }
+            fieldNames.add(fieldName);
+        }
+        return fieldNames;
+    }
+
+    /**
+     * 获取对应的表的字段
+     *
+     * @param allFields
+     * @param clazz
+     * @return
+     */
+    public static List<String> getTableAllFields(List<String> allFields, Class<?> clazz) {
+        if (allFields == null || allFields.size() == 0) {
+            allFields = getAllFields(clazz);
+        }
+        List<String> allTableFields = new ArrayList<>(allFields.size());
+        for (String fieldName : allFields) {
+            allTableFields.add(nameConvert(fieldName));
+        }
+
+        return allTableFields;
     }
 
     /**
@@ -176,6 +267,7 @@ public class ProviderUtils {
      * @param clazz
      * @return
      */
+    @Deprecated
     public static String[] getReadFields(Class clazz) {
         return getVariables(clazz, new String[]{"is", "get"});
     }
@@ -186,6 +278,7 @@ public class ProviderUtils {
      * @param clazz
      * @return
      */
+    @Deprecated
     public static String[] getWriteFields(Class clazz) {
         return getVariables(clazz, new String[]{"set"});
     }
@@ -197,6 +290,7 @@ public class ProviderUtils {
      * @param prefixes
      * @return
      */
+    @Deprecated
     private static String[] getVariables(Class clazz, String[] prefixes) {
         List<String> variables = new ArrayList<>();
         for (Method method : clazz.getMethods()) {
@@ -220,50 +314,6 @@ public class ProviderUtils {
         }
         return variables.toArray(new String[]{});
     }
-
-    /**
-     * 消驼峰:属性名 -> 表字段名
-     * 例: userName -> user_name
-     *
-     * @param name
-     * @return
-     */
-    public static String conversionName(String name) {
-        char[] chars = name.toCharArray();
-        StringBuilder stringBuilder = new StringBuilder();
-        for (char ch : chars) {
-            if (ch >= 'A' && ch <= 'Z') {
-                if (stringBuilder.length() > 0) {
-                    stringBuilder.append('_');
-                }
-                stringBuilder.append((char) (ch - 'A' + 'a'));
-            } else {
-                stringBuilder.append(ch);
-            }
-        }
-        return stringBuilder.toString();
-    }
-
-    /**
-     * 属性名-字段名对应map
-     *
-     * @param clazz
-     * @return
-     */
-    public static Map<String, String> nameMap(Class<?> clazz) {
-        // 使用guava的双向map
-        BiMap<String, String> biMap = HashBiMap.create();
-        BiMap<String, String> map = ImmutableBiMap.of("foo", "bar", "A", "a");
-        return null;
-    }
-
-    /**
-     * 获取实体内所有属性(排除序列化字段, Ignore修饰的字段)
-     * 1. 直接获取属性字段
-     * 2. 获取所有的set方法, 间接获取属性字段
-     */
-
-
 }
 
 

@@ -5,6 +5,8 @@ import org.luvx.common.provider.BaseDeleteProvider;
 import org.luvx.common.provider.BaseInsertProvider;
 import org.luvx.common.provider.BaseSelectProvider;
 import org.luvx.common.provider.BaseUpdateProvider;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.client.RestTemplate;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -156,6 +158,7 @@ public interface BaseMapper<T> {
      * @param record
      * @return
      */
+    @SelectProvider(type = BaseSelectProvider.class, method = "selectSelective")
     List<T> selectSelective(@Param("record") T record);
 
     /**
@@ -164,6 +167,7 @@ public interface BaseMapper<T> {
      * @param ids
      * @return
      */
+    @SelectProvider(type = BaseSelectProvider.class, method = "selectBatchIds")
     List<T> selectBatchIds(@Param("ids") Collection<Serializable> ids);
 
     /**
@@ -172,5 +176,6 @@ public interface BaseMapper<T> {
      * @param records
      * @return
      */
+    @SelectProvider(type = BaseSelectProvider.class, method = "selectSelectiveList")
     List<T> selectSelectiveList(@Param("records") Collection<T> records);
 }

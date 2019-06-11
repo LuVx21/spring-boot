@@ -116,7 +116,7 @@ public class BaseInsertProvider {
                     continue;
                 }
             }
-            String columns = String.format("`%s`", ProviderUtils.conversionName(key));
+            String columns = String.format("`%s`", ProviderUtils.nameConvert(key));
             String values = String.format("#{record.%s}", key);
             sql.VALUES(columns, values);
         }

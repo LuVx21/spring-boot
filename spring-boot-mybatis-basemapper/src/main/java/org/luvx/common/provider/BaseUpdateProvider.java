@@ -14,13 +14,24 @@ import java.util.*;
  * @Author: Ren, Xie
  * @Date: 2019/5/27 19:13
  */
-public class BaseUpdateProvider {
+public class BaseUpdateProvider extends BaseProvider {
 
-    // int updateByPrimaryKey(@Param("record") T record);
-    //// int updateByPrimaryKeySelective(@Param("record") T record);
-    // int updateSelective(@Param("record") T record, @Param("target") T target);
-    // int updateByPrimaryKeyList(@Param("ids") Collection<Serializable> ids, @Param("record") T record);
-    // int updateSelectiveList(@Param("records") Collection<T> records, @Param("target") T target);
+    SQL makeSet(SQL sql, Object record, Class clazz, String pkField, boolean isById) {
+        Set<String> variables = new HashSet<>(ProviderUtils.getAllFields(clazz));
+        JSONObject beanObj = ProviderUtils.parseObject(record);
+        String updated = isById ? "record" : "target";
+        for (String key : beanObj.keySet()) {
+            if (Objects.equals(pkField, key) || !variables.contains(key)) {
+                continue;
+            }
+            if (beanObj.get(key) == null) {
+                continue;
+            }
+            sql.SET(String.format("%s = #{%s.%s}", ProviderUtils.nameConvert(key), updated, key));
+        }
+        return sql;
+    }
+
 
     /**
      * 以主键更新
@@ -31,26 +42,15 @@ public class BaseUpdateProvider {
      * @return
      */
     public String updateByPrimaryKey(Map<String, Object> para, ProviderContext context) {
-        Object bean = para.get("record");
+        Object record = para.get("record");
         Class clazz = ProviderUtils.getEntityClass(context);
         String pkField = ProviderUtils.getPrimaryKeyField(clazz);
 
         SQL sql = new SQL();
         sql.UPDATE(ProviderUtils.getTableName(clazz));
-        Set<String> variables = new HashSet<>(Arrays.asList(ProviderUtils.getWriteFields(clazz)));
+        sql = makeSet(sql, record, clazz, pkField, true);
 
-        JSONObject beanObj = ProviderUtils.parseObject(bean);
-        for (String key : beanObj.keySet()) {
-            if (Objects.equals(pkField, key) || !variables.contains(key)) {
-                continue;
-            }
-            if (beanObj.get(key) == null) {
-                continue;
-            }
-            sql.SET(String.format("`%s` = #{record.%s}", ProviderUtils.conversionName(key), key));
-        }
-
-        sql.WHERE(ProviderUtils.conversionName(pkField) + " = " + String.format("#{record.%s}", pkField));
+        sql.WHERE(ProviderUtils.nameConvert(pkField) + " = " + String.format("#{record.%s}", pkField));
         return sql.toString();
     }
 
@@ -62,33 +62,17 @@ public class BaseUpdateProvider {
      * @return
      */
     public String updateSelective(Map<String, Object> para, ProviderContext context) {
-        Object record = para.get("record");
         Object target = para.get("target");
         Class clazz = ProviderUtils.getEntityClass(context);
         String pkField = ProviderUtils.getPrimaryKeyField(clazz);
 
-        SQL sql = new SQL();
-        sql.UPDATE(ProviderUtils.getTableName(clazz));
-        Set<String> variables = new HashSet<>(Arrays.asList(ProviderUtils.getWriteFields(clazz)));
+        SQL sql = new SQL()
+                .UPDATE(ProviderUtils.getTableName(clazz));
 
-        JSONObject beanObj = ProviderUtils.parseObject(target);
-        for (String key : beanObj.keySet()) {
-            if (Objects.equals(pkField, key) || !variables.contains(key)) {
-                continue;
-            }
-            if (beanObj.get(key) == null) {
-                continue;
-            }
-            sql.SET(String.format("`%s` = #{target.%s}", ProviderUtils.conversionName(key), key));
-        }
+        sql = makeSet(sql, target, clazz, pkField, false);
 
-        JSONObject recordObj = ProviderUtils.parseObject(record);
-        for (String key : recordObj.keySet()) {
-            if (recordObj.get(key) == null) {
-                continue;
-            }
-            sql.WHERE(ProviderUtils.conversionName(key) + " = " + String.format("#{record.%s}", key));
-        }
+        Object record = para.get("record");
+        sql = makeWhere(sql, record);
 
         return sql.toString();
     }
@@ -101,37 +85,18 @@ public class BaseUpdateProvider {
      * @return
      */
     public String updateByPrimaryKeyList(Map<String, Object> para, ProviderContext context) {
-        Object ids = para.get("ids");
         Object record = para.get("record");
         Class clazz = ProviderUtils.getEntityClass(context);
         String pkField = ProviderUtils.getPrimaryKeyField(clazz);
 
-        SQL sql = new SQL();
-        sql.UPDATE(ProviderUtils.getTableName(clazz));
-        Set<String> variables = new HashSet<>(Arrays.asList(ProviderUtils.getWriteFields(clazz)));
+        SQL sql = new SQL()
+                .UPDATE(ProviderUtils.getTableName(clazz));
 
-        JSONObject beanObj = ProviderUtils.parseObject(record);
-        for (String key : beanObj.keySet()) {
-            if (Objects.equals(pkField, key) || !variables.contains(key)) {
-                continue;
-            }
-            if (beanObj.get(key) == null) {
-                continue;
-            }
-            sql.SET(String.format("`%s` = #{record.%s}", ProviderUtils.conversionName(key), key));
-        }
+        sql = makeSet(sql, record, clazz, pkField, true);
 
-        Collection<Serializable> collection = (Collection) ids;
-        int i = 0;
-        Iterator<Serializable> iterator = collection.iterator();
-        while (iterator.hasNext()) {
-            Serializable id = iterator.next();
-            sql.WHERE(ProviderUtils.conversionName(pkField) + " = #{ids[" + i + "]}");
-            if (iterator.hasNext()) {
-                sql.OR();
-                i++;
-            }
-        }
+        String pk = ProviderUtils.nameConvert(pkField);
+        Collection<Serializable> ids = (Collection) para.get("ids");
+        sql = makeBatchIdWhere(sql, pk, ids);
 
         return sql.toString();
     }
@@ -148,41 +113,13 @@ public class BaseUpdateProvider {
         Class clazz = ProviderUtils.getEntityClass(context);
         String pkField = ProviderUtils.getPrimaryKeyField(clazz);
 
-        SQL sql = new SQL();
-        sql.UPDATE(ProviderUtils.getTableName(clazz));
-        Set<String> variables = new HashSet<>(Arrays.asList(ProviderUtils.getWriteFields(clazz)));
+        SQL sql = new SQL()
+                .UPDATE(ProviderUtils.getTableName(clazz));
 
-        JSONObject beanObj = ProviderUtils.parseObject(target);
-        for (String key : beanObj.keySet()) {
-            if (Objects.equals(pkField, key) || !variables.contains(key)) {
-                continue;
-            }
-            if (beanObj.get(key) == null) {
-                continue;
-            }
-            sql.SET(String.format("`%s` = #{target.%s}", ProviderUtils.conversionName(key), key));
-        }
+        sql = makeSet(sql, target, clazz, pkField, false);
 
-        Object records = para.get("records");
-        Collection collection = (Collection) records;
-        Iterator iterator = collection.iterator();
-        int i = 0;
-        while (iterator.hasNext()) {
-            Object obj = iterator.next();
-            JSONObject a = ProviderUtils.parseObject(obj);
-            for (String key : a.keySet()) {
-                Object value = a.get(key);
-                if (value == null) {
-                    continue;
-                }
-                String values = String.format("#{records[" + i + "].%s}", key);
-                sql.WHERE(ProviderUtils.conversionName(key) + " = " + values);
-            }
-            if (iterator.hasNext()) {
-                sql.OR();
-                i++;
-            }
-        }
+        Collection records = (Collection) para.get("records");
+        sql = makeWhere(sql, records);
 
         return sql.toString();
     }

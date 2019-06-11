@@ -2,7 +2,6 @@ package org.luvx.common.provider;
 
 import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.builder.annotation.ProviderContext;
 import org.apache.ibatis.jdbc.SQL;
 import org.luvx.common.query.Query;
@@ -10,6 +9,7 @@ import org.luvx.common.utils.ProviderUtils;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -19,12 +19,7 @@ import java.util.Objects;
  * @Date: 2019/5/27 19:08
  */
 @Slf4j
-public class BaseSelectProvider {
-
-    // T selectByPrimaryKey(@Param("id") Serializable id);
-    // List<T> selectSelective(@Param("record") T record);
-    // List<T> selectBatchIds(@Param("ids") Collection<Serializable> ids);
-    // List<T> selectSelectiveList(@Param("records") Collection<T> records);
+public class BaseSelectProvider extends BaseProvider {
 
     /**
      * 主键查询
@@ -43,22 +38,67 @@ public class BaseSelectProvider {
                 .toString();
     }
 
-    public String selectBatchIds(ProviderContext context) {
+    /**
+     * 批量主键查询
+     *
+     * @param para
+     * @param context
+     * @return
+     */
+    public String selectBatchIds(Map<String, Object> para, ProviderContext context) {
         Class clazz = ProviderUtils.getEntityClass(context);
-        assert clazz != null;
-        Objects.requireNonNull(clazz, "类对象不可为空");
+        String pk = ProviderUtils.getPrimaryKey(clazz);
 
-        return new SQL()
+        Collection<Serializable> ids = (Collection) para.get("ids");
+        Objects.requireNonNull(ids, "筛选条件不可为空");
+
+        SQL sql = new SQL()
                 .SELECT(ProviderUtils.getSelectColumns(clazz))
-                .FROM(ProviderUtils.getTableName(clazz))
-                .WHERE("id = #{ids}")
-                .toString();
+                .FROM(ProviderUtils.getTableName(clazz));
+
+        sql = makeBatchIdWhere(sql, pk, ids);
+
+        return sql.toString();
     }
 
-    public String ids(Collection<Serializable> ids) {
-        String sql = "`id` in (" + StringUtils.join(ids, ",")
-                + ")";
-        return sql;
+    /**
+     * 条件查询
+     *
+     * @param para
+     * @return
+     */
+    public String selectSelective(Map<String, Object> para) {
+        Object record = para.get("record");
+        Objects.requireNonNull(record, "筛选条件不可为空");
+        Class clazz = record.getClass();
+
+        SQL sql = new SQL()
+                .SELECT(ProviderUtils.getSelectColumns(clazz))
+                .FROM(ProviderUtils.getTableName(clazz));
+
+        sql = makeWhere(sql, record);
+
+        return sql.toString();
+    }
+
+    /**
+     * 批量条件查询
+     *
+     * @param para
+     * @param context
+     * @return
+     */
+    public String selectSelectiveList(Map<String, Object> para, ProviderContext context) {
+        Collection records = (Collection) para.get("records");
+        Class clazz = ProviderUtils.getEntityClass(context);
+        Objects.requireNonNull(clazz, "无法获取插入对象的类型");
+
+        SQL sql = new SQL()
+                .SELECT(ProviderUtils.getSelectColumns(clazz))
+                .FROM(ProviderUtils.getTableName(clazz));
+        sql = makeWhere(sql, records);
+
+        return sql.toString();
     }
 
     public String select(ProviderContext context, Query query) {
@@ -69,6 +109,7 @@ public class BaseSelectProvider {
         }
         return sql.toString();
     }
+
 
     public String selectAll(ProviderContext context, Query query) {
         Class clazz = ProviderUtils.getEntityClass(context);
