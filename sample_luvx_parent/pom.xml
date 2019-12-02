@@ -46,7 +46,7 @@
         <cxf.version>3.0.1</cxf.version>
         <objenesis.version>2.6</objenesis.version>
         <protostuff.version>1.4.0</protostuff.version>
-        <fastjson.version>1.2.31</fastjson.version>
+        <fastjson.version>1.2.62</fastjson.version>
         <!-- apache commons -->
         <commons-lang3.version>3.3.2</commons-lang3.version>
         <commons-io.version>2.4</commons-io.version>
