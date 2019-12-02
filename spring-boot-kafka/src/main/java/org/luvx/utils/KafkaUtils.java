@@ -11,7 +11,6 @@ import org.springframework.util.ClassUtils;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
-import java.io.IOException;
 import java.util.*;
 import java.util.regex.Pattern;
 
@@ -28,21 +27,39 @@ public class KafkaUtils {
     private final static String PROPERTY_PRODUCER_PREFIX = "kafka.producer.";
     private final static String TOPIC_PATTERN_KEY        = "topic.regex";
 
+    public static Properties getProducerProp() {
+        return PropertiesUtils.getProperties("config/kafka/kafka-producer.properties");
+    }
+
+    public static Properties getConsumerProp() {
+        return PropertiesUtils.getProperties("config/kafka/kafka-consumer.properties");
+    }
+
     /**
-     * 加载配置文件
+     * 测试用: 格式化显示消息
      *
-     * @param resource
-     * @return
+     * @param records
      */
-    public static Properties convertToProperties(Resource resource) {
-        try {
-            Properties properties = new Properties();
-            properties.load(resource.getInputStream());
-            return properties;
-        } catch (IOException e) {
-            log.error("", e);
+    public static void print(ConsumerRecords<?, ?> records) {
+        for (ConsumerRecord<?, ?> record : records) {
+            print(record);
         }
-        return null;
+    }
+
+    /**
+     * 测试用: 格式化显示消息
+     *
+     * @param record
+     */
+    public static void print(ConsumerRecord<?, ?> record) {
+        String topic = record.topic();
+        int partitionNum = record.partition();
+        long offset = record.offset();
+        Object key = record.key();
+        Object value = record.value();
+        log.info("------------------消费↓------------------------");
+        log.info("Topic:{} Partition:{} offset:{} key:{} msg:{}", topic, partitionNum, offset, key, value);
+        log.info("------------------消费↑------------------------");
     }
 
     /**
@@ -155,7 +172,7 @@ public class KafkaUtils {
     }
 
     public static Properties retrieveConsumerProperties(Resource resource) {
-        return retrieveProperties(convertToProperties(resource), PROPERTY_CONSUMER_PREFIX);
+        return retrieveProperties(PropertiesUtils.getProperties(resource), PROPERTY_CONSUMER_PREFIX);
     }
 
     /**
@@ -167,7 +184,7 @@ public class KafkaUtils {
     }
 
     public static Properties retrieveProducerProperties(Resource resource) {
-        return retrieveProperties(convertToProperties(resource), PROPERTY_PRODUCER_PREFIX);
+        return retrieveProperties(PropertiesUtils.getProperties(resource), PROPERTY_PRODUCER_PREFIX);
     }
 
     public static Properties retrieveProducerProperties(Properties properties) {
@@ -175,25 +192,25 @@ public class KafkaUtils {
     }
 
     private static Properties retrieveProperties(Properties properties, String otherPrefix) {
-        Properties kafkaPro = new Properties();
+        Properties p = new Properties();
         Set<java.util.Map.Entry<Object, Object>> set = properties.entrySet();
         String key = null;
         for (java.util.Map.Entry<Object, Object> entry : set) {
             key = (String) entry.getKey();
             if (StringUtils.hasText(key)) {
                 if (key.startsWith(otherPrefix)) {
-                    kafkaPro.put(key.substring(otherPrefix.length()), entry.getValue());
+                    p.put(key.substring(otherPrefix.length()), entry.getValue());
                 } else if (key.startsWith(PROPERTY_PREFIX, 0)) {
                     if ((PROPERTY_PRODUCER_PREFIX.equals(otherPrefix)
                             && !key.startsWith(PROPERTY_CONSUMER_PREFIX))
                             || (PROPERTY_CONSUMER_PREFIX.equals(otherPrefix)
                             && !key.startsWith(PROPERTY_PRODUCER_PREFIX))) {
-                        kafkaPro.put(key.substring(PROPERTY_PREFIX.length()), entry.getValue());
+                        p.put(key.substring(PROPERTY_PREFIX.length()), entry.getValue());
                     }
                 }
             }
         }
-        return kafkaPro;
+        return p;
     }
 
     private static class DefaultConsumerRebalanceListener<K, V> implements ConsumerRebalanceListener {

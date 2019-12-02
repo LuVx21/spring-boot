@@ -1,4 +1,3 @@
-https://segmentfault.com/a/1190000015316875
 
 ```bash
 /usr/local/zookeeper/bin/zkServer.sh start
