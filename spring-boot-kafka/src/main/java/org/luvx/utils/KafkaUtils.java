@@ -5,7 +5,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.*;
 import org.apache.kafka.common.TopicPartition;
 import org.springframework.beans.factory.InitializingBean;
-import org.springframework.core.io.Resource;
 import org.springframework.util.Assert;
 import org.springframework.util.ClassUtils;
 import org.springframework.util.CollectionUtils;
@@ -22,10 +21,10 @@ import java.util.regex.Pattern;
  */
 @Slf4j
 public class KafkaUtils {
-    private final static String PROPERTY_PREFIX          = "kafka.";
-    private final static String PROPERTY_CONSUMER_PREFIX = "kafka.consumer.";
-    private final static String PROPERTY_PRODUCER_PREFIX = "kafka.producer.";
-    private final static String TOPIC_PATTERN_KEY        = "topic.regex";
+    private final static String PREFIX_KAFKA          = "kafka.";
+    private final static String PREFIX_KAFKA_CONSUMER = "kafka.consumer.";
+    private final static String PREFIX_KAFKA_PRODUCER = "kafka.producer.";
+    private final static String PREFIX_TOPIC          = "topic.regex";
 
     public static Properties getProducerProp() {
         return PropertiesUtils.getProperties("config/kafka/kafka-producer.properties");
@@ -70,7 +69,7 @@ public class KafkaUtils {
      * @return
      */
     public static Collection<String> resolveTopics(Collection<String> topics, String topicPrefix) {
-        Assert.notEmpty(topics, "Topics should not be empty!");
+        Assert.notEmpty(topics, "Topics不可为空");
         List<String> list = new ArrayList<>(topics.size());
         for (String topic : topics) {
             list.add(topicPrefix + topic);
@@ -78,36 +77,6 @@ public class KafkaUtils {
         return list;
     }
 
-    /**
-     * 创建消费者
-     *
-     * @param consumerClass
-     * @param resource
-     * @param topicPrefix
-     * @param topics
-     * @return
-     */
-    public static <K, V> MessageConsumer<K, V> createConsumer(String consumerClass, Resource resource,
-                                                              String topicPrefix, List<String> topics) {
-        return createConsumer(consumerClass, retrieveConsumerProperties(resource), topicPrefix, topics);
-    }
-
-    /**
-     * Create a new consumer.
-     *
-     * @return
-     */
-    public static <K, V> MessageConsumer<K, V> createConsumer(String consumerClass,
-                                                              Properties properties, String topicPrefix) {
-        return createConsumer(consumerClass, retrieveConsumerProperties(properties), topicPrefix, null);
-    }
-
-    /**
-     * Create a new consumer.
-     *
-     * @return
-     */
-    @SuppressWarnings("unchecked")
     public static <K, V> MessageConsumer<K, V> createConsumer(String consumerClass, Properties properties,
                                                               String topicPrefix, List<String> topics) {
         log.info("Create a consumer: consumerClass={},topicPrefix={},topics={},properties={}",
@@ -137,28 +106,26 @@ public class KafkaUtils {
         ConsumerRecord<K, V> record = null;
         while (iterator.hasNext()) {
             record = iterator.next();
-            offsets.put(new TopicPartition(record.topic(), record.partition()),
-                    new OffsetAndMetadata(record.offset() + 1));
+            offsets = convertToOffsets(record, offsets);
         }
         return offsets;
     }
 
-    public static <K, V> Map<TopicPartition, OffsetAndMetadata> convertToOffsets(ConsumerRecord<K, V> record) {
-        Map<TopicPartition, OffsetAndMetadata> offsets = new LinkedHashMap<>();
+    public static <K, V> Map<TopicPartition, OffsetAndMetadata> convertToOffsets(ConsumerRecord<K, V> record,
+                                                                                 Map<TopicPartition, OffsetAndMetadata> offsets) {
         offsets.put(new TopicPartition(record.topic(), record.partition()),
                 new OffsetAndMetadata(record.offset() + 1));
         return offsets;
     }
 
     private static String retrieveTopicRegex(Properties properties) {
-        String patternValue = properties.getProperty(TOPIC_PATTERN_KEY);
-        if (StringUtils.hasLength(patternValue)) {
-            properties.remove(TOPIC_PATTERN_KEY);
+        String value = properties.getProperty(PREFIX_TOPIC);
+        if (StringUtils.hasLength(value)) {
+            properties.remove(PREFIX_TOPIC);
         }
-        return patternValue;
+        return value;
     }
 
-    @SuppressWarnings("unchecked")
     public static <K, V> MessageListener<K, V> createMessageListener(String messageListenerClass) {
         Assert.hasText(messageListenerClass, "MessageListener should not be empty!");
         MessageListener<K, V> listener = null;
@@ -171,42 +138,35 @@ public class KafkaUtils {
         return listener;
     }
 
-    public static Properties retrieveConsumerProperties(Resource resource) {
-        return retrieveProperties(PropertiesUtils.getProperties(resource), PROPERTY_CONSUMER_PREFIX);
-    }
-
     /**
+     * 简化配置
+     *
      * @param properties
+     * @param otherPrefix
      * @return
      */
-    public static Properties retrieveConsumerProperties(Properties properties) {
-        return retrieveProperties(properties, PROPERTY_CONSUMER_PREFIX);
-    }
-
-    public static Properties retrieveProducerProperties(Resource resource) {
-        return retrieveProperties(PropertiesUtils.getProperties(resource), PROPERTY_PRODUCER_PREFIX);
-    }
-
-    public static Properties retrieveProducerProperties(Properties properties) {
-        return retrieveProperties(properties, PROPERTY_PRODUCER_PREFIX);
-    }
-
-    private static Properties retrieveProperties(Properties properties, String otherPrefix) {
+    public static Properties retrieveProperties(Properties properties, String otherPrefix) {
         Properties p = new Properties();
-        Set<java.util.Map.Entry<Object, Object>> set = properties.entrySet();
+        Set<Map.Entry<Object, Object>> set = properties.entrySet();
         String key = null;
-        for (java.util.Map.Entry<Object, Object> entry : set) {
+        for (Map.Entry<Object, Object> entry : set) {
             key = (String) entry.getKey();
             if (StringUtils.hasText(key)) {
+
                 if (key.startsWith(otherPrefix)) {
                     p.put(key.substring(otherPrefix.length()), entry.getValue());
-                } else if (key.startsWith(PROPERTY_PREFIX, 0)) {
-                    if ((PROPERTY_PRODUCER_PREFIX.equals(otherPrefix)
-                            && !key.startsWith(PROPERTY_CONSUMER_PREFIX))
-                            || (PROPERTY_CONSUMER_PREFIX.equals(otherPrefix)
-                            && !key.startsWith(PROPERTY_PRODUCER_PREFIX))) {
-                        p.put(key.substring(PROPERTY_PREFIX.length()), entry.getValue());
+                } else if (key.startsWith(PREFIX_KAFKA, 0)) {
+
+                    if (PREFIX_KAFKA_PRODUCER.equals(otherPrefix)) {
+                        if (!key.startsWith(PREFIX_KAFKA_CONSUMER)) {
+                            p.put(key.substring(PREFIX_KAFKA.length()), entry.getValue());
+                        }
+                    } else if (PREFIX_KAFKA_CONSUMER.equals(otherPrefix)) {
+                        if (!key.startsWith(PREFIX_KAFKA_PRODUCER)) {
+                            p.put(key.substring(PREFIX_KAFKA.length()), entry.getValue());
+                        }
                     }
+
                 }
             }
         }
@@ -223,12 +183,10 @@ public class KafkaUtils {
         @Override
         public void onPartitionsRevoked(Collection<TopicPartition> partitions) {
             consumer.commitSync();
-            log.info("Rebalance occured, commit offset manually!");
         }
 
         @Override
         public void onPartitionsAssigned(Collection<TopicPartition> partitions) {
-            log.info("Partitions are assigned");
         }
     }
 
@@ -236,7 +194,7 @@ public class KafkaUtils {
 
         void onMessage(ConsumerRecords<K, V> data);
 
-        // void onMessage(ConsumerRecords<K, V> data, CommitCallback<K, V> callback);
+        void onMessage(ConsumerRecords<K, V> data, OffsetCommitCallback callback);
     }
 
     public interface MessageConsumer<K, V> extends InitializingBean {
