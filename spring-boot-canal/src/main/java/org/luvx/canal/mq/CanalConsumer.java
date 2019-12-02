@@ -10,6 +10,7 @@ import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.common.TopicPartition;
 import org.apache.kafka.common.serialization.StringDeserializer;
 
+import java.time.Duration;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
@@ -36,9 +37,7 @@ public class CanalConsumer {
         props.put("key.deserializer", StringDeserializer.class.getName());
         props.put("value.deserializer", StringDeserializer.class.getName());
 
-
         Consumer<String, String> consumer = new KafkaConsumer<>(props);
-
 
         TopicPartition partition = new TopicPartition("boot", 0);
         // 已存在的group.id
@@ -56,7 +55,7 @@ public class CanalConsumer {
 
         for (int i = 0; i < 100; i++) {
             Thread.sleep(2 * 1000);
-            consumerRecords = consumer.poll(1000);
+            consumerRecords = consumer.poll(Duration.ofMillis(1 * 1000));
             method(consumerRecords);
         }
 
