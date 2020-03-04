@@ -98,6 +98,10 @@ public class V1Controller {
      * 上传, 上传多个文件时可以重复调用这个方法
      * application/octet-stream
      * multipart/form-data
+     * http://127.0.0.1:8090/v1/pet/pets/1/upload
+     *
+     * @param petId
+     * @param file
      */
     @PostMapping(value = {"/pets/{petId}/upload"})
     public void upload(@PathVariable Long petId, @RequestParam("file") MultipartFile file) {
@@ -108,15 +112,16 @@ public class V1Controller {
 
     /**
      * 下载
+     * http://127.0.0.1:8090/v1/pet/pets/1/download/ud
      *
      * @param petId
      * @param request
      * @return
      */
-    @GetMapping(value = {"/pets/{petId}/download"})
-    public ResponseEntity<Resource> download(@PathVariable Long petId, HttpServletRequest request) {
-        // 假设根据petId获取到一个文件名
-        String fileName = "";
+    @GetMapping(value = {"/pets/{petId}/download/{fileName:.*}"})
+    public ResponseEntity<Resource> download(@PathVariable Long petId, @PathVariable String fileName,
+                                             HttpServletRequest request) {
+        log.info("下载宠物{}的照片:{}", petId, fileName);
         Resource resource = service.loadFile(fileName);
 
         String contentType = null;
