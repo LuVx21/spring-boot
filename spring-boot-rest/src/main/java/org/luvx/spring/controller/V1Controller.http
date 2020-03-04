@@ -1,0 +1,55 @@
+
+### 增
+
+POST http://127.0.0.1:8090/v1/pet/pets HTTP/1.1
+content-type: application/json
+
+{
+  "id": 1,
+  "name": "foo, bar",
+  "age": 18
+}
+
+### 删
+
+DELETE http://127.0.0.1:8090/v1/pet/pets/1 HTTP/1.1
+content-type: application/json
+
+### 改1
+
+PUT http://127.0.0.1:8090/v1/pet/pets/1 HTTP/1.1
+content-type: application/json
+
+{
+  "id": 1,
+  "name": "foo, bar",
+  "age": 18
+}
+
+### 改2
+
+PATCH http://127.0.0.1:8090/v1/pet/pets/1 HTTP/1.1
+content-type: application/json
+
+{
+  "name": "foo, bar1"
+}
+
+### 查1
+
+GET http://127.0.0.1:8090/v1/pet/pets/1 HTTP/1.1
+content-type: application/json
+
+### 查2
+
+GET http://127.0.0.1:8090/v1/pet/pets HTTP/1.1
+content-type: application/json
+
+{
+  "id": 1,
+  "name": "foo, bar",
+  "age": 18
+}
+
+###
+
