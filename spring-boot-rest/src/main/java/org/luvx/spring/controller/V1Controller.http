@@ -51,5 +51,24 @@ content-type: application/json
   "age": 18
 }
 
+### 上传
+
+POST http://127.0.0.1:8090/v1/pet/pets/1/upload HTTP/1.1
+Cache-Control: no-cache
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="file"; filename="1.jpg"
+Content-Type: image/jpeg
+
+< /Users/root/Desktop/1.jpg
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
+
+### 下载
+
+GET http://127.0.0.1:8090/v1/pet/pets/1/download/1.jpg HTTP/1.1
+Cache-Control: no-cache
+Content-Type: application/octet-stream
+
 ###
 
