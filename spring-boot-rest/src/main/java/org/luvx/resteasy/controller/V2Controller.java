@@ -123,18 +123,19 @@ public class V2Controller {
     public Response download(@PathParam("petId") Long petId, @PathParam("fileName") String fileName,
                              @Context HttpServletRequest request) throws IOException {
         log.info("下载宠物{}的照片:{}", petId, fileName);
-        Resource resource = service.loadFile(fileName);
 
         if (fileName == null || fileName.isEmpty()) {
-            ResponseBuilder builder = Response.status(Status.NOT_FOUND);
-            return builder.build();
+            return Response
+                    .status(Status.NOT_FOUND)
+                    .build();
         }
-
+        Resource resource = service.loadFile(fileName);
         File file = resource.getFile();
 
-        ResponseBuilder builder = Response.ok(file);
-        builder.header("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
-        return builder.build();
+        return Response.ok(file)
+                .header("Content-Disposition", "attachment; filename=\"" + fileName + "\"")
+                .header("Cache-Control", "no-cache")
+                .build();
     }
 
 }
