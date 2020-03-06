@@ -1,11 +1,22 @@
 package org.luvx.resteasy.controller;
 
 import lombok.extern.slf4j.Slf4j;
+import org.jboss.resteasy.plugins.providers.multipart.MultipartFormDataInput;
+import org.luvx.resteasy.service.V2Service;
 import org.luvx.spring.entity.Pet;
-import org.springframework.http.MediaType;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.ResponseBuilder;
+import javax.ws.rs.core.Response.Status;
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -17,8 +28,6 @@ import java.util.List;
 @Slf4j
 @Component
 @Path("/v2/pet")
-@Consumes(MediaType.APPLICATION_JSON_UTF8_VALUE)
-@Produces(MediaType.APPLICATION_JSON_UTF8_VALUE)
 public class V2Controller {
     /**
      * 新增, 可以和 update 合成一个
@@ -79,54 +88,53 @@ public class V2Controller {
         return null;
     }
 
-    // private V1Service service;
-    //
-    // @Autowired
-    // public void setService(V1Service service) {
-    //     this.service = service;
-    // }
-    //
-    // /**
-    //  * 上传, 上传多个文件时可以重复调用这个方法
-    //  * application/octet-stream
-    //  * multipart/form-data
-    //  */
-    // @POST
-    // @Path("/pets/{petId}/upload")
-    // public void upload(@PathVariable Long petId, @RequestParam("file") MultipartFile file) {
-    //     /// List<MultipartFile> files = ((MultipartHttpServletRequest) request).getFiles("file");
-    //     String fileName = service.storeFile(file);
-    //     log.info("宠物{}增加了照片:{}", petId, fileName);
-    // }
-    //
-    // /**
-    //  * 下载
-    //  *
-    //  * @param petId
-    //  * @param request
-    //  * @return
-    //  */
-    // @GET
-    // @Path("/pets/{petId}/download")
-    // public ResponseEntity<Resource> download(@PathVariable Long petId, HttpServletRequest request) {
-    //     // 假设根据petId获取到一个文件名
-    //     String fileName = "";
-    //     Resource resource = service.loadFile(fileName);
-    //
-    //     String contentType = null;
-    //     try {
-    //         contentType = request.getServletContext().getMimeType(resource.getFile().getAbsolutePath());
-    //     } catch (IOException ex) {
-    //         log.info("获取类型异常");
-    //     }
-    //     if (contentType == null) {
-    //         contentType = MediaType.APPLICATION_OCTET_STREAM_VALUE;
-    //     }
-    //
-    //     return ResponseEntity.ok()
-    //             .contentType(MediaType.parseMediaType(contentType))
-    //             .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
-    //             .body(resource);
-    // }
+    private V2Service service;
+
+    @Autowired
+    public void setService(V2Service service) {
+        this.service = service;
+    }
+
+    /**
+     * 上传 // TODO NPE
+     *
+     * @param petId
+     * @param input
+     */
+    @POST
+    @Path("/pets/{petId}/upload")
+    // @Consumes(MediaType.MULTIPART_FORM_DATA)
+    @Produces(MediaType.APPLICATION_OCTET_STREAM)
+    public void upload(@PathParam("petId") Long petId, MultipartFormDataInput input) {
+        System.out.println("id: " + petId);
+        String fileName = service.storeFile(input);
+        log.info("宠物{}增加了照片:{}", petId, fileName);
+    }
+
+    /**
+     * 下载
+     *
+     * @param petId
+     * @param request
+     * @return
+     */
+    @GET
+    @Path("/pets/{petId}/download/{fileName}")
+    public Response download(@PathParam("petId") Long petId, @PathParam("fileName") String fileName,
+                             @Context HttpServletRequest request) throws IOException {
+        log.info("下载宠物{}的照片:{}", petId, fileName);
+        Resource resource = service.loadFile(fileName);
+
+        if (fileName == null || fileName.isEmpty()) {
+            ResponseBuilder builder = Response.status(Status.NOT_FOUND);
+            return builder.build();
+        }
+
+        File file = resource.getFile();
+
+        ResponseBuilder builder = Response.ok(file);
+        builder.header("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
+        return builder.build();
+    }
 
 }
