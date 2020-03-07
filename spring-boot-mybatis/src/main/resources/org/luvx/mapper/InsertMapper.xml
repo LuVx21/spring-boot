@@ -57,11 +57,12 @@
         </trim>
     </insert>
 
-    <insert id="insertList" parameterType="java.util.List">
+    <insert id="insertList" parameterType="java.util.List"
+            useGeneratedKeys="true" keyProperty="id" >
         insert into user
           (user_name, password, age)
         values
-        <foreach collection="records" item="item" index="index" separator=",">
+        <foreach collection="list" item="item" index="index" separator=",">
             (#{item.userName, jdbcType=VARCHAR}, #{item.password, jdbcType=VARCHAR},#{item.age,javaType=INT})
         </foreach>
     </insert>

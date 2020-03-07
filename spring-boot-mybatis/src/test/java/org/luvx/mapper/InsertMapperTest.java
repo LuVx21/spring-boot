@@ -53,8 +53,11 @@ public class InsertMapperTest {
                 .password("bar")
                 .age(18)
                 .build();
-
+        log.info("插入前user1: {}", user1);
+        log.info("插入前user2: {}", user1);
         userMapper.insertList(Arrays.asList(user1, user2));
+        log.info("插入后user1: {}", user1);
+        log.info("插入后user2: {}", user2);
     }
 
     @Test

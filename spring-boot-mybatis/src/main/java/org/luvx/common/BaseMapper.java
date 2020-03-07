@@ -36,7 +36,7 @@ public interface BaseMapper<T> {
      * @param records
      * @return
      */
-    int insertList(@Param("records") Collection<T> records);
+    int insertList(Collection<T> records);
 
     /**
      * 同insertList 废弃
