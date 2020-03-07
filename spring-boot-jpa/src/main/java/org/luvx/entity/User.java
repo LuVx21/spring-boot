@@ -2,10 +2,7 @@ package org.luvx.entity;
 
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 
 @Data
@@ -19,6 +16,8 @@ public class User implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
+    @Column(name = "id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long    id;
     @Column(nullable = false, unique = true)
     private String  userName;
