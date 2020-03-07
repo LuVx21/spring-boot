@@ -1,5 +1,6 @@
 package org.luvx.mapper;
 
+import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.luvx.entity.User;
@@ -9,6 +10,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Arrays;
 
+@Slf4j
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class InsertMapperTest {
@@ -23,7 +25,9 @@ public class InsertMapperTest {
                 .password("bar")
                 .age(18)
                 .build();
+        log.info("插入前: {}", user);
         userMapper.insert(user);
+        log.info("插入后: {}", user);
     }
 
     @Test
@@ -32,7 +36,9 @@ public class InsertMapperTest {
                 .userName("foo")
                 .password("bar")
                 .build();
+        log.info("插入前: {}", user);
         userMapper.insertSelective(user);
+        log.info("插入后: {}", user);
     }
 
     @Test

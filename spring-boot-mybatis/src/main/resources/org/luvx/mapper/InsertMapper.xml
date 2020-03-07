@@ -12,7 +12,8 @@
       id, user_name, password, age
     </sql>
 
-    <insert id="insert" parameterType="org.luvx.entity.User">
+    <insert id="insert" parameterType="org.luvx.entity.User"
+            useGeneratedKeys="true" keyProperty="record.id" >
         insert into user
           (
             id, user_name, password, age
@@ -23,7 +24,8 @@
           )
     </insert>
 
-    <insert id="insertSelective" parameterType="org.luvx.entity.User">
+    <insert id="insertSelective" parameterType="org.luvx.entity.User"
+            useGeneratedKeys="true" keyProperty="record.id" >
         insert into user
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="record.id != null">
