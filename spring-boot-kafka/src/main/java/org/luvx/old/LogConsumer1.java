@@ -1,15 +1,14 @@
 package org.luvx.old;
 
 import lombok.extern.slf4j.Slf4j;
-import org.apache.kafka.clients.consumer.Consumer;
-import org.apache.kafka.clients.consumer.ConsumerRecords;
-import org.apache.kafka.clients.consumer.KafkaConsumer;
+import org.apache.kafka.clients.consumer.*;
 import org.apache.kafka.common.TopicPartition;
 import org.luvx.utils.KafkaUtils;
 import org.springframework.stereotype.Component;
 
 import java.time.Duration;
 import java.util.Arrays;
+import java.util.Map;
 import java.util.Properties;
 
 /**
@@ -31,6 +30,20 @@ public class LogConsumer1 {
         while (true) {
             ConsumerRecords<String, String> records = consumer.poll(Duration.ofMillis(100));
             KafkaUtils.print(records);
+            // 自动commit已关闭
+            // 同步commit
+            // consumer.commitSync();
+            // 异步commit
+            consumer.commitAsync(
+                    new OffsetCommitCallback() {
+                        @Override
+                        public void onComplete(Map<TopicPartition, OffsetAndMetadata> offsets, Exception exception) {
+                            if (exception != null) {
+                                log.error("commit exception! offset:{}", offsets);
+                            }
+                        }
+                    }
+            );
         }
     }
 
