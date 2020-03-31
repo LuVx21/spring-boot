@@ -1,4 +1,4 @@
-package org.luvx._new.config;
+package org.luvx.common.config;
 
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -12,10 +12,10 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 @EnableConfigurationProperties(KafkaTopicProperties.class)
-public class KafkaTopicConfiguration {
+public class KafkaTopicConfig {
     private final KafkaTopicProperties properties;
 
-    public KafkaTopicConfiguration(KafkaTopicProperties properties) {
+    public KafkaTopicConfig(KafkaTopicProperties properties) {
         this.properties = properties;
     }
 
