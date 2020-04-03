@@ -5,7 +5,7 @@
 <generatorConfiguration>
 
     <classPathEntry
-            location="C:\Users\xinmei\.m2\repository\mysql\mysql-connector-java\5.1.44\mysql-connector-java-5.1.44.jar"/>
+            location="/Users/renxie/.m2/repository/mysql/mysql-connector-java/5.1.44/mysql-connector-java-5.1.44.jar"/>
 
     <context id="DB2Tables" targetRuntime="MyBatis3">
         <!-- 控制注释 -->
@@ -41,9 +41,9 @@
             <property name="enableSubPackages" value="true"/>
         </sqlMapGenerator>
 
-        <!-- 控制mapper接口 -->
+        <!-- 控制mapper接口 XMLMAPPER,ANNOTATEDMAPPER -->
         <javaClientGenerator
-                type="XMLMAPPER" targetProject="src/main/java" targetPackage="org.luvx.test.mapper">
+                type="ANNOTATEDMAPPER" targetProject="src/main/java" targetPackage="org.luvx.test.mapper">
             <property name="enableSubPackages" value="true"/>
             <property name="methodNameCalculator" value="extended"/>
         </javaClientGenerator>

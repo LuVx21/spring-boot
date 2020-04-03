@@ -6,6 +6,7 @@ import org.mybatis.generator.config.xml.ConfigurationParser;
 import org.mybatis.generator.internal.DefaultShellCallback;
 
 import java.io.File;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +18,8 @@ import java.util.List;
  */
 public class GenerMybatisTool {
 
-    private static final String path = "D:\\code\\OneDrive\\Code\\luvx_trial\\spring-boot-mybatis\\src\\main\\java\\org\\luvx\\tools\\mbg_configuration.xml";
+    private static final String path = Paths.get("./src/main/java").toAbsolutePath().normalize()
+            + "/org/luvx/tools/mbg_configuration.xml";
 
     public static void main(String[] args) {
         generateMbgConfiguration();
