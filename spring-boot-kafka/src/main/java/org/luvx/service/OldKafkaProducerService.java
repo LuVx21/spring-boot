@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.producer.*;
 import org.luvx.common.config.KafkaConfig;
 import org.luvx.common.entity.User;
+import org.luvx.common.interceptor.MyProducerInterceptor;
 import org.luvx.common.partitioner.MyPartitioner;
 import org.luvx.common.utils.KafkaUtils;
 import org.springframework.stereotype.Service;
@@ -27,7 +28,9 @@ public class OldKafkaProducerService {
     public void send(User user) {
         Properties props = KafkaUtils.getProducerProp();
         /// 自定义分区器
-        /// props.put(ProducerConfig.PARTITIONER_CLASS_CONFIG, MyPartitioner.class.getName());
+        props.put(ProducerConfig.PARTITIONER_CLASS_CONFIG, MyPartitioner.class.getName());
+        /// 添加拦截器
+        props.put(ProducerConfig.INTERCEPTOR_CLASSES_CONFIG, MyProducerInterceptor.class.getName());
         Producer<String, User> producer = new KafkaProducer<>(props);
 
         ProducerRecord<String, User> producerRecord = new ProducerRecord<>(
