@@ -1,5 +1,9 @@
 package org.luvx.spring.controller;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.luvx.spring.entity.Pet;
 import org.luvx.spring.service.V1Service;
@@ -20,6 +24,7 @@ import java.util.List;
  * @desc:
  */
 @Slf4j
+@Api(value = "pet", description = "宠物", produces = MediaType.APPLICATION_JSON_VALUE)
 @RestController
 @RequestMapping("/v1/pet")
 public class V1Controller {
@@ -28,9 +33,12 @@ public class V1Controller {
      *
      * @param pet
      */
+    @ApiOperation(value = "新增/更新宠物信息", notes = "用于新增/更新宠物信息")
+    @ApiImplicitParam(name = "pet", value = "宠物实体", required = false, dataType = "Pet")
     @PostMapping(value = {"/pets"})
-    public void add(@RequestBody Pet pet) {
+    public Pet add(@RequestBody Pet pet) {
         System.out.println(pet);
+        return pet;
     }
 
     /**
@@ -81,6 +89,7 @@ public class V1Controller {
      *
      * @return
      */
+    @ApiOperation(value = "获取宠物信息", notes = "用于获取宠物信息")
     @GetMapping(value = {"/pets"})
     public List<Pet> list(@RequestBody Pet pet) {
         log.info("select2:{}", pet);

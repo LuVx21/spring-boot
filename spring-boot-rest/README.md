@@ -4,4 +4,5 @@ rest api
 RESTful: Jersey框架
 
 
-resteasy 异步调用不成功
+[swagger ui](http://localhost:8090/swagger-ui.html)
+
