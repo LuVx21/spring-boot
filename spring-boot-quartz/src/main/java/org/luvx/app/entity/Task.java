@@ -13,9 +13,10 @@ import javax.persistence.Id;
 @Data
 public class Task {
     @Id
-    private Long   id;
-    private String cron;
-    private String jobKey;
-    private String jobGroup;
-    private String descr;
+    private Long    id;
+    private String  cron;
+    private String  jobKey;
+    private String  jobGroup;
+    private String  descr;
+    private Boolean isDeleted;
 }
