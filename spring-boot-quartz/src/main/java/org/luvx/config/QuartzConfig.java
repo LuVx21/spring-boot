@@ -5,10 +5,15 @@ import org.luvx.job.BaseJob;
 import org.luvx.job.custom.CustomJob1;
 import org.quartz.JobDataMap;
 import org.quartz.JobDetail;
+import org.quartz.Scheduler;
 import org.quartz.Trigger;
+import org.quartz.spi.TriggerFiredBundle;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.quartz.*;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +24,7 @@ import java.util.List;
  * @Author: Ren, Xie
  * @Date: 2019/3/7 10:02
  */
-@Configuration
+// @Configuration
 public class QuartzConfig {
     @Bean("methodInvokingJobDetailFactoryBean")
     public MethodInvokingJobDetailFactoryBean methodInvokingJobDetailFactoryBean() {
@@ -91,6 +96,29 @@ public class QuartzConfig {
     public class JobConfigBean {
         private JobDetail[] jobDetails;
         private Trigger[]   triggers;
+    }
+
+    @Component("quartzJobFactory")
+    public class QuartzJobFactory extends AdaptableJobFactory {
+        @Autowired
+        private AutowireCapableBeanFactory capableBeanFactory;
+
+        @Override
+        protected Object createJobInstance(TriggerFiredBundle bundle) throws Exception {
+            Object jobInstance = super.createJobInstance(bundle);
+            capableBeanFactory.autowireBean(jobInstance);
+            return jobInstance;
+        }
+    }
+
+    @Bean(name = "scheduler")
+    public Scheduler scheduler(QuartzJobFactory quartzJobFactory) throws Exception {
+        SchedulerFactoryBean factoryBean = new SchedulerFactoryBean();
+        factoryBean.setJobFactory(quartzJobFactory);
+        factoryBean.afterPropertiesSet();
+        Scheduler scheduler = factoryBean.getScheduler();
+        scheduler.start();
+        return scheduler;
     }
 }
 

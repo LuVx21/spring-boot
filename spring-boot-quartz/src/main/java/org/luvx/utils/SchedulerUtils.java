@@ -35,6 +35,21 @@ public class SchedulerUtils {
     }
 
     /**
+     * 更新 cron
+     *
+     * @param jobName
+     * @param jobGroup
+     */
+    public static void updateJobCron(String jobName, String jobGroup, String cron) throws SchedulerException {
+        Scheduler scheduler = getScheduler();
+        TriggerKey triggerKey = TriggerKey.triggerKey(jobName, jobGroup);
+        CronTrigger trigger = (CronTrigger) scheduler.getTrigger(triggerKey);
+        CronScheduleBuilder scheduleBuilder = CronScheduleBuilder.cronSchedule(cron);
+        trigger = trigger.getTriggerBuilder().withIdentity(triggerKey).withSchedule(scheduleBuilder).build();
+        scheduler.rescheduleJob(triggerKey, trigger);
+    }
+
+    /**
      * 删除定时任务
      *
      * @param jobName
@@ -58,6 +73,19 @@ public class SchedulerUtils {
         Scheduler scheduler = getScheduler();
         JobKey jobKey = new JobKey(jobName, jobGroup);
         scheduler.pauseJob(jobKey);
+    }
+
+    /**
+     * 触发任务
+     *
+     * @param jobName
+     * @param jobGroup
+     * @throws SchedulerException
+     */
+    public static void triggerJob(String jobName, String jobGroup) throws SchedulerException {
+        Scheduler scheduler = getScheduler();
+        JobKey jobKey = new JobKey(jobName, jobGroup);
+        scheduler.triggerJob(jobKey);
     }
 
     /**
@@ -94,15 +122,15 @@ public class SchedulerUtils {
      * @throws SchedulerException
      */
     private static void scheduleJob(String cron, Scheduler scheduler,
-                                    String jobName, String jobGroup, Class<? extends Job> jobClass)
+                                    String jobName, String jobGroup,
+                                    Class<? extends Job> jobClass)
             throws SchedulerException {
         JobDetail jobDetail = JobBuilder.newJob(jobClass)
                 .withIdentity(jobName, jobGroup)
                 .build();
-        CronScheduleBuilder scheduleBuilder = CronScheduleBuilder.cronSchedule(cron);
         CronTrigger cronTrigger = TriggerBuilder.newTrigger()
                 .withIdentity(jobName, jobGroup)
-                .withSchedule(scheduleBuilder)
+                .withSchedule(CronScheduleBuilder.cronSchedule(cron))
                 .build();
 
         scheduler.scheduleJob(jobDetail, cronTrigger);
