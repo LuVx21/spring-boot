@@ -8,8 +8,8 @@ import org.luvx.listener.SchedulerListener;
 import org.quartz.*;
 import org.quartz.impl.StdSchedulerFactory;
 import org.quartz.impl.matchers.KeyMatcher;
+import org.springframework.scheduling.quartz.QuartzJobBean;
 
-import java.time.LocalDateTime;
 import java.util.Arrays;
 
 /**
@@ -21,13 +21,21 @@ import java.util.Arrays;
  * 可以在运行时选择不同的自定义内容job赋值给customJob达到切换不同执行策略的目的
  */
 @Slf4j
-public class BaseJob implements Job {
+public class BaseJob
+        // implements Job {
+        extends QuartzJobBean {
     @Setter
     private CustomJob customJob;
 
+    // @Override
+    // public void execute(JobExecutionContext context) throws JobExecutionException {
+    //     if (customJob != null) {
+    //         customJob.execute(context);
+    //     }
+    // }
+
     @Override
-    public void execute(JobExecutionContext context) {
-        log.info("执行自定义定时任务: {}", LocalDateTime.now());
+    protected void executeInternal(JobExecutionContext context) throws JobExecutionException {
         if (customJob != null) {
             customJob.execute(context);
         }

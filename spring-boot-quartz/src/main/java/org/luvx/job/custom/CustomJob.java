@@ -2,7 +2,8 @@ package org.luvx.job.custom;
 
 import lombok.extern.slf4j.Slf4j;
 import org.quartz.JobExecutionContext;
-import org.springframework.stereotype.Component;
+
+import java.io.Serializable;
 
 /**
  * @ClassName: org.luvx.task
@@ -11,7 +12,7 @@ import org.springframework.stereotype.Component;
  * @Date: 2019/3/7 11:06
  */
 @Slf4j
-public abstract class CustomJob {
+public abstract class CustomJob implements Serializable {
     /**
      * jod执行入口
      */

@@ -9,11 +9,11 @@ import java.time.LocalDateTime;
 public class CustomJob1 extends CustomJob {
     @Override
     public void execute(JobExecutionContext context) {
-        log.info("执行自定义定时任务: {}", LocalDateTime.now());
+        log.info("执行自定义定时任务(有参): {}", LocalDateTime.now());
     }
 
     @Override
     public void executeNoArgs() {
-        log.info("执行自定义定时任务: {}", LocalDateTime.now());
+        log.info("执行自定义定时任务(无参): {}", LocalDateTime.now());
     }
 }
