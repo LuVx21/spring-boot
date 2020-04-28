@@ -25,8 +25,6 @@ import java.util.List;
 @RequestMapping("/schedule")
 public class TaskScheduleController {
     @Autowired
-    public  SchedulerUtils  schedulerUtils;
-    @Autowired
     private TaskServiceImpl service;
 
     /**
@@ -40,7 +38,7 @@ public class TaskScheduleController {
     public Object auto() throws SchedulerException, ClassNotFoundException {
         List<TaskEntity> allAutoTask = service.getAllAutoTask();
         for (TaskEntity task : allAutoTask) {
-            schedulerUtils.startJob(task.getCron(),
+            SchedulerUtils.startJob(task.getCron(),
                     task.getJobKey(),
                     task.getJobGroup(),
                     (Class<? extends Job>) Class.forName(task.getClazz())
@@ -62,7 +60,7 @@ public class TaskScheduleController {
     @GetMapping(value = "/job2")
     public ResponseEntity scheduleJob2() {
         try {
-            schedulerUtils.startJob("0/5 * * * * ?", "job2", "group2", ScheduledJob.class);
+            SchedulerUtils.startJob("0/5 * * * * ?", "job2", "group2", ScheduledJob.class);
             return ResponseEntity.ok("启动定时任务成功");
         } catch (SchedulerException e) {
             e.printStackTrace();
@@ -73,7 +71,7 @@ public class TaskScheduleController {
     @GetMapping(value = "/del_job2")
     public ResponseEntity deleteScheduleJob2() {
         try {
-            schedulerUtils.deleteJob("job2", "group2");
+            SchedulerUtils.deleteJob("job2", "group2");
             return ResponseEntity.ok("删除定时任务成功");
         } catch (SchedulerException e) {
             e.printStackTrace();

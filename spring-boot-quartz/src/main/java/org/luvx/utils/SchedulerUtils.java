@@ -3,28 +3,14 @@ package org.luvx.utils;
 import lombok.extern.slf4j.Slf4j;
 import org.luvx.config.ApplicationContextUtils;
 import org.quartz.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.quartz.SchedulerFactoryBean;
-import org.springframework.stereotype.Component;
 
 /**
  *
  */
 @Slf4j
-@Component
 public class SchedulerUtils {
-    private static JobListener          scheduleListener;
-    private static SchedulerFactoryBean schedulerFactoryBean;
-
-    @Autowired
-    public void setScheduleListener(JobListener listener) {
-        SchedulerUtils.scheduleListener = listener;
-    }
-
-    @Autowired
-    public void setSchedulerFactoryBean(SchedulerFactoryBean bean) {
-        SchedulerUtils.schedulerFactoryBean = bean;
-    }
+    private static JobListener scheduleListener;
 
     /**
      * 开始定时任务
@@ -35,9 +21,9 @@ public class SchedulerUtils {
      * @param jobClass
      * @throws SchedulerException
      */
-    public void startJob(String cron, String jobName, String jobGroup, Class<? extends Job> jobClass)
+    public static void startJob(String cron, String jobName, String jobGroup, Class<? extends Job> jobClass)
             throws SchedulerException {
-        Scheduler scheduler = schedulerFactoryBean.getScheduler();
+        Scheduler scheduler = getScheduler();
         if (scheduleListener == null) {
             scheduleListener = ApplicationContextUtils.getBean("schedulerListener");
         }
@@ -55,8 +41,8 @@ public class SchedulerUtils {
      * @param jobGroup
      * @throws SchedulerException
      */
-    public void deleteJob(String jobName, String jobGroup) throws SchedulerException {
-        Scheduler scheduler = schedulerFactoryBean.getScheduler();
+    public static void deleteJob(String jobName, String jobGroup) throws SchedulerException {
+        Scheduler scheduler = getScheduler();
         JobKey jobKey = new JobKey(jobName, jobGroup);
         scheduler.deleteJob(jobKey);
     }
@@ -68,8 +54,8 @@ public class SchedulerUtils {
      * @param jobGroup
      * @throws SchedulerException
      */
-    public void pauseJob(String jobName, String jobGroup) throws SchedulerException {
-        Scheduler scheduler = schedulerFactoryBean.getScheduler();
+    public static void pauseJob(String jobName, String jobGroup) throws SchedulerException {
+        Scheduler scheduler = getScheduler();
         JobKey jobKey = new JobKey(jobName, jobGroup);
         scheduler.pauseJob(jobKey);
     }
@@ -81,8 +67,8 @@ public class SchedulerUtils {
      * @param jobGroup
      * @throws SchedulerException
      */
-    public void resumeJob(String jobName, String jobGroup) throws SchedulerException {
-        Scheduler scheduler = schedulerFactoryBean.getScheduler();
+    public static void resumeJob(String jobName, String jobGroup) throws SchedulerException {
+        Scheduler scheduler = getScheduler();
         JobKey triggerKey = new JobKey(jobName, jobGroup);
         scheduler.resumeJob(triggerKey);
     }
@@ -92,8 +78,8 @@ public class SchedulerUtils {
      *
      * @throws SchedulerException
      */
-    public void clearAll() throws SchedulerException {
-        Scheduler scheduler = schedulerFactoryBean.getScheduler();
+    public static void clearAll() throws SchedulerException {
+        Scheduler scheduler = getScheduler();
         scheduler.clear();
     }
 
@@ -107,8 +93,8 @@ public class SchedulerUtils {
      * @param jobClass
      * @throws SchedulerException
      */
-    private void scheduleJob(String cron, Scheduler scheduler,
-                             String jobName, String jobGroup, Class<? extends Job> jobClass)
+    private static void scheduleJob(String cron, Scheduler scheduler,
+                                    String jobName, String jobGroup, Class<? extends Job> jobClass)
             throws SchedulerException {
         JobDetail jobDetail = JobBuilder.newJob(jobClass)
                 .withIdentity(jobName, jobGroup)
@@ -120,5 +106,10 @@ public class SchedulerUtils {
                 .build();
 
         scheduler.scheduleJob(jobDetail, cronTrigger);
+    }
+
+    private static Scheduler getScheduler() {
+        SchedulerFactoryBean scheduler = ApplicationContextUtils.getBean(SchedulerFactoryBean.class);
+        return scheduler.getScheduler();
     }
 }
