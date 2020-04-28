@@ -1,4 +1,4 @@
-package org.luvx.demo;
+package org.luvx.others.transcation;
 
 public interface TransactionalCheck {
 

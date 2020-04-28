@@ -1,4 +1,4 @@
-package org.luvx.demo;
+package org.luvx.others.transcation;
 
 import lombok.extern.slf4j.Slf4j;
 import org.luvx.entity.User;
