@@ -6,11 +6,14 @@ import org.quartz.JobExecutionException;
 import org.quartz.JobListener;
 import org.springframework.stereotype.Component;
 
-import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 
 @Slf4j
 @Component
 public class SchedulerListener implements JobListener {
+
+    private static final ThreadLocal<LocalDateTime> time = new ThreadLocal();
+
     public static final String LISTENER_NAME = "QuartSchedulerListener";
 
     @Override
@@ -25,6 +28,7 @@ public class SchedulerListener implements JobListener {
      */
     @Override
     public void jobToBeExecuted(JobExecutionContext context) {
+        time.set(LocalDateTime.now());
         String jobName = context.getJobDetail().getKey().toString();
         log.info("job:{} 开始执行...", jobName);
     }
@@ -48,8 +52,9 @@ public class SchedulerListener implements JobListener {
      */
     @Override
     public void jobWasExecuted(JobExecutionContext context, JobExecutionException jobException) {
+        LocalDateTime start = time.get();
         String jobName = context.getJobDetail().getKey().toString();
-        log.info("job:{} 执行结束...", jobName);
+        log.info("job:{} 执行结束...{} ~ {}", jobName, start, LocalDateTime.now());
         if (jobException != null) {
             log.error("job:{} 异常结束", jobException);
         }

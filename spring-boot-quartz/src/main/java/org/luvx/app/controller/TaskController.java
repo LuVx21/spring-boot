@@ -1,13 +1,13 @@
 package org.luvx.app.controller;
 
-import org.luvx.job.ScheduledJob;
-import org.luvx.utils.SchedulerUtils;
-import org.quartz.SchedulerException;
+import org.luvx.app.entity.TaskEntity;
+import org.luvx.app.repository.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.util.Assert;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * @ClassName: org.luvx.controller
@@ -16,30 +16,43 @@ import org.springframework.web.bind.annotation.RestController;
  * @Date: 2019/3/7 13:45
  */
 @RestController
-@RequestMapping("/quartz")
+@RequestMapping("/task")
 public class TaskController {
     @Autowired
-    public SchedulerUtils schedulerUtils;
+    private TaskRepository repository;
 
-    @GetMapping(value = "/job2")
-    public ResponseEntity scheduleJob2() {
-        try {
-            schedulerUtils.startJob("0/5 * * * * ?", "job2", "group2", ScheduledJob.class);
-            return ResponseEntity.ok("启动定时器成功");
-        } catch (SchedulerException e) {
-            e.printStackTrace();
-        }
-        return ResponseEntity.ok("启动定时器失败");
+    @PostMapping(value = "/save")
+    public ResponseEntity save(TaskEntity task) {
+        repository.save(task);
+        return ResponseEntity.ok("新增任务成功");
     }
 
-    @GetMapping(value = "/del_job2")
-    public ResponseEntity deleteScheduleJob2() {
-        try {
-            schedulerUtils.deleteJob("job2", "group2");
-            return ResponseEntity.ok("删除定时器成功");
-        } catch (SchedulerException e) {
-            e.printStackTrace();
+    @DeleteMapping(value = "/delete")
+    public ResponseEntity delete(Long taskId) {
+        repository.deleteById(taskId);
+        return ResponseEntity.ok("删除任务成功");
+    }
+
+    @PutMapping(value = "/update")
+    public ResponseEntity update(TaskEntity task) {
+        Assert.notNull(task.getId(), "指定任务id");
+        repository.saveAndFlush(task);
+        return ResponseEntity.ok("更新任务成功");
+    }
+
+    @GetMapping(value = "/select")
+    public ResponseEntity select() {
+        List<TaskEntity> list = repository.findAll();
+        if (list.size() == 0) {
+            repository.save(
+                    TaskEntity.builder()
+                            .cron("0/5 * * * * ?")
+                            .jobKey("foo").jobGroup("bar")
+                            .clazz("org.quartz.Job").method("execute")
+                            .isAuto(true).isDeleted(false)
+                            .build()
+            );
         }
-        return ResponseEntity.ok("删除定时器失败");
+        return ResponseEntity.ok(list);
     }
 }

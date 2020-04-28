@@ -1,26 +1,30 @@
 package org.luvx.utils;
 
 import lombok.extern.slf4j.Slf4j;
-import org.luvx.job.BaseJob;
-import org.luvx.listener.SchedulerListener;
+import org.luvx.config.ApplicationContextUtils;
 import org.quartz.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.quartz.CronTriggerFactoryBean;
-import org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean;
 import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 import org.springframework.stereotype.Component;
-import sun.rmi.runtime.RuntimeUtil;
 
 /**
- * 此处可以注入数据库操作，查询出所有的任务配置
+ *
  */
 @Slf4j
 @Component
 public class SchedulerUtils {
+    private static JobListener          scheduleListener;
+    private static SchedulerFactoryBean schedulerFactoryBean;
+
     @Autowired
-    private JobListener          scheduleListener;
+    public void setScheduleListener(JobListener listener) {
+        SchedulerUtils.scheduleListener = listener;
+    }
+
     @Autowired
-    private SchedulerFactoryBean schedulerFactoryBean;
+    public void setSchedulerFactoryBean(SchedulerFactoryBean bean) {
+        SchedulerUtils.schedulerFactoryBean = bean;
+    }
 
     /**
      * 开始定时任务
@@ -35,7 +39,7 @@ public class SchedulerUtils {
             throws SchedulerException {
         Scheduler scheduler = schedulerFactoryBean.getScheduler();
         if (scheduleListener == null) {
-            scheduleListener = new SchedulerListener();
+            scheduleListener = ApplicationContextUtils.getBean("schedulerListener");
         }
         scheduler.getListenerManager().addJobListener(scheduleListener);
         JobKey jobKey = new JobKey(jobName, jobGroup);
@@ -116,88 +120,5 @@ public class SchedulerUtils {
                 .build();
 
         scheduler.scheduleJob(jobDetail, cronTrigger);
-    }
-
-    /**
-     * 创建触发器工厂类
-     *
-     * @param jobDetail
-     * @return
-     */
-    public static CronTriggerFactoryBean createCronTriggerFactory(JobDetail jobDetail) {
-        CronTriggerFactoryBean trigger = new CronTriggerFactoryBean();
-        trigger.setJobDetail(jobDetail);
-        trigger.setStartDelay(1000L);
-        trigger.setName("trigger1");
-        trigger.setGroup("group1");
-        trigger.setCronExpression("0/5 * * * * ?");
-        return trigger;
-    }
-
-    /**
-     * 创建触发器
-     *
-     * @param factory
-     * @return
-     */
-    public static CronTrigger createCronTrigger(CronTriggerFactoryBean factory) {
-        CronTrigger trigger = factory.getObject();
-        return trigger;
-    }
-
-    /**
-     * 创建JobDetail工厂
-     *
-     * @param job
-     * @return
-     */
-    public static MethodInvokingJobDetailFactoryBean createJobDetailFactory(BaseJob job) {
-        MethodInvokingJobDetailFactoryBean jobDetail = new MethodInvokingJobDetailFactoryBean();
-        jobDetail.setConcurrent(false);
-        jobDetail.setName("job-group-foo");
-        jobDetail.setGroup("group-foo");
-        jobDetail.setTargetObject(job);
-        jobDetail.setTargetMethod(BaseJob.METHOD_NAME);
-        return jobDetail;
-    }
-
-    /**
-     * 创建JobDetail
-     *
-     * @param factory
-     * @return
-     */
-    public static JobDetail createJobDetail(MethodInvokingJobDetailFactoryBean factory) {
-        JobDetail jobDetail = factory.getObject();
-        return jobDetail;
-    }
-
-    /**
-     * 创建调度器工厂
-     *
-     * @param cronJobTrigger
-     * @return
-     */
-    public static SchedulerFactoryBean createSchedulerFactory(CronTriggerFactoryBean cronJobTrigger) {
-        SchedulerFactoryBean bean = new SchedulerFactoryBean();
-        // 用于quartz集群,QuartzScheduler 启动时更新己存在的Job
-        bean.setOverwriteExistingJobs(true);
-        // 延时启动，应用启动1秒后
-        bean.setStartupDelay(1);
-        // 注册触发器
-        CronTrigger trigger = cronJobTrigger.getObject();
-        bean.setTriggers(trigger);
-        return bean;
-    }
-
-    /**
-     * 创建调度器
-     *
-     * @param factory
-     * @return
-     */
-    public static Scheduler createScheduler(SchedulerFactoryBean factory) {
-        Scheduler scheduler = factory.getScheduler();
-        return scheduler;
     }
 }
