@@ -1,4 +1,4 @@
-package org.luvx.utils;
+package org.luvx.transaction.utils;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -23,7 +23,6 @@ public class TransactionUtils {
         TransactionStatus status = transactionManager.getTransaction(new DefaultTransactionDefinition());
         try {
             consumer.accept(null);
-
             transactionManager.commit(status);
             return true;
         } catch (Exception e) {

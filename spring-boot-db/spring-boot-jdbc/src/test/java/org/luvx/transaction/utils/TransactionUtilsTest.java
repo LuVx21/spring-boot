@@ -1,7 +1,8 @@
-package org.luvx.utils;
+package org.luvx.transaction.utils;
 
 import org.junit.Test;
-import org.luvx.service.UserService;
+import org.luvx.transaction.service.UserService;
+import org.luvx.transaction.utils.TransactionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**

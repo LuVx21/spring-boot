@@ -1,6 +1,4 @@
-package org.luvx.service;
-
-import org.springframework.transaction.annotation.Transactional;
+package org.luvx.transaction.service;
 
 /**
  * @ClassName: org.luvx.service
