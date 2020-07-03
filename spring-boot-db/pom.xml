@@ -21,6 +21,7 @@
 <!--        <module>spring-boot-jooq</module>-->
         <module>spring-boot-jpa</module>
         <module>spring-boot-mybatis</module>
+        <module>spring-boot-mybatis-page</module>
         <module>spring-boot-mybatis-plus</module>
     </modules>
 
