@@ -15,8 +15,7 @@
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from
-        user
+        from user
         where
         id = #{id}
     </select>
