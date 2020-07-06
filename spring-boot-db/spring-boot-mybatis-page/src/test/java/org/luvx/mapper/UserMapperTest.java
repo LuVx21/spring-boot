@@ -1,7 +1,9 @@
 package org.luvx.mapper;
 
+import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.junit.Test;
 import org.luvx.ApplicationTests;
 import org.luvx.entity.User;
@@ -33,6 +35,7 @@ public class UserMapperTest extends ApplicationTests {
 
         PageHelper.startPage(build.getPage().getPageNum(), build.getPage().getPageSize());
         Page<User> users = userMapper.selectSelective(record);
-        System.out.println(users);
+        PageInfo<User> pageInfo = new PageInfo<>(users);
+        System.out.println(JSON.toJSONString(pageInfo));
     }
 }
