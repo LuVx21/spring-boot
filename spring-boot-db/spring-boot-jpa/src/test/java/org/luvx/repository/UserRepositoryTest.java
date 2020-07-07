@@ -1,14 +1,10 @@
 package org.luvx.repository;
 
 import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.luvx.ApplicationTests;
 import org.luvx.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 /**
@@ -17,9 +13,7 @@ import java.util.Optional;
  * @Author: Ren, Xie
  * @Date: 2019/5/21 19:46
  */
-@RunWith(SpringRunner.class)
-@SpringBootTest
-public class UserRepositoryTest {
+public class UserRepositoryTest extends ApplicationTests {
     @Autowired
     UserRepository userRepository;
 
@@ -49,7 +43,7 @@ public class UserRepositoryTest {
 
     @Test
     public void selectTest() {
-        Optional<User> user = userRepository.findById(10043L);
+        Optional<User> user = userRepository.findById(1L);
         System.out.println(user.get());
     }
 }

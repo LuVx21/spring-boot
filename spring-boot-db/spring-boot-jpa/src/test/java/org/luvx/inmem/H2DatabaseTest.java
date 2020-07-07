@@ -1,15 +1,12 @@
 package org.luvx.inmem;
 
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.luvx.ApplicationTests;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.UUID;
 
 /**
  * @ClassName: org.luvx.inmem
@@ -17,9 +14,7 @@ import java.util.UUID;
  * @Author: Ren, Xie
  * @Date: 2019/5/21 19:23
  */
-@RunWith(SpringRunner.class)
-@SpringBootTest
-public class H2DatabaseTest {
+public class H2DatabaseTest extends ApplicationTests {
     private static final String JDBC_URL     = "jdbc:h2:~/test";
     private static final String USER         = "sa";
     private static final String PASSWORD     = "";

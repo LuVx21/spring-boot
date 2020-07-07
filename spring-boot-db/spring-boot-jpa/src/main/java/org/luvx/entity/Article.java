@@ -6,25 +6,25 @@ import lombok.Setter;
 import lombok.experimental.Tolerate;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
 @Builder
 @Entity
-@Table(name = "user")
-public class User {
+@Table(name = "article")
+public class Article {
     private static final long serialVersionUID = 1L;
 
     @Tolerate
-    public User() {
+    public Article() {
     }
 
     @Id
     @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long    id;
-    @Column(nullable = false, unique = true)
-    private String  userName;
-    private String  password;
-    private Integer age;
+    private Long          id;
+    private String        articleName;
+    private LocalDateTime createTime;
+    private Long          userId;
 }
