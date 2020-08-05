@@ -1,6 +1,6 @@
 package org.luvx.kotlin.service
 
-import org.luvx.kotlin.enrity.User
+import org.luvx.kotlin.entity.User
 
 interface UserService {
 

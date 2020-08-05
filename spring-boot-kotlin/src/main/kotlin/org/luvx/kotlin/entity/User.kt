@@ -1,4 +1,4 @@
-package org.luvx.kotlin.enrity
+package org.luvx.kotlin.entity
 
 import javax.persistence.*
 

@@ -1,6 +1,6 @@
 package org.luvx.kotlin.controller
 
-import org.luvx.kotlin.enrity.User
+import org.luvx.kotlin.entity.User
 import org.luvx.kotlin.service.UserService
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -15,7 +15,7 @@ class UserController {
     lateinit var userService: UserService
 
     @GetMapping("/{userId}")
-    fun hello(@PathVariable userId: Long): User {
+    fun get(@PathVariable userId: Long): User {
         return userService.getUser(1)
     }
 }

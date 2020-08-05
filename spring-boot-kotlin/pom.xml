@@ -120,6 +120,7 @@
                         <plugin>spring</plugin>
                         <!-- <plugin>jpa</plugin> -->
                     </compilerPlugins>
+                    <jvmTarget>${java.version}</jvmTarget>
                 </configuration>
                 <dependencies>
                     <dependency>
