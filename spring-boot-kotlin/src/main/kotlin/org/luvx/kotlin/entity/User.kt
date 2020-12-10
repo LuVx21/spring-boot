@@ -5,9 +5,10 @@ import javax.persistence.*
 @Entity
 @Table(name = "user")
 class User {
+    @get:Id
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    var id: Long = -1
+    var id: Long? = null
 
     @Column(nullable = false)
     var userName: String? = null
@@ -16,5 +17,5 @@ class User {
     var password: String? = null
 
     @Column(nullable = true)
-    var age: Int = -1
+    var age: Int? = null
 }
