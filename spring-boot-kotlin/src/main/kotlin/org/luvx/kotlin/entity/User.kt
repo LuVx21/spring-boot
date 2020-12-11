@@ -18,4 +18,8 @@ class User {
 
     @Column(nullable = true)
     var age: Int? = null
+
+    override fun toString(): String {
+        return "User(id=$id, userName=$userName, password=$password, age=$age)"
+    }
 }
