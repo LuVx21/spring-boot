@@ -1,3 +1,4 @@
+<!DOCTYPE HTML>
 <html lang="zh">
     <head>
         <title>websocket测试</title>
@@ -5,28 +6,60 @@
     </head>
 
     <body>
-        <button onclick="sendMessage()">测试</button>
-        <script>
-            let socket = new WebSocket("ws://localhost:8090/websocket");
-            socket.onerror = err => {
-                console.log(err);
-            };
-            socket.onopen = event => {
-                console.log(event);
-            };
-            socket.onmessage = mess => {
-                console.log(mess);
-            };
-            socket.onclose = () => {
-                console.log("连接关闭");
-            };
-
-            function sendMessage() {
-                if (socket.readyState === 1)
-                    socket.send("这是一个来自客户端的测试数据");
-                else
-                    alert("尚未建立websocket连接");
-            }
-        </script>
+        Welcome<br/>
+        <input id="text" type="text"/>
+        <button onclick="sendMessage()">Send</button>
+        <button onclick="closeWebSocket()">Close</button>
+        <div id="message"></div>
     </body>
+    <script type="text/javascript">
+        let socket = null;
+        //判断当前浏览器是否支持WebSocket
+        if ('WebSocket' in window) {
+            socket = new WebSocket("ws://localhost:8090/websocket");
+        } else {
+            alert('Not support websocket')
+        }
+        socket.onerror = err => {
+            console.log(err);
+            setMessageInnerHTML("error");
+        }
+        socket.onopen = event => {
+            console.log(event);
+            setMessageInnerHTML("连接成功");
+        }
+        socket.onmessage = event => {
+            console.log(event);
+            setMessageInnerHTML(event.data);
+        }
+        socket.onclose = () => {
+            console.log("连接关闭");
+            setMessageInnerHTML("连接关闭");
+        };
+
+        /**
+         * 监听窗口关闭事件，当窗口关闭时，主动去关闭websocket连接，
+         * 防止连接还没断开就关闭窗口，server端会抛异常。
+         */
+        window.onbeforeunload = function () {
+            closeWebSocket();
+        }
+
+        function closeWebSocket() {
+            socket.close();
+        }
+
+        function setMessageInnerHTML(innerHTML) {
+            document.getElementById('message').innerHTML += innerHTML + '<br/>';
+        }
+
+        function sendMessage() {
+            if (socket.readyState === 1) {
+                const message = document.getElementById('text').value
+                socket.send(message)
+            } else {
+                alert("尚未建立websocket连接");
+            }
+        }
+    </script>
 </html>

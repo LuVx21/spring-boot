@@ -9,11 +9,11 @@ import org.springframework.web.bind.annotation.RestController;
  * @author Ren, Xie
  */
 @Slf4j
-@RestController
+@RestController("/v1")
 public class IndexController {
     @GetMapping("/broadcast")
     public void broadcast() {
         log.info("rest 请求");
-        MyWebSocket.broadcast();
+        MyWebSocket.broadcast("这是一条来自服务端的测试广播");
     }
 }
