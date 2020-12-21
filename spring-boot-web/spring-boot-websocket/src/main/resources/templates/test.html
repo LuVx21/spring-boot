@@ -11,13 +11,13 @@
         <div>
             <button id="connect" type="button" onclick="connect()">连接</button>
             <button id="disconnect" type="button" disabled="disabled" onclick="disconnect()">断开连接</button>
-            <br />
+            <br/>
             <label for="name">用户名：</label>
-            <input type="text" id="name" placeholder="用户名">
-            <br />
+            <input id="name" type="text" placeholder="用户名">
+            <br/>
         </div>
         <div id="chat">
-            <input id="text" type="text" />
+            <label for="text">消息:</label><input id="text" type="text"/>
             <button onclick="sendMessage()">发送</button>
             <div id="message"></div>
         </div>
