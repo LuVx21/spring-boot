@@ -12,7 +12,7 @@ import java.util.concurrent.TimeUnit;
  * @author Ren, Xie
  */
 @Slf4j
-@Component
+// @Component("async-task1")
 public class Task1 {
     /**
      * 每分钟的0秒开始,每10s触发一次, 每次执行9s
