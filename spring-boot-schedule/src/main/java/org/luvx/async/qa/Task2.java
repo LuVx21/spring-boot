@@ -1,4 +1,4 @@
-package org.luvx.ordinary.task;
+package org.luvx.async.qa;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Async;
@@ -8,12 +8,16 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDateTime;
 
 /**
- * @ClassName: org.luvx.ordinary.task
- * @Description: 测试任务累积:
+ * 测试任务累积
+ * <p>
+ * 现象:
  * 任务没有执行完就到达下一次的任务启动时间, 这个时间不会触发新的执行
  * 在执行完上一次后将累积任务全部执行了, 这些累积任务没有按照设置的时间正常执行
+ * <p>
  * 解决方案:
  * 1. 使用异步(@Async注解)
+ *
+ * @author Ren, Xie
  */
 @Slf4j
 // @Component
