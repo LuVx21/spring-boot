@@ -1,8 +1,8 @@
-package org.luvx.schedule.dynamic;
+package org.luvx.schedule.v1.dynamic;
 
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
-import org.luvx.schedule.entity.TaskEntity;
+import org.luvx.schedule.v1.entity.TaskEntity;
 
 /**
  * @author Ren, Xie

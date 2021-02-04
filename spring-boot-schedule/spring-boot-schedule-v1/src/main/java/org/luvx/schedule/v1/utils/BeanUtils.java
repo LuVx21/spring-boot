@@ -1,4 +1,4 @@
-package org.luvx.schedule.utils;
+package org.luvx.schedule.v1.utils;
 
 
 import java.lang.reflect.Field;

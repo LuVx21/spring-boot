@@ -1,10 +1,10 @@
-package org.luvx.schedule.serivce;
+package org.luvx.schedule.v1.serivce;
 
 import lombok.extern.slf4j.Slf4j;
-import org.luvx.schedule.dynamic.DynamicTask;
-import org.luvx.schedule.dynamic.DynamicTaskScheduler;
-import org.luvx.schedule.dynamic.TaskRunnable;
-import org.luvx.schedule.entity.TaskEntity;
+import org.luvx.schedule.v1.dynamic.DynamicTask;
+import org.luvx.schedule.v1.dynamic.DynamicTaskScheduler;
+import org.luvx.schedule.v1.dynamic.TaskRunnable;
+import org.luvx.schedule.v1.entity.TaskEntity;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 

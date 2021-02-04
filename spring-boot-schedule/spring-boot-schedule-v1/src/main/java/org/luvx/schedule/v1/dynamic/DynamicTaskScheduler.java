@@ -1,4 +1,4 @@
-package org.luvx.schedule.dynamic;
+package org.luvx.schedule.v1.dynamic;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.SchedulingException;

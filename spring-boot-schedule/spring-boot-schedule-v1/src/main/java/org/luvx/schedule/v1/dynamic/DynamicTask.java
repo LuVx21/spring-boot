@@ -1,9 +1,9 @@
-package org.luvx.schedule.dynamic;
+package org.luvx.schedule.v1.dynamic;
 
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import org.luvx.schedule.entity.TaskEntity;
+import org.luvx.schedule.v1.entity.TaskEntity;
 import org.springframework.scheduling.config.CronTask;
 
 import java.util.Objects;

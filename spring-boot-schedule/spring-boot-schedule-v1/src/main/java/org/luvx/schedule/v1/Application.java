@@ -1,12 +1,10 @@
-package org.luvx;
+package org.luvx.schedule.v1;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
- * @package: org.luvx
- * @author: Ren, Xie
- * @desc:
+ * @author Ren, Xie
  */
 @SpringBootApplication
 public class Application {

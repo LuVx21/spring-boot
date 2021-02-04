@@ -1,7 +1,7 @@
-package org.luvx.schedule.dynamic;
+package org.luvx.schedule.v1.dynamic;
 
 import lombok.extern.slf4j.Slf4j;
-import org.luvx.schedule.utils.BeanUtils;
+import org.luvx.schedule.v1.utils.BeanUtils;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.SchedulingException;
 import org.springframework.scheduling.TaskScheduler;

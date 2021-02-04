@@ -1,4 +1,4 @@
-package org.luvx.schedule.entity;
+package org.luvx.schedule.v1.entity;
 
 import lombok.Getter;
 import lombok.Setter;

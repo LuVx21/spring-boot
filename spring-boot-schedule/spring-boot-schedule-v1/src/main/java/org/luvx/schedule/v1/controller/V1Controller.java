@@ -1,9 +1,9 @@
-package org.luvx.schedule.controller;
+package org.luvx.schedule.v1.controller;
 
 import lombok.extern.slf4j.Slf4j;
-import org.luvx.schedule.dynamic.DynamicTaskScheduler;
-import org.luvx.schedule.entity.TaskEntity;
-import org.luvx.schedule.serivce.Service1;
+import org.luvx.schedule.v1.dynamic.DynamicTaskScheduler;
+import org.luvx.schedule.v1.entity.TaskEntity;
+import org.luvx.schedule.v1.serivce.Service1;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
