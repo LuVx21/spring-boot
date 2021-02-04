@@ -9,6 +9,7 @@ import org.springframework.scheduling.annotation.SchedulingConfigurer;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import org.springframework.scheduling.config.ScheduledTaskRegistrar;
 
+import javax.annotation.Resource;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 
@@ -21,9 +22,12 @@ import java.util.concurrent.ScheduledThreadPoolExecutor;
 public class ScheduledConfig implements SchedulingConfigurer {
     private final int size = 10;
 
+    @Resource
+    private ExecutorService executorService;
+
     @Override
     public void configureTasks(ScheduledTaskRegistrar taskRegistrar) {
-        taskRegistrar.setScheduler(setExecutor());
+        taskRegistrar.setScheduler(executorService);
     }
 
     @Bean
@@ -37,7 +41,7 @@ public class ScheduledConfig implements SchedulingConfigurer {
     public ThreadPoolTaskScheduler threadPoolTaskScheduler() {
         ThreadPoolTaskScheduler executor = new ThreadPoolTaskScheduler();
         executor.setPoolSize(20);
-        executor.setThreadNamePrefix("taskExecutor-");
+        executor.setThreadNamePrefix("scheduler-");
         executor.setWaitForTasksToCompleteOnShutdown(true);
         executor.setAwaitTerminationSeconds(60);
         return executor;

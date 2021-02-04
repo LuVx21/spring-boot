@@ -3,6 +3,7 @@ package org.luvx.schedule.dynamic;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.luvx.schedule.entity.TaskEntity;
 import org.springframework.scheduling.config.CronTask;
 
 import java.util.Objects;
@@ -15,12 +16,11 @@ import java.util.Objects;
 @ToString
 public class DynamicTask extends CronTask {
     private String dynamicTaskId;
-    private String expression;
 
-    public DynamicTask(Runnable runnable, String expression, String dynamicTaskId) {
+    public DynamicTask(TaskRunnable runnable, String expression) {
         super(runnable, expression);
-        this.dynamicTaskId = dynamicTaskId;
-        this.expression = expression;
+        TaskEntity taskInfo = runnable.getTaskInfo();
+        this.dynamicTaskId = taskInfo.getId();
     }
 
     @Override

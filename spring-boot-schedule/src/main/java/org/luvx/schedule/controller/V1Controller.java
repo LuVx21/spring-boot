@@ -1,13 +1,13 @@
 package org.luvx.schedule.controller;
 
 import lombok.extern.slf4j.Slf4j;
-import org.luvx.schedule.dynamic.pojo.TaskModel;
+import org.luvx.schedule.dynamic.DynamicTaskScheduler;
+import org.luvx.schedule.entity.TaskEntity;
 import org.luvx.schedule.serivce.Service1;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.Set;
 
 /**
  * @author Ren, Xie
@@ -16,16 +16,27 @@ import javax.annotation.Resource;
 @RestController
 @RequestMapping("/v1")
 public class V1Controller {
-
     @Resource
-    Service1 service1;
+    Service1             service1;
+    @Resource
+    DynamicTaskScheduler dynamicTaskScheduler;
 
-    @GetMapping(value = {"/create"})
-    public void select() {
-        TaskModel model = new TaskModel();
-        model.setId("_1");
-        model.setCron("0/5 * * * * ?");
-        model.setSql("");
-        service1.addTriggerTask(model);
+    @PostMapping(value = {"/createOrUpdate"})
+    public void createOrUpdate(@RequestBody TaskEntity entity) {
+        String id = entity.getId();
+        if (dynamicTaskScheduler.hasTask(id)) {
+            dynamicTaskScheduler.cancelTriggerTask(id);
+        }
+        service1.addTriggerTask(entity);
+    }
+
+    @DeleteMapping(value = {"/delete/{taskId}"})
+    public void delete(@PathVariable String taskId) {
+        dynamicTaskScheduler.cancelTriggerTask(taskId);
+    }
+
+    @GetMapping(value = {"/select"})
+    public Set<String> select() {
+        return dynamicTaskScheduler.taskIds();
     }
 }
