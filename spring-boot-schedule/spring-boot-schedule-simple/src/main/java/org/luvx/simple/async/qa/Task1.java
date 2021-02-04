@@ -1,4 +1,4 @@
-package org.luvx.async.qa;
+package org.luvx.simple.async.qa;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Async;
@@ -12,7 +12,7 @@ import java.util.concurrent.TimeUnit;
  * @author Ren, Xie
  */
 @Slf4j
-// @Component("async-task1")
+@Component("async-task1")
 public class Task1 {
     /**
      * 每分钟的0秒开始,每10s触发一次, 每次执行9s

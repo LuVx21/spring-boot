@@ -5,18 +5,20 @@
 
     <parent>
         <groupId>org.luvx</groupId>
-        <artifactId>spring-boot-schedule</artifactId>
+        <artifactId>coding-spring-boot-java-parent</artifactId>
         <version>1.0.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>spring-boot-schedule-v1</artifactId>
-    <packaging>jar</packaging>
+    <artifactId>spring-boot-schedule</artifactId>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>spring-boot-schedule-simple</module>
+        <module>spring-boot-schedule-v1</module>
+        <module>spring-boot-schedule-v2</module>
+    </modules>
 
     <dependencies>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
     </dependencies>
 
 </project>

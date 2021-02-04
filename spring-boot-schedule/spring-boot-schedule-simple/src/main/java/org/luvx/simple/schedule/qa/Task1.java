@@ -1,4 +1,4 @@
-package org.luvx.schedule.qa;
+package org.luvx.simple.schedule.qa;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -25,7 +25,7 @@ import java.util.concurrent.TimeUnit;
  * @author Ren, Xie
  */
 @Slf4j
-// @Component("schedule-task1")
+@Component("schedule-task1")
 public class Task1 {
     /**
      * 每分钟的0秒开始,每10s触发一次, 每次执行10s

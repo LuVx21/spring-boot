@@ -1,4 +1,4 @@
-package org.luvx.async.config;
+package org.luvx.simple.async.config;
 
 import org.springframework.aop.interceptor.AsyncUncaughtExceptionHandler;
 import org.springframework.context.annotation.Configuration;

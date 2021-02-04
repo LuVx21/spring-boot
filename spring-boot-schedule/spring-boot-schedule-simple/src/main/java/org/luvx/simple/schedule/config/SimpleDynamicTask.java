@@ -1,4 +1,4 @@
-package org.luvx.schedule.config;
+package org.luvx.simple.schedule.config;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.SchedulingConfigurer;

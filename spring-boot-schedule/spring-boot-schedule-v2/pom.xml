@@ -9,7 +9,7 @@
         <version>1.0.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>spring-boot-schedule-v1</artifactId>
+    <artifactId>spring-boot-schedule-v2</artifactId>
     <packaging>jar</packaging>
 
     <dependencies>

@@ -1,4 +1,4 @@
-package org.luvx.async.qa;
+package org.luvx.simple.async.qa;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Async;
@@ -20,7 +20,7 @@ import java.time.LocalDateTime;
  * @author Ren, Xie
  */
 @Slf4j
-// @Component
+@Component
 public class Task2 {
     private volatile static boolean b;
     private static          int     cnt = 1;

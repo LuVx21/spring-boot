@@ -1,4 +1,4 @@
-package org.luvx.schedule.config;
+package org.luvx.simple.schedule.config;
 
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import lombok.extern.slf4j.Slf4j;
