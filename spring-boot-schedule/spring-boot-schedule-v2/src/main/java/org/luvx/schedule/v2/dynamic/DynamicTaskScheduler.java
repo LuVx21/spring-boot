@@ -15,6 +15,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author Ren, Xie
@@ -23,9 +25,17 @@ import java.util.concurrent.ScheduledFuture;
 @Component
 public class DynamicTaskScheduler {
     @Resource
+    private       ScheduledThreadPoolExecutor     scheduledThreadPoolExecutor;
+    @Resource
     private       ThreadPoolTaskScheduler         threadPoolTaskScheduler;
     @Getter
     private final Map<String, ScheduledFuture<?>> id2FutureMap = new ConcurrentHashMap<>();
+
+    /**
+     * false: 执行过程中不中断
+     * true: 执行过程中可中断
+     */
+    private final boolean mayInterruptIfRunning = false;
 
     public void schedule(WaitScheduledTask waitScheduledTask) {
         TaskRunnable task = waitScheduledTask.getTaskRunnable();
@@ -36,7 +46,13 @@ public class DynamicTaskScheduler {
             throw new SchedulingException("the taskId[" + taskId + "] was added.");
         }
         Instant startTime = waitScheduledTask.getExecTime();
-        ScheduledFuture<?> future = threadPoolTaskScheduler.schedule(task, startTime);
+        ScheduledFuture<?> future;
+        if (mayInterruptIfRunning) {
+            long delay = startTime.toEpochMilli() - System.currentTimeMillis();
+            future = scheduledThreadPoolExecutor.schedule(task, delay, TimeUnit.MILLISECONDS);
+        } else {
+            future = threadPoolTaskScheduler.schedule(task, startTime);
+        }
         id2FutureMap.put(taskId, future);
     }
 

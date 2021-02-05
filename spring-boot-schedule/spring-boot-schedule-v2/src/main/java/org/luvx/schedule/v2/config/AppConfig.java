@@ -10,7 +10,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 
-import java.util.concurrent.ExecutorService;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 
 /**
@@ -27,12 +26,12 @@ public class AppConfig {
         return new CronParser(cronDefinition);
     }
 
-    // @Bean
-    // public ExecutorService setExecutor() {
-    //     return new ScheduledThreadPoolExecutor(20, new ThreadFactoryBuilder()
-    //             .setNameFormat("schedule-executor-%d")
-    //             .build());
-    // }
+    @Bean
+    public ScheduledThreadPoolExecutor setExecutor() {
+        return new ScheduledThreadPoolExecutor(20, new ThreadFactoryBuilder()
+                .setNameFormat("schedule-executor-%d")
+                .build());
+    }
 
     @Bean
     public ThreadPoolTaskScheduler threadPoolTaskScheduler() {
