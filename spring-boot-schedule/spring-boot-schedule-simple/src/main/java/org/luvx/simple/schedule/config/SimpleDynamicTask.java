@@ -35,7 +35,8 @@ public class SimpleDynamicTask implements SchedulingConfigurer {
                     }
                 },
                 //2.设置执行周期(Trigger)
-                triggerContext -> new CronTrigger(cron).nextExecutionTime(triggerContext)
+                // triggerContext -> new CronTrigger(cron).nextExecutionTime(triggerContext)
+                new CronTrigger(cron)
         );
         //</editor-fold>
     }
