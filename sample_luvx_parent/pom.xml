@@ -17,7 +17,7 @@
         <struts2.version>2.3.24</struts2.version>
         <spring.version>5.0.9.RELEASE</spring.version>
         <hibernate.version>5.2.12.Final</hibernate.version>
-        <mybatis.version>3.2.8</mybatis.version>
+        <mybatis.version>3.5.6</mybatis.version>
         <mybatis.spring.version>1.2.2</mybatis.spring.version>
         <mysql.version>5.1.6</mysql.version>
         <rabbit.spring.version>1.7.5.RELEASE</rabbit.spring.version>
