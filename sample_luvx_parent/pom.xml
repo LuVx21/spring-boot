@@ -35,7 +35,7 @@
         <!-- 测试 -->
         <junit.version>4.12</junit.version>
         <!-- json -->
-        <jackson.version>2.9.5</jackson.version>
+        <jackson.version>2.12.3</jackson.version>
         <!-- thymeleaf -->
         <thymeleaf.version>3.0.9.RELEASE</thymeleaf.version>
         <!-- jsp -->
