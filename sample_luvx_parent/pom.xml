@@ -42,7 +42,7 @@
         <jstl.version>1.2</jstl.version>
         <servlet.version>3.1.0</servlet.version>
         <jsp.version>2.2.1</jsp.version>
-        <shiro.version>1.4.0</shiro.version>
+        <shiro.version>1.6.0</shiro.version>
         <cxf.version>3.0.1</cxf.version>
         <objenesis.version>2.6</objenesis.version>
         <protostuff.version>1.4.0</protostuff.version>
