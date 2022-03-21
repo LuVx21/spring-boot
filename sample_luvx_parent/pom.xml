@@ -21,7 +21,7 @@
         <mybatis.spring.version>1.2.2</mybatis.spring.version>
         <mysql.version>5.1.6</mysql.version>
         <rabbit.spring.version>1.7.5.RELEASE</rabbit.spring.version>
-        <dubbo.version>2.5.3</dubbo.version>
+        <dubbo.version>2.6.9</dubbo.version>
         <!-- Redis -->
         <redis.spring.version>2.0.2.RELEASE</redis.spring.version>
         <jedis.version>2.9.0</jedis.version>
