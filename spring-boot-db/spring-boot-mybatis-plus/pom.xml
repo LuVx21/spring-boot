@@ -7,6 +7,7 @@
         <groupId>org.luvx</groupId>
         <artifactId>spring-boot-db</artifactId>
         <version>1.0.1-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>spring-boot-mybatis-plus</artifactId>
@@ -23,7 +24,7 @@
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-boot-starter</artifactId>
-            <version>3.0.4</version>
+            <version>3.4.2</version>
         </dependency>
     </dependencies>
 

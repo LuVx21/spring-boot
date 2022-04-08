@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: dubbo-provider
+# dubbo 相关配置(dubbo 的配置不再以 spring 开头)
+dubbo:
+  application:
+    name: dubbo-provider # 应用名称
+  registry:
+    address: zookeeper://127.0.0.1:2181 # 注册中心信息
+  protocol:
+    name: dubbo # 协议名称
+    port: 20880 # 协议端口
