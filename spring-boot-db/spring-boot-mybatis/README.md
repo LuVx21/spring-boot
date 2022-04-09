@@ -14,6 +14,7 @@ tags:
 - [xml版本](#xml版本)
 - [注解和xml比较](#注解和xml比较)
 - [多数据源](#多数据源)
+- [todo](#todo)
 
 <!-- /TOC -->
 
@@ -27,6 +28,7 @@ CREATE TABLE `user` (
   `user_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
   `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
   `age` int(11) DEFAULT NULL,
+  `update_time` timestamp not null default current_timestamp on update current_timestamp comment '更新时间',
   PRIMARY KEY (`id`),
   KEY `idx_id_age` (`id`,`age`,`password`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
@@ -91,3 +93,8 @@ git checkout mybatis-muldatasource
 * myabtis 部分查询 不修改mapper 在java中指定查询的列和查询条件
 * mybatis 条件查询
 * 传递多个参数
+
+mybatis 流式查询
+
+MBG:
+https://mp.weixin.qq.com/s/uGYO4fkw03Kxpfp_PIA8rQ

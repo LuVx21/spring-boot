@@ -13,9 +13,9 @@
     <packaging>pom</packaging>
 
     <modules>
-        <!--        <module>spring-boot-ebean</module>-->
-        <module>spring-boot-jdbc</module>
+<!--        <module>spring-boot-ebean</module>-->
 <!--        <module>spring-boot-jooq</module>-->
+        <module>spring-boot-jdbc</module>
         <module>spring-boot-jpa</module>
         <module>spring-boot-mybatis</module>
         <module>spring-boot-mybatis-page</module>
