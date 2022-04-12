@@ -12,5 +12,4 @@ public class ApplicationTests {
     public void contextLoads() {
         System.out.println("LuVx");
     }
-
 }

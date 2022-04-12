@@ -90,15 +90,6 @@ public class EmbeddedZooKeeper implements SmartLifecycle {
     }
 
     /**
-     * Stop the server if running and invoke the callback when complete.
-     */
-    @Override
-    public void stop(Runnable callback) {
-        stop();
-        callback.run();
-    }
-
-    /**
      * Runnable implementation that starts the ZooKeeper server.
      */
     private class ServerRunnable implements Runnable {

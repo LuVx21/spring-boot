@@ -1,0 +1,10 @@
+spring:
+  data:
+    mongodb:
+      uri: mongodb://boot_rw:1121@localhost:27017/boot?authSource=boot&authMechanism=SCRAM-SHA-1
+#      host: localhost
+#      port: 27017
+#      database: boot
+#      username: boot_rw
+#      password: 1121
+#      authentication-database: boot
