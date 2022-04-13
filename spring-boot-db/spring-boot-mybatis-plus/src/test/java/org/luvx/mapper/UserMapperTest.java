@@ -4,15 +4,17 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.luvx.ApplicationTests;
 import org.luvx.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Slf4j
-public class UserMapperTest extends BaseTest {
+public class UserMapperTest extends ApplicationTests {
 
     @Autowired
     private UserMapper userMapper;
@@ -51,14 +53,14 @@ public class UserMapperTest extends BaseTest {
 
     @Test
     public void deleteBatchIdsTest() {
-        List ids = Arrays.asList(10012, 10014);
+        List<Long> ids = List.of(10012L, 10014L);
         int num = userMapper.deleteBatchIds(ids);
         System.out.println(num);
     }
 
     @Test
     public void updateByIdTest() {
-        int num = userMapper.updateById(User.builder().userId(9999L).userName("Luvx1").build());
+        int num = userMapper.updateById(User.builder().userId(10043L).userName("Luvx1").build());
         log.info(num + "");
     }
 
@@ -71,13 +73,13 @@ public class UserMapperTest extends BaseTest {
 
     @Test
     public void selectByIdTest() {
-        User user = userMapper.selectById(0);
+        User user = userMapper.selectById(1);
         System.out.println(user);
     }
 
     @Test
     public void selectBatchIdsTest() {
-        List ids = Arrays.asList(0, 4, 5);
+        List<Long> ids = List.of(0L, 4L, 5L);
         List<User> users = userMapper.selectBatchIds(ids);
         System.out.println(users);
     }
@@ -102,7 +104,7 @@ public class UserMapperTest extends BaseTest {
 
     @Test
     public void selectCountTest() {
-        int count = userMapper.selectCount(new QueryWrapper<User>().eq("age", "3"));
+        long count = userMapper.selectCount(new QueryWrapper<User>().eq("age", "3"));
         System.out.println(count);
     }
 
@@ -141,10 +143,10 @@ public class UserMapperTest extends BaseTest {
 
     @Test
     public void selectMapsPageTest() {
-        Page<User> page = new Page<>(0, 3);
+        Page<Map<String, Object>> page = new Page<>(0, 3);
         IPage<Map<String, Object>> iPage = userMapper.selectMapsPage(page, new QueryWrapper<User>()
-                .eq("age", "3"));
-
+                .ge("age", "3")
+        );
         System.out.println(page.getRecords());
         System.out.println(iPage.getRecords());
     }
