@@ -26,10 +26,6 @@
     <description>数据库操作</description>
 
     <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <project.build.locales>zh_CN</project.build.locales>
-        <project.build.jdk>1.8</project.build.jdk>
     </properties>
 
     <dependencies>
