@@ -4,7 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.luvx.ApplicationTests;
 import org.luvx.entity.User;
 import org.luvx.entity.pojo.UserModel;
