@@ -2,7 +2,7 @@
 <configuration xmlns="http://www.jooq.org/xsd/jooq-codegen-3.12.0.xsd">
     <jdbc>
         <driver>com.mysql.cj.jdbc.Driver</driver>
-        <url>jdbc:mysql://127.0.0.1:3306/boot</url>
+        <url>jdbc:mysql://luvx:3306/boot</url>
         <user>luvx</user>
         <password>1121</password>
     </jdbc>

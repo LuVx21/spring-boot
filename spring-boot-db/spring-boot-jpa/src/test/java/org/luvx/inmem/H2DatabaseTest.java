@@ -1,6 +1,6 @@
 package org.luvx.inmem;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.luvx.ApplicationTests;
 
 import java.sql.Connection;

@@ -16,6 +16,7 @@
         <module>spring-boot-schedule-simple</module>
         <module>spring-boot-schedule-v1</module>
         <module>spring-boot-schedule-v2</module>
+        <module>xxl-job</module>
     </modules>
 
     <dependencies>

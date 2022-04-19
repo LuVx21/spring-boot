@@ -1,4 +1,4 @@
-package org.luvx.config;
+package org.luvx.spring.config;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.SmartLifecycle;

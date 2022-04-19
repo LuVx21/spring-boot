@@ -1,12 +1,9 @@
 package org.luvx.service.impl;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.luvx.pojos.User;
 import org.luvx.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 
 /**
  * @ClassName: org.luvx.service.impl
@@ -14,7 +11,7 @@ import org.springframework.test.context.junit4.SpringRunner;
  * @Author: Ren, Xie
  * @Date: 2019/11/6 10:14
  */
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 @SpringBootTest
 public class UserServiceImplTest {
     @Autowired

@@ -1,11 +1,10 @@
-package org.luvx.spring;
+package org.luvx.spring.bean;
 
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 
-@Configuration
-public class Config {
+// @Configuration // 打开观察 bean 加载
+public class Init {
     @Scope("singleton")
     @Bean(initMethod = "initMethod", destroyMethod = "destroyMethod")
     public SmallBean smallBean() {

@@ -15,6 +15,12 @@ import java.time.LocalDateTime;
 @Builder
 @TableName(value = "user")
 public class User {
+    public static final String COL_ID    = "id";
+    public static final String COL_UNAME = "user_name";
+    public static final String COL_PWD   = "password";
+    public static final String COL_AGE   = "age";
+    public static final String COL_UTM   = "update_time";
+
     @TableId(value = "id", type = IdType.AUTO)
     private Long          userId;
     private String        userName;

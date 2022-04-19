@@ -15,3 +15,11 @@ CREATE TABLE `t_config` (
   `isvalid` int(3) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 ```
+
+
+jdbc 流式查询
+
+
+https://blog.csdn.net/zhangzeyuaaa/article/details/79252446
+
+https://blog.csdn.net/qq_22912803/article/details/88998415

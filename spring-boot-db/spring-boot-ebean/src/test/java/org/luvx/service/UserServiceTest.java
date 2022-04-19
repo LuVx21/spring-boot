@@ -1,17 +1,14 @@
 package org.luvx.service;
 
 import io.ebean.EbeanServer;
-import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.luvx.module.domain.User;
 import org.luvx.module.domain.query.QUser;
 import org.luvx.module.repo.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 
 
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 @SpringBootTest
 public class UserServiceTest {
 

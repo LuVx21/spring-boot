@@ -1,4 +1,4 @@
-package org.luvx.spring;
+package org.luvx.spring.bean;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;

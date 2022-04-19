@@ -2,12 +2,12 @@ package org.luvx.jdbc.repository;
 
 import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.util.Lists;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.luvx.jdbc.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +19,7 @@ import java.util.stream.Stream;
  * @desc:
  */
 @Slf4j
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 @SpringBootTest
 public class UserRepositoryTest {
     @Autowired
@@ -27,14 +27,7 @@ public class UserRepositoryTest {
 
     @Test
     public void upsert() {
-        ArrayList<User> users = Lists.newArrayList(
-                User.builder()
-                        .id(20004L)
-                        .userName("foo").password("bar").age(18).build(),
-                User.builder()
-                        .id(20006L)
-                        .userName("foo").password("bar").age(19).build()
-        );
+        ArrayList<User> users = Lists.newArrayList(User.builder().id(20004L).userName("foo").password("bar").age(18).build(), User.builder().id(20006L).userName("foo").password("bar").age(19).build());
 
         Iterable<User> s = repository.saveAll(users);
         s.forEach(user -> log.info(user.toString()));

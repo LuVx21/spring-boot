@@ -1,6 +1,6 @@
 package org.luvx.repository;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.luvx.ApplicationTests;
 import org.luvx.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;

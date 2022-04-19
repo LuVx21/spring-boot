@@ -20,6 +20,7 @@ import org.luvx.fund.service.FundDataService;
 import org.luvx.fund.service.FundService;
 import org.luvx.fund.util.RequestUtils;
 import org.openjdk.nashorn.api.scripting.NashornScriptEngineFactory;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;
@@ -73,6 +74,7 @@ public class FundTask {
                 return null;
             }
         });
+        // exec();
     }
 
     private void addCronTask() {
