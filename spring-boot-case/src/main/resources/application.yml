@@ -1,0 +1,11 @@
+logging:
+  level:
+    root: info
+org:
+  luvx:
+    description: case
+    title: LuVx
+server:
+  port: 8090
+value:
+  map: '{home:"home"}'
