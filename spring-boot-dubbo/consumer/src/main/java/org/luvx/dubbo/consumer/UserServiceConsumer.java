@@ -12,7 +12,7 @@ public class UserServiceConsumer {
     @DubboReference(version = "1.0.0")
     private UserService userService;
 
-    @GetMapping("/listnames")
+    @GetMapping("/index")
     public List<String> listNames() {
         return userService.listNames(System.currentTimeMillis());
     }
