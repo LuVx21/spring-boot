@@ -1,4 +1,4 @@
-package org.luvx.boot.oauth2.config;
+package org.luvx.boot.oauth2.authorize.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;

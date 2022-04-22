@@ -1,4 +1,4 @@
-package org.luvx.boot.oauth2.init;
+package org.luvx.boot.oauth2.authorize.init;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;

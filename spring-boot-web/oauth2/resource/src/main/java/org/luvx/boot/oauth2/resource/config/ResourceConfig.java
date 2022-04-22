@@ -1,4 +1,4 @@
-package org.luvx.boot.oauth2.config;
+package org.luvx.boot.oauth2.resource.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,9 +12,9 @@ import org.springframework.security.oauth2.provider.token.RemoteTokenServices;
 @Configuration
 @EnableResourceServer
 public class ResourceConfig extends ResourceServerConfigurerAdapter {
-    public static String ClientId    = "javayz";
-    public static String Security    = "my_secret";
-    public static String my_resource = "my_resource";
+    private static String ClientId    = "javayz";
+    private static String Security    = "my_secret";
+    private static String my_resource = "my_resource";
 
     /**
      * token校验

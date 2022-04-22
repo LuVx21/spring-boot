@@ -1,9 +1,7 @@
-package org.luvx.boot.oauth2;
+package org.luvx.boot.oauth2.resource;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
-import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
 public class Application {

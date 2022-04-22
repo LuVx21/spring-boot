@@ -1,4 +1,4 @@
-package org.luvx.boot.oauth2.config;
+package org.luvx.boot.oauth2.authorize.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -11,6 +11,9 @@ import org.springframework.stereotype.Component;
 @Component
 @EnableAuthorizationServer
 public class AuthorizationConfig extends AuthorizationServerConfigurerAdapter {
+    private static String ClientId    = "javayz";
+    private static String Security    = "my_secret";
+    private static String my_resource = "my_resource";
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
@@ -24,15 +27,15 @@ public class AuthorizationConfig extends AuthorizationServerConfigurerAdapter {
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         clients.inMemory()
                 //client_id
-                .withClient(ResourceConfig.ClientId)
+                .withClient(ClientId)
                 //secret
-                .secret(bCryptPasswordEncoder.encode(ResourceConfig.Security))
+                .secret(bCryptPasswordEncoder.encode(Security))
                 //授权模式
                 .authorizedGrantTypes("authorization_code")
                 //作用域，也就是权限范围
                 .scopes("all")
                 //资源的ID
-                .resourceIds(ResourceConfig.my_resource)
+                .resourceIds(my_resource)
                 //回调地址
                 .redirectUris("http://localhost:8080/callback");
     }
