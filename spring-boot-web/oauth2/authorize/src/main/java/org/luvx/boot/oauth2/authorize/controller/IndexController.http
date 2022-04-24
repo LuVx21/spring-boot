@@ -1,23 +1,23 @@
 
 ### 浏览器打开
 
-GET http://localhost:8080/oauth/authorize?client_id=javayz&response_type=code
+GET http://localhost:50001/oauth/authorize?client_id=javayz&response_type=code
 
 ### 浏览器自动请求
 
-POST http://localhost:8080/oauth/authorize?client_id=javayz&response_type=code
+POST http://localhost:50001/oauth/authorize?client_id=javayz&response_type=code
 
 user_oauth_approval=true&scope.all=true&authorize=Authorize
 
 ### 浏览器自动请求
 
-GET http://localhost:8080/callback?code=JbjX93
+GET http://localhost:50003/callback?code=JbjX93
 
 ### postman 请求
 
-POST http://localhost:8080/oauth/token?code=nbyUws&grant_type=authorization_code&redirect_url=http://localhost:8080/callback&scope=all&client_id=javayz&client_secret=my_secret
+POST http://localhost:50001/oauth/token?code=nbyUws&grant_type=authorization_code&redirect_url=http://localhost:50003/callback&scope=all&client_id=javayz&client_secret=my_secret
 
 ### postman 请求
 
-POST http://localhost:8080/oauth/check_token?token=zg3N6tLw7LD01hH1JMN2ymGn11k
+POST http://localhost:50001/oauth/check_token?token=zg3N6tLw7LD01hH1JMN2ymGn11k
 

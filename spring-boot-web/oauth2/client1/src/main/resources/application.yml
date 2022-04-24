@@ -1,0 +1,15 @@
+security:
+  oauth2:
+    client:
+      client-id: javayz
+      client-secret: my_secret
+      user-authorization-uri: http://localhost:50001/oauth/authorize
+      access-token-uri: http://localhost:50001/oauth/token
+    resource:
+      user-info-uri: http://localhost:50002/user
+server:
+  port: 50003
+  servlet:
+    session:
+      cookie:
+        name: s1

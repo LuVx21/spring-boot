@@ -9,7 +9,7 @@
         <version>1.0.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>authorize</artifactId>
+    <artifactId>client1</artifactId>
     <packaging>jar</packaging>
 
     <properties>

@@ -11,7 +11,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final String username = "root";
-    private final String password = "123456";
+    private final String password = "1121";
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {

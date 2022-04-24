@@ -26,17 +26,14 @@ public class AuthorizationConfig extends AuthorizationServerConfigurerAdapter {
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         clients.inMemory()
-                //client_id
-                .withClient(ClientId)
-                //secret
-                .secret(bCryptPasswordEncoder.encode(Security))
-                //授权模式
+                .withClient(ClientId).secret(bCryptPasswordEncoder.encode(Security))
                 .authorizedGrantTypes("authorization_code")
-                //作用域，也就是权限范围
+                // 作用域，也就是权限范围
                 .scopes("all")
-                //资源的ID
+                // 资源的ID
                 .resourceIds(my_resource)
-                //回调地址
-                .redirectUris("http://localhost:8080/callback");
+                .accessTokenValiditySeconds(12 * 60 * 60)
+                // 回调地址
+                .redirectUris("http://localhost:50003/callback", "http://localhost:50004/callback");
     }
 }
