@@ -54,7 +54,7 @@ public class WeatherNotifyScheduler {
 
     @Scheduled(cron = "0 0 23 * * ?")
     public void a() throws Exception {
-        getWeather("116.324212", "40.068387");
+        getWeather("40.068387", "116.324212");
         getWeather("30.395202", "114.328222");
     }
 
