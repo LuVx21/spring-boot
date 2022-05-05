@@ -14,7 +14,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
-class ApplicationTest {
+public class ApplicationTest {
     @Autowired
     WeatherNotifyScheduler scheduler;
 
@@ -31,7 +31,7 @@ class ApplicationTest {
 
     @Test
     void m2() throws Exception {
-        scheduler.getWeather();
+        scheduler.a();
     }
 
     @Test
