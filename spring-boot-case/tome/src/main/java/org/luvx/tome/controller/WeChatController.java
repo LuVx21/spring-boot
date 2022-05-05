@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
@@ -45,10 +47,14 @@ public class WeChatController {
         return s;
     }
 
+    @JacksonXmlRootElement(localName = "xml")
     @Data
     private static class A {
+        @JacksonXmlProperty(localName = "ToUserName")
         private String ToUserName;
+        @JacksonXmlProperty(localName = "AgentID")
         private String AgentID;
+        @JacksonXmlProperty(localName = "Encrypt")
         private String Encrypt;
     }
 }
