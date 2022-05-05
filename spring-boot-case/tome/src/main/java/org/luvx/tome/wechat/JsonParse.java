@@ -35,9 +35,9 @@ class JsonParse {
 		Object[] result = new Object[3];
 		try {
 			Map<String, Object> tmpMap = new ObjectMapper().readValue(jsontext, Map.class);
-        	Object encrypt_msg = tmpMap.get("Encrypt");
-			Object tousername  = tmpMap.get("ToUserName");
-			Object agentid     = tmpMap.get("AgentID");
+        	Object encrypt_msg = tmpMap.get("encrypt");
+			Object tousername  = tmpMap.get("toUserName");
+			Object agentid     = tmpMap.get("agentID");
 
 			result[0] = tousername;
 			result[1] = encrypt_msg;
