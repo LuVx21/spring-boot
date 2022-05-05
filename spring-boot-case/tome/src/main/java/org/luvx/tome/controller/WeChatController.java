@@ -39,23 +39,26 @@ public class WeChatController {
     }
 
     @PostMapping("doMsg")
-    public String b(String msg_signature, String timestamp, String nonce, @RequestBody A data) throws Exception {
-        log.info("参数:{} {} {} {}", msg_signature, timestamp, nonce, data);
+    public String b(String msg_signature, String timestamp, String nonce, @RequestBody String xml) throws Exception {
+        log.info("参数:{} {} {} {}", msg_signature, timestamp, nonce, xml);
         WXBizJsonMsgCrypt wxBizJsonMsgCrypt = new WXBizJsonMsgCrypt(token, encodingAesKey, corpid);
-        String json = (new ObjectMapper()).writeValueAsString(data);
+        String json = XmlUtils.convertXmlToJson(xml);
         log.info("json:{}", json);
         String s = wxBizJsonMsgCrypt.DecryptMsg(msg_signature, timestamp, nonce, json);
         log.info("明文:{}", s);
-        String aa = """
-                <xml>
-                   <ToUserName><![CDATA[ww8d37a0aa1597c901]]></ToUserName>
-                   <FromUserName><![CDATA[ren.xie]]></FromUserName>
-                   <CreateTime>1651755011</CreateTime>
-                   <MsgType><![CDATA[text]]></MsgType>
-                   <Content><![CDATA[this is a test]]></Content>
-                </xml>
+        String sRespData = """
+                {
+                    "ToUserName": "wx5823bf96d3bd56c7",
+                    "FromUserName": "mycreate",
+                    "CreateTime": 1409659813,
+                    "MsgType": "text",
+                    "Content": "hello",
+                    "MsgId": 4561255354251345929,
+                    "AgentID": 218
+                }
                 """;
-        String s1 = wxBizJsonMsgCrypt.EncryptMsg(XmlUtils.convertXmlToJson(aa), timestamp, nonce);
+        String s1 = wxBizJsonMsgCrypt.EncryptMsg(XmlUtils.convertXmlToJson(sRespData), timestamp, nonce);
+        log.info("被动回复消息:{}", s1);
         return s1;
     }
 
