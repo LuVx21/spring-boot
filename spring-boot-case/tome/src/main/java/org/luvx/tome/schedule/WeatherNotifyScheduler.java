@@ -17,6 +17,7 @@ import org.luvx.tome.pojo.Content;
 import org.luvx.tome.pojo.Message;
 import org.luvx.tome.pojo.TextType;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -51,13 +52,14 @@ public class WeatherNotifyScheduler {
             .followRedirects(HttpClient.Redirect.NORMAL)
             .build();
 
-    // @Scheduled("aaa")
-    public void a() {
-
+    @Scheduled(cron = "0 0 23 * * ?")
+    public void a() throws Exception {
+        getWeather("116.324212", "40.068387");
+        getWeather("30.395202", "114.328222");
     }
 
-    public void getWeather() throws Exception {
-        String body = "lat=30.395202&lon=114.328222&token=" + token;
+    public void getWeather(String lat, String lon) throws Exception {
+        String body = "lat=" + lat + "&lon=" + lon + "&token=" + token;
         HttpRequest request = HttpRequest.newBuilder()
                 .header("Authorization", "APPCODE " + appCode)
                 .header("Content-Type", "application/x-www-form-urlencoded")

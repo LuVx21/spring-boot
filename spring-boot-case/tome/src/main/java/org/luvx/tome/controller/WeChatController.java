@@ -1,7 +1,9 @@
 package org.luvx.tome.controller;
 
+import org.luvx.tome.schedule.WeatherNotifyScheduler;
 import org.luvx.tome.utils.XmlUtils;
 import org.luvx.tome.wechat.WXBizJsonMsgCrypt;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,8 +29,17 @@ public class WeChatController {
     @Value("${wechat.encodingAesKey}")
     String encodingAesKey;
 
+    @Autowired
+    private WeatherNotifyScheduler weatherNotifyScheduler;
+
     @GetMapping("/index")
     public String index() {
+        return "index";
+    }
+
+    @GetMapping("/weather")
+    public String weather() throws Exception {
+        weatherNotifyScheduler.a();
         return "index";
     }
 
@@ -43,7 +54,6 @@ public class WeChatController {
         log.info("参数:{} {} {} {}", msg_signature, timestamp, nonce, xml);
         WXBizJsonMsgCrypt wxBizJsonMsgCrypt = new WXBizJsonMsgCrypt(token, encodingAesKey, corpid);
         String json = XmlUtils.convertXmlToJson(xml);
-        log.info("json:{}", json);
         String s = wxBizJsonMsgCrypt.DecryptMsg(msg_signature, timestamp, nonce, json);
         log.info("明文:{}", s);
         String s1 = wxBizJsonMsgCrypt.EncryptMsg(XmlUtils.convertXmlToJson(s), timestamp, nonce);
