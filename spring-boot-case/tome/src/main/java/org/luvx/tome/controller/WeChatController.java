@@ -1,5 +1,6 @@
 package org.luvx.tome.controller;
 
+import org.luvx.tome.utils.XmlUtils;
 import org.luvx.tome.wechat.WXBizJsonMsgCrypt;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -45,7 +46,17 @@ public class WeChatController {
         log.info("json:{}", json);
         String s = wxBizJsonMsgCrypt.DecryptMsg(msg_signature, timestamp, nonce, json);
         log.info("明文:{}", s);
-        return s;
+        String aa = """
+                <xml>
+                   <ToUserName><![CDATA[ww8d37a0aa1597c901]]></ToUserName>
+                   <FromUserName><![CDATA[ren.xie]]></FromUserName>
+                   <CreateTime>1651755011</CreateTime>
+                   <MsgType><![CDATA[text]]></MsgType>
+                   <Content><![CDATA[this is a test]]></Content>
+                </xml>
+                """;
+        String s1 = wxBizJsonMsgCrypt.EncryptMsg(XmlUtils.convertXmlToJson(aa), timestamp, nonce);
+        return s1;
     }
 
     @JacksonXmlRootElement(localName = "xml")
@@ -57,5 +68,20 @@ public class WeChatController {
         private String AgentID;
         @JacksonXmlProperty(localName = "Encrypt")
         private String Encrypt;
+    }
+
+    @JacksonXmlRootElement(localName = "xml")
+    @Data
+    public static class B {
+        @JacksonXmlProperty(localName = "ToUserName")
+        private String ToUserName;
+        @JacksonXmlProperty(localName = "FromUserName")
+        private String FromUserName;
+        @JacksonXmlProperty(localName = "CreateTime")
+        private String CreateTime;
+        @JacksonXmlProperty(localName = "MsgType")
+        private String MsgType;
+        @JacksonXmlProperty(localName = "Content")
+        private String Content;
     }
 }
