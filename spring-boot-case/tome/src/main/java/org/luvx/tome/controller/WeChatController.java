@@ -46,18 +46,7 @@ public class WeChatController {
         log.info("json:{}", json);
         String s = wxBizJsonMsgCrypt.DecryptMsg(msg_signature, timestamp, nonce, json);
         log.info("明文:{}", s);
-        String sRespData = """
-                {
-                    "ToUserName": "wx5823bf96d3bd56c7",
-                    "FromUserName": "mycreate",
-                    "CreateTime": 1409659813,
-                    "MsgType": "text",
-                    "Content": "hello",
-                    "MsgId": 4561255354251345929,
-                    "AgentID": 218
-                }
-                """;
-        String s1 = wxBizJsonMsgCrypt.EncryptMsg(XmlUtils.convertXmlToJson(sRespData), timestamp, nonce);
+        String s1 = wxBizJsonMsgCrypt.EncryptMsg(XmlUtils.convertXmlToJson(s), timestamp, nonce);
         log.info("被动回复消息:{}", s1);
         return s1;
     }
