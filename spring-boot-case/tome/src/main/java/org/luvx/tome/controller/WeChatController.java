@@ -42,6 +42,7 @@ public class WeChatController {
         log.info("参数:{} {} {} {}", msg_signature, timestamp, nonce, data);
         WXBizJsonMsgCrypt wxBizJsonMsgCrypt = new WXBizJsonMsgCrypt(token, encodingAesKey, corpid);
         String json = (new ObjectMapper()).writeValueAsString(data);
+        log.info("json:{}", json);
         String s = wxBizJsonMsgCrypt.DecryptMsg(msg_signature, timestamp, nonce, json);
         log.info("明文:{}", s);
         return s;
@@ -49,7 +50,7 @@ public class WeChatController {
 
     @JacksonXmlRootElement(localName = "xml")
     @Data
-    private static class A {
+    public static class A {
         @JacksonXmlProperty(localName = "ToUserName")
         private String ToUserName;
         @JacksonXmlProperty(localName = "AgentID")
