@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
@@ -34,11 +36,19 @@ public class WeChatController {
     }
 
     @PostMapping("doMsg")
-    public String b(String msg_signature, String timestamp, String nonce, @RequestBody String data) throws Exception {
+    public String b(String msg_signature, String timestamp, String nonce, @RequestBody A data) throws Exception {
         log.info("参数:{} {} {} {}", msg_signature, timestamp, nonce, data);
         WXBizJsonMsgCrypt wxBizJsonMsgCrypt = new WXBizJsonMsgCrypt(token, encodingAesKey, corpid);
-        String s = wxBizJsonMsgCrypt.DecryptMsg(msg_signature, timestamp, nonce, data);
+        String json = (new ObjectMapper()).writeValueAsString(data);
+        String s = wxBizJsonMsgCrypt.DecryptMsg(msg_signature, timestamp, nonce, json);
         log.info("明文:{}", s);
         return s;
+    }
+
+    @Data
+    private static class A {
+        private String ToUserName;
+        private String AgentID;
+        private String Encrypt;
     }
 }
