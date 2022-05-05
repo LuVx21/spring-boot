@@ -35,6 +35,7 @@ public class WeChatController {
 
     @PostMapping("doMsg")
     public String b(String msg_signature, String timestamp, String nonce, @RequestBody String data) throws Exception {
+        log.info("参数:{} {} {} {}", msg_signature, timestamp, nonce, data);
         WXBizJsonMsgCrypt wxBizJsonMsgCrypt = new WXBizJsonMsgCrypt(token, encodingAesKey, corpid);
         String s = wxBizJsonMsgCrypt.DecryptMsg(msg_signature, timestamp, nonce, data);
         log.info("明文:{}", s);
