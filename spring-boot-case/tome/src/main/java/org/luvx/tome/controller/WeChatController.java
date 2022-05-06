@@ -31,7 +31,7 @@ public class WeChatController {
     @Autowired
     private WeatherNotifyScheduler weatherNotifyScheduler;
 
-    @GetMapping("/index")
+    @GetMapping(value = "/index", produces = "application/json")
     public Object index() {
         return Map.of(
                 "app", "toMe",

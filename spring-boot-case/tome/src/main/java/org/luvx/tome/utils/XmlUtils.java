@@ -2,8 +2,11 @@ package org.luvx.tome.utils;
 
 import java.io.StringWriter;
 
+import javax.annotation.Nullable;
+
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 
@@ -26,5 +29,14 @@ public class XmlUtils {
             log.info("xml->json异常", e);
         }
         return writer.toString();
+    }
+
+    @Nullable
+    public <T> T xmlToBean(String xml, Class<T> clazz) {
+        try {
+            return xmlMapper.readValue(xml, clazz);
+        } catch (JsonProcessingException e) {
+            return null;
+        }
     }
 }
