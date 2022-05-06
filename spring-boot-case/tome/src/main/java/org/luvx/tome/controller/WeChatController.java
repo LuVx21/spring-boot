@@ -1,5 +1,9 @@
 package org.luvx.tome.controller;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Map;
+
 import org.luvx.tome.schedule.WeatherNotifyScheduler;
 import org.luvx.tome.utils.XmlUtils;
 import org.luvx.tome.wechat.WXBizJsonMsgCrypt;
@@ -28,8 +32,11 @@ public class WeChatController {
     private WeatherNotifyScheduler weatherNotifyScheduler;
 
     @GetMapping("/index")
-    public String index() {
-        return "index";
+    public Object index() {
+        return Map.of(
+                "app", "toMe",
+                "time", LocalDateTime.now()
+        );
     }
 
     @GetMapping("/weather")
