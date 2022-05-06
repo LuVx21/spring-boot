@@ -1,5 +1,7 @@
 package org.luvx.tome.schedule;
 
+import static org.luvx.tome.utils.XmlUtils.objectMapper;
+
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -10,6 +12,7 @@ import java.net.http.HttpResponse.BodyHandlers;
 import java.time.Duration;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import org.luvx.tome.entity.City;
 import org.luvx.tome.entity.DayWeather;
@@ -19,10 +22,6 @@ import org.luvx.tome.pojo.TextType;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
-
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.common.collect.ImmutableMap;
 
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
@@ -46,7 +45,6 @@ public class WeatherNotifyScheduler {
     String sendMsgUrl  = "https://qyapi.weixin.qq.com/cgi-bin/message/send";
     String weatherUrl  = "https://apifreelat.market.alicloudapi.com/whapi/json/aliweather/briefforecast3days";
 
-    ObjectMapper mapper = new ObjectMapper();
     HttpClient   client = HttpClient.newBuilder()
             .connectTimeout(Duration.ofMillis(5000))
             .followRedirects(HttpClient.Redirect.NORMAL)
@@ -71,21 +69,16 @@ public class WeatherNotifyScheduler {
     }
 
     public void weatherJson(String json) throws IOException, InterruptedException {
-        Map<String, Object> tmpMap = mapper.readValue(json, Map.class);
-        ResponseData data = mapper.readValue(mapper.writeValueAsString(tmpMap.get("data")), ResponseData.class);
+        Map<String, Object> tmpMap = objectMapper.readValue(json, Map.class);
+        ResponseData data =
+                objectMapper.readValue(objectMapper.writeValueAsString(tmpMap.get("data")), ResponseData.class);
         City city = data.getCity();
         String location = city.location();
         StringBuilder sb = new StringBuilder(location);
-        List<DayWeather> forecast = data.getForecast();
-        ImmutableMap<Integer, String> map = ImmutableMap.of(0, "今", 1, "明", 2, "后");
-        for (int i = 0; i < forecast.size(); i++) {
-            DayWeather w = forecast.get(i);
-            sb.append("----" + map.get(i) + "天(" + w.getPredictDate() + ")----\n");
-            sb.append("状况: " + w.getConditionNight() + " ~ " + w.getConditionDay() + "\n");
-            sb.append("温度: " + w.getTempNight() + " ~ " + w.getTempDay() + "\n");
-            sb.append("风向: " + w.getWindDirNight() + " ~ " + w.getWindDirDay() + "\n");
-            sb.append("风级: " + w.getWindLevelNight() + " ~ " + w.getWindLevelDay() + "\n");
-        }
+        data.getForecast().stream()
+                .filter(Objects::nonNull)
+                .map(DayWeather::info)
+                .forEach(sb::append);
 
         System.out.println(sb);
 
@@ -97,14 +90,14 @@ public class WeatherNotifyScheduler {
         String s = sendMsgUrl + "?access_token=" + getToken();
         message.setTouser("@all");
         message.setAgentid(agentid);
-        String requestBody = mapper.writeValueAsString(message);
+        String requestBody = objectMapper.writeValueAsString(message);
         HttpRequest request = HttpRequest.newBuilder()
                 .POST(BodyPublishers.ofString(requestBody))
                 .uri(URI.create(s))
                 .build();
         HttpResponse<String> response = client.send(request, BodyHandlers.ofString());
         log.info("响应:{}", response.body());
-        WeChatResponse1 weCahtResponse = mapper.readValue(response.body(), WeChatResponse1.class);
+        WeChatResponse1 weCahtResponse = objectMapper.readValue(response.body(), WeChatResponse1.class);
         if (40014 == weCahtResponse.getErrcode()) {
         }
     }
@@ -118,7 +111,7 @@ public class WeatherNotifyScheduler {
                 .build();
         HttpResponse<String> response = client.send(request, BodyHandlers.ofString());
         log.info("响应:{}", response.body());
-        WeChatResponse weCahtResponse = mapper.readValue(response.body(), WeChatResponse.class);
+        WeChatResponse weCahtResponse = objectMapper.readValue(response.body(), WeChatResponse.class);
         return weCahtResponse.getAccess_token();
     }
 

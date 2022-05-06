@@ -11,11 +11,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
-
-import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -59,31 +54,5 @@ public class WeChatController {
         String s1 = wxBizJsonMsgCrypt.EncryptMsg(XmlUtils.convertXmlToJson(s), timestamp, nonce);
         log.info("被动回复消息:{}", s1);
         return s1;
-    }
-
-    @JacksonXmlRootElement(localName = "xml")
-    @Data
-    public static class A {
-        @JacksonXmlProperty(localName = "ToUserName")
-        private String ToUserName;
-        @JacksonXmlProperty(localName = "AgentID")
-        private String AgentID;
-        @JacksonXmlProperty(localName = "Encrypt")
-        private String Encrypt;
-    }
-
-    @JacksonXmlRootElement(localName = "xml")
-    @Data
-    public static class B {
-        @JacksonXmlProperty(localName = "ToUserName")
-        private String ToUserName;
-        @JacksonXmlProperty(localName = "FromUserName")
-        private String FromUserName;
-        @JacksonXmlProperty(localName = "CreateTime")
-        private String CreateTime;
-        @JacksonXmlProperty(localName = "MsgType")
-        private String MsgType;
-        @JacksonXmlProperty(localName = "Content")
-        private String Content;
     }
 }

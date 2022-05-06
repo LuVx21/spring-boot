@@ -15,6 +15,8 @@ package org.luvx.tome.wechat;
  */
 import java.util.Map;
 
+import org.luvx.tome.utils.XmlUtils;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 
@@ -34,7 +36,7 @@ class JsonParse {
 	public static Object[] extract(String jsontext) throws AesException     {
 		Object[] result = new Object[3];
 		try {
-			Map<String, Object> tmpMap = new ObjectMapper().readValue(jsontext, Map.class);
+			Map<String, Object> tmpMap = XmlUtils.objectMapper.readValue(jsontext, Map.class);
         	Object encrypt_msg = tmpMap.get("Encrypt");
 			Object tousername  = tmpMap.get("ToUserName");
 			Object agentid     = tmpMap.get("AgentID");

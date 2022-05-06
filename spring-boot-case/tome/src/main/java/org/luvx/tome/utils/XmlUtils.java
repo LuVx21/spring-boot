@@ -7,23 +7,24 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public class XmlUtils {
     public static XmlMapper    xmlMapper    = new XmlMapper();
     public static ObjectMapper objectMapper = new ObjectMapper();
 
     public static String convertXmlToJson(String xml) {
-        StringWriter w = new StringWriter();
-        try {
-            JsonParser jp = xmlMapper.getFactory().createParser(xml);
-            JsonGenerator jg = objectMapper.getFactory().createGenerator(w);
-            while (jp.nextToken() != null) {
-                jg.copyCurrentEvent(jp);
+        StringWriter writer = new StringWriter();
+        try (JsonParser jp = xmlMapper.getFactory().createParser(xml)) {
+            try (JsonGenerator jg = objectMapper.getFactory().createGenerator(writer)) {
+                while (jp.nextToken() != null) {
+                    jg.copyCurrentEvent(jp);
+                }
             }
-            jp.close();
-            jg.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            log.info("xml->json异常", e);
         }
-        return w.toString();
+        return writer.toString();
     }
 }
