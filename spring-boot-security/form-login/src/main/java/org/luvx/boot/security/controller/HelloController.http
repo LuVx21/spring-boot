@@ -1,0 +1,18 @@
+
+
+### login
+
+POST http://localhost:8090/login
+Content-Type: application/x-www-form-urlencoded
+
+username=javaboy&password=123&remember-me=on
+
+### 1
+
+GET http://localhost:8090/hello
+
+### 1
+GET http://localhost:8090/admin/hello
+
+### 1
+GET http://localhost:8090/user/hello

@@ -82,17 +82,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     out.close();
                 })
                 .permitAll()
-                // .rememberMe()
-                // .key("javaboy")
                 .and()
-                .csrf().disable().exceptionHandling()
-                .authenticationEntryPoint((req, resp, authException) -> {
-                            resp.setContentType("application/json;charset=utf-8");
-                            PrintWriter out = resp.getWriter();
-                            out.write("尚未登录，请先登录");
-                            out.flush();
-                            out.close();
-                        }
-                );
+                .rememberMe()
+                .key("foobar")
+                .and()
+                .csrf().disable()
+                .exceptionHandling()
+                // .authenticationEntryPoint((req, resp, authException) -> {
+                //     resp.setContentType("application/json;charset=utf-8");
+                //     try (PrintWriter out = resp.getWriter()) {
+                //         out.write("尚未登录，请先登录");
+                //         out.flush();
+                //     }
+                // })
+        ;
     }
 }
