@@ -2,7 +2,9 @@ package org.luvx.boot.security.config;
 
 import java.io.PrintWriter;
 
-import org.luvx.boot.security.service.UserService;
+import javax.sql.DataSource;
+
+import org.luvx.boot.security.service.MyUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,6 +16,7 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -21,7 +24,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    private UserService userService;
+    private DataSource           dataSource;
+    @Autowired
+    private MyUserDetailsService userDetailsService;
 
     @Bean
     PasswordEncoder passwordEncoder() {
@@ -35,9 +40,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return hierarchy;
     }
 
+    @Bean
+    JdbcTokenRepositoryImpl jdbcTokenRepository() {
+        JdbcTokenRepositoryImpl jdbcTokenRepository = new JdbcTokenRepositoryImpl();
+        jdbcTokenRepository.setDataSource(dataSource);
+        return jdbcTokenRepository;
+    }
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userService);
+        auth.userDetailsService(userDetailsService);
     }
 
     @Override
@@ -85,6 +97,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .rememberMe()
                 .key("foobar")
+                // 持久化令牌解决rememberMe安全风险
+                .tokenRepository(jdbcTokenRepository())
                 .and()
                 .csrf().disable()
                 .exceptionHandling()

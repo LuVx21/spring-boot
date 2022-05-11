@@ -20,8 +20,8 @@ public class AppTest {
     @Test
     void contextLoads() {
         User u1 = new User();
-        u1.setUsername("javaboy");
-        u1.setPassword("123");
+        u1.setUsername("admin");
+        u1.setPassword("1121");
         u1.setAccountNonExpired(true);
         u1.setAccountNonLocked(true);
         u1.setCredentialsNonExpired(true);
@@ -32,8 +32,8 @@ public class AppTest {
         u1.setRoles(Lists.newArrayList(r1));
         userDao.save(u1);
         User u2 = new User();
-        u2.setUsername("江南一点雨");
-        u2.setPassword("123");
+        u2.setUsername("user");
+        u2.setPassword("1121");
         u2.setAccountNonExpired(true);
         u2.setAccountNonLocked(true);
         u2.setCredentialsNonExpired(true);

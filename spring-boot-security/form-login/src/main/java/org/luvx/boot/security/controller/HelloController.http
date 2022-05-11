@@ -5,7 +5,7 @@
 POST http://localhost:8090/login
 Content-Type: application/x-www-form-urlencoded
 
-username=javaboy&password=123&remember-me=on
+username=admin&password=1121&remember-me=on
 
 ### 1
 
