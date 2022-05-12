@@ -19,6 +19,7 @@
 
     <modules>
         <module>form-login</module>
+        <module>ldap</module>
     </modules>
 
     <dependencies>
