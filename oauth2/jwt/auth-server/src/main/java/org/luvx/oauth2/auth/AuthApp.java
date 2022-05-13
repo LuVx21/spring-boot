@@ -1,11 +1,13 @@
-package org.luvx.boot.oauth2.client1;
+package org.luvx.oauth2.auth;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class Client1App {
+public class AuthApp {
+
     public static void main(String[] args) {
-        SpringApplication.run(Client1App.class, args);
+        SpringApplication.run(AuthApp.class, args);
     }
+
 }
