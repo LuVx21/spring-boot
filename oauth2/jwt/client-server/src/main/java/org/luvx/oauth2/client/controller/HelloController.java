@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class HelloController {
     @Autowired
-    HelloService service;
+    private HelloService service;
 
     @GetMapping("/index.html")
     public String hello(String code, Model model) {

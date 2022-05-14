@@ -19,7 +19,14 @@
 
     <modules>
         <module>auth-server</module>
-        <module>client-app</module>
+        <module>client-server</module>
         <module>user-server</module>
     </modules>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+    </dependencies>
 </project>

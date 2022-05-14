@@ -1,5 +1,6 @@
 package org.luvx.oauth2.client.service;
 
+import static org.apache.commons.lang3.StringUtils.isBlank;
 import static org.springframework.http.HttpMethod.GET;
 
 import java.util.Map;
@@ -21,15 +22,15 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Service
 public class HelloService {
-    public String access_token  = "";
-    public String refresh_token = "";
+    private String access_token  = "";
+    private String refresh_token = "";
 
     @Autowired
     private RestTemplate restTemplate;
 
     public String getData(String code) {
         log.info("token:{}, code:{}", access_token, code);
-        if (StringUtils.isAnyBlank(access_token, code)) {
+        if (isBlank(access_token) && !isBlank(code)) {
             MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
             map.add("code", code);
             map.add("client_id", "client_app_id");
@@ -54,7 +55,7 @@ public class HelloService {
             return entity.getBody();
         } catch (RestClientException e) {
             log.info("get resource error:{}", e.getMessage());
-            return "未加载";
+            return "异常:获取资源服务内容";
         }
     }
 

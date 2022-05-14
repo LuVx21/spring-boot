@@ -4,6 +4,7 @@ import java.util.Arrays;
 
 import javax.sql.DataSource;
 
+import org.luvx.oauth2.auth.config.token.JwtTokenEnhancer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -29,13 +30,13 @@ public class AuthorizationServer extends AuthorizationServerConfigurerAdapter {
     @Autowired
     private TokenStore              tokenStore;
     @Autowired
-    private DataSource              dataSource;
-    @Autowired
     private JwtAccessTokenConverter jwtAccessTokenConverter;
     @Autowired
-    private AuthenticationManager   authenticationManager;
-    @Autowired
     private JwtTokenEnhancer        jwtTokenEnhancer;
+    @Autowired
+    private DataSource              dataSource;
+    @Autowired
+    private AuthenticationManager   authenticationManager;
 
     @Bean
     ClientDetailsService clientDetailsService() {
@@ -54,15 +55,9 @@ public class AuthorizationServer extends AuthorizationServerConfigurerAdapter {
         return services;
     }
 
-    @Override
-    public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
-        security.checkTokenAccess("permitAll()")
-                .allowFormAuthenticationForClients();
-    }
-
-    @Override
-    public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-        clients.withClientDetails(clientDetailsService());
+    @Bean
+    AuthorizationCodeServices authorizationCodeServices() {
+        return new InMemoryAuthorizationCodeServices();
     }
 
     @Override
@@ -72,8 +67,14 @@ public class AuthorizationServer extends AuthorizationServerConfigurerAdapter {
                 .tokenServices(tokenServices());
     }
 
-    @Bean
-    AuthorizationCodeServices authorizationCodeServices() {
-        return new InMemoryAuthorizationCodeServices();
+    @Override
+    public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
+        clients.withClientDetails(clientDetailsService());
+    }
+
+    @Override
+    public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
+        security.checkTokenAccess("permitAll()")
+                .allowFormAuthenticationForClients();
     }
 }

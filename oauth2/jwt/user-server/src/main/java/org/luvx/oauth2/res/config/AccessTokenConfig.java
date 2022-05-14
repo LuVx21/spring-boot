@@ -8,7 +8,7 @@ import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 
 @Configuration
 public class AccessTokenConfig {
-    private String SIGNING_KEY = "abcdefg";
+    private final String SIGNING_KEY = "abcdefg";
 
     @Bean
     TokenStore tokenStore() {

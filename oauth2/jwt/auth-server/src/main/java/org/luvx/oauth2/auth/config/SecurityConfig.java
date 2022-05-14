@@ -1,5 +1,6 @@
 package org.luvx.oauth2.auth.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -11,17 +12,20 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @Bean
-    PasswordEncoder passwordEncoder() {
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.inMemoryAuthentication()
-                .withUser("admin").password(new BCryptPasswordEncoder().encode("1121")).roles("admin")
+                .withUser("admin").password(passwordEncoder.encode("1121")).roles("admin")
                 .and()
-                .withUser("user").password(new BCryptPasswordEncoder().encode("1121")).roles("user");
+                .withUser("user").password(passwordEncoder.encode("1121")).roles("user");
     }
 
     @Bean
