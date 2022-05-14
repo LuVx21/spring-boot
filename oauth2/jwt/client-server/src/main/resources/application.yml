@@ -1,2 +1,33 @@
 server:
   port: 8082
+#  servlet:
+#    context-path: /client-server
+
+spring:
+  application:
+    name: client-server
+#  redis:
+#    database: 2
+#    host: localhost
+#    port: 6379
+#    password:
+#    jedis:
+#      pool:
+#        max-active: 8
+#        max-idle: 8
+#        min-idle: 0
+#    timeout: 100ms
+
+#security:
+#  oauth2:
+#    client:
+#      client-id: client-server
+#      client-secret: client-server
+#      user-authorization-uri: http://localhost:8080/oauth/authorize
+#      access-token-uri: http://localhost:8080/oauth/token
+#    resource:
+#      jwt:
+#        key-uri: http://localhost:8080/oauth/token_key
+#        key-value: dev
+#    authorization:
+#      check-token-access: http://localhost:8080/oauth/check_token

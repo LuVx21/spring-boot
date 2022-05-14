@@ -8,17 +8,18 @@ import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 
 @Configuration
 public class AccessTokenConfig {
-    private final String SIGNING_KEY = "abcdefg";
+    public static final String SIGNING_KEY = "abcdefg";
 
     @Bean
-    TokenStore tokenStore() {
+    public TokenStore tokenStore() {
         return new JwtTokenStore(jwtAccessTokenConverter());
     }
 
     @Bean
-    JwtAccessTokenConverter jwtAccessTokenConverter() {
+    public JwtAccessTokenConverter jwtAccessTokenConverter() {
         JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
         converter.setSigningKey(SIGNING_KEY);
+        // converter.setVerifierKey(SIGNING_KEY);
         return converter;
     }
 }
