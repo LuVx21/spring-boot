@@ -7,12 +7,12 @@
     <parent>
         <groupId>org.luvx</groupId>
         <artifactId>sample_luvx_parent</artifactId>
-        <version>1.0.1-SNAPSHOT</version>
+        <version>0.1</version>
     </parent>
 
     <groupId>org.luvx</groupId>
     <artifactId>sample_luvx_ssh</artifactId>
-    <version>1.0.1-SNAPSHOT</version>
+    <version>0.1</version>
     <packaging>pom</packaging>
 
     <modules>
@@ -25,7 +25,7 @@
         <dependency>
             <groupId>org.luvx</groupId>
             <artifactId>sample_luvx_commons</artifactId>
-            <version>1.0.1-SNAPSHOT</version>
+            <version>0.1</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>

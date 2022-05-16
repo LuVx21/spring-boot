@@ -5,7 +5,7 @@
 
     <groupId>org.luvx</groupId>
     <artifactId>spring-boot-excel</artifactId>
-    <version>1.0.1-SNAPSHOT</version>
+    <version>0.1</version>
     <packaging>jar</packaging>
 
     <name>spring-boot-excel</name>

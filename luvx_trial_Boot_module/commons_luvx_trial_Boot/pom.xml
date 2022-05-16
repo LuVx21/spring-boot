@@ -7,7 +7,7 @@
     <parent>
         <groupId>org.luvx</groupId>
         <artifactId>luvx_trial_Boot</artifactId>
-        <version>1.0.1-SNAPSHOT</version>
+        <version>0.1</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <artifactId>commons_luvx_trial_Boot</artifactId>

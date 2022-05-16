@@ -6,7 +6,7 @@
 
     <groupId>org.luvx</groupId>
     <artifactId>Spring-Boot</artifactId>
-    <version>1.0.1-SNAPSHOT</version>
+    <version>0.1</version>
     <!--打包方式为war-->
     <packaging>war</packaging>
 

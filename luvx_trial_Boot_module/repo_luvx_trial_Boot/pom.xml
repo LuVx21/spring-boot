@@ -7,7 +7,7 @@
     <parent>
         <groupId>org.luvx</groupId>
         <artifactId>luvx_trial_Boot</artifactId>
-        <version>1.0.1-SNAPSHOT</version>
+        <version>0.1</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <artifactId>repo_luvx_trial_Boot</artifactId>
@@ -16,7 +16,7 @@
         <dependency>
             <groupId>org.luvx</groupId>
             <artifactId>entity_luvx_trial_Boot</artifactId>
-            <version>1.0.1-SNAPSHOT</version>
+            <version>0.1</version>
         </dependency>
     </dependencies>
 </project>

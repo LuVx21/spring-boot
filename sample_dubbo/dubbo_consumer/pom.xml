@@ -7,7 +7,7 @@
     <parent>
         <groupId>org.luvx</groupId>
         <artifactId>sample_dubbo</artifactId>
-        <version>1.0.1-SNAPSHOT</version>
+        <version>0.1</version>
     </parent>
 
     <artifactId>dubbo_consumer</artifactId>
@@ -18,7 +18,7 @@
         <dependency>
             <groupId>org.luvx</groupId>
             <artifactId>dubbo_api</artifactId>
-            <version>1.0.1-SNAPSHOT</version>
+            <version>0.1</version>
         </dependency>
     </dependencies>
 </project>
