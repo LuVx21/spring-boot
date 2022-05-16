@@ -1,5 +1,0 @@
-
-description = ''
-dependencies {
-  compile project(':entity_luvx_trial_Boot')
-}
