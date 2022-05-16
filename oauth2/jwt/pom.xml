@@ -19,8 +19,9 @@
 
     <modules>
         <module>auth-server</module>
-        <module>client-server</module>
         <module>user-server</module>
+        <module>client-server</module>
+        <module>client-sso</module>
     </modules>
 
     <dependencies>

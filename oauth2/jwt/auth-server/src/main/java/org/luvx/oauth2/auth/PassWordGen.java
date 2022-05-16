@@ -8,7 +8,7 @@ public class PassWordGen {
     public static void main(String[] args) {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         Stream.of("1121",
-                        "client_app_id",
+                        "client-jwt",
                         "admin",
                         "client"
                 )

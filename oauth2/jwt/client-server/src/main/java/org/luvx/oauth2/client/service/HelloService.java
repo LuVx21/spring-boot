@@ -43,7 +43,7 @@ public class HelloService {
         if (isBlank(access_token) && !isBlank(code)) {
             MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
             map.add("code", code);
-            map.add("client_id", "client_app_id");
+            map.add("client_id", "client-jwt");
             map.add("client_secret", "1121");
             map.add("redirect_uri", "http://localhost:8082/login");
             map.add("grant_type", "authorization_code");
@@ -82,7 +82,7 @@ public class HelloService {
     @Scheduled(cron = "0 55 0/1 * * ？")
     public void tokenTask() {
         MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
-        map.add("client_id", "client_app_id");
+        map.add("client_id", "client-jwt");
         map.add("client_secret", "1121");
         map.add("refresh_token", refresh_token);
         map.add("grant_type", "refresh_token");
