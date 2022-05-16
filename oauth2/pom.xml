@@ -19,11 +19,7 @@
     </properties>
 
     <modules>
-        <module>authorize</module>
-        <module>authorize-fake</module>
-        <module>resource</module>
-        <module>client1</module>
-        <module>client2</module>
+        <module>simple</module>
         <module>oidc</module>
         <module>jwt</module>
     </modules>
