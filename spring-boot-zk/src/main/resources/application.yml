@@ -1,8 +1,0 @@
-server:
-  port: 8090
-zookeeper:
-  address: localhost:2181
-#  baseSleepTimeMs
-#  maxRetries
-#  sessionTimeoutMs
-#  connectionTimeoutMs
