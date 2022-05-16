@@ -18,8 +18,6 @@
     <modules>
         <module>authorize</module>
         <module>resource</module>
-        <module>client1</module>
-        <module>client2</module>
     </modules>
 
     <dependencies>
