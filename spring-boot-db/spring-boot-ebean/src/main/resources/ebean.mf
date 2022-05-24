@@ -1,3 +1,0 @@
-entity-packages: org.luvx.module.domain
-transactional-packages: org.luvx
-querybean-packages: org.luvx
