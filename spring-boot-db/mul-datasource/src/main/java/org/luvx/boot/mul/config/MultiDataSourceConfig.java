@@ -55,12 +55,12 @@ public class MultiDataSourceConfig {
     }
 
     @Bean("dataSource0Template")
-    public JdbcTemplate storyJdbcTemplate(DataSource dataSource0) {
+    public JdbcTemplate dataSource0Template(DataSource dataSource0) {
         return new JdbcTemplate(dataSource0);
     }
 
     @Bean("dataSource1Template")
-    public JdbcTemplate testJdbcTemplate(DataSource dataSource1) {
+    public JdbcTemplate dataSource1Template(DataSource dataSource1) {
         return new JdbcTemplate(dataSource1);
     }
 }

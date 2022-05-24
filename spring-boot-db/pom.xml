@@ -13,8 +13,9 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>spring-boot-jdbc</module>
         <module>mul-datasource</module>
+        <module>mul-datasource-mybatis</module>
+        <module>spring-boot-jdbc</module>
         <module>spring-boot-jpa</module>
         <module>spring-boot-mybatis</module>
         <module>spring-boot-mybatis-page</module>
@@ -44,15 +45,15 @@
 
     <build>
         <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.1</version>
-                <configuration>
-                    <source>${project.build.jdk}</source>
-                    <target>${project.build.jdk}</target>
-                </configuration>
-            </plugin>
+<!--            <plugin>-->
+<!--                <groupId>org.apache.maven.plugins</groupId>-->
+<!--                <artifactId>maven-compiler-plugin</artifactId>-->
+<!--                <version>3.1</version>-->
+<!--                <configuration>-->
+<!--                    <source>${project.build.jdk}</source>-->
+<!--                    <target>${project.build.jdk}</target>-->
+<!--                </configuration>-->
+<!--            </plugin>-->
 
             <!-- 配置测试错误不影响package等 -->
             <plugin>
