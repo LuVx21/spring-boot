@@ -1,0 +1,25 @@
+spring:
+  dynamic:
+    datasource:
+      write:
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        url: jdbc:mysql://luvx:53306/boot?useUnicode=true&characterEncoding=utf-8&serverTimezone=UTC&useSSL=true&allowMultiQueries=true
+        username: root
+        password: 1121
+      read:
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        url: jdbc:mysql://luvx:53306/boot1?useUnicode=true&characterEncoding=utf-8&serverTimezone=UTC&useSSL=true&allowMultiQueries=true
+        username: root
+        password: 1121
+
+logging:
+  level:
+    root: info
+    org:
+      springframework:
+        jdbc:
+          core: debug
+    com:
+      zaxxer:
+        hikari:
+          HikariDataSource: debug

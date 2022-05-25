@@ -11,6 +11,7 @@ import java.util.Map;
 
 import org.junit.jupiter.api.Test;
 import org.luvx.ApplicationTests;
+import org.luvx.common.util.PrintUtils;
 import org.luvx.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -33,7 +34,7 @@ class SelectTest extends ApplicationTests {
 
         List<Long> ids = List.of(0L, 4L, 5L);
         List<User> users = userMapper.selectBatchIds(ids);
-        API.println(user, users);
+        PrintUtils.println(user, users);
     }
 
     @Test
@@ -100,7 +101,7 @@ class SelectTest extends ApplicationTests {
         IPage<User> iPage = userMapper.selectPage(page, new QueryWrapper<User>()
                 .eq(COL_AGE, "3"));
 
-        API.println(page.getRecords(), iPage.getRecords());
+        PrintUtils.println(page.getRecords(), iPage.getRecords());
     }
 
     @Test
@@ -109,6 +110,6 @@ class SelectTest extends ApplicationTests {
         IPage<Map<String, Object>> iPage = userMapper.selectMapsPage(page, new QueryWrapper<User>()
                 .ge(COL_AGE, "3")
         );
-        API.println(page.getRecords(), iPage.getRecords());
+        PrintUtils.println(page.getRecords(), iPage.getRecords());
     }
 }

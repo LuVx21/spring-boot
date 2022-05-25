@@ -5,7 +5,7 @@
 
     <parent>
         <groupId>org.luvx</groupId>
-        <artifactId>coding-spring-boot-java-parent</artifactId>
+        <artifactId>coding-parent-spring-boot-java</artifactId>
         <version>0.1</version>
     </parent>
 
@@ -13,8 +13,8 @@
     <packaging>pom</packaging>
 
     <modules>
-<!--        <module>spring-boot-ebean</module>-->
-<!--        <module>spring-boot-jooq</module>-->
+        <module>mul-datasource</module>
+        <module>mul-datasource-mybatis</module>
         <module>spring-boot-jdbc</module>
         <module>spring-boot-jpa</module>
         <module>spring-boot-mybatis</module>
@@ -38,22 +38,22 @@
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
-            <version>1.2.72</version>
+            <version>2.0.3</version>
         </dependency>
 
     </dependencies>
 
     <build>
         <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.1</version>
-                <configuration>
-                    <source>${project.build.jdk}</source>
-                    <target>${project.build.jdk}</target>
-                </configuration>
-            </plugin>
+<!--            <plugin>-->
+<!--                <groupId>org.apache.maven.plugins</groupId>-->
+<!--                <artifactId>maven-compiler-plugin</artifactId>-->
+<!--                <version>3.1</version>-->
+<!--                <configuration>-->
+<!--                    <source>${project.build.jdk}</source>-->
+<!--                    <target>${project.build.jdk}</target>-->
+<!--                </configuration>-->
+<!--            </plugin>-->
 
             <!-- 配置测试错误不影响package等 -->
             <plugin>
