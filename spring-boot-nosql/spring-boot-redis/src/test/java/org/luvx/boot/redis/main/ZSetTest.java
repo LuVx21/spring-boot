@@ -1,18 +1,34 @@
 package org.luvx.boot.redis.main;
 
-import javax.annotation.Resource;
-
 import org.junit.jupiter.api.Test;
 import org.luvx.boot.redis.ApplicationTests;
-import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.DefaultTypedTuple;
+import org.springframework.data.redis.core.SetOperations;
+import org.springframework.data.redis.core.ZSetOperations;
+import org.springframework.data.redis.core.ZSetOperations.TypedTuple;
+
+import java.util.Set;
+
+import static org.luvx.common.util.PrintUtils.println;
 
 public class ZSetTest extends ApplicationTests {
-    @Resource
-    private RedisTemplate<String, Object> redisTemplate;
+    @Test
+    void m0() {
+        ZSetOperations<String, String> operations = stringRedisTemplate.opsForZSet();
+        String key = "zset-key";
+        operations.add(key, Set.of(
+                new DefaultTypedTuple("a", 1.0),
+                new DefaultTypedTuple("b", 99.0),
+                new DefaultTypedTuple("c", 101.0)
+        ));
+        Set<String> set = operations.range(key, 0, 100);
+        println(set);
+        set = operations.rangeByScore(key, 0.0, 100.0);
+        println(set);
+    }
 
     @Test
     void m1() {
-        // API.println("是 null", redisTemplate == null);
-        // redisTemplate.opsForSet();
+        SetOperations<String, Object> operations = redisTemplate.opsForSet();
     }
 }
