@@ -12,6 +12,12 @@ import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import javax.sql.DataSource;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.toMap;
+import static org.luvx.boot.mul.mybatis.config.DSTypeContainer.defaultType;
 
 @Configuration
 @EnableConfigurationProperties(DSProperties.class)
@@ -24,15 +30,17 @@ public class DynamicDataSourceConfig {
     @SuppressWarnings("unchecked")
     @Bean(name = "dynamicDataSource")
     public DynamicDataSource DataSource(DSProperties dsProperties) {
-        Map targetDataSource = new HashMap<>(8);
-        dsProperties.getDatasource()
-                .forEach((k, v) -> targetDataSource.put(k, v.initializeDataSourceBuilder().build()));
+        Map<Object, Object> targetDataSource = dsProperties.getDatasource().entrySet().stream()
+                .collect(toMap(Entry::getKey, e -> e.getValue().initializeDataSourceBuilder().build()));
+        defaultType = "write";
+        if (!targetDataSource.containsKey(defaultType)) {
+            defaultType = (String) targetDataSource.keySet().stream().findFirst().get();
+        }
+        Object defaultTargetDataSource = targetDataSource.get(defaultType);
+
         DynamicDataSource dataSource = new DynamicDataSource();
         dataSource.setTargetDataSources(targetDataSource);
-
-        // 设置默认的数据库
-        DSTypeContainer.defaultType = (String) targetDataSource.keySet().stream().findFirst().get();
-        dataSource.setDefaultTargetDataSource(targetDataSource.get(DSTypeContainer.defaultType));
+        dataSource.setDefaultTargetDataSource(defaultTargetDataSource);
         return dataSource;
     }
 
