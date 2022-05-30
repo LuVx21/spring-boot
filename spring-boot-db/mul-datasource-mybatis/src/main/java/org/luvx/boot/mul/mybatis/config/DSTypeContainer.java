@@ -1,24 +1,20 @@
 package org.luvx.boot.mul.mybatis.config;
 
-import org.apache.commons.lang3.StringUtils;
+import java.util.Objects;
 
 public class DSTypeContainer {
-    private static final ThreadLocal<String> TYPE = new ThreadLocal<>();
+    private static final ThreadLocal<DS.DSType> TYPE = new ThreadLocal<>();
 
-    public static String defaultType;
-
-    public static void setDataBaseType(String dataBase) {
-        if (StringUtils.isBlank(dataBase)) {
-            dataBase = defaultType;
-        }
+    public static void setDataSourceType(DS.DSType dataBase) {
+        Objects.requireNonNull(dataBase);
         TYPE.set(dataBase);
     }
 
-    public static String getDataBaseType() {
-        return TYPE.get();
+    public static String getDataSourceType() {
+        return TYPE.get().name();
     }
 
-    public static void clearDataBaseType() {
+    public static void clearDataSourceType() {
         TYPE.remove();
     }
 }

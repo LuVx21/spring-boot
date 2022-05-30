@@ -10,14 +10,10 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
 import javax.sql.DataSource;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toMap;
-import static org.luvx.boot.mul.mybatis.config.DSTypeContainer.defaultType;
 
 @Configuration
 @EnableConfigurationProperties(DSProperties.class)
@@ -32,11 +28,11 @@ public class DynamicDataSourceConfig {
     public DynamicDataSource DataSource(DSProperties dsProperties) {
         Map<Object, Object> targetDataSource = dsProperties.getDatasource().entrySet().stream()
                 .collect(toMap(Entry::getKey, e -> e.getValue().initializeDataSourceBuilder().build()));
-        defaultType = "write";
-        if (!targetDataSource.containsKey(defaultType)) {
-            defaultType = (String) targetDataSource.keySet().stream().findFirst().get();
+        DS.DSType defaultType = DS.DSType.write;
+        if (!targetDataSource.containsKey(defaultType.name())) {
+            DS.DSType.valueOf((String) targetDataSource.keySet().stream().findFirst().get());
         }
-        Object defaultTargetDataSource = targetDataSource.get(defaultType);
+        Object defaultTargetDataSource = targetDataSource.get(defaultType.name());
 
         DynamicDataSource dataSource = new DynamicDataSource();
         dataSource.setTargetDataSources(targetDataSource);

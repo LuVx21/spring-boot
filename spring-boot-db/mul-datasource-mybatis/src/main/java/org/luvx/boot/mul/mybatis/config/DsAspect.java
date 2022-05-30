@@ -5,8 +5,6 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.stereotype.Component;
 
-import java.lang.annotation.Annotation;
-
 @Aspect
 @Component
 public class DsAspect {
@@ -15,10 +13,10 @@ public class DsAspect {
     public Object dsAround(ProceedingJoinPoint joinPoint) throws Throwable {
         DS ds = (DS) joinPoint.getSignature().getDeclaringType().getAnnotation(DS.class);
         try {
-            DSTypeContainer.setDataBaseType(ds == null ? "write" : ds.value());
+            DSTypeContainer.setDataSourceType(ds == null ? DS.DSType.write : ds.value());
             return joinPoint.proceed();
         } finally {
-            DSTypeContainer.clearDataBaseType();
+            DSTypeContainer.clearDataSourceType();
         }
     }
 }
