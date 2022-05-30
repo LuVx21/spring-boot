@@ -10,8 +10,8 @@ public class DSTypeContainer {
         TYPE.set(dataBase);
     }
 
-    public static String getDataSourceType() {
-        return TYPE.get().name();
+    public static DS.DSType getDataSourceType() {
+        return TYPE.get() == null ? DS.DSType.write : TYPE.get();
     }
 
     public static void clearDataSourceType() {

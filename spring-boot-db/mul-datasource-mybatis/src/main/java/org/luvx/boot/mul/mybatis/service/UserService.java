@@ -6,6 +6,7 @@ import org.luvx.boot.mul.mybatis.mapper.SelectMapper;
 import org.luvx.boot.mul.mybatis.mapper.UpdateMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 @Service
@@ -15,9 +16,19 @@ public class UserService {
     @Autowired
     UpdateMapper updateMapper;
 
-    public void m1() {
+    // @Transactional
+    public void read() {
         User user = selectMapper.selectByPrimaryKey(10000L);
         log.info("user:{}", user);
+    }
+
+    // @Transactional
+    public void write() {
+        User user = new User();
+        user.setId(10000L);
+        user.setUserName("10000");
+        user.setPassword("hahaha");
+        user.setAge(30);
         int i = updateMapper.updateByPrimaryKey(user);
         log.info("update:{}", i);
     }

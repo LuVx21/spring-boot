@@ -1,4 +1,4 @@
-package org.luvx.boot.mul.mybatis.config;
+package org.luvx.boot.mul.mybatis.config.v0;
 
 import lombok.Data;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;

@@ -6,7 +6,7 @@ import org.luvx.boot.mul.mybatis.config.DS;
 import org.luvx.boot.mul.mybatis.entity.User;
 import org.springframework.stereotype.Repository;
 
-@DS(value = "write")
+@DS(value = DS.DSType.write)
 @Mapper
 @Repository
 public interface UpdateMapper {

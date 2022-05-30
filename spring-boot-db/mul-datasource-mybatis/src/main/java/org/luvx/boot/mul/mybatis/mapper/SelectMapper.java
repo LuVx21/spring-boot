@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import java.io.Serializable;
 
-@DS(value = "read")
+@DS(value = DS.DSType.read)
 @Mapper
 @Repository
 public interface SelectMapper {
