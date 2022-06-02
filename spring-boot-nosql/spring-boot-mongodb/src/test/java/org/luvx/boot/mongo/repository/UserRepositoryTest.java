@@ -4,40 +4,32 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.luvx.boot.mongo.ApplicationTests;
 import org.luvx.boot.mongo.entity.User;
-import org.springframework.beans.factory.annotation.Autowired;
+
+import javax.annotation.Resource;
+import java.util.Optional;
 
 @Slf4j
 class UserRepositoryTest extends ApplicationTests {
-    @Autowired
-    private UserRepository userDao;
+    @Resource
+    private UserRepository userRepository;
 
     @Test
-    public void testSaveUser() throws Exception {
+    void m1() {
         User user = new User();
-        user.setId(100L);
+        long id = 200L;
+        user.setId(id);
         user.setUserName("foo");
         user.setPassword("bar");
         user.setAge(20);
-        userDao.saveUser(user);
-    }
+        userRepository.save(user);
 
-    @Test
-    public void findUserByUserName() {
-        User user = userDao.findUserByUserName("foo");
-        log.info("user:{}", user);
-    }
+        Optional<User> byId = userRepository.findById(id);
 
-    @Test
-    public void updateUser() {
-        User user = new User();
-        user.setId(2l);
-        user.setUserName("天空");
-        user.setPassword("fffxxxx");
-        userDao.updateUser(user);
-    }
+        user.setPassword("******");
+        user.setAge(30);
+        userRepository.save(user);
+        log.info("find {} update {}", byId.get(), userRepository.findById(id).get());
 
-    @Test
-    public void deleteUserById() {
-        userDao.deleteUserById(1l);
+        userRepository.deleteById(id);
     }
 }
