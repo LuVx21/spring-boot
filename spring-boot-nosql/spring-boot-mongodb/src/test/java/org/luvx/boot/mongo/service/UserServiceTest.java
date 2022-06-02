@@ -38,6 +38,9 @@ class UserServiceTest extends ApplicationTests {
 
     @Test
     void updateUser() {
+        String json = """
+                {"id":101,"userName":"foo","password":"bar","age":20}
+                """;
         Query query = Query.query(Criteria
                 .where("id").is(100L)
         );
@@ -45,7 +48,8 @@ class UserServiceTest extends ApplicationTests {
                 .update("userName", "天空")
                 .set("password", "1234567")
                 .set("age", 30)
-                .set("updateUser", "luvx");
+                .set("updateUser", "luvx")
+                .set("json", json);
         // 更新查询返回结果集的第一条
         UpdateResult result = mongoTemplate.updateFirst(query, update, User.class);
         // 更新查询返回结果集的所有
