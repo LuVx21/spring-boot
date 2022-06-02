@@ -1,4 +1,4 @@
-package org.luvx.mongodb;
+package org.luvx.boot.mongo.entity;
 
 import lombok.Getter;
 import lombok.Setter;

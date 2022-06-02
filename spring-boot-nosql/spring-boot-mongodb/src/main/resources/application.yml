@@ -1,7 +1,7 @@
 spring:
   data:
     mongodb:
-      uri: mongodb://boot_rw:1121@localhost:27017/boot?authSource=boot&authMechanism=SCRAM-SHA-1
+      uri: mongodb://boot_rw:1121@luvx:57017/boot?authSource=boot&authMechanism=SCRAM-SHA-1
 #      host: localhost
 #      port: 27017
 #      database: boot

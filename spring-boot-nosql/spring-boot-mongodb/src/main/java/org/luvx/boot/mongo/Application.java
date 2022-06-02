@@ -1,4 +1,4 @@
-package org.luvx;
+package org.luvx.boot.mongo;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

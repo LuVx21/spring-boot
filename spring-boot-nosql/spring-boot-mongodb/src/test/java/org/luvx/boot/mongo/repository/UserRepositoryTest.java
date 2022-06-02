@@ -1,9 +1,9 @@
-package org.luvx.mongodb.repository;
+package org.luvx.boot.mongo.repository;
 
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
-import org.luvx.ApplicationTests;
-import org.luvx.mongodb.User;
+import org.luvx.boot.mongo.ApplicationTests;
+import org.luvx.boot.mongo.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @Slf4j

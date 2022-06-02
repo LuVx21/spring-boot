@@ -9,7 +9,7 @@ db.auth('admin', '1121')
 ```bash
 show dbs;
 use boot
-db.list.insert({"userName":"foo", "password":"bar", "age":18})
+db.list.insertOne({"userName":"foo", "password":"bar", "age":18})
 show dbs
 db.createUser({user:"boot_rw",pwd:"1121",roles:[{role:"readWrite",db:"boot"}]})
 ```
