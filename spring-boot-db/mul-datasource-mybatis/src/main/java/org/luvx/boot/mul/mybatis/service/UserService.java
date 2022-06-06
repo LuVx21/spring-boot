@@ -12,17 +12,17 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class UserService {
     @Autowired
-    SelectMapper selectMapper;
+    private SelectMapper selectMapper;
     @Autowired
-    UpdateMapper updateMapper;
+    private UpdateMapper updateMapper;
 
-    // @Transactional
+    @Transactional
     public void read() {
         User user = selectMapper.selectByPrimaryKey(10000L);
         log.info("user:{}", user);
     }
 
-    // @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void write() {
         User user = new User();
         user.setId(10000L);
