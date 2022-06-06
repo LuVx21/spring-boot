@@ -17,19 +17,22 @@ public class UserService {
     private UpdateMapper updateMapper;
 
     @Transactional
+    // @Transactional("readTransactionManager")
     public void read() {
         User user = selectMapper.selectByPrimaryKey(10000L);
         log.info("user:{}", user);
     }
 
     @Transactional(rollbackFor = Exception.class)
+    // @Transactional(transactionManager = "writeTransactionManager", rollbackFor = Exception.class)
     public void write() {
         User user = new User();
         user.setId(10000L);
         user.setUserName("10000");
-        user.setPassword("hahaha");
+        user.setPassword("write");
         user.setAge(30);
         int i = updateMapper.updateByPrimaryKey(user);
+        // i = 0 / 0;
         log.info("update:{}", i);
     }
 }

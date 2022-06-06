@@ -278,12 +278,11 @@ public class CustomSqlSessionTemplate extends SqlSessionTemplate {
      */
     private class SqlSessionInterceptor implements InvocationHandler {
         public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-            SqlSessionFactory sqlSessionFactory = CustomSqlSessionTemplate.this.getSqlSessionFactory();
-            final SqlSession sqlSession = SqlSessionUtils.getSqlSession(
-                    sqlSessionFactory, CustomSqlSessionTemplate.this.executorType, CustomSqlSessionTemplate.this.exceptionTranslator);
+            SqlSessionFactory sqlSessionFactory = getSqlSessionFactory();
+            final SqlSession sqlSession = SqlSessionUtils.getSqlSession(sqlSessionFactory, executorType, exceptionTranslator);
             try {
                 Object result = method.invoke(sqlSession, args);
-                if (!SqlSessionUtils.isSqlSessionTransactional(sqlSession, CustomSqlSessionTemplate.this.getSqlSessionFactory())) {
+                if (!SqlSessionUtils.isSqlSessionTransactional(sqlSession, getSqlSessionFactory())) {
                     // force commit even on non-dirty sessions because some databases require
                     // a commit/rollback before calling close()
                     sqlSession.commit(true);
@@ -291,16 +290,15 @@ public class CustomSqlSessionTemplate extends SqlSessionTemplate {
                 return result;
             } catch (Throwable t) {
                 Throwable unwrapped = ExceptionUtil.unwrapThrowable(t);
-                if (CustomSqlSessionTemplate.this.exceptionTranslator != null && unwrapped instanceof PersistenceException) {
-                    Throwable translated = CustomSqlSessionTemplate.this.exceptionTranslator
-                            .translateExceptionIfPossible((PersistenceException) unwrapped);
+                if (exceptionTranslator != null && unwrapped instanceof PersistenceException) {
+                    Throwable translated = exceptionTranslator.translateExceptionIfPossible((PersistenceException) unwrapped);
                     if (translated != null) {
                         unwrapped = translated;
                     }
                 }
                 throw unwrapped;
             } finally {
-                SqlSessionUtils.closeSqlSession(sqlSession, CustomSqlSessionTemplate.this.getSqlSessionFactory());
+                SqlSessionUtils.closeSqlSession(sqlSession, getSqlSessionFactory());
             }
         }
     }

@@ -11,6 +11,8 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.transaction.TransactionManager;
 
 import javax.sql.DataSource;
 import java.util.Map;
@@ -21,9 +23,11 @@ import java.util.Map;
         sqlSessionTemplateRef = "sqlSessionTemplate"
 )
 public class DynamicDataSourceConfigV1 {
+    public static final String readTransactionManager  = "readTransactionManager";
+    public static final String writeTransactionManager = "writeTransactionManager";
 
-    private final String ds_write = "write";
     private final String ds_read  = "read";
+    private final String ds_write = "write";
 
     @Bean(name = ds_read)
     @ConfigurationProperties(prefix = "spring.dynamic.datasource.read")
@@ -69,6 +73,16 @@ public class DynamicDataSourceConfigV1 {
         // configuration.setMapUnderscoreToCamelCase(true);
         // bean.setConfiguration(configuration);
         return bean.getObject();
+    }
+
+    @Bean(name = readTransactionManager)
+    public TransactionManager readTransactionManager(@Qualifier(ds_read) DataSource dataSource) {
+        return new DataSourceTransactionManager(dataSource);
+    }
+
+    @Bean(name = writeTransactionManager)
+    public TransactionManager writeTransactionManager(@Qualifier(ds_write) DataSource dataSource) {
+        return new DataSourceTransactionManager(dataSource);
     }
 
     @Bean(name = "sqlSessionTemplate")
