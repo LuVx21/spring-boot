@@ -1,17 +1,15 @@
 package org.luvx.mapper;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.luvx.ApplicationTests;
 import org.luvx.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-
-import lombok.extern.slf4j.Slf4j;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Slf4j
 class UserMapperTest extends ApplicationTests {
@@ -29,7 +27,7 @@ class UserMapperTest extends ApplicationTests {
                 .build();
 
         userMapper.insert(user);
-        System.out.println(user.getUserId());
+        log.info("after insert:{}", user);
     }
 
     @Test
