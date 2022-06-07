@@ -83,12 +83,12 @@ public class DynamicDataSourceConfigV1 {
     }
 
     @Bean(name = "sqlSessionTemplate")
-    public CustomSqlSessionTemplate sqlSessionTemplate(@Qualifier("readSqlSessionFactory") SqlSessionFactory readSqlSessionFactory,
-                                                       @Qualifier("writeSqlSessionFactory") SqlSessionFactory writeSqlSessionFactory) {
+    public CustomSqlSessionTemplate sqlSessionTemplate(@Qualifier(readSqlSessionFactory) SqlSessionFactory readSqlSessionFactory,
+                                                       @Qualifier(writeSqlSessionFactory) SqlSessionFactory writeSqlSessionFactory) {
         CustomSqlSessionTemplate customSqlSessionTemplate = new CustomSqlSessionTemplate(writeSqlSessionFactory);
         customSqlSessionTemplate.setTargetSqlSessionFactorys(Map.of(
-                "read", readSqlSessionFactory,
-                "write", writeSqlSessionFactory
+                ds_read, readSqlSessionFactory,
+                ds_write, writeSqlSessionFactory
         ));
         customSqlSessionTemplate.setDefaultTargetSqlSessionFactory(writeSqlSessionFactory);
         return customSqlSessionTemplate;

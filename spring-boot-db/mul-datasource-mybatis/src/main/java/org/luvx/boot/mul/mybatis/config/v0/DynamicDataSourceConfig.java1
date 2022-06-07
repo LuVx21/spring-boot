@@ -44,7 +44,7 @@ public class DynamicDataSourceConfig {
     }
 
     @Bean(name = ConstValue.dynamicSqlSessionFactory)
-    public SqlSessionFactory sqlSessionFactory(@Qualifier("dynamicDataSource") DataSource dynamicDataSource)
+    public SqlSessionFactory sqlSessionFactory(@Qualifier(ConstValue.dynamicDataSource) DataSource dynamicDataSource)
             throws Exception {
         String locationPattern = "classpath:*Mapper.xml";
         SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
