@@ -1,4 +1,4 @@
-package org.luvx.boot.mul.mybatis.mapper;
+package org.luvx.boot.mul.mybatis.mapper.read;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -6,9 +6,11 @@ import org.luvx.boot.mul.mybatis.config.DS;
 import org.luvx.boot.mul.mybatis.entity.User;
 import org.springframework.stereotype.Repository;
 
-@DS(value = DS.DSType.write)
+import java.io.Serializable;
+
+@DS(value = DS.DSType.read)
 @Mapper
 @Repository
-public interface UpdateMapper {
-    int updateByPrimaryKey(@Param("record") User record);
+public interface SelectMapper {
+    User selectByPrimaryKey(@Param("id") Serializable id);
 }
