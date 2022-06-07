@@ -1,6 +1,7 @@
 package org.luvx.boot.mul.mybatis.config.v1;
 
 import lombok.extern.slf4j.Slf4j;
+import org.luvx.boot.mul.mybatis.common.ConstValue;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -38,9 +39,9 @@ public class MyProxyTransactionManagementConfiguration extends ProxyTransactionM
                     // 获取方法归属类的全名
                     String name = method.getName();
                     if (name.contains("read")) {
-                        attribute.setQualifier(DynamicDataSourceConfigV1.readTransactionManager);
+                        attribute.setQualifier(ConstValue.readTransactionManager);
                     } else if (name.contains("write")) {
-                        attribute.setQualifier(DynamicDataSourceConfigV1.writeTransactionManager);
+                        attribute.setQualifier(ConstValue.writeTransactionManager);
                     }
                     log.info("指定事务管理器:{} {}", name, attribute.getQualifier());
                 }

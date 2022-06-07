@@ -17,31 +17,28 @@ import org.springframework.transaction.TransactionManager;
 import javax.sql.DataSource;
 import java.util.Map;
 
+import static org.luvx.boot.mul.mybatis.common.ConstValue.*;
+
 @Configuration
 @MapperScan(
         basePackages = {"org.luvx.boot.mul.mybatis.mapper"},
         sqlSessionTemplateRef = "sqlSessionTemplate"
 )
 public class DynamicDataSourceConfigV1 {
-    public static final String readTransactionManager  = "readTransactionManager";
-    public static final String writeTransactionManager = "writeTransactionManager";
-
-    private final String ds_read  = "read";
-    private final String ds_write = "write";
 
     @Bean(name = ds_read)
-    @ConfigurationProperties(prefix = "spring.dynamic.datasource.read")
+    @ConfigurationProperties(prefix = prefix_read)
     public DataSource getDateSourceRead() {
         return new HikariDataSource();
     }
 
     @Bean(name = ds_write)
-    @ConfigurationProperties(prefix = "spring.dynamic.datasource.write")
+    @ConfigurationProperties(prefix = prefix_write)
     public DataSource getDateSourceWrite() {
         return new HikariDataSource();
     }
 
-    @Bean(name = "dynamicDataSource")
+    @Bean(name = dynamicDataSource)
     public DynamicDataSource DataSource(@Qualifier(ds_read) DataSource read,
                                         @Qualifier(ds_write) DataSource write) {
         DynamicDataSource dataSource = new DynamicDataSource();
@@ -53,12 +50,12 @@ public class DynamicDataSourceConfigV1 {
         return dataSource;
     }
 
-    @Bean(name = "readSqlSessionFactory")
+    @Bean(name = readSqlSessionFactory)
     public SqlSessionFactory readSqlSessionFactory(@Qualifier(ds_read) DataSource dataSource) throws Exception {
         return createSqlSessionFactory(dataSource);
     }
 
-    @Bean(name = "writeSqlSessionFactory")
+    @Bean(name = writeSqlSessionFactory)
     public SqlSessionFactory writeSqlSessionFactory(@Qualifier(ds_write) DataSource dataSource) throws Exception {
         return createSqlSessionFactory(dataSource);
     }

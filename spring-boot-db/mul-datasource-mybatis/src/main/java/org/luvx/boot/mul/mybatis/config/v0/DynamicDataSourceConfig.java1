@@ -1,6 +1,7 @@
 package org.luvx.boot.mul.mybatis.config.v0;
 
 import org.apache.ibatis.session.SqlSessionFactory;
+import org.luvx.boot.mul.mybatis.common.ConstValue;
 import org.luvx.boot.mul.mybatis.config.DS;
 import org.luvx.boot.mul.mybatis.config.DynamicDataSource;
 import org.mybatis.spring.SqlSessionFactoryBean;
@@ -20,12 +21,12 @@ import static java.util.stream.Collectors.toMap;
 @EnableConfigurationProperties(DSProperties.class)
 @MapperScan(
         basePackages = {"org.luvx.boot.mul.mybatis.mapper"},
-        sqlSessionFactoryRef = "SqlSessionFactory"
+        sqlSessionFactoryRef = ConstValue.dynamicSqlSessionFactory
 )
 public class DynamicDataSourceConfig {
 
     @SuppressWarnings("unchecked")
-    @Bean(name = "dynamicDataSource")
+    @Bean(name = ConstValue.dynamicDataSource)
     public DynamicDataSource DataSource(DSProperties dsProperties) {
         Map<Object, Object> targetDataSource = dsProperties.getDatasource().entrySet().stream()
                 .collect(toMap(e -> DS.DSType.valueOf(e.getKey()), e -> e.getValue().initializeDataSourceBuilder().build()));
@@ -42,7 +43,7 @@ public class DynamicDataSourceConfig {
         return dataSource;
     }
 
-    @Bean(name = "SqlSessionFactory")
+    @Bean(name = ConstValue.dynamicSqlSessionFactory)
     public SqlSessionFactory sqlSessionFactory(@Qualifier("dynamicDataSource") DataSource dynamicDataSource)
             throws Exception {
         String locationPattern = "classpath:*Mapper.xml";
