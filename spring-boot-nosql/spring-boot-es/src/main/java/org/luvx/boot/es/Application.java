@@ -1,4 +1,4 @@
-package org.luvx.es;
+package org.luvx.boot.es;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

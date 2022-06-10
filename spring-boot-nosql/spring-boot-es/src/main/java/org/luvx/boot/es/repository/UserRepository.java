@@ -1,11 +1,10 @@
-package org.luvx.es.repository;
+package org.luvx.boot.es.repository;
 
-import org.luvx.es.entity.User;
+import org.luvx.boot.es.entity.User;
 import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
+import org.springframework.stereotype.Repository;
 
-/**
- * @author: Ren, Xie
- */
+@Repository
 public interface UserRepository extends ElasticsearchRepository<User, Long> {
 
 }

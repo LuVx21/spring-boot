@@ -1,9 +1,6 @@
-package org.luvx.es.entity;
+package org.luvx.boot.es.entity;
 
-import lombok.Builder;
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import lombok.experimental.Tolerate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.DateFormat;
@@ -13,14 +10,11 @@ import org.springframework.data.elasticsearch.annotations.FieldType;
 
 import java.time.LocalDateTime;
 
-/**
- * @author: Ren, Xie
- */
+@Builder
 @Getter
 @Setter
-@Builder
-@Document(indexName = "users")
-@Data
+@ToString
+@Document(indexName = "t_user")
 public class User {
 
     @Tolerate
