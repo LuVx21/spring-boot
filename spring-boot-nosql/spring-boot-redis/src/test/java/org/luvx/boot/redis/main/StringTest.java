@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.luvx.boot.redis.ApplicationTests;
 import org.springframework.data.redis.core.ValueOperations;
 
-import static org.luvx.common.util.PrintUtils.println;
+import static org.luvx.common.more.MorePrints.println;
 
 public class StringTest extends ApplicationTests {
     @Test

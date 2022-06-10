@@ -1,16 +1,10 @@
----
-title: Spring-Boot Redis
-date:
-tags:
-- Java
-- SpringBoot
-- Redis
----
 
-<!-- TOC -->
+```bash
+docker run -itd --name redis \
+-p 6379:6379 \
+redis
+```
 
-
-<!-- /TOC -->
 
 JPA+Redis
 

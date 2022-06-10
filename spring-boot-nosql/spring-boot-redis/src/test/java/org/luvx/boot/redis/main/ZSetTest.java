@@ -9,7 +9,7 @@ import org.springframework.data.redis.core.ZSetOperations.TypedTuple;
 
 import java.util.Set;
 
-import static org.luvx.common.util.PrintUtils.println;
+import static org.luvx.common.more.MorePrints.println;
 
 public class ZSetTest extends ApplicationTests {
     @Test
