@@ -1,4 +1,4 @@
-package org.luvx.boot.mul.mybatis.config.v1;
+package org.luvx.boot.mul.mybatis.config.config;
 
 import lombok.extern.slf4j.Slf4j;
 import org.luvx.boot.mul.mybatis.common.ConstValue;
@@ -19,6 +19,7 @@ import java.lang.reflect.Method;
 @Configuration
 public class MyProxyTransactionManagementConfiguration extends ProxyTransactionManagementConfiguration {
     /**
+     * 声明式事务中不指定事务管理器, 此方法根据一定规则指定事务管理器
      * 重写了事务注解属性解析器的内容
      * 让其根据包名动态的获取事务管理器名称
      * 以达到不修改Service代码的前提下保证多数据源下的事务能够正常运行
