@@ -30,7 +30,7 @@ public class DynamicDataSourceConfig {
     public DynamicDataSource DataSource(DSProperties dsProperties) {
         Map<Object, Object> targetDataSource = dsProperties.getDatasource().entrySet().stream()
                 .collect(toMap(e -> DS.DSType.valueOf(e.getKey()), e -> e.getValue().initializeDataSourceBuilder().build()));
-        DS.DSType defaultType = DS.DSType.write;
+        DS.DSType defaultType = DS.DSType.ds1;
         Object defaultTargetDataSource = targetDataSource.get(defaultType);
         if (defaultTargetDataSource == null) {
             defaultType = DS.DSType.valueOf((String) targetDataSource.keySet().stream().findFirst().get());

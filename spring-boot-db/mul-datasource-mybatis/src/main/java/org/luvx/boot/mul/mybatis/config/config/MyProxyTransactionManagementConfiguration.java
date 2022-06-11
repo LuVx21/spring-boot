@@ -41,10 +41,10 @@ public class MyProxyTransactionManagementConfiguration extends ProxyTransactionM
                 ) {
                     // 获取方法归属类的全名
                     String name = method.getName();
-                    if (name.contains("read")) {
-                        attribute.setQualifier(ConstValue.readTransactionManager);
-                    } else if (name.contains("write")) {
-                        attribute.setQualifier(ConstValue.writeTransactionManager);
+                    if (name.startsWith(ConstValue.ds_ds1)) {
+                        attribute.setQualifier(ConstValue.ds1TransactionManager);
+                    } else if (name.startsWith(ConstValue.ds_ds2)) {
+                        attribute.setQualifier(ConstValue.ds2TransactionManager);
                     }
                     log.info("指定事务管理器:{} {}", name, attribute.getQualifier());
                 }

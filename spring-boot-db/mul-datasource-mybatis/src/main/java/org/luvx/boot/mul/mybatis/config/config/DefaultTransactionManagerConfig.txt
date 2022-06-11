@@ -10,7 +10,7 @@ import javax.annotation.Resource;
 @Configuration
 public class DefaultTransactionManagerConfig implements TransactionManagementConfigurer {
 
-    @Resource(name = ConstValue.writeTransactionManager)
+    @Resource(name = ConstValue.ds1TransactionManager)
     private TransactionManager defaultTransactionManager;
 
     /**

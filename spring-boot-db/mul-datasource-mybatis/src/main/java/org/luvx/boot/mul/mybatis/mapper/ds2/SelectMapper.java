@@ -1,4 +1,4 @@
-package org.luvx.boot.mul.mybatis.mapper.read;
+package org.luvx.boot.mul.mybatis.mapper.ds2;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import java.io.Serializable;
 
-@DS(value = DS.DSType.read)
+@DS(value = DS.DSType.ds2)
 @Mapper
 @Repository
 public interface SelectMapper {

@@ -26,37 +26,37 @@ import static org.luvx.boot.mul.mybatis.common.ConstValue.*;
 )
 public class DynamicDataSourceConfigV1 {
 
-    @Bean(name = ds_read)
-    @ConfigurationProperties(prefix = prefix_read)
-    public DataSource getDateSourceRead() {
+    @Bean(name = ds_ds2)
+    @ConfigurationProperties(prefix = prefix_ds2)
+    public DataSource getDateSourceDs2() {
         return new HikariDataSource();
     }
 
-    @Bean(name = ds_write)
-    @ConfigurationProperties(prefix = prefix_write)
-    public DataSource getDateSourceWrite() {
+    @Bean(name = ds_ds1)
+    @ConfigurationProperties(prefix = prefix_ds1)
+    public DataSource getDateSourceDs1() {
         return new HikariDataSource();
     }
 
     @Bean(name = dynamicDataSource)
-    public DynamicDataSource DataSource(@Qualifier(ds_read) DataSource read,
-                                        @Qualifier(ds_write) DataSource write) {
+    public DynamicDataSource DataSource(@Qualifier(ds_ds2) DataSource ds2,
+                                        @Qualifier(ds_ds1) DataSource ds1) {
         DynamicDataSource dataSource = new DynamicDataSource();
         dataSource.setTargetDataSources(Map.of(
-                DS.DSType.read, read,
-                DS.DSType.write, write
+                DS.DSType.ds2, ds2,
+                DS.DSType.ds1, ds1
         ));
-        dataSource.setDefaultTargetDataSource(write);
+        dataSource.setDefaultTargetDataSource(ds1);
         return dataSource;
     }
 
-    @Bean(name = readSqlSessionFactory)
-    public SqlSessionFactory readSqlSessionFactory(@Qualifier(ds_read) DataSource dataSource) throws Exception {
+    @Bean(name = ds2SqlSessionFactory)
+    public SqlSessionFactory ds2SqlSessionFactory(@Qualifier(ds_ds2) DataSource dataSource) throws Exception {
         return createSqlSessionFactory(dataSource);
     }
 
-    @Bean(name = writeSqlSessionFactory)
-    public SqlSessionFactory writeSqlSessionFactory(@Qualifier(ds_write) DataSource dataSource) throws Exception {
+    @Bean(name = ds1SqlSessionFactory)
+    public SqlSessionFactory ds1SqlSessionFactory(@Qualifier(ds_ds1) DataSource dataSource) throws Exception {
         return createSqlSessionFactory(dataSource);
     }
 
@@ -72,25 +72,25 @@ public class DynamicDataSourceConfigV1 {
         return bean.getObject();
     }
 
-    @Bean(name = readTransactionManager)
-    public TransactionManager readTransactionManager(@Qualifier(ds_read) DataSource dataSource) {
+    @Bean(name = ds2TransactionManager)
+    public TransactionManager ds2TransactionManager(@Qualifier(ds_ds2) DataSource dataSource) {
         return new DataSourceTransactionManager(dataSource);
     }
 
-    @Bean(name = writeTransactionManager)
-    public TransactionManager writeTransactionManager(@Qualifier(ds_write) DataSource dataSource) {
+    @Bean(name = ds1TransactionManager)
+    public TransactionManager ds1TransactionManager(@Qualifier(ds_ds1) DataSource dataSource) {
         return new DataSourceTransactionManager(dataSource);
     }
 
     @Bean(name = "sqlSessionTemplate")
-    public CustomSqlSessionTemplate sqlSessionTemplate(@Qualifier(readSqlSessionFactory) SqlSessionFactory readSqlSessionFactory,
-                                                       @Qualifier(writeSqlSessionFactory) SqlSessionFactory writeSqlSessionFactory) {
-        CustomSqlSessionTemplate customSqlSessionTemplate = new CustomSqlSessionTemplate(writeSqlSessionFactory);
+    public CustomSqlSessionTemplate sqlSessionTemplate(@Qualifier(ds2SqlSessionFactory) SqlSessionFactory ds2SqlSessionFactory,
+                                                       @Qualifier(ds1SqlSessionFactory) SqlSessionFactory ds1SqlSessionFactory) {
+        CustomSqlSessionTemplate customSqlSessionTemplate = new CustomSqlSessionTemplate(ds1SqlSessionFactory);
         customSqlSessionTemplate.setTargetSqlSessionFactorys(Map.of(
-                ds_read, readSqlSessionFactory,
-                ds_write, writeSqlSessionFactory
+                ds_ds2, ds2SqlSessionFactory,
+                ds_ds1, ds1SqlSessionFactory
         ));
-        customSqlSessionTemplate.setDefaultTargetSqlSessionFactory(writeSqlSessionFactory);
+        customSqlSessionTemplate.setDefaultTargetSqlSessionFactory(ds1SqlSessionFactory);
         return customSqlSessionTemplate;
     }
 }

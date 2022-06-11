@@ -13,12 +13,12 @@ class UserServiceTest {
     UserService userService;
 
     @Test
-    void read() {
-        userService.read();
+    void ds1() {
+        userService.ds1Operate();
     }
 
     @Test
-    void write() {
-        userService.write();
+    void ds2() {
+        userService.ds2Operate();
     }
 }

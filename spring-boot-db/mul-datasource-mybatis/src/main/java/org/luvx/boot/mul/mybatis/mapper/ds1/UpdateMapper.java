@@ -1,4 +1,4 @@
-package org.luvx.boot.mul.mybatis.mapper.write;
+package org.luvx.boot.mul.mybatis.mapper.ds1;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import java.io.Serializable;
 
-@DS(value = DS.DSType.write)
+@DS(value = DS.DSType.ds1)
 @Mapper
 @Repository
 public interface UpdateMapper {

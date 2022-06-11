@@ -18,20 +18,21 @@ import static org.luvx.boot.mul.mybatis.common.ConstValue.*;
 
 @Configuration
 @MapperScan(
-        basePackages = {"org.luvx.boot.mul.mybatis.mapper.read"},
-        sqlSessionFactoryRef = readSqlSessionFactory
+        basePackages = {"org.luvx.boot.mul.mybatis.mapper.ds2"},
+        sqlSessionFactoryRef = ds2SqlSessionFactory
 )
-public class DynamicDataSourceConfigV2Read {
-    @Bean(name = ds_read)
-    @ConfigurationProperties(prefix = prefix_read)
-    public DataSource getDateSourceRead() {
+public class DynamicDataSourceConfigV2Ds2 {
+    @Bean(name = ds_ds2)
+    @ConfigurationProperties(prefix = prefix_ds2)
+    public DataSource getDateSourceDs2() {
         return new HikariDataSource();
     }
 
-    @Bean(name = readSqlSessionFactory)
-    public SqlSessionFactory readSqlSessionFactory(@Qualifier(ds_read) DataSource dataSource) throws Exception {
+    @Bean(name = ds2SqlSessionFactory)
+    public SqlSessionFactory ds2SqlSessionFactory(@Qualifier(ds_ds2) DataSource dataSource) throws Exception {
         return createSqlSessionFactory(dataSource);
     }
+
     private SqlSessionFactory createSqlSessionFactory(DataSource dataSource) throws Exception {
         String locationPattern = "classpath*:**/*Mapper.xml";
         SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
@@ -44,8 +45,8 @@ public class DynamicDataSourceConfigV2Read {
         return bean.getObject();
     }
 
-    @Bean(name = readTransactionManager)
-    public TransactionManager readTransactionManager(@Qualifier(ds_read) DataSource dataSource) {
+    @Bean(name = ds2TransactionManager)
+    public TransactionManager ds2TransactionManager(@Qualifier(ds_ds2) DataSource dataSource) {
         return new DataSourceTransactionManager(dataSource);
     }
 }

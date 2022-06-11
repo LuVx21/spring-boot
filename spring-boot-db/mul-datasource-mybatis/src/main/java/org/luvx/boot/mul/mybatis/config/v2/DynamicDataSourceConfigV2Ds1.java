@@ -18,18 +18,18 @@ import static org.luvx.boot.mul.mybatis.common.ConstValue.*;
 
 @Configuration
 @MapperScan(
-        basePackages = {"org.luvx.boot.mul.mybatis.mapper.write"},
-        sqlSessionFactoryRef = writeSqlSessionFactory
+        basePackages = {"org.luvx.boot.mul.mybatis.mapper.ds1"},
+        sqlSessionFactoryRef = ds1SqlSessionFactory
 )
-public class DynamicDataSourceConfigV2Write {
-    @Bean(name = ds_write)
-    @ConfigurationProperties(prefix = prefix_write)
-    public DataSource getDateSourceWrite() {
+public class DynamicDataSourceConfigV2Ds1 {
+    @Bean(name = ds_ds1)
+    @ConfigurationProperties(prefix = prefix_ds1)
+    public DataSource getDateSourceDs1() {
         return new HikariDataSource();
     }
 
-    @Bean(name = writeSqlSessionFactory)
-    public SqlSessionFactory writeSqlSessionFactory(@Qualifier(ds_write) DataSource dataSource) throws Exception {
+    @Bean(name = ds1SqlSessionFactory)
+    public SqlSessionFactory ds1SqlSessionFactory(@Qualifier(ds_ds1) DataSource dataSource) throws Exception {
         return createSqlSessionFactory(dataSource);
     }
 
@@ -45,8 +45,8 @@ public class DynamicDataSourceConfigV2Write {
         return bean.getObject();
     }
 
-    @Bean(name = writeTransactionManager)
-    public TransactionManager writeTransactionManager(@Qualifier(ds_write) DataSource dataSource) {
+    @Bean(name = ds1TransactionManager)
+    public TransactionManager ds1TransactionManager(@Qualifier(ds_ds1) DataSource dataSource) {
         return new DataSourceTransactionManager(dataSource);
     }
 }

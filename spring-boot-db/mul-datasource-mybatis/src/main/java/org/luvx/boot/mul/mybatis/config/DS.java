@@ -6,9 +6,9 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Inherited
 public @interface DS {
-    DSType value() default DSType.write;
+    DSType value() default DSType.ds1;
 
     enum DSType {
-        write, read
+        ds1, ds2
     }
 }

@@ -11,7 +11,7 @@ public class DSTypeContainer {
     }
 
     public static DS.DSType getDataSourceType() {
-        return TYPE.get() == null ? DS.DSType.write : TYPE.get();
+        return TYPE.get() == null ? DS.DSType.ds1 : TYPE.get();
     }
 
     public static void clearDataSourceType() {

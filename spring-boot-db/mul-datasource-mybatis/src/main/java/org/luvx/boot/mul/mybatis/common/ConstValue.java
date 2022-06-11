@@ -5,13 +5,13 @@ public interface ConstValue {
     String dynamicSqlSessionFactory = "dynamicSqlSessionFactory";
     // --------------------------------------------------------
 
-    String prefix_write            = "spring.dynamic.datasource.write";
-    String ds_write                = "write";
-    String writeSqlSessionFactory  = ds_write + "SqlSessionFactory";
-    String writeTransactionManager = ds_write + "TransactionManager";
+    String prefix_ds1            = "spring.dynamic.datasource.ds1";
+    String ds_ds1                = "ds1";
+    String ds1SqlSessionFactory  = ds_ds1 + "SqlSessionFactory";
+    String ds1TransactionManager = ds_ds1 + "TransactionManager";
 
-    String prefix_read            = "spring.dynamic.datasource.read";
-    String ds_read                = "read";
-    String readSqlSessionFactory  = ds_read + "SqlSessionFactory";
-    String readTransactionManager = ds_read + "TransactionManager";
+    String prefix_ds2            = "spring.dynamic.datasource.ds2";
+    String ds_ds2                = "ds2";
+    String ds2SqlSessionFactory  = ds_ds2 + "SqlSessionFactory";
+    String ds2TransactionManager = ds_ds2 + "TransactionManager";
 }
