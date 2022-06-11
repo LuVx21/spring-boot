@@ -20,6 +20,8 @@ import java.lang.reflect.Method;
 public class MyProxyTransactionManagementConfiguration extends ProxyTransactionManagementConfiguration {
     /**
      * 声明式事务中不指定事务管理器, 此方法根据一定规则指定事务管理器
+     * 无论使用数据源 a 还是 b, 都可以根据规则找到对应的事务管理器
+     * <p>
      * 重写了事务注解属性解析器的内容
      * 让其根据包名动态的获取事务管理器名称
      * 以达到不修改Service代码的前提下保证多数据源下的事务能够正常运行

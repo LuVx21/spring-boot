@@ -1,0 +1,25 @@
+package org.luvx.boot.mul.mybatis.config.config;
+
+import org.luvx.boot.mul.mybatis.common.ConstValue;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.transaction.TransactionManager;
+import org.springframework.transaction.annotation.TransactionManagementConfigurer;
+
+import javax.annotation.Resource;
+
+@Configuration
+public class DefaultTransactionManagerConfig implements TransactionManagementConfigurer {
+
+    @Resource(name = ConstValue.writeTransactionManager)
+    private TransactionManager defaultTransactionManager;
+
+    /**
+     * 声明式事务中没有指定事务管理器时会使用此方法返回的默认事务管理器, 假设对应数据源 a
+     * 如果在使用 b 数据源的方法上不指定事务管理器, 则会默认使用 a 的管理器, 此时 b 的事务失效
+     * 为了正确性, 不使用数据源 a 的事务需要指定名称
+     */
+    @Override
+    public TransactionManager annotationDrivenTransactionManager() {
+        return defaultTransactionManager;
+    }
+}
