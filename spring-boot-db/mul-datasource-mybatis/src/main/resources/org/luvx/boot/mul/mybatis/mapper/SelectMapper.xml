@@ -12,6 +12,14 @@
       id, user_name, password, age
     </sql>
 
+    <update id="updateByPrimaryKey">
+        update user
+        set user_name = #{record.userName},
+            password  = #{record.password},
+            age       = #{record.age}
+        where id = #{record.id}
+    </update>
+
     <select id="selectByPrimaryKey" resultMap="BaseResultMap">
         select
           <include refid="Base_Column_List"/>

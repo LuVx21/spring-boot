@@ -13,4 +13,9 @@ import java.io.Serializable;
 @Repository
 public interface SelectMapper {
     User selectByPrimaryKey(@Param("id") Serializable id);
+
+    /**
+     * 用于确认事务
+     */
+    int updateByPrimaryKey(@Param("record") User record);
 }

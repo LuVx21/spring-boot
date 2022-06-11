@@ -20,4 +20,12 @@
         where id = #{record.id}
     </update>
 
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        user
+        where
+        id = #{id}
+    </select>
 </mapper>
