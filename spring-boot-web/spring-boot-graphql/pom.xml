@@ -9,7 +9,7 @@
         <version>0.1</version>
     </parent>
 
-    <artifactId>spring-boot-websocket</artifactId>
+    <artifactId>spring-boot-graphql</artifactId>
     <packaging>jar</packaging>
 
     <properties>
@@ -17,14 +17,11 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-websocket</artifactId>
+            <groupId>com.graphql-java</groupId>
+            <artifactId>graphql-java</artifactId>
+            <version>11.0</version>
         </dependency>
-        <dependency>
-            <groupId>com.jcraft</groupId>
-            <artifactId>jsch</artifactId>
-            <version>0.1.55</version>
-        </dependency>
+
     </dependencies>
 
     <build>
@@ -32,7 +29,11 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <fork>true</fork>
+                </configuration>
             </plugin>
         </plugins>
     </build>
+
 </project>
