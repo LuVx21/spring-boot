@@ -8,3 +8,7 @@ spring:
     static-path-pattern: /static/**
   thymeleaf:
     mode: LEGACYHTML5
+  http:
+    multipart:
+      max-request-size: 200MB
+      max-file-size: 20MB

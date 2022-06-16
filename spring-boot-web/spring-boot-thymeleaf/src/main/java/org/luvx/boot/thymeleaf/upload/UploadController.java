@@ -11,6 +11,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
+import java.util.Collection;
 import java.util.List;
 
 @Slf4j
@@ -46,6 +47,16 @@ public class UploadController {
      */
     @PostMapping(value = "/batchUpload1")
     public void upload(@RequestParam("files") MultipartFile[] files) {
+        doUpload(List.of(files));
+    }
+
+    @PostMapping("/batchUpload2")
+    public void handleFileUpload(HttpServletRequest request) {
+        List<MultipartFile> files = ((MultipartHttpServletRequest) request).getFiles("files");
+        doUpload(files);
+    }
+
+    private void doUpload(Collection<MultipartFile> files) {
         for (MultipartFile file : files) {
             String fileName = file.getOriginalFilename();
             log.info("上传的文件名：{}", fileName);
@@ -56,24 +67,5 @@ public class UploadController {
                 log.info("上传失败:{}", file.getOriginalFilename());
             }
         }
-    }
-
-    @PostMapping("/batchUpload2")
-    public String handleFileUpload(HttpServletRequest request) {
-        List<MultipartFile> files = ((MultipartHttpServletRequest) request).getFiles("file");
-        List<MultipartFile> collect = files.stream()
-                .filter(f -> !f.isEmpty())
-                .toList();
-        if (collect.size() != files.size()) {
-            return "存在空文件";
-        }
-        for (MultipartFile file : collect) {
-            try {
-                file.transferTo(new File(path + file.getOriginalFilename()));
-            } catch (Exception e) {
-                log.info("上传失败:{}", file.getOriginalFilename());
-            }
-        }
-        return "上传成功";
     }
 }
