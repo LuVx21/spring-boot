@@ -1,0 +1,10 @@
+server:
+  port: 8090
+
+spring:
+  freemarker:
+    template-loader-path: classpath:/templates
+  mvc:
+    static-path-pattern: /static/**
+  thymeleaf:
+    mode: LEGACYHTML5

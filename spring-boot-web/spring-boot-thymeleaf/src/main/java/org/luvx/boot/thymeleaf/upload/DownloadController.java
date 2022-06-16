@@ -15,13 +15,14 @@ import java.io.FileInputStream;
 @RestController
 @RequestMapping("/download")
 public class DownloadController {
-    private final String path = "/Users/renxie/Desktop/upload/";
+    private final String path     = "/Users/renxie/Desktop/upload/";
+    private final String fileName = "application.yml";
 
     @GetMapping("/download1")
     public void download(HttpServletRequest request, HttpServletResponse response) {
         response.setCharacterEncoding(request.getCharacterEncoding());
         response.setContentType("application/octet-stream");
-        File file = new File(path + "runtime.js");
+        File file = new File(path + fileName);
         try (FileInputStream fis = new FileInputStream(file)) {
             response.setHeader("Content-Disposition", "attachment; filename=" + file.getName());
             IOUtils.copy(fis, response.getOutputStream());
@@ -32,7 +33,6 @@ public class DownloadController {
 
     @GetMapping("/download2")
     public String downloadFile(HttpServletRequest request, HttpServletResponse response) {
-        String fileName = "application.yml";
         if (fileName == null) {
             return "下载失败";
         }
