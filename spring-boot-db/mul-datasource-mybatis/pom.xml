@@ -24,7 +24,7 @@
         </dependency>
         <dependency>
             <groupId>org.luvx</groupId>
-            <artifactId>coding-common-spring-boot</artifactId>
+            <artifactId>boot-common</artifactId>
         </dependency>
     </dependencies>
 

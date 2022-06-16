@@ -2,36 +2,35 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+
     <parent>
         <groupId>org.luvx</groupId>
-        <artifactId>spring-boot-web</artifactId>
+        <artifactId>coding-parent-spring-boot-java</artifactId>
         <version>0.1</version>
     </parent>
 
-    <artifactId>spring-boot-thymeleaf</artifactId>
-    <packaging>jar</packaging>
+    <artifactId>spring-boot-web</artifactId>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>spring-boot-thymeleaf</module>
+    </modules>
 
     <properties>
+        <java.version>17</java.version>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+            <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.springframework.restdocs</groupId>
-            <artifactId>spring-restdocs-mockmvc</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>net.sourceforge.nekohtml</groupId>
-            <artifactId>nekohtml</artifactId>
-            <version>1.9.15</version>
+            <groupId>org.luvx</groupId>
+            <artifactId>boot-common</artifactId>
         </dependency>
     </dependencies>
 
     <build>
     </build>
-
 </project>

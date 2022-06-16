@@ -1,4 +1,4 @@
-package org.luvx.upload;
+package org.luvx.boot.thymeleaf.upload;
 
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.slf4j.Logger;
@@ -12,15 +12,8 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
-import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @ClassName: org.luvx.upload
- * @Description:
- * @Author: Ren, Xie
- * @Date: 2019/1/23 20:00
- */
 @RestController
 @RequestMapping("/file1")
 public class FileUploadController1 {
