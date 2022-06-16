@@ -14,6 +14,9 @@
 
     <modules>
         <module>spring-boot-thymeleaf</module>
+        <module>spring-boot-rest</module>
+        <module>spring-boot-resteasy</module>
+        <module>spring-boot-graphql</module>
     </modules>
 
     <properties>
