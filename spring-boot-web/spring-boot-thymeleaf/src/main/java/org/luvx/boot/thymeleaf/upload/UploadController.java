@@ -57,6 +57,10 @@ public class UploadController {
     }
 
     private void doUpload(Collection<MultipartFile> files) {
+        File dir = new File(path);
+        if (!dir.exists() && !dir.mkdirs()) {
+            return;
+        }
         for (MultipartFile file : files) {
             String fileName = file.getOriginalFilename();
             log.info("上传的文件名：{}", fileName);
