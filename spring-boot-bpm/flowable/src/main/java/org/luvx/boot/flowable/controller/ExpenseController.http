@@ -1,0 +1,16 @@
+
+### 创建
+
+GET http://localhost:8080/expense/add?userId=123&money=123321
+
+### 查看待办列表
+
+GET http://localhost:8080/expense/list?userId=123
+
+### 同意
+
+GET http://localhost:8080/expense/apply?taskId=4017c6c0-f843-11ec-9982-ae8202e91955
+
+### 生成流程图
+
+http://localhost:8080/expense/processDiagram?processId=40104ca9-f843-11ec-9982-ae8202e91955
