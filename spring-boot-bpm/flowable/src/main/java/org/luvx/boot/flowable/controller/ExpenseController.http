@@ -9,8 +9,12 @@ GET http://localhost:8080/expense/list?userId=123
 
 ### 同意
 
-GET http://localhost:8080/expense/apply?taskId=4017c6c0-f843-11ec-9982-ae8202e91955
+GET http://localhost:8080/expense/apply?taskId=
+
+### 拒绝
+
+GET http://localhost:8080/expense/reject?taskId=
 
 ### 生成流程图
 
-http://localhost:8080/expense/processDiagram?processId=40104ca9-f843-11ec-9982-ae8202e91955
+http://localhost:8080/expense/processDiagram?processId=
