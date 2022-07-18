@@ -1,32 +1,28 @@
 package org.luvx.mapper;
 
-import static org.luvx.entity.User.COL_AGE;
-import static org.luvx.entity.User.COL_ID;
-import static org.luvx.entity.User.COL_PWD;
-import static org.luvx.entity.User.COL_UNAME;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.Test;
+import org.luvx.ApplicationTests;
+import org.luvx.common.more.MorePrints;
+import org.luvx.entity.User;
+import org.luvx.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.junit.jupiter.api.Test;
-import org.luvx.ApplicationTests;
-import org.luvx.common.util.PrintUtils;
-import org.luvx.entity.User;
-import org.springframework.beans.factory.annotation.Autowired;
-
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-
-import io.vavr.API;
-import lombok.extern.slf4j.Slf4j;
+import static org.luvx.entity.User.*;
 
 @Slf4j
 class SelectTest extends ApplicationTests {
-
     @Autowired
-    private UserMapper userMapper;
+    private UserMapper  userMapper;
+    @Autowired
+    private UserService userService;
 
     @Test
     void selectByIdTest() {
@@ -34,7 +30,7 @@ class SelectTest extends ApplicationTests {
 
         List<Long> ids = List.of(0L, 4L, 5L);
         List<User> users = userMapper.selectBatchIds(ids);
-        PrintUtils.println(user, users);
+        MorePrints.println(user, users);
     }
 
     @Test
@@ -59,11 +55,14 @@ class SelectTest extends ApplicationTests {
      */
     @Test
     void selectOneTest() {
-        User user = userMapper.selectOne(new QueryWrapper<User>()
-                .eq(COL_ID, 0L)
-                .and(w -> w.eq(COL_ID, 1L).ne(COL_ID, 2L))
-                .eq(COL_ID, 3L)
-        );
+        QueryWrapper<User> query = new QueryWrapper<User>()
+                .in(COL_ID, List.of(10000L, 10001L))
+                // .eq(COL_ID, 0L)
+                // .and(w -> w.eq(COL_ID, 1L).ne(COL_ID, 2L))
+                // .eq(COL_ID, 3L)
+                ;
+        User user = userService.getOne(query);
+        // User user = userMapper.selectOne(query);
         System.out.println(user);
     }
 
@@ -75,8 +74,12 @@ class SelectTest extends ApplicationTests {
 
     @Test
     void selectListTest() {
-        List<User> users = userMapper.selectList(new QueryWrapper<User>()
-                .eq(COL_AGE, "3"));
+        QueryWrapper<User> query = new QueryWrapper<User>()
+                .eq(COL_AGE, "3")
+                // .like(COL_UNAME, "foo")
+                // .likeLeft(COL_UNAME, "foo")
+                .likeRight(COL_UNAME, "foo");
+        List<User> users = userMapper.selectList(query);
         System.out.println(users);
     }
 
@@ -101,7 +104,7 @@ class SelectTest extends ApplicationTests {
         IPage<User> iPage = userMapper.selectPage(page, new QueryWrapper<User>()
                 .eq(COL_AGE, "3"));
 
-        PrintUtils.println(page.getRecords(), iPage.getRecords());
+        MorePrints.println(page.getRecords(), iPage.getRecords());
     }
 
     @Test
@@ -110,6 +113,6 @@ class SelectTest extends ApplicationTests {
         IPage<Map<String, Object>> iPage = userMapper.selectMapsPage(page, new QueryWrapper<User>()
                 .ge(COL_AGE, "3")
         );
-        PrintUtils.println(page.getRecords(), iPage.getRecords());
+        MorePrints.println(page.getRecords(), iPage.getRecords());
     }
 }

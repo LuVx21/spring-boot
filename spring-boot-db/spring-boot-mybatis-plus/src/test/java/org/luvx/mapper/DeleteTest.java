@@ -12,23 +12,10 @@ import java.util.List;
 import java.util.Map;
 
 @Slf4j
-class UserMapperTest extends ApplicationTests {
+class DeleteTest extends ApplicationTests {
 
     @Autowired
     private UserMapper userMapper;
-
-    @Test
-    void insertTest() {
-        User user = User.builder()
-                // .userId(1L)
-                .userName("xie")
-                .password("ren")
-                .age(18)
-                .build();
-
-        userMapper.insert(user);
-        log.info("after insert:{}", user);
-    }
 
     @Test
     void deleteByIdTest() {
@@ -56,29 +43,6 @@ class UserMapperTest extends ApplicationTests {
     void deleteBatchIdsTest() {
         List<Long> ids = List.of(10012L, 10014L);
         int num = userMapper.deleteBatchIds(ids);
-        System.out.println(num);
-    }
-
-    /**
-     * <pre>
-     *     UPDATE user SET user_name=? WHERE id=?
-     * </pre>
-     */
-    @Test
-    void updateByIdTest() {
-        int num = userMapper.updateById(User.builder().userId(10043L).userName("LuVx1").build());
-        log.info(num + "");
-    }
-
-    /**
-     * <pre>
-     *     UPDATE user SET user_name=? WHERE (id = ?)
-     * </pre>
-     */
-    @Test
-    void updateTest() {
-        int num = userMapper.update(User.builder().userId(9999L).userName("LuVx2").build(),
-                new QueryWrapper<User>().eq("id", 10043L));
         System.out.println(num);
     }
 }
