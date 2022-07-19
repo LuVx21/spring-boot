@@ -16,9 +16,7 @@
     </properties>
 
     <modules>
-        <module>base</module>
         <module>flowable</module>
-        <module>camunda</module>
     </modules>
 
     <dependencies>

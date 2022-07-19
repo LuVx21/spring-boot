@@ -16,12 +16,12 @@
         <exclusiveGateway id="judgeTask"/>
         <userTask id="directorTak" name="经理审批">
             <extensionElements>
-                <flowable:taskListener event="create" class="org.luvx.boot.flowable.handler.ManagerTaskHandler"/>
+                <flowable:taskListener event="create" class="org.luvx.boot.flowable.listener.ManagerTaskHandler"/>
             </extensionElements>
         </userTask>
         <userTask id="bossTask" name="老板审批">
             <extensionElements>
-                <flowable:taskListener event="create" class="org.luvx.boot.flowable.handler.BossTaskHandler"/>
+                <flowable:taskListener event="create" class="org.luvx.boot.flowable.listener.BossTaskHandler"/>
             </extensionElements>
         </userTask>
         <endEvent id="end" name="结束"/>
