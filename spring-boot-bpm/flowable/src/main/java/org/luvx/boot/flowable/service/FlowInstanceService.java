@@ -3,6 +3,7 @@ package org.luvx.boot.flowable.service;
 import org.flowable.engine.history.HistoricProcessInstance;
 import org.luvx.boot.flowable.vo.FlowTaskVo;
 
+import java.io.InputStream;
 import java.util.Map;
 
 public interface FlowInstanceService {
@@ -42,4 +43,6 @@ public interface FlowInstanceService {
      * 根据实例ID查询历史实例数据
      */
     HistoricProcessInstance getHistoricProcessInstanceById(String processInstanceId);
+
+    InputStream genProcessDiagram(String processId) throws Exception;
 }

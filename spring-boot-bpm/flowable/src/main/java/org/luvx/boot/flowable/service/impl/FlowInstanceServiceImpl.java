@@ -2,11 +2,15 @@ package org.luvx.boot.flowable.service.impl;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.flowable.bpmn.model.BpmnModel;
 import org.flowable.common.engine.api.FlowableObjectNotFoundException;
+import org.flowable.engine.ProcessEngineConfiguration;
 import org.flowable.engine.history.HistoricProcessInstance;
 import org.flowable.engine.repository.ProcessDefinition;
 import org.flowable.engine.repository.ProcessDefinitionQuery;
+import org.flowable.engine.runtime.Execution;
 import org.flowable.engine.runtime.ProcessInstance;
+import org.flowable.image.ProcessDiagramGenerator;
 import org.flowable.task.api.Task;
 import org.flowable.task.api.TaskQuery;
 import org.flowable.task.service.impl.persistence.entity.TaskEntityImpl;
@@ -16,9 +20,12 @@ import org.luvx.boot.flowable.vo.FlowTaskVo;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -172,5 +179,44 @@ public class FlowInstanceServiceImpl extends BaseFlowService implements FlowInst
         return runtimeService.createProcessInstanceQuery()
                 .processDefinitionId(processDefinitionId)
                 .list();
+    }
+
+    /**
+     * 生成流程图
+     *
+     * @param processId 任务ID
+     */
+    @Override
+    public InputStream genProcessDiagram(String processId) throws Exception {
+        ProcessInstance pi = runtimeService.createProcessInstanceQuery()
+                .processInstanceId(processId)
+                .singleResult();
+        //流程走完的不显示图
+        if (pi == null) {
+            return null;
+        }
+        Task task = taskService.createTaskQuery()
+                .processInstanceId(pi.getId())
+                .singleResult();
+        //使用流程实例ID，查询正在执行的执行对象表，返回流程实例对象
+        String InstanceId = task.getProcessInstanceId();
+        List<Execution> executions = runtimeService
+                .createExecutionQuery()
+                .processInstanceId(InstanceId)
+                .list();
+        //得到正在执行的Activity的Id
+        List<String> activityIds = executions.stream()
+                .map(exe -> runtimeService.getActiveActivityIds(exe.getId()))
+                .flatMap(List::stream)
+                .collect(Collectors.toList());
+        List<String> flows = new ArrayList<>();
+        //获取流程图
+        BpmnModel bpmnModel = repositoryService.getBpmnModel(pi.getProcessDefinitionId());
+        ProcessEngineConfiguration engconf = processEngine.getProcessEngineConfiguration();
+        ProcessDiagramGenerator diagramGenerator = engconf.getProcessDiagramGenerator();
+        return diagramGenerator.generateDiagram(bpmnModel, "png",
+                activityIds, flows,
+                engconf.getActivityFontName(), engconf.getLabelFontName(), engconf.getAnnotationFontName(),
+                engconf.getClassLoader(), 1.0, false);
     }
 }

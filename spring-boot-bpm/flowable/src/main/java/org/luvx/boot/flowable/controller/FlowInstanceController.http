@@ -12,3 +12,8 @@ Content-Type: application/json;charset=UTF-8
 ### 列表
 
 GET http://localhost:8080/flowable/inst/list?instanceId=&userId=boss
+
+
+### 图形
+
+GET http://localhost:8080/flowable/inst/processDiagram?processId=

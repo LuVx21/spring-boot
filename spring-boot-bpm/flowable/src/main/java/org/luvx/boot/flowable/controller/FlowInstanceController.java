@@ -7,6 +7,9 @@ import org.luvx.boot.flowable.vo.FlowTaskVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.Map;
 
 @Slf4j
@@ -50,5 +53,18 @@ public class FlowInstanceController {
     public Object delete(@RequestParam String instanceId, @RequestParam(defaultValue = "") String deleteReason) {
         flowInstanceService.delete(instanceId, deleteReason);
         return "ok";
+    }
+
+    @RequestMapping(value = "processDiagram")
+    public void processDiagram(HttpServletResponse httpServletResponse, String processId) throws Exception {
+        int length = 0;
+        byte[] buf = new byte[1024];
+        try (InputStream in = flowInstanceService.genProcessDiagram(processId);
+             OutputStream out = httpServletResponse.getOutputStream()
+        ) {
+            while ((length = in.read(buf)) != -1) {
+                out.write(buf, 0, length);
+            }
+        }
     }
 }
