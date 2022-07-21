@@ -1,0 +1,14 @@
+### 创建
+
+POST http://localhost:8080/flowable/inst/start?procDefId=&procDefKey=Expense
+Content-Type: application/json;charset=UTF-8
+
+{
+    "taskUser": "123",
+    "money": 123321
+}
+
+
+### 列表
+
+GET http://localhost:8080/flowable/inst/list?instanceId=&userId=boss
