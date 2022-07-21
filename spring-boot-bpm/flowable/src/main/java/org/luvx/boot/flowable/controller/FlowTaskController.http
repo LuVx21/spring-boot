@@ -1,0 +1,40 @@
+### complete
+
+POST http://localhost:8080/flowable/task/complete
+Content-Type: application/json;charset=UTF-8
+
+{
+    "taskId": "0cd80724-08f4-11ed-b1df-ae5c38898a9c",
+    "values": {
+        "outcome": "通过"
+    },
+    "assignee": "123"
+}
+
+### complete-reject
+
+POST http://localhost:8080/flowable/task/complete
+Content-Type: application/json;charset=UTF-8
+
+{
+    "taskId": "0cd80724-08f4-11ed-b1df-ae5c38898a9c",
+    "values": {
+        "outcome": "驳回"
+    },
+    "assignee": "123"
+}
+
+### reject
+
+POST http://localhost:8080/flowable/task/reject
+Content-Type: application/json;charset=UTF-8
+
+{
+    "taskId": "xxx",
+    "values": {
+        "outcome": "驳回"
+    }
+}
+
+###
+
