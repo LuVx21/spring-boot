@@ -6,6 +6,9 @@
              targetNamespace="http://www.flowable.org/processdef">
     <process id="Expense" name="ExpenseProcess" isExecutable="true">
         <documentation>报销流程</documentation>
+        <extensionElements>
+            <flowable:eventListener class="org.luvx.boot.flowable.listener.MyEventListener"/>
+        </extensionElements>
         <startEvent id="start" name="开始"/>
         <userTask id="fillTask" name="出差报销" flowable:assignee="${taskUser}">
             <extensionElements>
