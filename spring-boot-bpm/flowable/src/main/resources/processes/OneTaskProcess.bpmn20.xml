@@ -4,19 +4,31 @@
         xmlns:flowable="http://flowable.org/bpmn"
         targetNamespace="Examples">
 
-    <process id="oneTaskProcess" name="The One Task Process">
-        <documentation>单任务流程</documentation>
+    <process id="oneTaskProcess" name="串行任务流程">
+        <documentation>串行任务流程</documentation>
         <extensionElements>
             <flowable:eventListener class="org.luvx.boot.flowable.listener.MyEventListener"/>
         </extensionElements>
         <startEvent id="theStart"/>
-        <sequenceFlow id="flow1" sourceRef="theStart" targetRef="theTask"/>
-        <userTask id="theTask" name="my task" flowable:assignee="zhangsan">
+        <sequenceFlow id="flow1" sourceRef="theStart" targetRef="task1"/>
+        <userTask id="task1" name="mytask1" flowable:assignee="zhangsan">
             <extensionElements>
                 <flowable:taskListener event="create" class="org.luvx.boot.flowable.listener.MyTaskListener"/>
             </extensionElements>
         </userTask>
-        <sequenceFlow id="flow2" sourceRef="theTask" targetRef="theEnd"/>
+        <sequenceFlow id="flow2" sourceRef="task1" targetRef="task2"/>
+        <userTask id="task2" name="mytask2" flowable:assignee="lisi">
+            <extensionElements>
+                <flowable:taskListener event="create" class="org.luvx.boot.flowable.listener.MyTaskListener"/>
+            </extensionElements>
+        </userTask>
+        <sequenceFlow id="flow3" sourceRef="task2" targetRef="task3"/>
+        <userTask id="task3" name="mytask3" flowable:assignee="wangwu">
+            <extensionElements>
+                <flowable:taskListener event="create" class="org.luvx.boot.flowable.listener.MyTaskListener"/>
+            </extensionElements>
+        </userTask>
+        <sequenceFlow id="flow4" sourceRef="task3" targetRef="theEnd"/>
         <endEvent id="theEnd"/>
     </process>
 
