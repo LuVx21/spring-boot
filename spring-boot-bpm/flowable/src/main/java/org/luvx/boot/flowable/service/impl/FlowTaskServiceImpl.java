@@ -118,7 +118,7 @@ public class FlowTaskServiceImpl extends BaseFlowService implements FlowTaskServ
         // 目的获取所有跳转到的节点 targetIds
         // 获取当前节点的所有父级用户任务节点
         // 深度优先算法思想：延边迭代深入
-        List<UserTask> parentUserTaskList = FlowableUtils.iteratorFindParentUserTasks(source, null, null);
+        List<UserTask> parentUserTaskList = FlowableUtils.findParentUserTasks(source, null, null);
         if (parentUserTaskList == null || parentUserTaskList.size() == 0) {
             throw new RuntimeException("当前节点为初始任务节点，不能驳回");
         }

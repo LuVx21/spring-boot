@@ -1,75 +1,106 @@
 package org.luvx.boot.flowable.util;
 
+import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.CollectionUtils;
 import org.flowable.bpmn.model.*;
 import org.flowable.engine.impl.bpmn.behavior.ParallelMultiInstanceBehavior;
 import org.flowable.engine.impl.bpmn.behavior.SequentialMultiInstanceBehavior;
 import org.flowable.task.api.history.HistoricTaskInstance;
+import org.flowable.validation.ProcessValidatorFactory;
+import org.flowable.validation.ValidationError;
 
+import javax.annotation.Nullable;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
+import java.util.stream.Collectors;
+
+import static org.apache.commons.lang3.ObjectUtils.defaultIfNull;
 
 @Slf4j
 public class FlowableUtils {
 
     /**
-     * 根据节点，获取入口连线
-     *
-     * @param source
-     * @return
+     * 验证BpmnModel是否正确
      */
-    public static List<SequenceFlow> getElementIncomingFlows(FlowElement source) {
-        List<SequenceFlow> sequenceFlows = null;
+    public static boolean isInValid(BpmnModel bpmnModel) {
+        List<ValidationError> errorList = new ProcessValidatorFactory()
+            .createDefaultProcessValidator()
+            .validate(bpmnModel);
+        if (CollectionUtils.isEmpty(errorList)) {
+            return true;
+        }
+        String msg = errorList.stream()
+            .map(ValidationError::toString)
+            .collect(Collectors.joining("|"));
+        log.warn("模板验证失败,原因:{}", msg);
+        return false;
+    }
+
+    /**
+     * 生成 bpmn xml内容
+     */
+    // public static String bpmnModelConverterXml(BpmnModel bpmnModel) {
+    //     try {
+    //         FixedBpmnXMLConverter fixedBpmnXMLConverter = new FixedBpmnXMLConverter();
+    //         return new String(fixedBpmnXMLConverter.convertToXML(bpmnModel), StandardCharsets.UTF_8);
+    //     } catch (Exception e) {
+    //         log.warn("bpmnModelConverterXml e", e);
+    //         return "";
+    //     }
+    // }
+
+    /**
+     * 获取节点入口连线
+     */
+    public static List<SequenceFlow> getIncomingFlows(FlowElement source) {
+        List<SequenceFlow> sequenceFlows = Collections.emptyList();
         if (source instanceof FlowNode) {
             sequenceFlows = ((FlowNode) source).getIncomingFlows();
-        } else if (source instanceof Gateway) {
-            sequenceFlows = ((Gateway) source).getIncomingFlows();
-        } else if (source instanceof SubProcess) {
-            sequenceFlows = ((SubProcess) source).getIncomingFlows();
-        } else if (source instanceof StartEvent) {
-            sequenceFlows = ((StartEvent) source).getIncomingFlows();
-        } else if (source instanceof EndEvent) {
-            sequenceFlows = ((EndEvent) source).getIncomingFlows();
         }
+        // else if (source instanceof Gateway) {
+        //     sequenceFlows = ((Gateway) source).getIncomingFlows();
+        // } else if (source instanceof SubProcess) {
+        //     sequenceFlows = ((SubProcess) source).getIncomingFlows();
+        // } else if (source instanceof StartEvent) {
+        //     sequenceFlows = ((StartEvent) source).getIncomingFlows();
+        // } else if (source instanceof EndEvent) {
+        //     sequenceFlows = ((EndEvent) source).getIncomingFlows();
+        // }
         return sequenceFlows;
     }
 
     /**
-     * 根据节点，获取出口连线
-     *
-     * @param source
-     * @return
+     * 获取节点出口连线
      */
-    public static List<SequenceFlow> getElementOutgoingFlows(FlowElement source) {
-        List<SequenceFlow> sequenceFlows = null;
+    public static List<SequenceFlow> getOutgoingFlows(FlowElement source) {
+        List<SequenceFlow> sequenceFlows = Collections.emptyList();
         if (source instanceof FlowNode) {
             sequenceFlows = ((FlowNode) source).getOutgoingFlows();
-        } else if (source instanceof Gateway) {
-            sequenceFlows = ((Gateway) source).getOutgoingFlows();
-        } else if (source instanceof SubProcess) {
-            sequenceFlows = ((SubProcess) source).getOutgoingFlows();
-        } else if (source instanceof StartEvent) {
-            sequenceFlows = ((StartEvent) source).getOutgoingFlows();
-        } else if (source instanceof EndEvent) {
-            sequenceFlows = ((EndEvent) source).getOutgoingFlows();
         }
+        // else if (source instanceof Gateway) {
+        //     sequenceFlows = ((Gateway) source).getOutgoingFlows();
+        // } else if (source instanceof SubProcess) {
+        //     sequenceFlows = ((SubProcess) source).getOutgoingFlows();
+        // } else if (source instanceof StartEvent) {
+        //     sequenceFlows = ((StartEvent) source).getOutgoingFlows();
+        // } else if (source instanceof EndEvent) {
+        //     sequenceFlows = ((EndEvent) source).getOutgoingFlows();
+        // }
         return sequenceFlows;
     }
 
     /**
      * 获取全部节点列表，包含子流程节点
-     *
-     * @param flowElements
-     * @param allElements
-     * @return
      */
-    public static Collection<FlowElement> getAllElements(Collection<FlowElement> flowElements, Collection<FlowElement> allElements) {
-        allElements = allElements == null ? new ArrayList<>() : allElements;
-
+    public static Collection<FlowElement> getAllElements(Collection<FlowElement> flowElements, @Nullable Collection<FlowElement> allElements) {
+        allElements = defaultIfNull(allElements, Lists.newArrayList());
         for (FlowElement flowElement : flowElements) {
             allElements.add(flowElement);
             if (flowElement instanceof SubProcess) {
-                // 继续深入子流程，进一步获取子流程
-                allElements = FlowableUtils.getAllElements(((SubProcess) flowElement).getFlowElements(), allElements);
+                Collection<FlowElement> subFlowElements = ((SubProcess) flowElement).getFlowElements();
+                allElements = getAllElements(subFlowElements, allElements);
             }
         }
         return allElements;
@@ -81,47 +112,42 @@ public class FlowableUtils {
      * @param source          起始节点
      * @param hasSequenceFlow 已经经过的连线的 ID，用于判断线路是否重复
      * @param userTaskList    已找到的用户任务节点
-     * @return
      */
-    public static List<UserTask> iteratorFindParentUserTasks(FlowElement source, Set<String> hasSequenceFlow, List<UserTask> userTaskList) {
-        userTaskList = userTaskList == null ? new ArrayList<>() : userTaskList;
-        hasSequenceFlow = hasSequenceFlow == null ? new HashSet<>() : hasSequenceFlow;
+    public static List<UserTask> findParentUserTasks(FlowElement source, Set<String> hasSequenceFlow, List<UserTask> userTaskList) {
+        hasSequenceFlow = defaultIfNull(hasSequenceFlow, Sets.newHashSet());
+        userTaskList = defaultIfNull(userTaskList, Lists.newArrayList());
 
         // 如果该节点为开始节点，且存在上级子节点，则顺着上级子节点继续迭代
         if (source instanceof StartEvent && source.getSubProcess() != null) {
-            userTaskList = iteratorFindParentUserTasks(source.getSubProcess(), hasSequenceFlow, userTaskList);
+            userTaskList = findParentUserTasks(source.getSubProcess(), hasSequenceFlow, userTaskList);
         }
 
         // 根据类型，获取入口连线
-        List<SequenceFlow> sequenceFlows = getElementIncomingFlows(source);
-
-        if (sequenceFlows != null) {
-            // 循环找到目标元素
-            for (SequenceFlow sequenceFlow : sequenceFlows) {
-                // 如果发现连线重复，说明循环了，跳过这个循环
-                if (hasSequenceFlow.contains(sequenceFlow.getId())) {
-                    continue;
-                }
-                // 添加已经走过的连线
-                hasSequenceFlow.add(sequenceFlow.getId());
-                // 类型为用户节点，则新增父级节点
-                if (sequenceFlow.getSourceFlowElement() instanceof UserTask) {
-                    userTaskList.add((UserTask) sequenceFlow.getSourceFlowElement());
-                    continue;
-                }
-                // 类型为子流程，则添加子流程开始节点出口处相连的节点
-                if (sequenceFlow.getSourceFlowElement() instanceof SubProcess) {
-                    // 获取子流程用户任务节点
-                    List<UserTask> childUserTaskList = findChildProcessUserTasks((StartEvent) ((SubProcess) sequenceFlow.getSourceFlowElement()).getFlowElements().toArray()[0], null, null);
-                    // 如果找到节点，则说明该线路找到节点，不继续向下找，反之继续
-                    if (childUserTaskList != null && childUserTaskList.size() > 0) {
-                        userTaskList.addAll(childUserTaskList);
-                        continue;
-                    }
-                }
-                // 继续迭代
-                userTaskList = iteratorFindParentUserTasks(sequenceFlow.getSourceFlowElement(), hasSequenceFlow, userTaskList);
+        List<SequenceFlow> sequenceFlows = getIncomingFlows(source);
+        for (SequenceFlow sequenceFlow : sequenceFlows) {
+            if (hasSequenceFlow.contains(sequenceFlow.getId())) {
+                continue;
             }
+            hasSequenceFlow.add(sequenceFlow.getId());
+
+            FlowElement sourceFlowElement = sequenceFlow.getSourceFlowElement();
+            if (sourceFlowElement instanceof UserTask) {
+                userTaskList.add((UserTask) sourceFlowElement);
+                continue;
+            }
+            // 类型为子流程，则添加子流程开始节点出口处相连的节点
+            if (sourceFlowElement instanceof SubProcess) {
+                // 获取子流程用户任务节点
+                FlowElement first = ((SubProcess) sourceFlowElement).getFlowElements().iterator().next();
+                List<UserTask> childUserTaskList = findChildProcessUserTasks(first, null, null);
+                // 如果找到节点，则说明该线路找到节点，不继续向下找，反之继续
+                if (CollectionUtils.isNotEmpty(childUserTaskList)) {
+                    userTaskList.addAll(childUserTaskList);
+                    continue;
+                }
+            }
+            // 继续迭代
+            userTaskList = findParentUserTasks(sourceFlowElement, hasSequenceFlow, userTaskList);
         }
         return userTaskList;
     }
@@ -133,46 +159,42 @@ public class FlowableUtils {
      * @param runTaskKeyList  正在运行的任务 Key，用于校验任务节点是否是正在运行的节点
      * @param hasSequenceFlow 已经经过的连线的 ID，用于判断线路是否重复
      * @param userTaskList    需要撤回的用户任务列表
-     * @return
      */
     public static List<UserTask> iteratorFindChildUserTasks(FlowElement source, List<String> runTaskKeyList, Set<String> hasSequenceFlow, List<UserTask> userTaskList) {
-        hasSequenceFlow = hasSequenceFlow == null ? new HashSet<>() : hasSequenceFlow;
-        userTaskList = userTaskList == null ? new ArrayList<>() : userTaskList;
+        hasSequenceFlow = defaultIfNull(hasSequenceFlow, Sets.newHashSet());
+        userTaskList = defaultIfNull(userTaskList, Lists.newArrayList());
 
         // 如果该节点为开始节点，且存在上级子节点，则顺着上级子节点继续迭代
         if (source instanceof EndEvent && source.getSubProcess() != null) {
             userTaskList = iteratorFindChildUserTasks(source.getSubProcess(), runTaskKeyList, hasSequenceFlow, userTaskList);
         }
-
         // 根据类型，获取出口连线
-        List<SequenceFlow> sequenceFlows = getElementOutgoingFlows(source);
-
-        if (sequenceFlows != null) {
-            // 循环找到目标元素
-            for (SequenceFlow sequenceFlow : sequenceFlows) {
-                // 如果发现连线重复，说明循环了，跳过这个循环
-                if (hasSequenceFlow.contains(sequenceFlow.getId())) {
-                    continue;
-                }
-                // 添加已经走过的连线
-                hasSequenceFlow.add(sequenceFlow.getId());
-                // 如果为用户任务类型，且任务节点的 Key 正在运行的任务中存在，添加
-                if (sequenceFlow.getTargetFlowElement() instanceof UserTask && runTaskKeyList.contains((sequenceFlow.getTargetFlowElement()).getId())) {
-                    userTaskList.add((UserTask) sequenceFlow.getTargetFlowElement());
-                    continue;
-                }
-                // 如果节点为子流程节点情况，则从节点中的第一个节点开始获取
-                if (sequenceFlow.getTargetFlowElement() instanceof SubProcess) {
-                    List<UserTask> childUserTaskList = iteratorFindChildUserTasks((FlowElement) (((SubProcess) sequenceFlow.getTargetFlowElement()).getFlowElements().toArray()[0]), runTaskKeyList, hasSequenceFlow, null);
-                    // 如果找到节点，则说明该线路找到节点，不继续向下找，反之继续
-                    if (childUserTaskList != null && childUserTaskList.size() > 0) {
-                        userTaskList.addAll(childUserTaskList);
-                        continue;
-                    }
-                }
-                // 继续迭代
-                userTaskList = iteratorFindChildUserTasks(sequenceFlow.getTargetFlowElement(), runTaskKeyList, hasSequenceFlow, userTaskList);
+        List<SequenceFlow> sequenceFlows = getOutgoingFlows(source);
+        for (SequenceFlow sequenceFlow : sequenceFlows) {
+            // 如果发现连线重复，说明循环了，跳过这个循环
+            if (hasSequenceFlow.contains(sequenceFlow.getId())) {
+                continue;
             }
+            // 添加已经走过的连线
+            hasSequenceFlow.add(sequenceFlow.getId());
+            FlowElement targetFlowElement = sequenceFlow.getTargetFlowElement();
+            // 如果为用户任务类型，且任务节点的 Key 正在运行的任务中存在，添加
+            if (targetFlowElement instanceof UserTask && runTaskKeyList.contains(targetFlowElement.getId())) {
+                userTaskList.add((UserTask) targetFlowElement);
+                continue;
+            }
+            // 如果节点为子流程节点情况，则从节点中的第一个节点开始获取
+            if (targetFlowElement instanceof SubProcess) {
+                FlowElement next = ((SubProcess) targetFlowElement).getFlowElements().iterator().next();
+                List<UserTask> childUserTaskList = iteratorFindChildUserTasks(next, runTaskKeyList, hasSequenceFlow, null);
+                // 如果找到节点，则说明该线路找到节点，不继续向下找，反之继续
+                if (childUserTaskList != null && childUserTaskList.size() > 0) {
+                    userTaskList.addAll(childUserTaskList);
+                    continue;
+                }
+            }
+            // 继续迭代
+            userTaskList = iteratorFindChildUserTasks(targetFlowElement, runTaskKeyList, hasSequenceFlow, userTaskList);
         }
         return userTaskList;
     }
@@ -186,19 +208,16 @@ public class FlowableUtils {
      * @return
      */
     public static List<UserTask> findChildProcessUserTasks(FlowElement source, Set<String> hasSequenceFlow, List<UserTask> userTaskList) {
-        hasSequenceFlow = hasSequenceFlow == null ? new HashSet<>() : hasSequenceFlow;
-        userTaskList = userTaskList == null ? new ArrayList<>() : userTaskList;
+        hasSequenceFlow = defaultIfNull(hasSequenceFlow, Sets.newHashSet());
+        userTaskList = defaultIfNull(userTaskList, Lists.newArrayList());
 
         // 根据类型，获取出口连线
-        List<SequenceFlow> sequenceFlows = getElementOutgoingFlows(source);
-
-        if (sequenceFlows != null) {
-            // 循环找到目标元素
-            for (SequenceFlow sequenceFlow : sequenceFlows) {
-                // 如果发现连线重复，说明循环了，跳过这个循环
-                if (hasSequenceFlow.contains(sequenceFlow.getId())) {
-                    continue;
-                }
+        List<SequenceFlow> sequenceFlows = getOutgoingFlows(source);
+        for (SequenceFlow sequenceFlow : sequenceFlows) {
+            // 如果发现连线重复，说明循环了，跳过这个循环
+            if (hasSequenceFlow.contains(sequenceFlow.getId())) {
+                continue;
+            }
                 // 添加已经走过的连线
                 hasSequenceFlow.add(sequenceFlow.getId());
                 // 如果为用户任务类型，且任务节点的 Key 正在运行的任务中存在，添加
@@ -218,7 +237,6 @@ public class FlowableUtils {
                 // 继续迭代
                 userTaskList = findChildProcessUserTasks(sequenceFlow.getTargetFlowElement(), hasSequenceFlow, userTaskList);
             }
-        }
         return userTaskList;
     }
 
@@ -230,12 +248,11 @@ public class FlowableUtils {
      * @param hasSequenceFlow 已经经过的连线的 ID，用于判断线路是否重复
      * @param targets         目标脏线路终点
      * @param dirtyRoads      确定为脏数据的点，因为不需要重复，因此使用 set 存储
-     * @return
      */
     public static Set<String> iteratorFindDirtyRoads(FlowElement source, List<String> passRoads, Set<String> hasSequenceFlow, List<String> targets, Set<String> dirtyRoads) {
-        passRoads = passRoads == null ? new ArrayList<>() : passRoads;
-        dirtyRoads = dirtyRoads == null ? new HashSet<>() : dirtyRoads;
-        hasSequenceFlow = hasSequenceFlow == null ? new HashSet<>() : hasSequenceFlow;
+        passRoads = defaultIfNull(passRoads, Lists.newArrayList());
+        dirtyRoads = defaultIfNull(dirtyRoads, Sets.newHashSet());
+        hasSequenceFlow = defaultIfNull(hasSequenceFlow, Sets.newHashSet());
 
         // 如果该节点为开始节点，且存在上级子节点，则顺着上级子节点继续迭代
         if (source instanceof StartEvent && source.getSubProcess() != null) {
@@ -243,37 +260,33 @@ public class FlowableUtils {
         }
 
         // 根据类型，获取入口连线
-        List<SequenceFlow> sequenceFlows = getElementIncomingFlows(source);
-
-        if (sequenceFlows != null) {
-            // 循环找到目标元素
-            for (SequenceFlow sequenceFlow : sequenceFlows) {
-                // 如果发现连线重复，说明循环了，跳过这个循环
-                if (hasSequenceFlow.contains(sequenceFlow.getId())) {
-                    continue;
-                }
-                // 添加已经走过的连线
-                hasSequenceFlow.add(sequenceFlow.getId());
-                // 新增经过的路线
-                passRoads.add(sequenceFlow.getSourceFlowElement().getId());
-                // 如果此点为目标点，确定经过的路线为脏线路，添加点到脏线路中，然后找下个连线
-                if (targets.contains(sequenceFlow.getSourceFlowElement().getId())) {
-                    dirtyRoads.addAll(passRoads);
-                    continue;
-                }
-                // 如果该节点为开始节点，且存在上级子节点，则顺着上级子节点继续迭代
-                if (sequenceFlow.getSourceFlowElement() instanceof SubProcess) {
-                    dirtyRoads = findChildProcessAllDirtyRoad((StartEvent) ((SubProcess) sequenceFlow.getSourceFlowElement()).getFlowElements().toArray()[0], null, dirtyRoads);
-                    // 是否存在子流程上，true 是，false 否
-                    Boolean isInChildProcess = dirtyTargetInChildProcess((StartEvent) ((SubProcess) sequenceFlow.getSourceFlowElement()).getFlowElements().toArray()[0], null, targets, null);
-                    if (isInChildProcess) {
-                        // 已在子流程上找到，该路线结束
-                        continue;
-                    }
-                }
-                // 继续迭代
-                dirtyRoads = iteratorFindDirtyRoads(sequenceFlow.getSourceFlowElement(), passRoads, hasSequenceFlow, targets, dirtyRoads);
+        List<SequenceFlow> sequenceFlows = getIncomingFlows(source);
+        for (SequenceFlow sequenceFlow : sequenceFlows) {
+            // 如果发现连线重复，说明循环了，跳过这个循环
+            if (hasSequenceFlow.contains(sequenceFlow.getId())) {
+                continue;
             }
+            // 添加已经走过的连线
+            hasSequenceFlow.add(sequenceFlow.getId());
+            // 新增经过的路线
+            passRoads.add(sequenceFlow.getSourceFlowElement().getId());
+            // 如果此点为目标点，确定经过的路线为脏线路，添加点到脏线路中，然后找下个连线
+            if (targets.contains(sequenceFlow.getSourceFlowElement().getId())) {
+                dirtyRoads.addAll(passRoads);
+                continue;
+            }
+            // 如果该节点为开始节点，且存在上级子节点，则顺着上级子节点继续迭代
+            if (sequenceFlow.getSourceFlowElement() instanceof SubProcess) {
+                dirtyRoads = findChildProcessAllDirtyRoad((StartEvent) ((SubProcess) sequenceFlow.getSourceFlowElement()).getFlowElements().toArray()[0], null, dirtyRoads);
+                // 是否存在子流程上，true 是，false 否
+                Boolean isInChildProcess = dirtyTargetInChildProcess((StartEvent) ((SubProcess) sequenceFlow.getSourceFlowElement()).getFlowElements().toArray()[0], null, targets, null);
+                if (isInChildProcess) {
+                    // 已在子流程上找到，该路线结束
+                    continue;
+                }
+            }
+            // 继续迭代
+            dirtyRoads = iteratorFindDirtyRoads(sequenceFlow.getSourceFlowElement(), passRoads, hasSequenceFlow, targets, dirtyRoads);
         }
         return dirtyRoads;
     }
@@ -288,30 +301,26 @@ public class FlowableUtils {
      * @return
      */
     public static Set<String> findChildProcessAllDirtyRoad(FlowElement source, Set<String> hasSequenceFlow, Set<String> dirtyRoads) {
-        hasSequenceFlow = hasSequenceFlow == null ? new HashSet<>() : hasSequenceFlow;
-        dirtyRoads = dirtyRoads == null ? new HashSet<>() : dirtyRoads;
+        hasSequenceFlow = defaultIfNull(hasSequenceFlow, Sets.newHashSet());
+        dirtyRoads = defaultIfNull(dirtyRoads, Sets.newHashSet());
 
         // 根据类型，获取出口连线
-        List<SequenceFlow> sequenceFlows = getElementOutgoingFlows(source);
-
-        if (sequenceFlows != null) {
-            // 循环找到目标元素
-            for (SequenceFlow sequenceFlow : sequenceFlows) {
-                // 如果发现连线重复，说明循环了，跳过这个循环
-                if (hasSequenceFlow.contains(sequenceFlow.getId())) {
-                    continue;
-                }
-                // 添加已经走过的连线
-                hasSequenceFlow.add(sequenceFlow.getId());
-                // 添加脏路线
-                dirtyRoads.add(sequenceFlow.getTargetFlowElement().getId());
-                // 如果节点为子流程节点情况，则从节点中的第一个节点开始获取
-                if (sequenceFlow.getTargetFlowElement() instanceof SubProcess) {
-                    dirtyRoads = findChildProcessAllDirtyRoad((FlowElement) (((SubProcess) sequenceFlow.getTargetFlowElement()).getFlowElements().toArray()[0]), hasSequenceFlow, dirtyRoads);
-                }
-                // 继续迭代
-                dirtyRoads = findChildProcessAllDirtyRoad(sequenceFlow.getTargetFlowElement(), hasSequenceFlow, dirtyRoads);
+        List<SequenceFlow> sequenceFlows = getOutgoingFlows(source);
+        for (SequenceFlow sequenceFlow : sequenceFlows) {
+            // 如果发现连线重复，说明循环了，跳过这个循环
+            if (hasSequenceFlow.contains(sequenceFlow.getId())) {
+                continue;
             }
+            // 添加已经走过的连线
+            hasSequenceFlow.add(sequenceFlow.getId());
+            // 添加脏路线
+            dirtyRoads.add(sequenceFlow.getTargetFlowElement().getId());
+            // 如果节点为子流程节点情况，则从节点中的第一个节点开始获取
+            if (sequenceFlow.getTargetFlowElement() instanceof SubProcess) {
+                dirtyRoads = findChildProcessAllDirtyRoad((FlowElement) (((SubProcess) sequenceFlow.getTargetFlowElement()).getFlowElements().toArray()[0]), hasSequenceFlow, dirtyRoads);
+            }
+            // 继续迭代
+            dirtyRoads = findChildProcessAllDirtyRoad(sequenceFlow.getTargetFlowElement(), hasSequenceFlow, dirtyRoads);
         }
         return dirtyRoads;
     }
@@ -323,17 +332,14 @@ public class FlowableUtils {
      * @param hasSequenceFlow 已经经过的连线的 ID，用于判断线路是否重复
      * @param targets         判断脏路线节点是否存在子流程上，只要存在一个，说明脏路线只到子流程为止
      * @param inChildProcess  是否存在子流程上，true 是，false 否
-     * @return
      */
     public static Boolean dirtyTargetInChildProcess(FlowElement source, Set<String> hasSequenceFlow, List<String> targets, Boolean inChildProcess) {
-        hasSequenceFlow = hasSequenceFlow == null ? new HashSet<>() : hasSequenceFlow;
-        inChildProcess = inChildProcess == null ? false : inChildProcess;
+        hasSequenceFlow = defaultIfNull(hasSequenceFlow, Sets.newHashSet());
+        inChildProcess = defaultIfNull(inChildProcess, false);
 
         // 根据类型，获取出口连线
-        List<SequenceFlow> sequenceFlows = getElementOutgoingFlows(source);
-
-        if (sequenceFlows != null && !inChildProcess) {
-            // 循环找到目标元素
+        List<SequenceFlow> sequenceFlows = getOutgoingFlows(source);
+        if (!inChildProcess) {
             for (SequenceFlow sequenceFlow : sequenceFlows) {
                 // 如果发现连线重复，说明循环了，跳过这个循环
                 if (hasSequenceFlow.contains(sequenceFlow.getId())) {
@@ -364,45 +370,41 @@ public class FlowableUtils {
      * @param source          起始节点
      * @param isSequential    是否串行
      * @param hasSequenceFlow 已经经过的连线的 ID，用于判断线路是否重复
-     * @param targetKsy       目标节点
-     * @return
+     * @param targetKey       目标节点
      */
-    public static Boolean iteratorCheckSequentialReferTarget(FlowElement source, String targetKsy, Set<String> hasSequenceFlow, Boolean isSequential) {
-        isSequential = isSequential == null ? true : isSequential;
-        hasSequenceFlow = hasSequenceFlow == null ? new HashSet<>() : hasSequenceFlow;
+    public static Boolean iteratorCheckSequentialReferTarget(FlowElement source, String targetKey, Set<String> hasSequenceFlow, Boolean isSequential) {
+        isSequential = defaultIfNull(isSequential, true);
+        hasSequenceFlow = defaultIfNull(hasSequenceFlow, Sets.newHashSet());
 
         // 如果该节点为开始节点，且存在上级子节点，则顺着上级子节点继续迭代
         if (source instanceof StartEvent && source.getSubProcess() != null) {
-            isSequential = iteratorCheckSequentialReferTarget(source.getSubProcess(), targetKsy, hasSequenceFlow, isSequential);
+            isSequential = iteratorCheckSequentialReferTarget(source.getSubProcess(), targetKey, hasSequenceFlow, isSequential);
         }
 
         // 根据类型，获取入口连线
-        List<SequenceFlow> sequenceFlows = getElementIncomingFlows(source);
-
-        if (sequenceFlows != null) {
-            // 循环找到目标元素
-            for (SequenceFlow sequenceFlow : sequenceFlows) {
-                // 如果发现连线重复，说明循环了，跳过这个循环
-                if (hasSequenceFlow.contains(sequenceFlow.getId())) {
-                    continue;
-                }
-                // 添加已经走过的连线
-                hasSequenceFlow.add(sequenceFlow.getId());
-                // 如果目标节点已被判断为并行，后面都不需要执行，直接返回
-                if (isSequential == false) {
-                    break;
-                }
-                // 这条线路存在目标节点，这条线路完成，进入下个线路
-                if (targetKsy.equals(sequenceFlow.getSourceFlowElement().getId())) {
-                    continue;
-                }
-                if (sequenceFlow.getSourceFlowElement() instanceof StartEvent) {
-                    isSequential = false;
-                    break;
-                }
-                // 否则就继续迭代
-                isSequential = iteratorCheckSequentialReferTarget(sequenceFlow.getSourceFlowElement(), targetKsy, hasSequenceFlow, isSequential);
+        List<SequenceFlow> sequenceFlows = getIncomingFlows(source);
+        for (SequenceFlow sequenceFlow : sequenceFlows) {
+            // 如果发现连线重复，说明循环了，跳过这个循环
+            if (hasSequenceFlow.contains(sequenceFlow.getId())) {
+                continue;
             }
+            // 添加已经走过的连线
+            hasSequenceFlow.add(sequenceFlow.getId());
+            // 如果目标节点已被判断为并行，后面都不需要执行，直接返回
+            if (!isSequential) {
+                break;
+            }
+            // 这条线路存在目标节点，这条线路完成，进入下个线路
+            FlowElement sourceFlowElement = sequenceFlow.getSourceFlowElement();
+            if (targetKey.equals(sourceFlowElement.getId())) {
+                continue;
+            }
+            if (sourceFlowElement instanceof StartEvent) {
+                isSequential = false;
+                break;
+            }
+            // 否则就继续迭代
+            isSequential = iteratorCheckSequentialReferTarget(sourceFlowElement, targetKey, hasSequenceFlow, isSequential);
         }
         return isSequential;
     }
@@ -417,9 +419,9 @@ public class FlowableUtils {
      * @return
      */
     public static List<List<UserTask>> findRoad(FlowElement source, List<UserTask> passRoads, Set<String> hasSequenceFlow, List<List<UserTask>> roads) {
-        passRoads = passRoads == null ? new ArrayList<>() : passRoads;
-        roads = roads == null ? new ArrayList<>() : roads;
-        hasSequenceFlow = hasSequenceFlow == null ? new HashSet<>() : hasSequenceFlow;
+        passRoads = defaultIfNull(passRoads, Lists.newArrayList());
+        roads = defaultIfNull(roads, Lists.newArrayList());
+        hasSequenceFlow = defaultIfNull(hasSequenceFlow, Sets.newHashSet());
 
         // 如果该节点为开始节点，且存在上级子节点，则顺着上级子节点继续迭代
         if (source instanceof StartEvent && source.getSubProcess() != null) {
@@ -427,26 +429,25 @@ public class FlowableUtils {
         }
 
         // 根据类型，获取入口连线
-        List<SequenceFlow> sequenceFlows = getElementIncomingFlows(source);
-
-        if (sequenceFlows != null && sequenceFlows.size() != 0) {
-            for (SequenceFlow sequenceFlow : sequenceFlows) {
-                // 如果发现连线重复，说明循环了，跳过这个循环
-                if (hasSequenceFlow.contains(sequenceFlow.getId())) {
-                    continue;
-                }
-                // 添加已经走过的连线
-                hasSequenceFlow.add(sequenceFlow.getId());
-                // 添加经过路线
-                if (sequenceFlow.getSourceFlowElement() instanceof UserTask) {
-                    passRoads.add((UserTask) sequenceFlow.getSourceFlowElement());
-                }
-                // 继续迭代
-                roads = findRoad(sequenceFlow.getSourceFlowElement(), passRoads, hasSequenceFlow, roads);
-            }
-        } else {
+        List<SequenceFlow> sequenceFlows = getIncomingFlows(source);
+        if (sequenceFlows.isEmpty()) {
             // 添加路线
             roads.add(passRoads);
+            return roads;
+        }
+        for (SequenceFlow sequenceFlow : sequenceFlows) {
+            // 如果发现连线重复，说明循环了，跳过这个循环
+            if (hasSequenceFlow.contains(sequenceFlow.getId())) {
+                continue;
+            }
+            // 添加已经走过的连线
+            hasSequenceFlow.add(sequenceFlow.getId());
+            // 添加经过路线
+            if (sequenceFlow.getSourceFlowElement() instanceof UserTask) {
+                passRoads.add((UserTask) sequenceFlow.getSourceFlowElement());
+            }
+            // 继续迭代
+            roads = findRoad(sequenceFlow.getSourceFlowElement(), passRoads, hasSequenceFlow, roads);
         }
         return roads;
     }
@@ -456,31 +457,33 @@ public class FlowableUtils {
      *
      * @param allElements              全部节点信息
      * @param historicTaskInstanceList 历史任务实例信息，数据采用开始时间升序
-     * @return
      */
-    public static List<String> historicTaskInstanceClean(Collection<FlowElement> allElements, List<HistoricTaskInstance> historicTaskInstanceList) {
+    public static List<String> historicTaskInstanceClean(Collection<FlowElement> allElements,
+                                                         List<HistoricTaskInstance> historicTaskInstanceList
+    ) {
         // 会签节点收集
-        List<String> multiTask = new ArrayList<>();
-        allElements.forEach(flowElement -> {
-            if (flowElement instanceof UserTask) {
+        List<String> multiTask = allElements.stream()
+            .filter(fe -> fe instanceof UserTask)
+            .map(fe -> (UserTask) fe)
+            .filter(fe -> {
                 // 如果该节点的行为为会签行为，说明该节点为会签节点
-                if (((UserTask) flowElement).getBehavior() instanceof ParallelMultiInstanceBehavior || ((UserTask) flowElement).getBehavior() instanceof SequentialMultiInstanceBehavior) {
-                    multiTask.add(flowElement.getId());
-                }
-            }
-        });
-        // 循环放入栈，栈 LIFO：后进先出
+                Object behavior = fe.getBehavior();
+                return behavior instanceof ParallelMultiInstanceBehavior || behavior instanceof SequentialMultiInstanceBehavior;
+            })
+            .map(UserTask::getId)
+            .collect(Collectors.toList());
+
         Stack<HistoricTaskInstance> stack = new Stack<>();
-        historicTaskInstanceList.forEach(item -> stack.push(item));
+        stack.addAll(historicTaskInstanceList);
         // 清洗后的历史任务实例
-        List<String> lastHistoricTaskInstanceList = new ArrayList<>();
+        List<String> lastHistoricTaskInstanceList = Lists.newArrayList();
         // 网关存在可能只走了部分分支情况，且还存在跳转废弃数据以及其他分支数据的干扰，因此需要对历史节点数据进行清洗
         // 临时用户任务 key
         StringBuilder userTaskKey = null;
         // 临时被删掉的任务 key，存在并行情况
-        List<String> deleteKeyList = new ArrayList<>();
+        List<String> deleteKeyList = Lists.newArrayList();
         // 临时脏数据线路
-        List<Set<String>> dirtyDataLineList = new ArrayList<>();
+        List<Set<String>> dirtyDataLineList = Lists.newArrayList();
         // 由某个点跳到会签点,此时出现多个会签实例对应 1 个跳转情况，需要把这些连续脏数据都找到
         // 会签特殊处理下标
         int multiIndex = -1;
@@ -502,11 +505,11 @@ public class FlowableUtils {
             if (stack.peek().getDeleteReason() != null && !stack.peek().getDeleteReason().equals("MI_END")) {
                 // 可以理解为脏线路起点
                 String dirtyPoint = "";
-                if (stack.peek().getDeleteReason().indexOf("Change activity to ") >= 0) {
+                if (stack.peek().getDeleteReason().contains("Change activity to ")) {
                     dirtyPoint = stack.peek().getDeleteReason().replace("Change activity to ", "");
                 }
                 // 会签回退删除原因有点不同
-                if (stack.peek().getDeleteReason().indexOf("Change parent activity to ") >= 0) {
+                if (stack.peek().getDeleteReason().contains("Change parent activity to ")) {
                     dirtyPoint = stack.peek().getDeleteReason().replace("Change parent activity to ", "");
                 }
                 FlowElement dirtyTask = null;
@@ -551,7 +554,7 @@ public class FlowableUtils {
             for (int i = 0; i < deleteKeyList.size(); i++) {
                 // 如果发现脏数据属于会签，记录下下标与对应 Key，以备后续比对，会签脏数据范畴开始
                 if (multiKey == null && multiTask.contains(stack.peek().getTaskDefinitionKey())
-                        && deleteKeyList.get(i).contains(stack.peek().getTaskDefinitionKey())) {
+                    && deleteKeyList.get(i).contains(stack.peek().getTaskDefinitionKey())) {
                     multiIndex = i;
                     multiKey = new StringBuilder(stack.peek().getTaskDefinitionKey());
                 }
