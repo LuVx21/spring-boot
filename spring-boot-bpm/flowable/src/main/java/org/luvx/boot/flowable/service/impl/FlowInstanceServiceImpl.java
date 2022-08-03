@@ -153,14 +153,14 @@ public class FlowInstanceServiceImpl extends BaseFlowService implements FlowInst
             // identityService.setAuthenticatedUserId(sysUser.getUserId().toString());
             ProcessInstance processInstance = runtimeService.startProcessInstanceById(def.getId(), variables);
             // 给第一步申请人节点设置任务执行人和意见 todo:第一个节点不设置为申请人节点有点问题？
-            Task task = taskService.createTaskQuery()
-                    .processInstanceId(processInstance.getProcessInstanceId())
-                    .singleResult();
-            if (Objects.nonNull(task)) {
-                // taskService.addComment(task.getId(), processInstance.getProcessInstanceId(), FlowComment.NORMAL.getType(), sysUser.getNickName() + "发起流程申请");
-                // taskService.setAssignee(task.getId(), sysUser.getUserId().toString());
-                taskService.complete(task.getId(), variables);
-            }
+            // Task task = taskService.createTaskQuery()
+            //         .processInstanceId(processInstance.getProcessInstanceId())
+            //         .singleResult();
+            // if (Objects.nonNull(task)) {
+            //     // taskService.addComment(task.getId(), processInstance.getProcessInstanceId(), FlowComment.NORMAL.getType(), sysUser.getNickName() + "发起流程申请");
+            //     // taskService.setAssignee(task.getId(), sysUser.getUserId().toString());
+            //     taskService.complete(task.getId(), variables);
+            // }
             return Map.of(
                     "msg", "提交成功",
                     "流程Id", "Expense",

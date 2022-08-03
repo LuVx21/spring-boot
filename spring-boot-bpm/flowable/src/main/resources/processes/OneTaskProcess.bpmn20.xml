@@ -23,7 +23,7 @@
             </extensionElements>
         </userTask>
         <sequenceFlow id="flow_3" sourceRef="userTask_2" targetRef="userTask_3"/>
-        <userTask id="userTask_3" name="任务2" flowable:assignee="wangwu">
+        <userTask id="userTask_3" name="任务3" flowable:assignee="wangwu">
             <extensionElements>
                 <flowable:taskListener event="create" class="org.luvx.boot.flowable.listener.MyTaskListener"/>
             </extensionElements>
