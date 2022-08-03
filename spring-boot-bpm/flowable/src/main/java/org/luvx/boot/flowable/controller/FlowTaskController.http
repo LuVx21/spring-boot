@@ -33,8 +33,20 @@ Content-Type: application/json;charset=UTF-8
     "taskId": "xxx",
     "values": {
         "outcome": "驳回"
-    }
+    },
+    "comment": "驳回意见-haha"
 }
 
-###
+### return
 
+POST http://localhost:8080/flowable/task/return
+Content-Type: application/json;charset=UTF-8
+
+{
+    "taskId": "xxx",
+    "targetKey": "task1",
+    "values": {
+        "outcome": "驳回"
+    },
+    "comment": "驳回意见-hehe"
+}
