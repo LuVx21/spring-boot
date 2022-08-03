@@ -9,27 +9,27 @@
         <extensionElements>
             <flowable:eventListener class="org.luvx.boot.flowable.listener.MyEventListener"/>
         </extensionElements>
-        <startEvent id="theStart"/>
-        <sequenceFlow id="flow1" sourceRef="theStart" targetRef="task1"/>
-        <userTask id="task1" name="mytask1" flowable:assignee="zhangsan">
+        <startEvent id="start_1"/>
+        <sequenceFlow id="flow_1" sourceRef="start_1" targetRef="userTask_1"/>
+        <userTask id="userTask_1" name="任务1" flowable:assignee="zhangsan">
             <extensionElements>
                 <flowable:taskListener event="create" class="org.luvx.boot.flowable.listener.MyTaskListener"/>
             </extensionElements>
         </userTask>
-        <sequenceFlow id="flow2" sourceRef="task1" targetRef="task2"/>
-        <userTask id="task2" name="mytask2" flowable:assignee="lisi">
+        <sequenceFlow id="flow_2" sourceRef="userTask_1" targetRef="userTask_2"/>
+        <userTask id="userTask_2" name="任务2" flowable:assignee="lisi">
             <extensionElements>
                 <flowable:taskListener event="create" class="org.luvx.boot.flowable.listener.MyTaskListener"/>
             </extensionElements>
         </userTask>
-        <sequenceFlow id="flow3" sourceRef="task2" targetRef="task3"/>
-        <userTask id="task3" name="mytask3" flowable:assignee="wangwu">
+        <sequenceFlow id="flow_3" sourceRef="userTask_2" targetRef="userTask_3"/>
+        <userTask id="userTask_3" name="任务2" flowable:assignee="wangwu">
             <extensionElements>
                 <flowable:taskListener event="create" class="org.luvx.boot.flowable.listener.MyTaskListener"/>
             </extensionElements>
         </userTask>
-        <sequenceFlow id="flow4" sourceRef="task3" targetRef="theEnd"/>
-        <endEvent id="theEnd"/>
+        <sequenceFlow id="flow_4" sourceRef="userTask_3" targetRef="end_1"/>
+        <endEvent id="end_1"/>
     </process>
 
 </definitions>
