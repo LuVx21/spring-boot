@@ -7,6 +7,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 
@@ -21,15 +22,9 @@ import lombok.ToString;
 @Setter
 @ToString
 public class ValidationVo {
-    public interface AddGroup {
-    }
-
-    public interface UpdateGroup {
-    }
-
     private Integer        id;
-    @Length(min = 4, max = 8, message = "用户名长度要求在{min}-{max}之间")
     @NotNull(message = "用户名不可为空", groups = {AddGroup.class})
+    @Length(min = 4, max = 8, message = "用户名长度要求在{min}-{max}之间")
     private String         username;
     @Email(message = "邮箱格式错误", groups = {AddGroup.class, UpdateGroup.class})
     private String         email;
@@ -41,7 +36,8 @@ public class ValidationVo {
     @Range(min = 0, max = 1, message = "性别选择错误")
     private Integer        sex;
     @Valid
-    @NotNull(message = "voList不可为空")
+    // @NotNull(message = "voList不可为空")
+    @NotEmpty(message = "voList必须有元素")
     private List<ObjectVO> voList;
 
     @Getter
@@ -52,5 +48,11 @@ public class ValidationVo {
         @Min(1)
         @Max(value = 5, message = "vip等级最多为5")
         private Integer vipLevel;
+    }
+
+    public interface AddGroup {
+    }
+
+    public interface UpdateGroup {
     }
 }

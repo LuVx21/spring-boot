@@ -13,35 +13,19 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.vavr.Tuple;
 import io.vavr.Tuple2;
 
 @RestController
 public class ValidationController {
-    /**
-     * <pre>
-     *     {
-     *         "username": "jacklinjacklin",
-     *         "email": "793066408@qq.com",
-     *         "birthday": "2019-04-14T09:05:39.604Z",
-     *         "age": 22,
-     *         "sex": 0,
-     *         "voList": [
-     *             {
-     *                 "id": 10,
-     *                 "vipLevel": 6
-     *             }
-     *         ]
-     *     }
-     * </pre>
-     */
     @PostMapping("save")
     public List<Tuple2> save(@Valid @RequestBody @NotNull ValidationVo demo, BindingResult result) {
         if (result.hasErrors()) {
             return result.getAllErrors().stream()
-                    .map(e -> new Tuple2("校验失败", e.getDefaultMessage()))
+                    .map(e -> Tuple.of("校验失败", e.getDefaultMessage()))
                     .collect(Collectors.toList());
         }
-        return List.of(new Tuple2("校验成功", ""));
+        return List.of(Tuple.of("校验成功", ""));
     }
 
     @PostMapping("update")
@@ -49,9 +33,9 @@ public class ValidationController {
             BindingResult result) {
         if (result.hasErrors()) {
             return result.getAllErrors().stream()
-                    .map(e -> new Tuple2("校验失败", e.getDefaultMessage()))
+                    .map(e -> Tuple.of("校验失败", e.getDefaultMessage()))
                     .collect(Collectors.toList());
         }
-        return List.of(new Tuple2("校验成功", ""));
+        return List.of(Tuple.of("校验成功", ""));
     }
 }
