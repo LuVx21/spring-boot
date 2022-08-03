@@ -10,5 +10,7 @@ public class MyTaskListener implements TaskListener {
     @Override
     public void notify(DelegateTask delegateTask) {
         log.info("MyTaskListener====》notify:{}", delegateTask);
+        // delegateTask.addCandidateUser("renxie");
+        // delegateTask.setAssignee("renxie-1");
     }
 }

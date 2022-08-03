@@ -5,9 +5,9 @@
         targetNamespace="Examples">
 
     <process id="oneTaskProcess" name="串行任务流程">
-        <documentation>串行任务流程</documentation>
+        <documentation>串行任务流程说明</documentation>
         <extensionElements>
-            <flowable:eventListener class="org.luvx.boot.flowable.listener.MyEventListener"/>
+            <flowable:eventListener events="TASK_CREATED,TASK_ASSIGNED,TASK_COMPLETED,PROCESS_STARTED" class="org.luvx.boot.flowable.listener.MyEventListener"/>
         </extensionElements>
         <startEvent id="start_1"/>
         <sequenceFlow id="flow_1" sourceRef="start_1" targetRef="userTask_1"/>

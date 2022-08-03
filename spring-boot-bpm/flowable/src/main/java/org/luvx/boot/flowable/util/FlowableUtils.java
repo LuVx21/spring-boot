@@ -492,39 +492,42 @@ public class FlowableUtils {
         // 会签特殊处理操作标识
         boolean multiOpera = false;
         while (!stack.empty()) {
+            HistoricTaskInstance top = stack.peek();
+            String taskDefinitionKey = top.getTaskDefinitionKey();
             // 从这里开始 userTaskKey 都还是上个栈的 key
             // 是否是脏数据线路上的点
             final boolean[] isDirtyData = {false};
             for (Set<String> oldDirtyDataLine : dirtyDataLineList) {
-                if (oldDirtyDataLine.contains(stack.peek().getTaskDefinitionKey())) {
+                if (oldDirtyDataLine.contains(taskDefinitionKey)) {
                     isDirtyData[0] = true;
+                    break;
                 }
             }
             // 删除原因不为空，说明从这条数据开始回跳或者回退的
             // MI_END：会签完成后，其他未签到节点的删除原因，不在处理范围内
-            if (stack.peek().getDeleteReason() != null && !stack.peek().getDeleteReason().equals("MI_END")) {
+            if (top.getDeleteReason() != null && !top.getDeleteReason().equals("MI_END")) {
                 // 可以理解为脏线路起点
                 String dirtyPoint = "";
-                if (stack.peek().getDeleteReason().contains("Change activity to ")) {
-                    dirtyPoint = stack.peek().getDeleteReason().replace("Change activity to ", "");
+                if (top.getDeleteReason().contains("Change activity to ")) {
+                    dirtyPoint = top.getDeleteReason().replace("Change activity to ", "");
                 }
                 // 会签回退删除原因有点不同
-                if (stack.peek().getDeleteReason().contains("Change parent activity to ")) {
-                    dirtyPoint = stack.peek().getDeleteReason().replace("Change parent activity to ", "");
+                if (top.getDeleteReason().contains("Change parent activity to ")) {
+                    dirtyPoint = top.getDeleteReason().replace("Change parent activity to ", "");
                 }
                 FlowElement dirtyTask = null;
                 // 获取变更节点的对应的入口处连线
                 // 如果是网关并行回退情况，会变成两条脏数据路线，效果一样
                 for (FlowElement flowElement : allElements) {
-                    if (flowElement.getId().equals(stack.peek().getTaskDefinitionKey())) {
+                    if (flowElement.getId().equals(taskDefinitionKey)) {
                         dirtyTask = flowElement;
                     }
                 }
                 // 获取脏数据线路
                 Set<String> dirtyDataLine = FlowableUtils.iteratorFindDirtyRoads(dirtyTask, null, null, Arrays.asList(dirtyPoint.split(",")), null);
                 // 自己本身也是脏线路上的点，加进去
-                dirtyDataLine.add(stack.peek().getTaskDefinitionKey());
-                log.info(stack.peek().getTaskDefinitionKey() + "点脏路线集合：" + dirtyDataLine);
+                dirtyDataLine.add(taskDefinitionKey);
+                log.info(taskDefinitionKey + "点脏路线集合：" + dirtyDataLine);
                 // 是全新的需要添加的脏线路
                 boolean isNewDirtyData = true;
                 for (int i = 0; i < dirtyDataLineList.size(); i++) {
@@ -548,20 +551,20 @@ public class FlowableUtils {
             }
             // 如果不是脏线路上的点，说明是有效数据，添加历史实例 Key
             if (!isDirtyData[0]) {
-                lastHistoricTaskInstanceList.add(stack.peek().getTaskDefinitionKey());
+                lastHistoricTaskInstanceList.add(taskDefinitionKey);
             }
             // 校验脏线路是否结束
             for (int i = 0; i < deleteKeyList.size(); i++) {
                 // 如果发现脏数据属于会签，记录下下标与对应 Key，以备后续比对，会签脏数据范畴开始
-                if (multiKey == null && multiTask.contains(stack.peek().getTaskDefinitionKey())
-                    && deleteKeyList.get(i).contains(stack.peek().getTaskDefinitionKey())) {
+                if (multiKey == null && multiTask.contains(taskDefinitionKey)
+                    && deleteKeyList.get(i).contains(taskDefinitionKey)) {
                     multiIndex = i;
-                    multiKey = new StringBuilder(stack.peek().getTaskDefinitionKey());
+                    multiKey = new StringBuilder(taskDefinitionKey);
                 }
                 // 会签脏数据处理，节点退回会签清空
                 // 如果在会签脏数据范畴中发现 Key改变，说明会签脏数据在上个节点就结束了，可以把会签脏数据删掉
-                if (multiKey != null && !multiKey.toString().equals(stack.peek().getTaskDefinitionKey())) {
-                    deleteKeyList.set(multiIndex, deleteKeyList.get(multiIndex).replace(stack.peek().getTaskDefinitionKey() + ",", ""));
+                if (multiKey != null && !multiKey.toString().equals(taskDefinitionKey)) {
+                    deleteKeyList.set(multiIndex, deleteKeyList.get(multiIndex).replace(taskDefinitionKey + ",", ""));
                     multiKey = null;
                     // 结束进行下校验删除
                     multiOpera = true;
@@ -569,9 +572,9 @@ public class FlowableUtils {
                 // 其他脏数据处理
                 // 发现该路线最后一条脏数据，说明这条脏数据线路处理完了，删除脏数据信息
                 // 脏数据产生的新实例中是否包含这条数据
-                if (multiKey == null && deleteKeyList.get(i).contains(stack.peek().getTaskDefinitionKey())) {
+                if (multiKey == null && deleteKeyList.get(i).contains(taskDefinitionKey)) {
                     // 删除匹配到的部分
-                    deleteKeyList.set(i, deleteKeyList.get(i).replace(stack.peek().getTaskDefinitionKey() + ",", ""));
+                    deleteKeyList.set(i, deleteKeyList.get(i).replace(taskDefinitionKey + ",", ""));
                 }
                 // 如果每组中的元素都以匹配过，说明脏数据结束
                 if ("".equals(deleteKeyList.get(i))) {
