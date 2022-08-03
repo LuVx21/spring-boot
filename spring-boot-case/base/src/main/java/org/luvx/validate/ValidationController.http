@@ -5,6 +5,7 @@ Content-Type: application/json;charset=UTF-8
 
 {
   "username": "abcdefghi",
+  "password": "1234",
   "email": "123456@qq.com",
   "birthday": "2019-04-14T09:05:39.604Z",
   "age": 20,
@@ -23,6 +24,7 @@ POST http://localhost:8080/update
 Content-Type: application/json;charset=UTF-8
 
 {
+  "id": 100,
   "username": "abcdefghi",
   "email": "123456@qq.com",
   "birthday": "2019-04-14T09:05:39.604Z",
