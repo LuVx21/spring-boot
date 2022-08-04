@@ -14,17 +14,19 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
-public class ApplicationTest {
+public class TomeAppTest {
     @Autowired
     WeatherNotifyScheduler scheduler;
+    @Autowired
+    WeChatService          weChatService;
 
     @Test
     void m1() throws IOException, InterruptedException {
         TextType textType = new TextType(new Content("你的快递已到，请携带工卡前往邮件中心领取"));
-        scheduler.send(textType);
+        weChatService.send(textType);
 
         MarkdownType markdownType = new MarkdownType(new Content("你的**快递**已到，请携带工卡前往`邮件`中心领取"));
-        scheduler.send(markdownType);
+        weChatService.send(markdownType);
         // String token = scheduler.getToken();
         // API.println(token);
     }
