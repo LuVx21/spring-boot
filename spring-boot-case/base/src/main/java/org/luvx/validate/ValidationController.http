@@ -10,6 +10,7 @@ Content-Type: application/json;charset=UTF-8
   "birthday": "2019-04-14T09:05:39.604Z",
   "age": 20,
   "sex": 0,
+  "sexName": "男",
   "voList": [
     {
       "id": 10,
@@ -30,6 +31,7 @@ Content-Type: application/json;charset=UTF-8
   "birthday": "2019-04-14T09:05:39.604Z",
   "age": 20,
   "sex": 0,
+  "sexName": "男",
   "voList": [
     {
       "id": 10,
