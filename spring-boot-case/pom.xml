@@ -16,12 +16,45 @@
     </properties>
 
     <modules>
-        <module>base</module>
-        <module>tome</module>
+        <module>common</module>
+        <module>dao</module>
+        <module>service</module>
+        <module>schedule</module>
+        <module>web</module>
     </modules>
 
     <dependencies>
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+            <version>5.8.5</version>
+        </dependency>
     </dependencies>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.luvx</groupId>
+                <artifactId>common</artifactId>
+                <version>${parent.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.luvx</groupId>
+                <artifactId>dao</artifactId>
+                <version>${parent.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.luvx</groupId>
+                <artifactId>service</artifactId>
+                <version>${parent.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.luvx</groupId>
+                <artifactId>schedule</artifactId>
+                <version>${parent.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <build>
     </build>

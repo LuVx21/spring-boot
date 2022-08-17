@@ -1,0 +1,13 @@
+server:
+  port: 8080
+
+spring:
+  profiles:
+    include: base,tome
+
+swagger:
+  enable: true
+
+logging:
+  level:
+    root: info
