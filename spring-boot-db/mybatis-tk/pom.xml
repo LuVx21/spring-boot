@@ -9,7 +9,7 @@
         <version>0.1</version>
     </parent>
 
-    <artifactId>spring-boot-mybatis-tk</artifactId>
+    <artifactId>mybatis-tk</artifactId>
     <packaging>jar</packaging>
 
     <properties>

@@ -9,7 +9,7 @@
         <version>0.1</version>
     </parent>
 
-    <artifactId>spring-boot-jdbc</artifactId>
+    <artifactId>jdbc</artifactId>
     <packaging>jar</packaging>
 
     <properties>

@@ -15,12 +15,12 @@
     <modules>
         <module>mul-datasource</module>
         <module>mul-datasource-mybatis</module>
-        <module>spring-boot-jdbc</module>
-        <module>spring-boot-jpa</module>
-        <module>spring-boot-mybatis</module>
-        <module>spring-boot-mybatis-tk</module>
-        <module>spring-boot-mybatis-page</module>
-        <module>spring-boot-mybatis-plus</module>
+        <module>jdbc</module>
+        <module>jpa</module>
+        <module>mybatis</module>
+        <module>mybatis-tk</module>
+        <module>mybatis-page</module>
+        <module>mybatis-plus</module>
     </modules>
 
     <name>spring-boot-db</name>

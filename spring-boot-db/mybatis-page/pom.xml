@@ -10,7 +10,7 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>spring-boot-mybatis-page</artifactId>
+    <artifactId>mybatis-page</artifactId>
     <packaging>jar</packaging>
 
     <properties>
