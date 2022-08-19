@@ -10,8 +10,16 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>mul-datasource-mybatis</artifactId>
-    <packaging>jar</packaging>
+    <artifactId>mybatis-parent</artifactId>
+    <packaging>pom</packaging>
+
+  <modules>
+        <module>mul-datasource-mybatis</module>
+        <module>mybatis</module>
+        <module>mybatis-page</module>
+        <module>mybatis-plus</module>
+        <module>mybatis-tk</module>
+    </modules>
 
     <properties>
     </properties>
@@ -22,26 +30,9 @@
             <artifactId>mybatis-spring-boot-starter</artifactId>
             <version>2.2.2</version>
         </dependency>
-        <dependency>
-            <groupId>org.luvx</groupId>
-            <artifactId>boot-common</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.luvx</groupId>
-            <artifactId>boot-aop</artifactId>
-        </dependency>
     </dependencies>
 
     <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <configuration>
-                    <fork>true</fork>
-                </configuration>
-            </plugin>
-        </plugins>
     </build>
 
 </project>
