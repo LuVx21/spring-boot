@@ -5,7 +5,14 @@ spring:
     username: root
     password: 1121
 
-# 打印sql
 logging:
   level:
-    org.springframework.jdbc.core.JdbcTemplate: debug
+    org:
+      luvx:
+        db:
+          tk:
+            mapper: debug
+
+mybatis:
+  mapper-locations: classpath:org/luvx/tools/dao/*/*.xml
+  type-aliases-package: org.luvx.tools.dao
