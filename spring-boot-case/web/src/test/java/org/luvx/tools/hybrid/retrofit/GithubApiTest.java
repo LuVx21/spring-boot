@@ -18,7 +18,7 @@ class GithubApiTest extends BaseAppTests {
         CompletableFuture<Map<String, Object>> users = githubApi.users("LuVx");
         // System.out.println(users.get());
 
-        CompletableFuture<List<Object>> repos = githubApi.repos("LuVx");
+        // CompletableFuture<List<Object>> repos = githubApi.repos("LuVx");
         // System.out.println(repos.get());
     }
 }

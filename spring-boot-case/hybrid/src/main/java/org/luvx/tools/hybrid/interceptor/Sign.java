@@ -1,4 +1,4 @@
-package org.luvx.tools.hybrid;
+package org.luvx.tools.hybrid.interceptor;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
