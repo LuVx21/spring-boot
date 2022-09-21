@@ -1,14 +1,11 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://luvx:53306/test?useUnicode=true&characterEncoding=UTF-8
+    url: jdbc:mysql://luvx:53306/boot?useUnicode=true&characterEncoding=utf-8&serverTimezone=UTC&useSSL=true&allowMultiQueries=true
     username: root
     password: 1121
 
 # 打印sql
 logging:
   level:
-    com.example.tk.mapper: debug
-
-mapper-locations: classpath:mappers/*.xml
-type-aliases-package: org.luvx.tools.dao.mapper
+    org.springframework.jdbc.core.JdbcTemplate: debug

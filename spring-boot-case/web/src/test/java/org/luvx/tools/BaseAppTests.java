@@ -8,6 +8,6 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @ExtendWith(SpringExtension.class)
-@SpringBootTest
+@SpringBootTest(classes = {TestConfiguration.class})
 public class BaseAppTests {
 }

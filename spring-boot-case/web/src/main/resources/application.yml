@@ -3,7 +3,7 @@ server:
 
 spring:
   profiles:
-    include: base,tome
+    include: base,tome,db
 
 swagger:
   enable: true
