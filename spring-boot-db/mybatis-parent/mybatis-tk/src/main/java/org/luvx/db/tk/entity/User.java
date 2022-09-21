@@ -1,13 +1,13 @@
 package org.luvx.db.tk.entity;
 
+import java.time.LocalDateTime;
+
 import io.mybatis.provider.Entity.Column;
 import io.mybatis.provider.Entity.Table;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Tolerate;
-
-import java.time.LocalDateTime;
 
 @Table("user")
 @Data

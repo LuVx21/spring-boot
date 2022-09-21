@@ -2,6 +2,7 @@ package org.luvx.mapper;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
@@ -15,7 +16,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.luvx.entity.User.*;
+import static org.luvx.entity.User.COL_AGE;
+import static org.luvx.entity.User.COL_ID;
+import static org.luvx.entity.User.COL_PWD;
+import static org.luvx.entity.User.COL_UNAME;
 
 @Slf4j
 class SelectTest extends ApplicationTests {
@@ -55,20 +59,27 @@ class SelectTest extends ApplicationTests {
      */
     @Test
     void selectOneTest() {
-        QueryWrapper<User> query = new QueryWrapper<User>()
-                .in(COL_ID, List.of(10000L, 10001L))
-                // .eq(COL_ID, 0L)
+        QueryWrapper<User> query = Wrappers.<User>query()
+                .select(COL_ID, COL_AGE)
+                .gt(COL_ID, 10000L)
+                .orderByAsc(COL_ID)
+                .last("limit 1")
+                // .in(COL_ID, List.of(10000L, 10001L))
+                // .eq(COL_ID, 10000L)
                 // .and(w -> w.eq(COL_ID, 1L).ne(COL_ID, 2L))
                 // .eq(COL_ID, 3L)
                 ;
-        User user = userService.getOne(query);
-        // User user = userMapper.selectOne(query);
+        // LambdaQueryWrapper<User> query = Wrappers.<User>lambdaQuery()
+        //         .eq(User::getUserId, 10000L);
+
+        // User user = userService.getOne(query);
+        User user = userMapper.selectOne(query);
         System.out.println(user);
     }
 
     @Test
     void selectCountTest() {
-        long count = userMapper.selectCount(new QueryWrapper<User>().eq("age", "3"));
+        long count = userMapper.selectCount(new QueryWrapper<User>().eq(COL_AGE, "3"));
         System.out.println(count);
     }
 

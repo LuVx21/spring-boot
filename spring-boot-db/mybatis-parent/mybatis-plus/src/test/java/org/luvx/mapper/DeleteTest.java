@@ -21,7 +21,7 @@ class DeleteTest extends ApplicationTests {
     void deleteByIdTest() {
         userMapper.deleteById(10015L);
 
-        User u = User.builder().userId(10015L).userName("foo1").build();
+        User u = User.builder().id(10015L).userName("foo1").build();
         userMapper.deleteById(u);
     }
 
