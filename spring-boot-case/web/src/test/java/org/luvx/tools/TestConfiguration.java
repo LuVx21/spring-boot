@@ -6,6 +6,6 @@ import org.springframework.context.annotation.Configuration;
 
 @Slf4j
 @Configuration
-@ComponentScan(basePackages = {"org.luvx.boot", "org.luvx.tools"})
+@ComponentScan(basePackages = {"org.luvx.boot", "org.luvx.tools.*"})
 public class TestConfiguration {
 }

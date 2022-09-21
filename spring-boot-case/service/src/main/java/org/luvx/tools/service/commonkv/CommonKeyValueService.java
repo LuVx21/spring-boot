@@ -1,8 +1,7 @@
 package org.luvx.tools.service.commonkv;
 
-import com.google.common.collect.Maps;
 import org.luvx.common.util.JsonUtils;
-import org.luvx.tools.dao.commonkv.CommonKeyValue;
+import org.luvx.tools.dao.entity.CommonKeyValue;
 import org.luvx.tools.service.commonkv.constant.KVBizType;
 
 import javax.annotation.Nullable;
@@ -28,7 +27,7 @@ public interface CommonKeyValueService {
     default <T> Map<String, T> getData(KVBizType bizType, Collection<String> keys) {
         return get(bizType, keys).entrySet().stream()
                 .collect(Collectors.toMap(Entry::getKey,
-                        e -> (T) JsonUtils.fromJson(e.getValue().getValue(), bizType.valueClass())
+                        e -> (T) JsonUtils.fromJson(e.getValue().getCommonValue(), bizType.valueClass())
                 ));
     }
 
@@ -38,6 +37,6 @@ public interface CommonKeyValueService {
         if (kv == null) {
             return null;
         }
-        return (T) JsonUtils.fromJson(kv.getValue(), bizType.valueClass());
+        return (T) JsonUtils.fromJson(kv.getCommonValue(), bizType.valueClass());
     }
 }

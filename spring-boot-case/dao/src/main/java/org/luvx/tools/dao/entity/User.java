@@ -1,4 +1,4 @@
-package org.luvx.tools.dao.user.entity;
+package org.luvx.tools.dao.entity;
 
 import io.mybatis.provider.Entity.Column;
 import io.mybatis.provider.Entity.Table;

@@ -1,4 +1,4 @@
-package org.luvx.tools.dao.commonkv;
+package org.luvx.tools.dao.entity;
 
 import io.mybatis.provider.Entity.Column;
 import io.mybatis.provider.Entity.Table;
@@ -14,8 +14,8 @@ public class CommonKeyValue {
     @Column(id = true)
     private Long   id;
     private int    bizType;
-    private String key;
-    private String value;
+    private String commonKey;
+    private String commonValue;
     private long   createTime;
     private long   updateTime;
 }

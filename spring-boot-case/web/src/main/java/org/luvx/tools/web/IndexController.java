@@ -1,9 +1,10 @@
 package org.luvx.tools.web;
 
 import lombok.extern.slf4j.Slf4j;
+
 import org.luvx.boot.web.response.R;
-import org.luvx.tools.dao.user.entity.User;
-import org.luvx.tools.dao.user.repository.UserMapper;
+import org.luvx.tools.dao.entity.User;
+import org.luvx.tools.dao.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -20,6 +21,8 @@ public class IndexController {
     @RequestMapping(value = {"app"}, method = {RequestMethod.GET})
     public R<Object> index() {
         Optional<User> byId = userMapper.selectByPrimaryKey(10000L);
-        return R.success("ok!" + byId.get());
+        return R.success("ok!"
+                + byId.get()
+        );
     }
 }

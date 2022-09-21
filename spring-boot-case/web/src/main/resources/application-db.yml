@@ -7,11 +7,7 @@ spring:
 
 logging:
   level:
-    org:
-      luvx:
-        db:
-          tk:
-            mapper: debug
+    org.luvx.tools.dao.mapper: debug
 
 mybatis:
   mapper-locations: classpath:org/luvx/tools/dao/*/*.xml

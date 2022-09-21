@@ -2,8 +2,8 @@ package org.luvx.tools.dao.repository;
 
 import org.junit.jupiter.api.Test;
 import org.luvx.tools.BaseAppTests;
-import org.luvx.tools.dao.user.entity.User;
-import org.luvx.tools.dao.user.repository.UserMapper;
+import org.luvx.tools.dao.entity.User;
+import org.luvx.tools.dao.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Optional;
