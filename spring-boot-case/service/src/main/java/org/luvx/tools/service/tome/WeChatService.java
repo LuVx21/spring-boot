@@ -14,6 +14,7 @@ import java.net.http.HttpRequest.BodyPublishers;
 import java.net.http.HttpResponse;
 import java.net.http.HttpResponse.BodyHandlers;
 
+import org.luvx.common.util.JsonUtils;
 import static org.luvx.tools.service.tome.utils.HttpClientUtils.client;
 
 @Slf4j
@@ -33,14 +34,14 @@ public class WeChatService {
         String s = sendMsgUrl + "?access_token=" + getToken();
         message.setTouser("@all");
         message.setAgentid(agentid);
-        String requestBody = JsonUtils.toJSONString(message);
+        String requestBody = JsonUtils.toJson(message);
         HttpRequest request = HttpRequest.newBuilder()
                 .POST(BodyPublishers.ofString(requestBody))
                 .uri(URI.create(s))
                 .build();
         HttpResponse<String> response = client.send(request, BodyHandlers.ofString());
         log.info("响应:{}", response.body());
-        WeChatResponse1 weCahtResponse = JsonUtils.parseObject(response.body(), WeChatResponse1.class);
+        WeChatResponse1 weCahtResponse = JsonUtils.fromJson(response.body(), WeChatResponse1.class);
         if (40014 == weCahtResponse.getErrcode()) {
         }
     }
@@ -54,7 +55,7 @@ public class WeChatService {
                 .build();
         HttpResponse<String> response = client.send(request, BodyHandlers.ofString());
         log.info("响应:{}", response.body());
-        WeChatResponse weCahtResponse = JsonUtils.parseObject(response.body(), WeChatResponse.class);
+        WeChatResponse weCahtResponse = JsonUtils.fromJson(response.body(), WeChatResponse.class);
         return weCahtResponse.getAccess_token();
     }
 

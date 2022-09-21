@@ -1,7 +1,12 @@
 package org.luvx.tools.web.base.validate;
 
-import java.util.Date;
-import java.util.List;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+import org.hibernate.validator.constraints.Range;
+import org.hibernate.validator.group.GroupSequenceProvider;
+import org.luvx.tools.web.base.validate.custom.Sex;
+import org.luvx.tools.web.base.validate.custom.VoProvider;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Email;
@@ -13,17 +18,13 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 import javax.validation.constraints.Past;
 import javax.validation.groups.Default;
-
-import org.hibernate.validator.constraints.Range;
-import org.luvx.tools.web.base.validate.custom.Sex;
-
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import java.util.Date;
+import java.util.List;
 
 @Getter
 @Setter
 @ToString
+@GroupSequenceProvider(VoProvider.class)
 public class ValidationVo {
     @NotNull(message = "必须指定id", groups = {UpdateGroup.class})
     private Integer        id;

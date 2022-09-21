@@ -1,10 +1,8 @@
 package org.luvx.tools.web.utils;
 
-import cn.hutool.json.JSONUtil;
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONObject;
 import org.junit.jupiter.api.Test;
-import org.luvx.common.more.MoreRuns;
 import org.luvx.common.util.JsonUtils;
 import org.luvx.tools.web.base.web.UserVo;
 
@@ -18,7 +16,7 @@ class JsonXmlUtilsTest {
         user.setAge(18);
         user.setValid(2);
 
-        String jsonStr = JsonUtils.toJSONString(user);
+        String jsonStr = JsonUtils.toJson(user);
         JSONObject json1 = JSON.parseObject(jsonStr);
         JSONObject passWord = json1.getJSONObject("passWord");
 

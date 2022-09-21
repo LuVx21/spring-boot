@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import org.luvx.common.util.JsonUtils;
 import static org.luvx.tools.service.tome.utils.HttpClientUtils.client;
 
 @Slf4j
@@ -57,9 +58,9 @@ public class WeatherNotifyScheduler {
     }
 
     public void weatherJson(String json) throws IOException, InterruptedException {
-        Map<String, Object> tmpMap = JsonUtils.parseObject(json, Map.class);
+        Map<String, Object> tmpMap = JsonUtils.fromJson(json, Map.class);
         ResponseData data =
-                JsonUtils.parseObject(JsonUtils.toJSONString(tmpMap.get("data")), ResponseData.class);
+                JsonUtils.fromJson(JsonUtils.toJson(tmpMap.get("data")), ResponseData.class);
         City city = data.getCity();
         String location = city.location();
         StringBuilder sb = new StringBuilder(location);

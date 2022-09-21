@@ -24,6 +24,7 @@
             <groupId>org.luvx</groupId>
             <artifactId>dao</artifactId>
         </dependency>
+
         <dependency>
             <groupId>commons-codec</groupId>
             <artifactId>commons-codec</artifactId>

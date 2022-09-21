@@ -34,7 +34,7 @@ class JsonParse {
 	public static Object[] extract(String jsontext) throws AesException     {
 		Object[] result = new Object[3];
 		try {
-			Map<String, Object> tmpMap = JsonUtils.parseMap(jsontext, Map.class, Object.class);
+			Map<String, Object> tmpMap = JsonUtils.fromJson(jsontext, Map.class, Object.class);
 			Object encrypt_msg = tmpMap.get("Encrypt");
 			Object tousername = tmpMap.get("ToUserName");
 			Object agentid = tmpMap.get("AgentID");
