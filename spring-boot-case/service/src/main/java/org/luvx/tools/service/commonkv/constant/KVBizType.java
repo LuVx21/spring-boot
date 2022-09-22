@@ -1,7 +1,17 @@
 package org.luvx.tools.service.commonkv.constant;
 
-public interface KVBizType {
-    Integer getCode();
+import org.luvx.common.enums.EnumHasCode;
 
-    Class<?> valueClass();
+public interface KVBizType extends EnumHasCode<Integer> {
+    /**
+     * value 存储的数据类型
+     */
+    Class<?> getValueClass();
+
+    /**
+     * 业务场景
+     */
+    default Integer getBizType() {
+        return getCode();
+    }
 }

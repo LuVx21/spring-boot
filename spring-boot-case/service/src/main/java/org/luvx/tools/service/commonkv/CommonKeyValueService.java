@@ -1,42 +1,60 @@
 package org.luvx.tools.service.commonkv;
 
+import static java.util.Collections.singleton;
+
+import java.util.Collection;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
 import org.luvx.common.util.JsonUtils;
 import org.luvx.tools.dao.entity.CommonKeyValue;
 import org.luvx.tools.service.commonkv.constant.KVBizType;
 
-import javax.annotation.Nullable;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.stream.Collectors;
-
 public interface CommonKeyValueService {
 
+    /**
+     * 存在会覆盖
+     */
     <T> boolean setValue(KVBizType bizType, String key, T value);
 
+    /**
+     * 存在不覆盖, 返回 false
+     */
+    <T> boolean setValueIfAbsent(KVBizType bizType, String key, T value);
+
+    /**
+     * 数值类型增加计数, 仅支持 Integer 和 Long
+     */
     boolean setOrIncrValue(KVBizType bizType, String key, long incr);
+
+    void remove(KVBizType bizType, String key);
+
+    void setValueItem(KVBizType bizType, String key, Map<String, Object> kvs);
+
+    void setValueItemIfAbsent(KVBizType bizType, String key, Map<String, Object> kvs);
+
+    /**
+     * 仅支持 json object的最外层 key 的删除
+     */
+    void removeValueItem(KVBizType bizType, String key, String... itemKey);
 
     Map<String, CommonKeyValue> get(KVBizType bizType, Collection<String> keys);
 
-    @Nullable
-    default CommonKeyValue get(KVBizType bizType, String key) {
-        return get(bizType, Collections.singleton(key)).get(key);
+    default Optional<CommonKeyValue> get(KVBizType bizType, String key) {
+        return Optional.ofNullable(get(bizType, singleton(key)).get(key));
     }
 
     default <T> Map<String, T> getData(KVBizType bizType, Collection<String> keys) {
         return get(bizType, keys).entrySet().stream()
                 .collect(Collectors.toMap(Entry::getKey,
-                        e -> (T) JsonUtils.fromJson(e.getValue().getCommonValue(), bizType.valueClass())
+                        e -> (T) JsonUtils.fromJson(e.getValue().getCommonValue(), bizType.getValueClass())
                 ));
     }
 
-    @Nullable
-    default <T> T getData(KVBizType bizType, String key) {
-        CommonKeyValue kv = get(bizType, key);
-        if (kv == null) {
-            return null;
-        }
-        return (T) JsonUtils.fromJson(kv.getCommonValue(), bizType.valueClass());
+    default <T> Optional<T> getData(KVBizType bizType, String key) {
+        return get(bizType, key)
+                .map(kv -> (T) JsonUtils.fromJson(kv.getCommonValue(), bizType.getValueClass()));
     }
 }

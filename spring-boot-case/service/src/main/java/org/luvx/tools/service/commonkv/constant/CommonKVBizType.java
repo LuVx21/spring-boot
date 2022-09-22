@@ -1,30 +1,30 @@
 package org.luvx.tools.service.commonkv.constant;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import org.luvx.common.enums.EnumHasCode;
-
 import java.util.Map;
 
+import org.luvx.tools.dao.entity.User;
+
+import lombok.AllArgsConstructor;
+
 @AllArgsConstructor
-public enum CommonKVBizType implements KVBizType, EnumHasCode<Integer> {
+public enum CommonKVBizType implements KVBizType {
     UNKNOWN(0, Object.class),
     INT(1, Integer.class),
     STRING(2, String.class),
     MAP(3, Map.class),
+    BEAN(4, User.class),
     ;
 
-    private final int      code;
-    @Getter
+    private final int      bizType;
     private final Class<?> valueClass;
 
     @Override
     public Integer getCode() {
-        return code;
+        return bizType;
     }
 
     @Override
-    public Class<?> valueClass() {
-        return getValueClass();
+    public Class<?> getValueClass() {
+        return valueClass;
     }
 }
