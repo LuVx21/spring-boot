@@ -1,5 +1,6 @@
 package org.luvx.tools.service.commonkv.constant;
 
+import java.util.List;
 import java.util.Map;
 
 import org.luvx.tools.dao.entity.User;
@@ -13,6 +14,8 @@ public enum CommonKVBizType implements KVBizType {
     STRING(2, String.class),
     MAP(3, Map.class),
     BEAN(4, User.class),
+    LIST(5, List.class),
+    ARRAY(6, String[].class),
     ;
 
     private final int      bizType;

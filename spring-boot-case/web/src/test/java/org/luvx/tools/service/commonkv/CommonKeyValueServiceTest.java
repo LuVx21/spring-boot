@@ -1,5 +1,7 @@
 package org.luvx.tools.service.commonkv;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 import org.junit.jupiter.api.Test;
@@ -53,5 +55,23 @@ class CommonKeyValueServiceTest extends BaseAppTests {
 
         service.setValue(CommonKVBizType.BEAN, "a", user);
         service.getData(CommonKVBizType.BEAN, "a").ifPresent(System.out::println);
+    }
+
+    @Test
+    void m4() {
+        User user = new User();
+        user.setUserName("foo");
+        user.setPassword("bar");
+        user.setAge(18);
+        service.setValue(CommonKVBizType.LIST, "a", List.of(user));
+    }
+
+    @Test
+    void m5() {
+        String[] array = {"a", "b"};
+        // Integer[] array = {1, 2}; // 异常
+        service.setValue(CommonKVBizType.ARRAY, "a", array);
+        String[] a = (String[]) service.getData(CommonKVBizType.ARRAY, "a").get();
+        System.out.println(Arrays.toString(a));
     }
 }
