@@ -1,6 +1,7 @@
 package org.luvx.tools;
 
 import org.luvx.tools.dao.config.DaoConfig;
+import org.luvx.tools.hybrid.config.HybridConfig;
 import org.luvx.tools.schedule.config.ScheduleConfig;
 import org.luvx.tools.service.config.ServiceConfig;
 import org.luvx.tools.web.config.WebConfig;
@@ -20,7 +21,8 @@ import lombok.extern.slf4j.Slf4j;
         DaoConfig.class,
         ScheduleConfig.class,
         WebConfig.class,
-        ServiceConfig.class
+        ServiceConfig.class,
+        HybridConfig.class
 })
 @SpringBootApplication
 public class ToolApp {

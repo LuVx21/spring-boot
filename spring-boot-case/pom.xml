@@ -18,6 +18,7 @@
     <modules>
         <module>common</module>
         <module>dao</module>
+        <module>hybrid</module>
         <module>service</module>
         <module>schedule</module>
         <module>web</module>
@@ -51,6 +52,11 @@
             <dependency>
                 <groupId>org.luvx</groupId>
                 <artifactId>schedule</artifactId>
+                <version>${parent.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.luvx</groupId>
+                <artifactId>hybrid</artifactId>
                 <version>${parent.version}</version>
             </dependency>
         </dependencies>

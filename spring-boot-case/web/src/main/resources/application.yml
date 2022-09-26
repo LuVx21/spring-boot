@@ -11,3 +11,7 @@ swagger:
 logging:
   level:
     root: info
+
+api:
+  baseUrl:
+    github: https://gitee.com/api/v5/
