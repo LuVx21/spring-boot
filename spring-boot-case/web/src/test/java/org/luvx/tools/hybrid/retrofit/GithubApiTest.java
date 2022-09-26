@@ -1,18 +1,16 @@
 package org.luvx.tools.hybrid.retrofit;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
+
+import javax.annotation.Resource;
 
 import org.junit.jupiter.api.Test;
 import org.luvx.tools.BaseAppTests;
-import org.springframework.beans.factory.annotation.Autowired;
 
 class GithubApiTest extends BaseAppTests {
-    @Autowired
+    @Resource
     private GithubApi githubApi;
 
     @Test
