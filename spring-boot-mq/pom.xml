@@ -5,25 +5,30 @@
 
     <parent>
         <groupId>org.luvx</groupId>
-        <artifactId>spring-boot-mq</artifactId>
+        <artifactId>coding-parent-boot-java</artifactId>
         <version>0.1</version>
-        <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>spring-boot-rabbit</artifactId>
-    <packaging>jar</packaging>
+    <artifactId>spring-boot-mq</artifactId>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>spring-boot-rocketmq</module>
+        <module>spring-boot-rabbit</module>
+    </modules>
 
     <properties>
     </properties>
 
     <dependencies>
-       <dependency>
+        <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-amqp</artifactId>
+            <artifactId>spring-boot-starter</artifactId>
         </dependency>
     </dependencies>
 
     <build>
+        <plugins>
+        </plugins>
     </build>
-
 </project>
