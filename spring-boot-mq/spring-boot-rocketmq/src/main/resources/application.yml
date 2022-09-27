@@ -1,0 +1,4 @@
+rocketmq:
+  name-server: luvx:59876
+  producer:
+    group: producer-group
