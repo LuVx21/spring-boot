@@ -1,4 +1,4 @@
-package org.luvx.tools.hybrid.interceptor;
+package org.luvx.tools.hybrid.retrofit.interceptor;
 
 import java.io.IOException;
 

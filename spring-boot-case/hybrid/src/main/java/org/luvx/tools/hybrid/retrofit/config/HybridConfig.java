@@ -1,4 +1,4 @@
-package org.luvx.tools.hybrid.config;
+package org.luvx.tools.hybrid.retrofit.config;
 
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;

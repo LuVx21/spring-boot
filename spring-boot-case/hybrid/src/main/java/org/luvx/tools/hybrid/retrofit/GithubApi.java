@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
-import org.luvx.tools.hybrid.interceptor.TimeStampInterceptor;
+import org.luvx.tools.hybrid.retrofit.interceptor.TimeStampInterceptor;
 
 import com.github.lianjiatech.retrofit.spring.boot.core.RetrofitClient;
 import com.github.lianjiatech.retrofit.spring.boot.interceptor.Intercept;
