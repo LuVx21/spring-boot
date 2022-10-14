@@ -19,8 +19,8 @@ import okhttp3.Response;
 @Component
 public class GeekTimeInterceptor extends BasePathMatchInterceptor {
     @Setter
-    private  String cookie = "";
-    private final String value  =
+    private static       String cookie = "";
+    private static final String value  =
             "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.0.0 "
                     + "Safari/537.36";
 

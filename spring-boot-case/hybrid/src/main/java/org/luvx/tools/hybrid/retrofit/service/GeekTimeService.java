@@ -7,7 +7,6 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -118,17 +117,15 @@ public class GeekTimeService {
         return result;
     }
 
-    public List<Tuple2<Long, String>> getUpdateArticles(Long courseId) throws IOException {
+    public List<Long> getUpdateArticles(Long courseId) throws IOException {
         List<Tuple2<Long, String>> all = courseIndex(courseId);
-        Iterator<Tuple2<Long, String>> iterator = all.iterator();
-        while (iterator.hasNext()) {
-            Tuple2<Long, String> pair = iterator.next();
-            File md = new File(docDir + courseId + "_" + course.get(courseId) + File.separator + pair._1() + ".md");
-            if (md.exists()) {
-                iterator.remove();
-            }
-        }
-        return all;
+        return all.stream()
+                .map(Tuple2::_1)
+                .filter(articleId -> {
+                    String mdFile = docDir + courseId + "_" + course.get(courseId) + File.separator + articleId + ".md";
+                    return !new File(mdFile).exists();
+                })
+                .collect(Collectors.toList());
     }
 
     /**
@@ -144,7 +141,7 @@ public class GeekTimeService {
         for (int i = 0; i < pairs.size(); i++) {
             Tuple2<Long, String> pair = pairs.get(i);
             if (pair._1().equals(articleId)) {
-                if (i - 1 >= 0) {
+                if (i >= 1) {
                     content.append("[上一篇](./").append(pairs.get(i - 1)._1()).append(".md)");
                 }
                 if (content.length() == 0) {

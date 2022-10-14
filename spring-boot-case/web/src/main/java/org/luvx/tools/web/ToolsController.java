@@ -9,7 +9,6 @@ import java.util.stream.Collectors;
 import javax.annotation.Resource;
 
 import org.apache.commons.collections4.MapUtils;
-import org.luvx.boot.common.util.ApplicationContextUtils;
 import org.luvx.boot.web.response.R;
 import org.luvx.tools.hybrid.retrofit.interceptor.GeekTimeInterceptor;
 import org.luvx.tools.hybrid.retrofit.service.GeekTimeService;
@@ -20,7 +19,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.google.common.collect.Sets;
 
-import io.vavr.Tuple2;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -43,8 +41,7 @@ public class ToolsController {
     @RequestMapping(value = {"tool/geektime"}, method = {RequestMethod.POST})
     public R<Object> geektime(@RequestBody Map<String, Object> param) throws Exception {
         String cookie = MapUtils.getString(param, "cookie");
-        GeekTimeInterceptor bean = ApplicationContextUtils.getBean(GeekTimeInterceptor.class);
-        bean.setCookie(cookie);
+        GeekTimeInterceptor.setCookie(cookie);
         List<String> idList = (List<String>) MapUtils.getObject(param, "ids", Collections.emptyList());
 
         geekTimeService.allCourse();
@@ -60,9 +57,8 @@ public class ToolsController {
         } else if (type == 1) {
             // 指定文章
             for (Long courseId : set) {
-                List<Tuple2<Long, String>> ids = geekTimeService.getUpdateArticles(courseId);
-                for (Tuple2<Long, String> id : ids) {
-                    Long articleId = id._1();
+                List<Long> ids = geekTimeService.getUpdateArticles(courseId);
+                for (Long articleId : ids) {
                     geekTimeService.downloadArticle(courseId, articleId);
                 }
             }

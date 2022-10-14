@@ -32,9 +32,8 @@ class GeekTimeServiceTest extends BaseAppTests {
         } else if (type == 1) {
             // 指定文章
             for (Long courseId : set) {
-                List<Tuple2<Long, String>> ids = geekTimeService.getUpdateArticles(courseId);
-                for (Tuple2<Long, String> id : ids) {
-                    Long articleId = id._1();
+                List<Long> ids = geekTimeService.getUpdateArticles(courseId);
+                for (Long articleId : ids) {
                     geekTimeService.downloadArticle(courseId, articleId);
                 }
             }
