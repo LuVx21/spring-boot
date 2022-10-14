@@ -42,7 +42,7 @@ public class ToolsController {
 
     @RequestMapping(value = {"tool/geektime"}, method = {RequestMethod.POST})
     public R<Object> geektime(@RequestBody Map<String, Object> param) throws Exception {
-        String cookie = MapUtils.getString(param, "");
+        String cookie = MapUtils.getString(param, "cookie");
         GeekTimeInterceptor bean = ApplicationContextUtils.getBean(GeekTimeInterceptor.class);
         bean.setCookie(cookie);
         List<String> idList = (List<String>) MapUtils.getObject(param, "ids", Collections.emptyList());
