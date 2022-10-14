@@ -1,9 +1,9 @@
 wechat:
-  corpid
-  corpsecret
-  agentid
-  token
-  encodingAesKey
+  corpid: x
+  corpsecret: x
+  agentid: 0
+  token: x
+  encodingAesKey: x
 moji:
-  appCode
-  token
+  appCode: x
+  token: x
