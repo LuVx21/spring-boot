@@ -16,7 +16,7 @@ class GithubApiTest extends BaseAppTests {
     @Test
     void m1() throws Exception {
         CompletableFuture<Map<String, Object>> users = githubApi.users("LuVx");
-        // System.out.println(users.get());
+        System.out.println(users.get());
 
         // CompletableFuture<List<Object>> repos = githubApi.repos("LuVx");
         // System.out.println(repos.get());
