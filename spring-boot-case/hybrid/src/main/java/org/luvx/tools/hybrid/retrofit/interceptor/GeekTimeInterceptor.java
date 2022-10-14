@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 import com.github.lianjiatech.retrofit.spring.boot.interceptor.BasePathMatchInterceptor;
 
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -17,7 +18,8 @@ import okhttp3.Response;
 @Slf4j
 @Component
 public class GeekTimeInterceptor extends BasePathMatchInterceptor {
-    private final String cookie = "";
+    @Setter
+    private  String cookie = "";
     private final String value  =
             "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.0.0 "
                     + "Safari/537.36";
