@@ -7,8 +7,8 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import org.luvx.boot.web.enums.CommonStatusEnum;
-import org.luvx.common.enums.ext.EnumNameAnno;
-import org.luvx.common.enums.ext.EnumNameSerializer;
+import org.luvx.coding.common.enums.ext.EnumNameAnno;
+import org.luvx.coding.common.enums.ext.EnumNameSerializer;
 
 @Getter
 @Setter

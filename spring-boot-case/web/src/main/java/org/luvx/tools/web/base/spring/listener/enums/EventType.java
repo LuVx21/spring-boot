@@ -1,6 +1,6 @@
 package org.luvx.tools.web.base.spring.listener.enums;
 
-import org.luvx.common.enums.EnumHasCode;
+import org.luvx.coding.common.enums.EnumHasCode;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

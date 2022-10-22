@@ -4,7 +4,7 @@ import com.google.common.collect.Sets;
 import com.google.common.collect.Sets.SetView;
 import lombok.*;
 import org.junit.jupiter.api.Test;
-import org.luvx.common.more.MorePrints;
+import org.luvx.coding.common.more.MorePrints;
 
 import java.util.Map;
 import java.util.stream.Collectors;

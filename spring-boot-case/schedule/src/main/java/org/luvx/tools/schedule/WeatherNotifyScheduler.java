@@ -2,7 +2,7 @@ package org.luvx.tools.schedule;
 
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
-import org.luvx.common.util.JsonUtils;
+import org.luvx.coding.common.util.JsonUtils;
 import org.luvx.tools.service.tome.WeChatService;
 import org.luvx.tools.service.tome.entity.City;
 import org.luvx.tools.service.tome.entity.DayWeather;
@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import org.luvx.common.util.JsonUtils;
+import org.luvx.coding.common.util.JsonUtils;
 import static org.luvx.tools.service.tome.utils.HttpClientUtils.client;
 
 @Slf4j

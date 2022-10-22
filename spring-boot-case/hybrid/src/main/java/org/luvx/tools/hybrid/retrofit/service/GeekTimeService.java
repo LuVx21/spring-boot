@@ -17,7 +17,7 @@ import java.util.stream.IntStream;
 import javax.annotation.Resource;
 
 import org.apache.commons.lang3.math.NumberUtils;
-import org.luvx.common.util.JSONPathUtils;
+import org.luvx.coding.common.util.JSONPathUtils;
 import org.luvx.tools.hybrid.retrofit.GeekTimeApi;
 import org.luvx.tools.hybrid.retrofit.GeekTimeApi.ArticleBody;
 import org.luvx.tools.hybrid.retrofit.GeekTimeApi.ArticlesBody;

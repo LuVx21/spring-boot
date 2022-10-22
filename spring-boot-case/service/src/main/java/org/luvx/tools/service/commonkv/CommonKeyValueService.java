@@ -8,7 +8,7 @@ import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import org.luvx.common.util.JsonUtils;
+import org.luvx.coding.common.util.JsonUtils;
 import org.luvx.tools.dao.entity.CommonKeyValue;
 import org.luvx.tools.service.commonkv.constant.KVBizType;
 

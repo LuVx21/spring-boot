@@ -16,7 +16,7 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
-import org.luvx.common.util.JsonUtils;
+import org.luvx.coding.common.util.JsonUtils;
 import org.luvx.tools.dao.entity.CommonKeyValue;
 import org.luvx.tools.dao.mapper.CommonKeyValueMapper;
 import org.luvx.tools.service.commonkv.constant.KVBizType;

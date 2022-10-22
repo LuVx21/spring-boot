@@ -14,7 +14,7 @@ package org.luvx.tools.service.tome.wechat;
  * 官方源码下载地址 : https://github.com/stleary/JSON-java, jar包下载地址 : https://mvnrepository.com/artifact/org.json/json
  */
 
-import org.luvx.common.util.JsonUtils;
+import org.luvx.coding.common.util.JsonUtils;
 
 import java.util.Map;
 

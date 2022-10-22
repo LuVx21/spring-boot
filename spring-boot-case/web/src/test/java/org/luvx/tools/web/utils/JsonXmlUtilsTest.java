@@ -3,7 +3,7 @@ package org.luvx.tools.web.utils;
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONObject;
 import org.junit.jupiter.api.Test;
-import org.luvx.common.util.JsonUtils;
+import org.luvx.coding.common.util.JsonUtils;
 import org.luvx.tools.web.base.web.UserVo;
 
 class JsonXmlUtilsTest {
