@@ -11,7 +11,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import java.util.List;
 import java.util.Map;
 
-import static org.luvx.common.more.MorePrints.println;
+import static org.luvx.coding.common.more.MorePrints.println;
 
 @Slf4j
 public class HashTest extends ApplicationTests {

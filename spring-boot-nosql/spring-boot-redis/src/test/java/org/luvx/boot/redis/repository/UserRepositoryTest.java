@@ -1,13 +1,15 @@
 package org.luvx.boot.redis.repository;
 
-import lombok.extern.slf4j.Slf4j;
+import java.util.Optional;
+import java.util.stream.Stream;
+
 import org.junit.jupiter.api.Test;
 import org.luvx.boot.redis.ApplicationTests;
 import org.luvx.boot.redis.entity.User;
+import org.luvx.coding.common.more.MorePrints;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.Optional;
-import java.util.stream.Stream;
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 class UserRepositoryTest extends ApplicationTests {
@@ -17,14 +19,20 @@ class UserRepositoryTest extends ApplicationTests {
     @Test
     void m0() {
         Stream.of(
-                        new User("foo", "1121", 19),
-                        new User("bar", "1121", 19)
+                        new User(1, "foo", "1121", 19),
+                        new User(2, "bar", "1121", 19)
                 )
-                .peek(u -> u.setId(System.currentTimeMillis()))
                 .forEach(user -> {
                     User save = userRepository.save(user);
                     Optional<User> byId = userRepository.findById(user.getId());
                     log.info("save:{} find:{}", save, byId.get());
                 });
+    }
+
+    @Test
+    void m2() {
+        Optional<User> byId = userRepository.findById(1L);
+        Optional<User> byId1 = userRepository.findById(2L);
+        MorePrints.println(byId, byId1);
     }
 }
