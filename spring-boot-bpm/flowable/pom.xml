@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>org.luvx</groupId>
+        <groupId>org.luvx.boot</groupId>
         <artifactId>spring-boot-bpm</artifactId>
         <version>0.1</version>
     </parent>
@@ -18,7 +18,7 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.luvx</groupId>
+            <groupId>org.luvx.boot</groupId>
             <artifactId>boot-common</artifactId>
         </dependency>
         <dependency>

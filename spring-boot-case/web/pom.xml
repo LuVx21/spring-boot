@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>org.luvx</groupId>
+        <groupId>org.luvx.boot</groupId>
         <artifactId>spring-boot-case</artifactId>
         <version>0.1</version>
     </parent>
@@ -18,19 +18,19 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.luvx</groupId>
+            <groupId>org.luvx.boot</groupId>
             <artifactId>boot-web</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.luvx</groupId>
+            <groupId>org.luvx.boot</groupId>
             <artifactId>service</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.luvx</groupId>
+            <groupId>org.luvx.boot</groupId>
             <artifactId>schedule</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.luvx</groupId>
+            <groupId>org.luvx.boot</groupId>
             <artifactId>hybrid</artifactId>
         </dependency>
         <dependency>

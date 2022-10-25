@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>org.luvx</groupId>
+        <groupId>org.luvx.boot</groupId>
         <artifactId>coding-parent-boot-java</artifactId>
         <version>0.1</version>
     </parent>
@@ -35,27 +35,27 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>org.luvx</groupId>
+                <groupId>org.luvx.boot</groupId>
                 <artifactId>common</artifactId>
                 <version>${project.parent.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.luvx</groupId>
+                <groupId>org.luvx.boot</groupId>
                 <artifactId>dao</artifactId>
                 <version>${project.parent.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.luvx</groupId>
+                <groupId>org.luvx.boot</groupId>
                 <artifactId>service</artifactId>
                 <version>${project.parent.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.luvx</groupId>
+                <groupId>org.luvx.boot</groupId>
                 <artifactId>schedule</artifactId>
                 <version>${project.parent.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.luvx</groupId>
+                <groupId>org.luvx.boot</groupId>upId>
                 <artifactId>hybrid</artifactId>
                 <version>${project.parent.version}</version>
             </dependency>
