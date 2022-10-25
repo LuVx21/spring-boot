@@ -4,13 +4,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-<<<<<<< HEAD
-        <groupId>org.luvx.boot</groupId>
-        <artifactId>coding-parent-spring-boot-java</artifactId>
-=======
         <groupId>org.luvx.boot</groupId>
         <artifactId>coding-parent-boot-java</artifactId>
->>>>>>> bff87bc11f962756a064fad08961f9f518bb84e0
         <version>0.1</version>
     </parent>
 

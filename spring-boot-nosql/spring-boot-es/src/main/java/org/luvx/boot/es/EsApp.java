@@ -3,12 +3,9 @@ package org.luvx.boot.es;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-/**
- * @author: Ren, Xie
- */
 @SpringBootApplication
-public class Application {
+public class EsApp {
     public static void main(String[] args) {
-        SpringApplication.run(Application.class, args);
+        SpringApplication.run(EsApp.class, args);
     }
 }
