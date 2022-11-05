@@ -16,14 +16,6 @@ import java.util.stream.IntStream;
 
 import javax.annotation.Resource;
 
-import org.apache.commons.lang3.math.NumberUtils;
-import org.luvx.coding.common.util.JSONPathUtils;
-import org.luvx.tools.hybrid.retrofit.GeekTimeApi;
-import org.luvx.tools.hybrid.retrofit.GeekTimeApi.ArticleBody;
-import org.luvx.tools.hybrid.retrofit.GeekTimeApi.ArticlesBody;
-import org.luvx.tools.hybrid.retrofit.GeekTimeApi.IntroBody;
-import org.springframework.stereotype.Service;
-
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONArray;
 import com.alibaba.fastjson2.JSONObject;
@@ -32,6 +24,15 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 import com.google.common.io.Files;
 import com.google.common.util.concurrent.Uninterruptibles;
+
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.math.NumberUtils;
+import org.luvx.coding.common.util.JSONPathUtils;
+import org.luvx.tools.hybrid.retrofit.GeekTimeApi;
+import org.luvx.tools.hybrid.retrofit.GeekTimeApi.ArticleBody;
+import org.luvx.tools.hybrid.retrofit.GeekTimeApi.ArticlesBody;
+import org.luvx.tools.hybrid.retrofit.GeekTimeApi.IntroBody;
+import org.springframework.stereotype.Service;
 
 import io.vavr.Tuple2;
 import okhttp3.OkHttpClient;
@@ -109,15 +110,20 @@ public class GeekTimeService {
 
         String courseDirName = courseId + "_" + course.get(courseId);
         write(json.toJSONString(), jsonDir + courseDirName + File.separator + INDEX_JSON);
-        write("←←[课程目录](../../README.md)\n\n\n\n" + result.stream()
-                        .map(p -> "* [" + p._2() + "](./" + p._1() + ".md)").collect(Collectors.joining("\n")),
-                docDir + courseDirName + File.separator + INDEX_MD);
+        String prefix = "←←[课程目录](../../README.md)\n\n\n\n";
+        String indexContent = result.stream()
+                .map(p -> "* [" + p._2() + "](./" + p._1() + ".md)")
+                .collect(Collectors.joining("\n"));
+        write(prefix + indexContent, docDir + courseDirName + File.separator + INDEX_MD);
 
         map.put(courseId, result);
         return result;
     }
 
-    public List<Long> getUpdateArticles(Long courseId) throws IOException {
+    /**
+     * @return 需要更新的文章 id
+     */
+    public List<Long> getUpdateArticleIds(Long courseId) throws IOException {
         List<Tuple2<Long, String>> all = courseIndex(courseId);
         return all.stream()
                 .map(Tuple2::_1)
@@ -135,58 +141,35 @@ public class GeekTimeService {
      * @param articleId 文章id
      */
     public void downloadArticle(Long courseId, Long articleId) throws IOException {
-        StringBuilder content = new StringBuilder();
-        // 文章内部增加跳转到前后篇以及目录
-        List<Tuple2<Long, String>> pairs = map.get(courseId);
-        for (int i = 0; i < pairs.size(); i++) {
-            Tuple2<Long, String> pair = pairs.get(i);
-            if (pair._1().equals(articleId)) {
-                if (i >= 1) {
-                    content.append("[上一篇](./").append(pairs.get(i - 1)._1()).append(".md)");
-                }
-                if (content.length() == 0) {
-                    content.append("           ");
-                }
-                content.append("               [目录](./README.md)");
-                if (i + 1 < pairs.size()) {
-                    content.append("               [下一篇](./").append(pairs.get(i + 1)._1()).append(".md)");
-                }
-                break;
-            }
-        }
-        String temp = content.toString().replaceAll(" ", "&nbsp;");
-        content.delete(0, content.length()).append(temp);
+        JSONObject json = getArticleJson(courseId, articleId);
+        JSONObject data = json.getJSONObject("data");
 
-        JSONObject json;
-        if (online) {
-            ArticleBody body1 = new ArticleBody();
-            body1.setId(articleId + "");
-            Map<String, Object> response = geekTimeApi.article(body1);
-            json = JSON.parseObject(JSON.toJSONString(response));
-        } else {
-            String path = jsonDir + courseId + "_" + course.get(courseId) + File.separator + articleId + ".json";
-            json = JSONObject.parseObject(read(path));
-        }
-        JSONObject o = json.getJSONObject("data");
-        String article_title = o.getString("article_title");
-        content.append("\n\n## ").append(article_title).append("\n\n");
-        // String article_cover = o.getString("article_cover");
+        String article_title = data.getString("article_title");
+        // String article_cover = data.getString("article_cover");
+        String mp3Url = data.getString("audio_download_url");
+        String articleContent = data.getString("article_content");
+
+        String preNext = getPrefixOfMd(courseId, articleId);
+        StringBuilder content = new StringBuilder(preNext);
+        content.append(StringUtils.isEmpty(preNext) ? "" : "\n\n")
+                .append("<h2>").append(article_title).append("</h2>")
+                .append("\n\n");
         // if (article_cover != null) {
-        //     content.append("![](" + article_cover + ")").append("\n\n");
+        //     content.append("<img src=\"" + article_cover + "\">")
+        //     .append("\n\n");
         // }
-        String mp3Url = o.getString("audio_download_url");
         if (mp3Url != null) {
             content.append("<audio controls=\"controls\"><source src=\"").append(mp3Url)
                     .append("\" type=\"audio/mpeg\"></audio>").append("\n\n");
         }
-        content.append(o.getString("article_content")
-                        .replaceAll("<hr></hr>", "<hr/>"))
+        content.append(articleContent)
                 .append("\n\n")
-                .append(temp);
+                .append(preNext);
 
         String courseDirName = courseId + "_" + course.get(courseId);
         write(json.toJSONString(), jsonDir + courseDirName + File.separator + articleId + ".json");
         write(content.toString(), docDir + courseDirName + File.separator + articleId + ".md");
+        write(content.toString(), root + courseDirName + File.separator + article_title + ".html");
 
         /// 保存音频文件
         if (false) {
@@ -200,6 +183,70 @@ public class GeekTimeService {
         if (online) {
             Uninterruptibles.sleepUninterruptibly(6, TimeUnit.SECONDS);
         }
+    }
+
+    private JSONObject getArticleJson(Long courseId, Long articleId) throws IOException {
+        JSONObject json;
+        if (online) {
+            ArticleBody body1 = new ArticleBody();
+            body1.setId(articleId + "");
+            Map<String, Object> response = geekTimeApi.article(body1);
+            json = JSON.parseObject(JSON.toJSONString(response));
+        } else {
+            String path = jsonDir + courseId + "_" + course.get(courseId) + File.separator + articleId + ".json";
+            json = JSONObject.parseObject(read(path));
+        }
+        return json;
+    }
+
+    private String getPrefixOfMd(Long courseId, Long articleId) {
+        StringBuilder content = new StringBuilder();
+        // 文章内部增加跳转到前后篇以及目录
+        List<Tuple2<Long, String>> pairs = map.get(courseId);
+        for (int i = 0; i < pairs.size(); i++) {
+            Tuple2<Long, String> pair = pairs.get(i);
+            if (!pair._1().equals(articleId)) {
+                continue;
+            }
+
+            if (i >= 1) {
+                content.append("[上一篇](./").append(pairs.get(i - 1)._1()).append(".md)");
+            }
+            if (content.length() == 0) {
+                content.append("           ");
+            }
+            content.append("               [目录](./README.md)");
+            if (i + 1 < pairs.size()) {
+                content.append("               [下一篇](./").append(pairs.get(i + 1)._1()).append(".md)");
+            }
+            break;
+        }
+        return content.toString().replaceAll(" ", "&nbsp;");
+    }
+
+    private String getPrefixOfHtml(Long courseId, Long articleId) {
+        StringBuilder content = new StringBuilder();
+        // 文章内部增加跳转到前后篇以及目录
+        List<Tuple2<Long, String>> pairs = map.get(courseId);
+        for (int i = 0; i < pairs.size(); i++) {
+            Tuple2<Long, String> pair = pairs.get(i);
+            if (!pair._1().equals(articleId)) {
+                continue;
+            }
+
+            if (i >= 1) {
+                content.append("<a href=\"./").append(pairs.get(i - 1)._1()).append(".html\">上一篇</a>");
+            }
+            if (content.length() == 0) {
+                content.append("           ");
+            }
+            content.append("               [目录](./README.md)");
+            if (i + 1 < pairs.size()) {
+                content.append("               [下一篇](./").append(pairs.get(i + 1)._1()).append(".md)");
+            }
+            break;
+        }
+        return content.toString().replaceAll(" ", "&nbsp;");
     }
 
     private void mp3Download(String url, String path) throws IOException {

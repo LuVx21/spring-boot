@@ -9,8 +9,6 @@ import javax.annotation.Resource;
 import org.junit.jupiter.api.Test;
 import org.luvx.tools.BaseAppTests;
 
-import io.vavr.Tuple2;
-
 class GeekTimeServiceTest extends BaseAppTests {
     @Resource
     private GeekTimeService geekTimeService;
@@ -32,7 +30,7 @@ class GeekTimeServiceTest extends BaseAppTests {
         } else if (type == 1) {
             // 指定文章
             for (Long courseId : set) {
-                List<Long> ids = geekTimeService.getUpdateArticles(courseId);
+                List<Long> ids = geekTimeService.getUpdateArticleIds(courseId);
                 for (Long articleId : ids) {
                     geekTimeService.downloadArticle(courseId, articleId);
                 }

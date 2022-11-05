@@ -55,7 +55,7 @@
                 <version>${project.parent.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.luvx.boot</groupId>upId>
+                <groupId>org.luvx.boot</groupId>
                 <artifactId>hybrid</artifactId>
                 <version>${project.parent.version}</version>
             </dependency>

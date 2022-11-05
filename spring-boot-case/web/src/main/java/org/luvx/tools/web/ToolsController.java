@@ -57,7 +57,7 @@ public class ToolsController {
         } else if (type == 1) {
             // 指定文章
             for (Long courseId : set) {
-                List<Long> ids = geekTimeService.getUpdateArticles(courseId);
+                List<Long> ids = geekTimeService.getUpdateArticleIds(courseId);
                 for (Long articleId : ids) {
                     geekTimeService.downloadArticle(courseId, articleId);
                 }
