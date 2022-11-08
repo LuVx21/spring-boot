@@ -1,8 +1,10 @@
 package org.luvx.boot.mongo.service;
 
+import java.util.List;
+
 import com.mongodb.client.result.DeleteResult;
 import com.mongodb.client.result.UpdateResult;
-import lombok.extern.slf4j.Slf4j;
+
 import org.junit.jupiter.api.Test;
 import org.luvx.boot.mongo.ApplicationTests;
 import org.luvx.boot.mongo.entity.User;
@@ -11,6 +13,10 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
+import org.springframework.data.mongodb.core.schema.MongoJsonSchema;
+import org.springframework.data.mongodb.core.schema.MongoJsonSchema.MongoJsonSchemaBuilder;
+
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 class UserServiceTest extends ApplicationTests {
@@ -29,11 +35,24 @@ class UserServiceTest extends ApplicationTests {
 
     @Test
     void findUserByUserName() {
-        Query query = Query.query(Criteria
-                .where("userName").is("foo")
-        );
+        Criteria criteria = Criteria
+                .where("userName").is("foo");
+
+        // MongoJsonSchema jsonSchema = MongoJsonSchema.builder()
+        //         .build();
+        // Criteria criteria = Criteria.matchingDocumentStructure(jsonSchema);
+
+        Query query = Query.query(criteria);
+
         User user = mongoTemplate.findOne(query, User.class);
         log.info("user:{}", user);
+
+        List<User> users = mongoTemplate.find(query, User.class);
+        log.info("users:{}", users);
+    }
+
+    @Test
+    void m1() {
     }
 
     @Test

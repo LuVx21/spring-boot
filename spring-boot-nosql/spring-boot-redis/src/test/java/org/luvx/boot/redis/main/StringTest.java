@@ -14,6 +14,8 @@ public class StringTest extends ApplicationTests {
         operations.set(key, "haha1");
         Object haha = operations.get(key);
         println(haha);
+        // Long increment = operations.increment(key, 1);
+        // System.out.println(increment);
     }
 
     @Test
@@ -26,5 +28,7 @@ public class StringTest extends ApplicationTests {
             String s = new String((byte[]) o);
             println(s);
         }
+        // Long increment = operations.increment(key, 1);
+        // System.out.println(increment);
     }
 }
