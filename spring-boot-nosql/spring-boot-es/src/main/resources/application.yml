@@ -1,7 +1,6 @@
 spring:
   elasticsearch:
-    rest:
-      uris: http://luvx:59200
+    uris: http://luvx:59200
 #      username:
 #      password:
 #        # 链接超时时间
