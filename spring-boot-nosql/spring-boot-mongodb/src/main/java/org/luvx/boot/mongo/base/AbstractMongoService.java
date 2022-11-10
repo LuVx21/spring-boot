@@ -1,4 +1,4 @@
-package org.luvx.boot.mongo;
+package org.luvx.boot.mongo.base;
 
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
@@ -16,6 +16,7 @@ import org.springframework.data.domain.Sort.Order;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -38,6 +39,15 @@ public abstract class AbstractMongoService<T> {
                 .collect(Collectors.toList());
     }
 
+    public void update(Criteria criteria, Update update) {
+        mongoTemplate.updateMulti(Query.query(criteria), update, entityClass());
+    }
+
+    /**
+     * // MongoJsonSchema jsonSchema = MongoJsonSchema.builder()
+     * //         .build();
+     * // Criteria criteria = Criteria.matchingDocumentStructure(jsonSchema);
+     */
     public List<T> list(Criteria criteria) {
         return mongoTemplate.find(Query.query(criteria), entityClass());
     }
@@ -51,14 +61,17 @@ public abstract class AbstractMongoService<T> {
         return mongoTemplate.find(query, entityClass());
     }
 
-    public void deleteByQuery(Query query) {
-        mongoTemplate.remove(query, entityClass());
+    public void deleteByQuery(Criteria criteria) {
+        mongoTemplate.remove(Query.query(criteria), entityClass());
     }
 
     public void deleteByIds(Collection<Serializable> ids) {
         ids.stream()
                 .map(id -> Criteria.where("_id").is(id))
-                .map(Query::query)
                 .forEachOrdered(this::deleteByQuery);
+    }
+
+    public long count(Criteria criteria) {
+        return mongoTemplate.count(Query.query(criteria), entityClass());
     }
 }
