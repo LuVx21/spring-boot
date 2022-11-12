@@ -6,6 +6,8 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 
+import org.luvx.enums.BizTypeEnum;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -33,4 +35,5 @@ public class User {
     private String        password;
     private Integer       age;
     private LocalDateTime updateTime;
+    private BizTypeEnum   bizType;
 }

@@ -1,14 +1,16 @@
 package org.luvx.mapper;
 
-import lombok.extern.slf4j.Slf4j;
+import java.time.LocalDateTime;
+import java.util.List;
+
 import org.junit.jupiter.api.Test;
 import org.luvx.ApplicationTests;
 import org.luvx.entity.User;
+import org.luvx.enums.BizTypeEnum;
 import org.luvx.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.List;
-import java.util.Set;
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 class InsertTest extends ApplicationTests {
@@ -27,10 +29,12 @@ class InsertTest extends ApplicationTests {
     @Test
     void insertTest() {
         User user = User.builder()
-                // .userId(1L)
-                .userName("xie")
-                .password("ren")
+                // .id(1L)
+                .userName("foo")
+                .password("bar")
                 .age(18)
+                .updateTime(LocalDateTime.now())
+                .bizType(BizTypeEnum.B)
                 .build();
 
         userMapper.insert(user);

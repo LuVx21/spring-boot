@@ -7,7 +7,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.luvx.ApplicationTests;
-import org.luvx.common.more.MorePrints;
+import org.luvx.coding.common.more.MorePrints;
 import org.luvx.entity.User;
 import org.luvx.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
