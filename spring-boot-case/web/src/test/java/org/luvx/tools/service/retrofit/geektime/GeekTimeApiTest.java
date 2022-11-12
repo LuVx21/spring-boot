@@ -1,4 +1,4 @@
-package org.luvx.tools.hybrid.retrofit.geektime;
+package org.luvx.tools.service.retrofit.geektime;
 
 import java.util.Map;
 
@@ -6,10 +6,10 @@ import javax.annotation.Resource;
 
 import org.junit.jupiter.api.Test;
 import org.luvx.tools.BaseAppTests;
-import org.luvx.tools.hybrid.retrofit.GeekTimeApi;
-import org.luvx.tools.hybrid.retrofit.GeekTimeApi.ArticleBody;
-import org.luvx.tools.hybrid.retrofit.GeekTimeApi.ArticlesBody;
-import org.luvx.tools.hybrid.retrofit.GeekTimeApi.IntroBody;
+import org.luvx.tools.service.retrofit.GeekTimeApi;
+import org.luvx.tools.service.retrofit.GeekTimeApi.ArticleBody;
+import org.luvx.tools.service.retrofit.GeekTimeApi.ArticlesBody;
+import org.luvx.tools.service.retrofit.GeekTimeApi.IntroBody;
 
 class GeekTimeApiTest extends BaseAppTests {
     @Resource

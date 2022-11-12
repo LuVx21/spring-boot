@@ -30,10 +30,6 @@
             <artifactId>runner</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.luvx.boot</groupId>
-            <artifactId>hybrid</artifactId>
-        </dependency>
-        <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger2</artifactId>
             <version>${swagger.version}</version>

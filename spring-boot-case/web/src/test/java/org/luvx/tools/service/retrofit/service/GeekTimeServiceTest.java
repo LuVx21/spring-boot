@@ -1,4 +1,4 @@
-package org.luvx.tools.hybrid.retrofit.service;
+package org.luvx.tools.service.retrofit.service;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -8,6 +8,7 @@ import javax.annotation.Resource;
 
 import org.junit.jupiter.api.Test;
 import org.luvx.tools.BaseAppTests;
+import org.luvx.tools.service.retrofit.service.GeekTimeService;
 
 class GeekTimeServiceTest extends BaseAppTests {
     @Resource

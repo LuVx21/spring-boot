@@ -18,7 +18,6 @@
     <modules>
         <module>common</module>
         <module>dao</module>
-        <module>hybrid</module>
         <module>service</module>
         <module>runner</module>
         <module>web</module>
@@ -52,11 +51,6 @@
             <dependency>
                 <groupId>org.luvx.boot</groupId>
                 <artifactId>runner</artifactId>
-                <version>${project.parent.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.luvx.boot</groupId>
-                <artifactId>hybrid</artifactId>
                 <version>${project.parent.version}</version>
             </dependency>
         </dependencies>

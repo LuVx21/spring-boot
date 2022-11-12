@@ -1,4 +1,4 @@
-package org.luvx.tools.hybrid.retrofit.interceptor;
+package org.luvx.tools.service.retrofit.interceptor;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;

@@ -1,10 +1,9 @@
-package org.luvx.tools.hybrid.retrofit;
+package org.luvx.tools.service.retrofit;
 
 import java.util.Map;
 
-import org.luvx.tools.hybrid.retrofit.interceptor.GeekTimeInterceptor;
+import org.luvx.tools.service.retrofit.interceptor.GeekTimeInterceptor;
 
-import com.alibaba.fastjson2.JSONObject;
 import com.github.lianjiatech.retrofit.spring.boot.core.RetrofitClient;
 import com.github.lianjiatech.retrofit.spring.boot.interceptor.Intercept;
 

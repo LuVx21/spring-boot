@@ -1,4 +1,4 @@
-package org.luvx.tools.hybrid.retrofit.service;
+package org.luvx.tools.service.retrofit.service;
 
 import java.io.File;
 import java.io.IOException;
@@ -28,10 +28,10 @@ import com.google.common.util.concurrent.Uninterruptibles;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.luvx.coding.common.util.JSONPathUtils;
-import org.luvx.tools.hybrid.retrofit.GeekTimeApi;
-import org.luvx.tools.hybrid.retrofit.GeekTimeApi.ArticleBody;
-import org.luvx.tools.hybrid.retrofit.GeekTimeApi.ArticlesBody;
-import org.luvx.tools.hybrid.retrofit.GeekTimeApi.IntroBody;
+import org.luvx.tools.service.retrofit.GeekTimeApi;
+import org.luvx.tools.service.retrofit.GeekTimeApi.ArticleBody;
+import org.luvx.tools.service.retrofit.GeekTimeApi.ArticlesBody;
+import org.luvx.tools.service.retrofit.GeekTimeApi.IntroBody;
 import org.springframework.stereotype.Service;
 
 import io.vavr.Tuple2;

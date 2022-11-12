@@ -1,7 +1,6 @@
 package org.luvx.tools;
 
 import org.luvx.tools.dao.config.DaoConfig;
-import org.luvx.tools.hybrid.retrofit.config.HybridConfig;
 import org.luvx.tools.service.config.ServiceConfig;
 import org.luvx.tools.runner.config.RunnerConfig;
 import org.luvx.tools.web.config.WebConfig;
@@ -21,8 +20,7 @@ import lombok.extern.slf4j.Slf4j;
         DaoConfig.class,
         RunnerConfig.class,
         WebConfig.class,
-        ServiceConfig.class,
-        HybridConfig.class
+        ServiceConfig.class
 })
 @SpringBootApplication
 public class ToolApp {

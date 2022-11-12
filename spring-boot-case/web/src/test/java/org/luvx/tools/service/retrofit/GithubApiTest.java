@@ -1,6 +1,5 @@
-package org.luvx.tools.hybrid.retrofit;
+package org.luvx.tools.service.retrofit;
 
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
@@ -8,6 +7,7 @@ import javax.annotation.Resource;
 
 import org.junit.jupiter.api.Test;
 import org.luvx.tools.BaseAppTests;
+import org.luvx.tools.service.retrofit.GithubApi;
 
 class GithubApiTest extends BaseAppTests {
     @Resource
