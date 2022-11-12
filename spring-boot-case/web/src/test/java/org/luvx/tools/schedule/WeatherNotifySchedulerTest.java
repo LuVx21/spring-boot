@@ -2,6 +2,7 @@ package org.luvx.tools.schedule;
 
 import org.junit.jupiter.api.Test;
 import org.luvx.tools.BaseAppTests;
+import org.luvx.tools.runner.WeatherNotifyScheduler;
 import org.springframework.beans.factory.annotation.Autowired;
 
 class WeatherNotifySchedulerTest extends BaseAppTests {
