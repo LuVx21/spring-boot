@@ -12,7 +12,7 @@ class JsonXmlUtilsTest {
         UserVo user = new UserVo();
         user.setUserId(10000L);
         user.setUserName("foo");
-        user.setPassWord("bar");
+        user.setPassword("bar");
         user.setAge(18);
         user.setValid(2);
 

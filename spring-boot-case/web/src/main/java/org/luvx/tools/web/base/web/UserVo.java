@@ -16,14 +16,23 @@ import org.luvx.coding.common.enums.ext.EnumNameSerializer;
 public class UserVo {
     private Long    userId;
     private String  userName;
-    private String  passWord;
+    private String  password;
+    /**
+     * @see Access#WRITE_ONLY 只接受传参,不作为响应参数
+     * @see Access#READ_ONLY 不接受传参,只作为响应参数
+     */
     @JsonProperty(access = Access.WRITE_ONLY)
     private Integer age;
+
     @EnumNameAnno(CommonStatusEnum.class)
     @JsonSerialize(using = EnumNameSerializer.class)
-    private int     valid;
+    private int              valid;
+    /**
+     * 入出参都是直接使用枚举的 code
+     */
+    private CommonStatusEnum status;
 
     public String getTest() {
-        return userName + ":" + passWord;
+        return userName + ":" + password;
     }
 }
