@@ -9,7 +9,7 @@
         <version>0.1</version>
     </parent>
 
-    <artifactId>schedule</artifactId>
+    <artifactId>runner</artifactId>
     <packaging>jar</packaging>
 
     <properties>

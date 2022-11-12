@@ -27,7 +27,7 @@
         </dependency>
         <dependency>
             <groupId>org.luvx.boot</groupId>
-            <artifactId>schedule</artifactId>
+            <artifactId>runner</artifactId>
         </dependency>
         <dependency>
             <groupId>org.luvx.boot</groupId>

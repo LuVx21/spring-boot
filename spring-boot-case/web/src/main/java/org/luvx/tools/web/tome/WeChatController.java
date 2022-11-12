@@ -1,7 +1,8 @@
 package org.luvx.tools.web.tome;
 
 import lombok.extern.slf4j.Slf4j;
-import org.luvx.tools.schedule.WeatherNotifyScheduler;
+
+import org.luvx.tools.runner.WeatherNotifyScheduler;
 import org.luvx.tools.web.utils.JsonXmlUtils;
 import org.luvx.tools.service.tome.wechat.WXBizJsonMsgCrypt;
 import org.springframework.beans.factory.annotation.Autowired;

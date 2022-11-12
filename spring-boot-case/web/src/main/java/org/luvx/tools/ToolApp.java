@@ -2,8 +2,8 @@ package org.luvx.tools;
 
 import org.luvx.tools.dao.config.DaoConfig;
 import org.luvx.tools.hybrid.retrofit.config.HybridConfig;
-import org.luvx.tools.schedule.config.ScheduleConfig;
 import org.luvx.tools.service.config.ServiceConfig;
+import org.luvx.tools.runner.config.RunnerConfig;
 import org.luvx.tools.web.config.WebConfig;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -19,7 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 })
 @Import({
         DaoConfig.class,
-        ScheduleConfig.class,
+        RunnerConfig.class,
         WebConfig.class,
         ServiceConfig.class,
         HybridConfig.class

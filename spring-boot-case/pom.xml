@@ -20,7 +20,7 @@
         <module>dao</module>
         <module>hybrid</module>
         <module>service</module>
-        <module>schedule</module>
+        <module>runner</module>
         <module>web</module>
     </modules>
 
@@ -51,7 +51,7 @@
             </dependency>
             <dependency>
                 <groupId>org.luvx.boot</groupId>
-                <artifactId>schedule</artifactId>
+                <artifactId>runner</artifactId>
                 <version>${project.parent.version}</version>
             </dependency>
             <dependency>
