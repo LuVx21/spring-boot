@@ -10,9 +10,9 @@ docker run -d --name es \
 -p 59300:9300 \
 -e "discovery.type=single-node" \
 -e ES_JAVA_OPTS="-Xms1024m -Xmx1024m" \
-#-v ~/docker/es/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml \
-#-v ~/docker/es/data:/usr/share/elasticsearch/data \
-#-v ~/docker/es/plugins:/usr/share/elasticsearch/plugins \
+-v ~/docker/es/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml \
+-v ~/docker/es/data:/usr/share/elasticsearch/data \
+-v ~/docker/es/plugins:/usr/share/elasticsearch/plugins \
 elasticsearch:7.2.0
 #curl localhost:9200
 ```
@@ -36,10 +36,14 @@ cd config
 ## kibana
 
 ```bash
+mkdir -p ~/docker/kibana/config
+touch ~/docker/kibana/config/kibana.yml
+
 docker run -d --name kibana \
 --link es \
 # -e ELASTICSEARCH_HOSTS="http://172.17.0.2:59200"
-#-e ELASTICSEARCH_URL=http://172.17.0.2:59200 
+#-e ELASTICSEARCH_URL=http://172.17.0.2:59200
+-v ~/docker/kibana/config/kibana.yml:/usr/share/kibana/config/kibana.yml \
 -p 55601:5601 \
 kibana:7.2.0
 ```
