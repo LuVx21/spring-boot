@@ -11,6 +11,7 @@
 
     <artifactId>spring-boot-web</artifactId>
     <packaging>pom</packaging>
+    <version>0.1</version>
 
     <modules>
         <module>spring-boot-thymeleaf</module>
@@ -21,17 +22,12 @@
     </modules>
 
     <properties>
-        <java.version>17</java.version>
     </properties>
 
     <dependencies>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-        <dependency>
             <groupId>org.luvx.boot</groupId>
-            <artifactId>boot-common</artifactId>
+            <artifactId>boot-web</artifactId>
         </dependency>
     </dependencies>
 
