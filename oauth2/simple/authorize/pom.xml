@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>org.luvx.boot</groupId>upId>
+        <groupId>org.luvx.boot</groupId>
         <artifactId>simple</artifactId>
         <version>0.1</version>
     </parent>
