@@ -30,7 +30,7 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.luvx.boot</groupId>upId>
+            <groupId>org.luvx.boot</groupId>
             <artifactId>boot-common</artifactId>
         </dependency>
     </dependencies>
