@@ -11,6 +11,7 @@
 
     <artifactId>spring-boot-case</artifactId>
     <packaging>pom</packaging>
+    <version>0.1</version>
 
     <properties>
     </properties>
@@ -36,22 +37,22 @@
             <dependency>
                 <groupId>org.luvx.boot</groupId>
                 <artifactId>common</artifactId>
-                <version>${project.parent.version}</version>
+                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.luvx.boot</groupId>
                 <artifactId>dao</artifactId>
-                <version>${project.parent.version}</version>
+                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.luvx.boot</groupId>
                 <artifactId>service</artifactId>
-                <version>${project.parent.version}</version>
+                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.luvx.boot</groupId>
                 <artifactId>runner</artifactId>
-                <version>${project.parent.version}</version>
+                <version>${project.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
