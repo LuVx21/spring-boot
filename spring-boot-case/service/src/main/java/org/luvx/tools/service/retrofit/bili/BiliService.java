@@ -16,6 +16,7 @@ import java.util.stream.Collectors;
 import com.alibaba.fastjson2.JSONObject;
 import com.alibaba.fastjson2.JSONPath;
 import com.github.phantomthief.util.MoreFunctions;
+import com.google.common.base.Preconditions;
 import com.google.common.collect.AbstractIterator;
 import com.google.common.collect.Lists;
 
@@ -74,8 +75,8 @@ public class BiliService {
 
         List<String> result = Lists.newArrayList();
         iterator.forEachRemaining(response -> {
-            Object eval = JSONPath.eval(response, "$.data.list.vlist");
-            List<Map<String, Object>> eval1 = (List<Map<String, Object>>) eval;
+            List<Map<String, Object>> eval1 = (List<Map<String, Object>>) JSONPath.eval(response, "$.data.list.vlist");
+            Preconditions.checkNotNull(eval1, "响应:%s", response);
             for (Map<String, Object> map : eval1) {
                 long created = MapUtils.getLongValue(map, "created", -1L);
                 if (created <= createdLast) {
