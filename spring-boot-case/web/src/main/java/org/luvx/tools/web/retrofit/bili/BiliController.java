@@ -1,6 +1,6 @@
 package org.luvx.tools.web.retrofit.bili;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 
 import java.util.Collections;
 import java.util.List;

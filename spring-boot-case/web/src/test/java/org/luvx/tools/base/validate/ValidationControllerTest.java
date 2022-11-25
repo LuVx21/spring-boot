@@ -1,6 +1,6 @@
 package org.luvx.tools.base.validate;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 
 import org.junit.jupiter.api.Test;
 

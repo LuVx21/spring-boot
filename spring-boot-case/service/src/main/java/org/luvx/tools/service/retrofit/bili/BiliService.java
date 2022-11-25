@@ -1,7 +1,7 @@
 package org.luvx.tools.service.retrofit.bili;
 
-import javax.annotation.Resource;
 
+import jakarta.annotation.Resource;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;

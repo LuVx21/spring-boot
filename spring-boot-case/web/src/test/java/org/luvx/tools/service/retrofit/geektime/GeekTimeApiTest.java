@@ -2,7 +2,7 @@ package org.luvx.tools.service.retrofit.geektime;
 
 import java.util.Map;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 
 import org.junit.jupiter.api.Test;
 import org.luvx.tools.BaseAppTests;

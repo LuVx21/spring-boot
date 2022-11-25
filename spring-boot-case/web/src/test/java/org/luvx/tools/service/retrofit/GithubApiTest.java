@@ -3,7 +3,7 @@ package org.luvx.tools.service.retrofit;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 
 import org.junit.jupiter.api.Test;
 import org.luvx.tools.BaseAppTests;
