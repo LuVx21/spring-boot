@@ -4,7 +4,7 @@ import com.alibaba.fastjson2.JSONObject;
 import com.github.lianjiatech.retrofit.spring.boot.core.RetrofitClient;
 import com.github.lianjiatech.retrofit.spring.boot.interceptor.Intercept;
 
-import org.luvx.tools.service.retrofit.interceptor.UserAgentInterceptor;
+import org.luvx.tools.service.retrofit.interceptor.common.UserAgentInterceptor;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 
