@@ -2,7 +2,7 @@ package org.luvx.boot.flowable.config;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import org.luvx.common.enums.EnumHasCode;
+import org.luvx.coding.common.enums.EnumHasCode;
 
 @AllArgsConstructor
 public enum FlowComment implements EnumHasCode<String> {
