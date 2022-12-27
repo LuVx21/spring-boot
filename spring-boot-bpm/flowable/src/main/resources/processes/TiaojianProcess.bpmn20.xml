@@ -44,7 +44,7 @@
 <!--        <sequenceFlow id="flow2" sourceRef="fillTask" targetRef="judgeTask"/>-->
 
         <sequenceFlow id="xiaoyudengyu500" name="小于等于500元" sourceRef="judgeTask" targetRef="director1Task">
-            <conditionExpression xsi:type="tFormalExpression"><![CDATA[${(money <= 500) && (var:contains(nums,400)) && (!var:contains(nums,500)) && (var:containsAny(nums,400,500)) && (!var:containsAny(nums,500,600)) && (customFunc.inFunc(taskUser,'123,456')) && (!customFunc.inFunc(taskUser,'789,120')) }]]></conditionExpression>
+            <conditionExpression xsi:type="tFormalExpression"><![CDATA[${(money <= 500) && (var:contains(nums,400)) && (!var:contains(nums,500)) && (var:containsAny(nums,400,500)) && (!var:containsAny(nums,500,600)) && (var:containsAny(taskUser,'1','2')) && (!var:containsAny(taskUser,'4','5')) && (customFunc.inFunc(taskUser,'123,456')) && (!customFunc.inFunc(taskUser,'789,120')) }]]></conditionExpression>
         </sequenceFlow>
         <sequenceFlow id="xiaoyudengyu1000" name="小于等于1000" sourceRef="judgeTask" targetRef="director2Task">
             <conditionExpression xsi:type="tFormalExpression"><![CDATA[${money <= 1000}]]></conditionExpression>
