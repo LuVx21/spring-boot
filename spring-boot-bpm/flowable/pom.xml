@@ -7,19 +7,26 @@
         <groupId>org.luvx.boot</groupId>
         <artifactId>spring-boot-bpm</artifactId>
         <version>0.1</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>flowable</artifactId>
     <packaging>jar</packaging>
 
     <properties>
-        <flowable.version>6.7.2</flowable.version>
+        <flowable.version>6.4.2</flowable.version>
     </properties>
 
     <dependencies>
         <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.11.0</version>
+        </dependency>
+
+        <dependency>
             <groupId>org.luvx.boot</groupId>
-            <artifactId>boot-common</artifactId>
+            <artifactId>boot-web</artifactId>
         </dependency>
         <dependency>
             <groupId>mysql</groupId>

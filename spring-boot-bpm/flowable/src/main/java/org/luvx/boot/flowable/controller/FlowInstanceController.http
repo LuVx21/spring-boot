@@ -5,7 +5,8 @@ Content-Type: application/json;charset=UTF-8
 
 {
     "taskUser": "123",
-    "money": 123321
+    "money": 123321,
+    "nums": [100,200,300,400]
 }
 
 
