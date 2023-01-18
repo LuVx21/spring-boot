@@ -25,6 +25,7 @@ public class User {
     private Long          id;
     private String        userName;
     private String        password;
+    @Field
     private Integer       age;
     @Field(type = FieldType.Date, format = DateFormat.date_hour_minute_second)
     private LocalDateTime birthday;
