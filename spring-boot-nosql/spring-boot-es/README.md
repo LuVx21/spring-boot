@@ -13,7 +13,7 @@ docker run -d --name es \
 -v ~/docker/es/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml \
 -v ~/docker/es/data:/usr/share/elasticsearch/data \
 -v ~/docker/es/plugins:/usr/share/elasticsearch/plugins \
-elasticsearch:7.2.0
+elasticsearch:7.17.9
 #curl localhost:9200
 ```
 
@@ -45,7 +45,7 @@ docker run -d --name kibana \
 #-e ELASTICSEARCH_URL=http://172.17.0.2:59200
 -v ~/docker/kibana/config/kibana.yml:/usr/share/kibana/config/kibana.yml \
 -p 55601:5601 \
-kibana:7.2.0
+kibana:7.17.9
 ```
 
 启动出现问题可尝试
@@ -98,4 +98,26 @@ EOF
 .bin/elasticsearch
 
 .bin/kibana
+```
+
+## 新版
+
+```bash
+docker network create elastic
+
+docker run \
+--name es8 \
+--net elastic \
+-p 59200:9200 \
+-p 59300:9300 \
+-e ES_JAVA_OPTS="-Xms1024m -Xmx1024m" \
+-t elasticsearch:8.5.3
+```
+
+```bash
+docker run \
+--name kibana8 \
+--net elastic \
+-p 55601:5601 \
+kibana:8.5.3
 ```
