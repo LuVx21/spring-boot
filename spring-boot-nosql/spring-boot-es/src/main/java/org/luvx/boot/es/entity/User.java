@@ -29,4 +29,6 @@ public class User {
     private Integer       age;
     @Field(type = FieldType.Date, format = DateFormat.date_hour_minute_second)
     private LocalDateTime birthday;
+    @Field(type = FieldType.Keyword)
+    private String        remark;
 }
