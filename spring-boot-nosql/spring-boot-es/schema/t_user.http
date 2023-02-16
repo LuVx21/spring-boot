@@ -117,13 +117,7 @@ PUT http://luvx:59200/t_user
                 "type": "integer"
             },
             "remark": {
-                "type": "text",
-                "fields": {
-                    "keyword": {
-                        "type": "keyword",
-                        "ignore_above": 256
-                    }
-                }
+                "type": "keyword"
             },
             "viewFormData": {
                 "properties": {
