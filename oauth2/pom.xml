@@ -20,7 +20,6 @@
 
     <modules>
         <module>simple</module>
-        <module>oidc</module>
         <module>jwt</module>
     </modules>
 
@@ -36,7 +35,7 @@
             <optional>true</optional>
         </dependency>
         <dependency>
-            <groupId>org.luvx.boot</groupId>
+            <groupId>org.luvx.coding</groupId>
             <artifactId>coding-common</artifactId>
             <version>0.1</version>
         </dependency>
