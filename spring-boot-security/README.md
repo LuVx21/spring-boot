@@ -19,3 +19,7 @@ CREATE TABLE `persistent_logins`
     PRIMARY KEY (`series`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 ```
+
+https://blog.didispace.com/spring-authorization-server-config/
+
+https://docs.spring.io/spring-authorization-server/docs/current/reference/html/getting-started.html

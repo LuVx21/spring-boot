@@ -5,7 +5,7 @@
 
     <parent>
         <groupId>org.luvx.boot</groupId>
-        <artifactId>coding-spring-boot-java-parent</artifactId>
+        <artifactId>coding-parent-boot-java</artifactId>
         <version>0.1</version>
     </parent>
 
@@ -20,6 +20,7 @@
     <modules>
         <module>form-login</module>
         <module>ldap</module>
+        <module>oauth2</module>
     </modules>
 
     <dependencies>
