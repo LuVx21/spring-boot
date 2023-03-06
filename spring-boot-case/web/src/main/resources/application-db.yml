@@ -6,7 +6,7 @@ spring:
     password: 1121
   data:
     mongodb:
-      uri: mongodb://boot_rw:1121@luvx:57017/boot?authSource=boot&authMechanism=SCRAM-SHA-1
+      uri: mongodb+srv://xxx:xxx@cluster0.r8xxd.mongodb.net/boot
 
 logging:
   level:
