@@ -1,5 +1,6 @@
 package org.luvx.tools.service.retrofit.service;
 
+import javax.annotation.Resource;
 import java.io.File;
 import java.io.IOException;
 import java.text.MessageFormat;
@@ -11,33 +12,37 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
+import java.util.function.BiConsumer;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-
-import javax.annotation.Resource;
 
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONArray;
 import com.alibaba.fastjson2.JSONObject;
 import com.google.common.base.Charsets;
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Iterators;
 import com.google.common.collect.Maps;
 import com.google.common.io.Files;
+import com.google.common.util.concurrent.RateLimiter;
 import com.google.common.util.concurrent.Uninterruptibles;
-
-import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.math.NumberUtils;
-import org.luvx.coding.common.util.JSONPathUtils;
-import org.luvx.tools.service.retrofit.GeekTimeApi;
-import org.luvx.tools.service.retrofit.GeekTimeApi.ArticleBody;
-import org.luvx.tools.service.retrofit.GeekTimeApi.ArticlesBody;
-import org.luvx.tools.service.retrofit.GeekTimeApi.IntroBody;
-import org.springframework.stereotype.Service;
 
 import io.vavr.Tuple2;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.math.NumberUtils;
+import org.luvx.coding.common.cursor.CursorIteratorEx;
+import org.luvx.coding.common.util.JSONPathUtils;
+import org.luvx.tools.service.retrofit.GeekTimeApi;
+import org.luvx.tools.service.retrofit.GeekTimeApi.ArticleBody;
+import org.luvx.tools.service.retrofit.GeekTimeApi.ArticlesBody;
+import org.luvx.tools.service.retrofit.GeekTimeApi.CommentBody;
+import org.luvx.tools.service.retrofit.GeekTimeApi.IntroBody;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.stereotype.Service;
 
 @Service
 public class GeekTimeService {
@@ -56,8 +61,13 @@ public class GeekTimeService {
 
     private final OkHttpClient client = new OkHttpClient();
 
+    private static final String TABLE_NAME_COMMENT = "geek_comment";
+    private static final String TABLE_NAME_ARTICLE = "geek_article";
+
     @Resource
-    private GeekTimeApi geekTimeApi;
+    private GeekTimeApi   geekTimeApi;
+    @Resource
+    private MongoTemplate mongoTemplate;
 
     public void downloadCourse(Collection<Long> courseIds) throws IOException {
         for (Long courseId : courseIds) {
@@ -141,35 +151,26 @@ public class GeekTimeService {
      * @param articleId 文章id
      */
     public void downloadArticle(Long courseId, Long articleId) throws IOException {
-        JSONObject json = getArticleJson(courseId, articleId);
+        String courseDirName = courseId + "_" + course.get(courseId);
+        String originalJson = getArticleJson(courseId, articleId);
+        // 保存原始 json
+        write(originalJson, jsonDir + courseDirName + File.separator + articleId + ".json");
+
+        JSONObject json = JSONObject.parseObject(originalJson);
         JSONObject data = json.getJSONObject("data");
+
+        data.put("_id", data.getLong("id"));
+        mongoTemplate.save(data.toJSONString(), TABLE_NAME_ARTICLE);
 
         String article_title = data.getString("article_title");
         // String article_cover = data.getString("article_cover");
         String mp3Url = data.getString("audio_download_url");
         String articleContent = data.getString("article_content");
 
-        String preNext = getPrefixOfMd(courseId, articleId);
-        StringBuilder content = new StringBuilder(preNext);
-        content.append(StringUtils.isEmpty(preNext) ? "" : "\n\n")
-                .append("<h2>").append(article_title).append("</h2>")
-                .append("\n\n");
-        // if (article_cover != null) {
-        //     content.append("<img src=\"" + article_cover + "\">")
-        //     .append("\n\n");
-        // }
-        if (mp3Url != null) {
-            content.append("<audio controls=\"controls\"><source src=\"").append(mp3Url)
-                    .append("\" type=\"audio/mpeg\"></audio>").append("\n\n");
-        }
-        content.append(articleContent)
-                .append("\n\n")
-                .append(preNext);
-
-        String courseDirName = courseId + "_" + course.get(courseId);
-        write(json.toJSONString(), jsonDir + courseDirName + File.separator + articleId + ".json");
-        write(content.toString(), docDir + courseDirName + File.separator + articleId + ".md");
-        write(content.toString(), root + courseDirName + File.separator + article_title + ".html");
+        genMarkdownOrHtml(docDir + courseDirName + File.separator + articleId + ".md", genIndex(courseId, articleId, true),
+                article_title, mp3Url, articleContent);
+        // genMarkdownOrHtml(root + courseDirName + File.separator + article_title + ".html", genIndex(courseId, articleId, false),
+        //         article_title, mp3Url, articleContent);
 
         /// 保存音频文件
         if (false) {
@@ -185,21 +186,62 @@ public class GeekTimeService {
         }
     }
 
-    private JSONObject getArticleJson(Long courseId, Long articleId) throws IOException {
-        JSONObject json;
+    private void genMarkdownOrHtml(String path, String index, String article_title, String mp3Url, String articleContent)
+            throws IOException {
+        StringBuilder content = new StringBuilder(index);
+        content.append(StringUtils.isEmpty(index) ? "" : "\n\n")
+                .append("<h2>").append(article_title).append("</h2>")
+                .append("\n\n");
+        // if (article_cover != null) {
+        //     content.append("<img src=\"" + article_cover + "\">")
+        //     .append("\n\n");
+        // }
+        if (mp3Url != null) {
+            content.append("<audio controls=\"controls\"><source src=\"").append(mp3Url)
+                    .append("\" type=\"audio/mpeg\"></audio>").append("\n\n");
+        }
+        content.append(articleContent)
+                .append("\n\n")
+                .append(index);
+
+        write(content.toString(), path);
+    }
+
+    /**
+     * 文章的内容
+     */
+    public String getArticleJson(Long courseId, Long articleId) throws IOException {
+        String json;
         if (online) {
-            ArticleBody body1 = new ArticleBody();
-            body1.setId(articleId + "");
-            Map<String, Object> response = geekTimeApi.article(body1);
-            json = JSON.parseObject(JSON.toJSONString(response));
+            ArticleBody body = new ArticleBody();
+            body.setId(articleId + "");
+            json = geekTimeApi.article(body);
         } else {
             String path = jsonDir + courseId + "_" + course.get(courseId) + File.separator + articleId + ".json";
-            json = JSONObject.parseObject(read(path));
+            json = read(path);
         }
         return json;
     }
 
-    private String getPrefixOfMd(Long courseId, Long articleId) {
+    private String genIndex(Long courseId, Long articleId, boolean md) {
+        // if (false) {
+        //     return "";
+        // }
+        BiConsumer<StringBuilder, Long> pre = (sb, l) -> {
+            if (md) {
+                sb.append("[上一篇](./").append(l).append(".md)");
+            } else {
+                sb.append("<a href=\"./").append(l).append(".html\">上一篇</a>");
+            }
+        };
+        BiConsumer<StringBuilder, Long> next = (sb, l) -> {
+            if (md) {
+                sb.append("               [下一篇](./").append(l).append(".md)");
+            } else {
+                sb.append("               <a href=\"./").append(l).append(".html\">下一篇</a>");
+            }
+        };
+
         StringBuilder content = new StringBuilder();
         // 文章内部增加跳转到前后篇以及目录
         List<Tuple2<Long, String>> pairs = map.get(courseId);
@@ -210,39 +252,14 @@ public class GeekTimeService {
             }
 
             if (i >= 1) {
-                content.append("[上一篇](./").append(pairs.get(i - 1)._1()).append(".md)");
+                pre.accept(content, pairs.get(i - 1)._1());
             }
             if (content.length() == 0) {
                 content.append("           ");
             }
             content.append("               [目录](./README.md)");
             if (i + 1 < pairs.size()) {
-                content.append("               [下一篇](./").append(pairs.get(i + 1)._1()).append(".md)");
-            }
-            break;
-        }
-        return content.toString().replaceAll(" ", "&nbsp;");
-    }
-
-    private String getPrefixOfHtml(Long courseId, Long articleId) {
-        StringBuilder content = new StringBuilder();
-        // 文章内部增加跳转到前后篇以及目录
-        List<Tuple2<Long, String>> pairs = map.get(courseId);
-        for (int i = 0; i < pairs.size(); i++) {
-            Tuple2<Long, String> pair = pairs.get(i);
-            if (!pair._1().equals(articleId)) {
-                continue;
-            }
-
-            if (i >= 1) {
-                content.append("<a href=\"./").append(pairs.get(i - 1)._1()).append(".html\">上一篇</a>");
-            }
-            if (content.length() == 0) {
-                content.append("           ");
-            }
-            content.append("               [目录](./README.md)");
-            if (i + 1 < pairs.size()) {
-                content.append("               [下一篇](./").append(pairs.get(i + 1)._1()).append(".md)");
+                next.accept(content, pairs.get(i + 1)._1());
             }
             break;
         }
@@ -301,6 +318,46 @@ public class GeekTimeService {
                 course.put(Long.valueOf(split[0]), split[1]);
             });
         }
+    }
+
+    /**
+     * 获取文章的评论
+     */
+    public void getCommentOfArticle(String articleId) {
+        final CommentBody body = new CommentBody();
+        body.setAid(articleId);
+
+        CursorIteratorEx<JSONObject, String, JSONArray> cursorIterator =
+                CursorIteratorEx.<JSONObject, String, JSONArray> builder()
+                        .withInitCursor("0")
+                        .withEndChecker(StringUtils::isEmpty)
+                        .firstCursorCheckEnd(true)
+                        .withRateLimiter(RateLimiter.create(0.16))
+                        .withDataAccessor((String cursor) -> {
+                            body.setPrev(cursor);
+                            String json = geekTimeApi.comments(body);
+                            JSONObject comments = JSONObject.parseObject(json);
+                            JSONObject data = comments.getJSONObject("data");
+                            return data.getJSONArray("list");
+                        })
+                        .withDataExtractor(
+                                jsonArray -> Iterators.transform(jsonArray.iterator(), (a) -> (JSONObject) a)
+                        )
+                        .withCursorExtractor((JSONArray _list) -> {
+                            // 接口默认分页 20
+                            if (CollectionUtils.size(_list) < 20) {
+                                return null;
+                            }
+                            JSONObject last = _list.getJSONObject(_list.size() - 1);
+                            return last.getString("score");
+                        }).build();
+
+        long _articleId = NumberUtils.toLong(articleId);
+        cursorIterator.forEach(jsonObject -> {
+            jsonObject.put("_id", jsonObject.getLongValue("id"));
+            jsonObject.put("article_id", _articleId);
+            mongoTemplate.save(jsonObject.toJSONString(), TABLE_NAME_COMMENT);
+        });
     }
 
     public static String read(String path) throws IOException {

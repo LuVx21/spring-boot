@@ -26,6 +26,10 @@
 
     <dependencies>
         <dependency>
+            <groupId>org.luvx.coding</groupId>
+            <artifactId>coding-manifold</artifactId>
+        </dependency>
+        <dependency>
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-all</artifactId>
             <version>5.8.8</version>

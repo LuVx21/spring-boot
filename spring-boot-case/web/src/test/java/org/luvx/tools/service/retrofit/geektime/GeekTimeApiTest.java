@@ -35,7 +35,7 @@ class GeekTimeApiTest extends BaseAppTests {
     void article() {
         ArticleBody body = new ArticleBody();
         body.setId("566666");
-        Map<String, Object> response = geekTimeApi.article(body);
-        System.out.println(response);
+        String json = geekTimeApi.article(body);
+        System.out.println(json);
     }
 }

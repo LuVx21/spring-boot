@@ -40,7 +40,7 @@ import static java.util.Objects.requireNonNullElse;
 public class BiliService {
     @Resource
     private BiliApi       api;
-    @Autowired
+    @Resource
     private MongoTemplate mongoTemplate;
 
     private final String      tableName = "bili";
