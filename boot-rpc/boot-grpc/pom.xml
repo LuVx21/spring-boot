@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.luvx.boot</groupId>
+        <artifactId>boot-rpc</artifactId>
+        <version>0.1</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+
+    <artifactId>boot-grpc</artifactId>
+    <packaging>pom</packaging>
+
+    <properties>
+        <grpc.version>1.51.0</grpc.version>
+        <protoc.version>3.21.9</protoc.version>
+        <protobuf.plugin.version>0.6.1</protobuf.plugin.version>
+        <os.plugin.version>1.7.1</os.plugin.version>
+        <grpc.starter.version>2.14.0.RELEASE</grpc.starter.version>
+    </properties>
+
+    <modules>
+        <module>service-sdk</module>
+        <module>service-impl</module>
+        <module>service-client</module>
+    </modules>
+
+    <dependencies>
+    </dependencies>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.luvx.boot</groupId>
+                <artifactId>service-sdk</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+
+    <build>
+        <pluginManagement>
+        </pluginManagement>
+    </build>
+
+</project>

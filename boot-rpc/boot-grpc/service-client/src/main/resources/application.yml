@@ -1,0 +1,15 @@
+server:
+  http2:
+    enabled: true
+
+spring:
+  application:
+    name: service-client
+
+grpc:
+  client:
+    service-impl:
+      address: 'localhost:9090'
+      enableKeepAlive: true
+      keepAliveWithoutCalls: true
+      negotiationType: plaintext

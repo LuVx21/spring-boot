@@ -1,0 +1,34 @@
+syntax = "proto3";
+
+package luvx.user;
+
+option java_multiple_files = true;
+option java_package = "org.luvx.boot.rpc.grpc.service.proto.user";
+option java_outer_classname = "UserProto";
+//option objc_class_prefix = "HLW";
+
+service UserInfo {
+  rpc selectUserInfo (UserRequest) returns (UserResponse) {}
+  rpc selectUserInfo1 (UserRequest) returns (stream UserResponse) {}
+  rpc selectUserInfo2 (stream UserRequest) returns (UserResponseList) {}
+  rpc selectUserInfo3 (stream UserRequest) returns (stream UserResponse) {}
+}
+
+service UserOperate {
+  rpc updatePassword (UserRequest) returns (UserResponse) {}
+}
+
+message UserRequest {
+  uint64 id = 1;
+  string name = 2;
+  string password = 3;
+  int32 age = 4;
+}
+
+message UserResponse {
+  string message = 1;
+}
+
+message UserResponseList {
+  repeated UserResponse users = 1;
+}
