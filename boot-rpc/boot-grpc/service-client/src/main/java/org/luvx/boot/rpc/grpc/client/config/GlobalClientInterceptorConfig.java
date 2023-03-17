@@ -8,7 +8,7 @@ import net.devh.boot.grpc.client.interceptor.GrpcGlobalClientInterceptor;
 
 @Order(Ordered.LOWEST_PRECEDENCE)
 @Configuration(proxyBeanMethods = false)
-public class GlobalClientInterceptorConfiguration {
+public class GlobalClientInterceptorConfig {
     @GrpcGlobalClientInterceptor
     LogGrpcInterceptor logClientInterceptor() {
         return new LogGrpcInterceptor();

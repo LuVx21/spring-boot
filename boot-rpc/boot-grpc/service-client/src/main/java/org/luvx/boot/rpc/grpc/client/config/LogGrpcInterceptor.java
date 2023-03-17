@@ -5,6 +5,7 @@ import io.grpc.Channel;
 import io.grpc.ClientCall;
 import io.grpc.ClientInterceptor;
 import io.grpc.ForwardingClientCall;
+import io.grpc.ForwardingClientCall.SimpleForwardingClientCall;
 import io.grpc.ForwardingClientCallListener;
 import io.grpc.Metadata;
 import io.grpc.MethodDescriptor;
@@ -19,8 +20,9 @@ public class LogGrpcInterceptor implements ClientInterceptor {
             CallOptions callOptions,
             Channel next
     ) {
-        log.info("客户端请求:{}", method.getFullMethodName());
-        return new ForwardingClientCall.SimpleForwardingClientCall<>(next.newCall(method, callOptions)) {
+        log.info("客户端请求服务:{}", method.getFullMethodName());
+        ClientCall<ReqT, RespT> clientCall = next.newCall(method, callOptions);
+        return new SimpleForwardingClientCall<>(clientCall) {
             @Override
             public void sendMessage(ReqT message) {
                 log.info("请求参数->{}", message);
