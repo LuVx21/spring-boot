@@ -1,9 +1,9 @@
 package org.luvx.boot.rpc.grpc.service.config;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+
+import com.google.common.collect.Lists;
 
 import lombok.extern.slf4j.Slf4j;
 import net.devh.boot.grpc.server.security.authentication.BasicGrpcAuthenticationReader;
@@ -22,6 +22,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import static java.util.Collections.singletonList;
+
 @Slf4j
 @Configuration(proxyBeanMethods = false)
 @EnableGlobalMethodSecurity(securedEnabled = true, proxyTargetClass = true)
@@ -32,49 +34,43 @@ public class SecurityConfiguration {
     }
 
     @Bean
-    UserDetailsService userDetailsService(final PasswordEncoder passwordEncoder) {
+    UserDetailsService userDetailsService(PasswordEncoder passwordEncoder) {
         return username -> {
             log.debug("Searching user: {}", username);
+            List<SimpleGrantedAuthority> authorities = Collections.emptyList();
             switch (username) {
-                case "guest": {
-                    return new User(username, passwordEncoder.encode(username + "Password"), Collections.emptyList());
+                case "guest" -> {
                 }
-                case "user": {
-                    final List<SimpleGrantedAuthority> authorities =
-                            Arrays.asList(new SimpleGrantedAuthority("ROLE_GREET"));
-                    return new User(username, passwordEncoder.encode(username + "Password"), authorities);
-                }
-                default: {
-                    throw new UsernameNotFoundException("Could not find user!");
-                }
+                case "user" -> authorities = singletonList(new SimpleGrantedAuthority("ROLE_GREET"));
+                default -> throw new UsernameNotFoundException("Could not find user!");
             }
+            return new User(username, passwordEncoder.encode(username + "Password"), authorities);
         };
     }
 
     @Bean
-    DaoAuthenticationProvider daoAuthenticationProvider(
-            final UserDetailsService userDetailsService,
-            final PasswordEncoder passwordEncoder) {
-
-        final DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+    DaoAuthenticationProvider daoAuthenticationProvider(UserDetailsService userDetailsService,
+            PasswordEncoder passwordEncoder) {
+        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
         provider.setUserDetailsService(userDetailsService);
         provider.setPasswordEncoder(passwordEncoder);
         return provider;
     }
 
     @Bean
-    AuthenticationManager authenticationManager(final DaoAuthenticationProvider daoAuthenticationProvider) {
-        final List<AuthenticationProvider> providers = new ArrayList<>();
-        providers.add(daoAuthenticationProvider);
+    AuthenticationManager authenticationManager(DaoAuthenticationProvider daoAuthenticationProvider) {
+        List<AuthenticationProvider> providers = Lists.newArrayList(daoAuthenticationProvider);
         return new ProviderManager(providers);
     }
 
     @Bean
     GrpcAuthenticationReader authenticationReader() {
         return new BasicGrpcAuthenticationReader();
-        // final List<GrpcAuthenticationReader> readers = new ArrayList<>();
-        // readers.add(new BasicGrpcAuthenticationReader());
-        // readers.add(new SSLContextGrpcAuthenticationReader());
+
+        // List<GrpcAuthenticationReader> readers = Lists.newArrayList(
+        //         new BasicGrpcAuthenticationReader(),
+        //         new SSLContextGrpcAuthenticationReader()
+        // );
         // return new CompositeGrpcAuthenticationReader(readers);
     }
 }
