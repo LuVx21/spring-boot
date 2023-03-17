@@ -17,40 +17,37 @@ public class LogGrpcInterceptor implements ClientInterceptor {
     public <ReqT, RespT> ClientCall<ReqT, RespT> interceptCall(
             MethodDescriptor<ReqT, RespT> method,
             CallOptions callOptions,
-            Channel next) {
-
-        log.info("Received call to {}", method.getFullMethodName());
-        return new ForwardingClientCall.SimpleForwardingClientCall<ReqT, RespT>(next.newCall(method, callOptions)) {
-
+            Channel next
+    ) {
+        log.info("客户端请求:{}", method.getFullMethodName());
+        return new ForwardingClientCall.SimpleForwardingClientCall<>(next.newCall(method, callOptions)) {
             @Override
             public void sendMessage(ReqT message) {
-                log.debug("Request message: {}", message);
+                log.info("请求参数->{}", message);
                 super.sendMessage(message);
             }
 
             @Override
             public void start(Listener<RespT> responseListener, Metadata headers) {
-                super.start(
-                        new ForwardingClientCallListener.SimpleForwardingClientCallListener<RespT>(responseListener) {
-                            @Override
-                            public void onMessage(RespT message) {
-                                log.debug("Response message: {}", message);
-                                super.onMessage(message);
-                            }
+                super.start(new ForwardingClientCallListener.SimpleForwardingClientCallListener<>(responseListener) {
+                    @Override
+                    public void onMessage(RespT message) {
+                        log.info("响应内容->{}", message);
+                        super.onMessage(message);
+                    }
 
-                            @Override
-                            public void onHeaders(Metadata headers) {
-                                log.debug("gRPC headers: {}", headers);
-                                super.onHeaders(headers);
-                            }
+                    @Override
+                    public void onHeaders(Metadata headers) {
+                        log.info("请求头:{}", headers);
+                        super.onHeaders(headers);
+                    }
 
-                            @Override
-                            public void onClose(Status status, Metadata trailers) {
-                                log.info("Interaction ends with status: {}", status);
-                                log.info("Trailers: {}", trailers);
-                                super.onClose(status, trailers);
-                            }
-                        }, headers);
+                    @Override
+                    public void onClose(Status status, Metadata trailers) {
+                        log.info("交互状态:{},元数据:{}", status, trailers);
+                        super.onClose(status, trailers);
+                    }
+                }, headers);
             }
         };
     }

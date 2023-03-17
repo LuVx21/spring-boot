@@ -14,15 +14,18 @@ public class GrpcClientController {
     @Resource
     private GrpcClientService grpcClientService;
 
-    @RequestMapping("/test")
+    @RequestMapping("/selectUserInfo")
     public R<Object> printMessage(@RequestParam(defaultValue = "name") String name) {
         UserResponse userResponse = grpcClientService.selectUserInfo(name);
         return R.success(userResponse.getMessage());
     }
 
-    @RequestMapping("/test1")
-    public R<Object> updatePassword(@RequestParam(defaultValue = "password") String password) {
-        UserResponse userResponse = grpcClientService.updatePassword(password);
+    @RequestMapping("/updatePassword")
+    public R<Object> updatePassword(
+            long id,
+            @RequestParam(defaultValue = "password") String password
+    ) {
+        UserResponse userResponse = grpcClientService.updatePassword(id, password);
         return R.success(userResponse.getMessage());
     }
 }

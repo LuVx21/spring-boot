@@ -23,8 +23,11 @@ public class GrpcClientService {
         return userResponse;
     }
 
-    public UserResponse updatePassword(String password) {
-        UserRequest request = UserRequest.newBuilder().setName(password).build();
+    public UserResponse updatePassword(long id, String password) {
+        UserRequest request = UserRequest.newBuilder()
+                .setId(id)
+                .setPassword(password)
+                .build();
         UserResponse userResponse = userOperateBlockingStub.updatePassword(request);
         log.info("入:{} 出:{}", password, userResponse);
         return userResponse;

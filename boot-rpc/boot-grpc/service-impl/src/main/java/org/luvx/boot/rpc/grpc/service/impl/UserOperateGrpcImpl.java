@@ -14,8 +14,11 @@ public class UserOperateGrpcImpl extends UserOperateImplBase {
     @Override
     @Secured("ROLE_GREET")
     public void updatePassword(UserRequest request, StreamObserver<UserResponse> responseObserver) {
+        long id = request.getId();
+        String password = request.getPassword();
+        String msg = "用户:%d 更新密码为%s".formatted(id, password);
         UserResponse response = UserResponse.newBuilder()
-                .setMessage("更新密码..." + request.getId())
+                .setMessage(msg)
                 .build();
 
         responseObserver.onNext(response);
