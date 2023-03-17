@@ -5,9 +5,10 @@ import java.util.List;
 import java.util.Map;
 
 import org.junit.jupiter.api.Test;
+import org.luvx.boot.tools.service.commonkv.CommonKeyValueService;
 import org.luvx.tools.BaseAppTests;
-import org.luvx.tools.dao.entity.User;
-import org.luvx.tools.service.commonkv.constant.CommonKVBizType;
+import org.luvx.boot.tools.dao.entity.User;
+import org.luvx.boot.tools.service.commonkv.constant.CommonKVBizType;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import lombok.extern.slf4j.Slf4j;

@@ -6,7 +6,7 @@ import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
 import org.luvx.boot.common.exception.BizException;
 import org.luvx.boot.web.response.R;
-import org.luvx.tools.service.shorturl.service.ShortenUrlService;
+import org.luvx.boot.tools.service.shorturl.service.ShortenUrlService;
 import org.luvx.tools.web.shorturl.entity.request.GetLongUrlReq;
 import org.luvx.tools.web.shorturl.entity.request.GetShortUrlReq;
 import org.luvx.tools.web.shorturl.entity.response.GetLongUrlResp;

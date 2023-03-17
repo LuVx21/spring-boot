@@ -3,8 +3,8 @@ package org.luvx.tools.web;
 import lombok.extern.slf4j.Slf4j;
 
 import org.luvx.boot.web.response.R;
-import org.luvx.tools.dao.entity.User;
-import org.luvx.tools.dao.mapper.UserMapper;
+import org.luvx.boot.tools.dao.entity.User;
+import org.luvx.boot.tools.dao.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;

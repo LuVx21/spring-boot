@@ -2,9 +2,10 @@ package org.luvx.tools.service.tome;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.luvx.tools.service.tome.pojo.Content;
-import org.luvx.tools.service.tome.pojo.MarkdownType;
-import org.luvx.tools.service.tome.pojo.TextType;
+import org.luvx.boot.tools.service.tome.WeChatService;
+import org.luvx.boot.tools.service.tome.pojo.Content;
+import org.luvx.boot.tools.service.tome.pojo.MarkdownType;
+import org.luvx.boot.tools.service.tome.pojo.TextType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -16,7 +17,7 @@ import java.io.IOException;
 public class TomeAppTest {
 
     @Autowired
-    WeChatService          weChatService;
+    WeChatService weChatService;
 
     @Test
     void m1() throws IOException, InterruptedException {

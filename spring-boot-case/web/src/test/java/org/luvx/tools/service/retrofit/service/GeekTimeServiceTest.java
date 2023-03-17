@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.junit.jupiter.api.Test;
+import org.luvx.boot.tools.service.retrofit.GeekTimeService;
 import org.luvx.tools.BaseAppTests;
 
 class GeekTimeServiceTest extends BaseAppTests {

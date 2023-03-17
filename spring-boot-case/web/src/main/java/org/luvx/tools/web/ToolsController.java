@@ -10,8 +10,8 @@ import javax.annotation.Resource;
 
 import org.apache.commons.collections4.MapUtils;
 import org.luvx.boot.web.response.R;
-import org.luvx.tools.service.retrofit.interceptor.GeekTimeInterceptor;
-import org.luvx.tools.service.retrofit.service.GeekTimeService;
+import org.luvx.boot.tools.service.api.interceptor.GeekTimeInterceptor;
+import org.luvx.boot.tools.service.retrofit.GeekTimeService;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;

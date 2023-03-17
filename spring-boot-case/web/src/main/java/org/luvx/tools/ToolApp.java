@@ -1,8 +1,8 @@
 package org.luvx.tools;
 
-import org.luvx.tools.dao.config.DaoConfig;
-import org.luvx.tools.service.config.ServiceConfig;
-import org.luvx.tools.runner.config.RunnerConfig;
+import org.luvx.boot.tools.dao.config.DaoConfig;
+import org.luvx.boot.tools.service.config.ServiceConfig;
+import org.luvx.boot.tools.runner.config.RunnerConfig;
 import org.luvx.tools.web.config.WebConfig;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
