@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>org.luvx.boot</groupId>
-        <artifactId>spring-boot-dubbo</artifactId>
+        <artifactId>boot-dubbo</artifactId>
         <version>0.1</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
@@ -15,27 +15,20 @@
     <dependencies>
         <dependency>
             <groupId>org.luvx.boot</groupId>
-            <artifactId>api</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter</artifactId>
+            <artifactId>sdk</artifactId>
         </dependency>
 
         <dependency>
             <groupId>org.apache.dubbo</groupId>
             <artifactId>dubbo-spring-boot-starter</artifactId>
-            <version>${dubbo.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.dubbo</groupId>
-            <artifactId>dubbo-dependencies-zookeeper</artifactId>
-            <version>${dubbo.version}</version>
+            <artifactId>dubbo-dependencies-zookeeper-curator5</artifactId>
             <type>pom</type>
             <exclusions>
                 <exclusion>
-                    <artifactId>slf4j-log4j12</artifactId>
+                    <artifactId>slf4j-reload4j</artifactId>
                     <groupId>org.slf4j</groupId>
                 </exclusion>
             </exclusions>

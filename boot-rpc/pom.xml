@@ -18,6 +18,7 @@
 
     <modules>
         <module>boot-grpc</module>
+        <module>boot-dubbo</module>
     </modules>
 
     <dependencies>

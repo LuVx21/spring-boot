@@ -1,4 +1,4 @@
-package org.luvx.dubbo;
+package org.luvx.boot.rpc.dubbo.service.impl;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -114,7 +114,7 @@ public class EmbeddedZooKeeper implements SmartLifecycle {
                 if (errorHandler != null) {
                     errorHandler.handleError(e);
                 } else {
-                    log.error("Exception running embedded ZooKeeper", e);
+                    log.error("启动内嵌ZooKeeper失败", e);
                 }
             }
         }

@@ -5,12 +5,12 @@
 
     <parent>
         <groupId>org.luvx.boot</groupId>
-        <artifactId>spring-boot-dubbo</artifactId>
+        <artifactId>boot-dubbo</artifactId>
         <version>0.1</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>api</artifactId>
+    <artifactId>sdk</artifactId>
     <packaging>jar</packaging>
 
     <dependencies>

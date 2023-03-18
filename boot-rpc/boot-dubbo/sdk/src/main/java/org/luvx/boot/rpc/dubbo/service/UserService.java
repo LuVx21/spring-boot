@@ -1,4 +1,4 @@
-package org.luvx.dubbo.service;
+package org.luvx.boot.rpc.dubbo.service;
 
 import java.util.List;
 
