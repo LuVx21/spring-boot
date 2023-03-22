@@ -1,4 +1,4 @@
-package org.luvx.zk.use;
+package org.luvx.boot.zk;
 
 import org.apache.curator.RetryPolicy;
 import org.apache.curator.framework.CuratorFramework;

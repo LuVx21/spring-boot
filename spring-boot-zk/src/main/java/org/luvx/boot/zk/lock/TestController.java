@@ -1,4 +1,4 @@
-package org.luvx.zk.lock;
+package org.luvx.boot.zk.lock;
 
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Lock;

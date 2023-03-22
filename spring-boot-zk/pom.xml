@@ -5,9 +5,8 @@
 
     <parent>
         <groupId>org.luvx.boot</groupId>
-        <artifactId>coding-spring-boot-kotlin-parent</artifactId>
+        <artifactId>coding-parent-boot-java</artifactId>
         <version>0.1</version>
-        <relativePath/>
     </parent>
 
     <artifactId>spring-boot-zk</artifactId>
@@ -21,8 +20,8 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
+            <groupId>org.luvx.boot</groupId>
+            <artifactId>boot-web</artifactId>
         </dependency>
 
         <dependency>
@@ -36,6 +35,13 @@
         <!--     <artifactId>curator-recipes</artifactId>-->
         <!--     <version>${curator.version}</version>-->
         <!-- </dependency>-->
+
+        <dependency>
+            <groupId>org.apache.curator</groupId>
+            <artifactId>curator-test</artifactId>
+            <version>4.3.0</version>
+            <scope>test</scope>
+        </dependency>
 
         <dependency>
             <groupId>org.springframework.boot</groupId>

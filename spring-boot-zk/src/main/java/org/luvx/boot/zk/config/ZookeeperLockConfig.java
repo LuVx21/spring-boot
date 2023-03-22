@@ -1,4 +1,4 @@
-package org.luvx.zk.config;
+package org.luvx.boot.zk.config;
 
 import org.apache.curator.framework.CuratorFramework;
 import org.springframework.beans.factory.annotation.Value;

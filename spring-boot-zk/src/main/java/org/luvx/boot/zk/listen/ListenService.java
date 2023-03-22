@@ -1,4 +1,4 @@
-package org.luvx.zk.use.listen;
+package org.luvx.boot.zk.listen;
 
 import javax.annotation.Resource;
 
