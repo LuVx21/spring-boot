@@ -11,8 +11,6 @@ import lombok.extern.slf4j.Slf4j;
 
 /**
  * 分布式锁
- *
- * @author Ren, Xie
  */
 @Slf4j
 public class Lock {

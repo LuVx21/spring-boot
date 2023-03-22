@@ -7,9 +7,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.integration.zookeeper.config.CuratorFrameworkFactoryBean;
 import org.springframework.integration.zookeeper.lock.ZookeeperLockRegistry;
 
-/**
- * @author Ren, Xie
- */
 @Configuration
 public class ZookeeperLockConfig {
     @Value("${zookeeper.address:127.0.0.1:2181}")

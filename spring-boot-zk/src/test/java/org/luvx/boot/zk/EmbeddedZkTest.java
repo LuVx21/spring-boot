@@ -40,6 +40,7 @@ public class EmbeddedZkTest {
             log.error("启动cluster异常", e);
             throw e;
         }
+        log.info("zk server 启动成功");
         System.in.read();
     }
 }

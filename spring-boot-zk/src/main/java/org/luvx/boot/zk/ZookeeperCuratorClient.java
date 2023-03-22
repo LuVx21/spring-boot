@@ -8,9 +8,6 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 
-/**
- * @author Ren, Xie
- */
 public class ZookeeperCuratorClient implements InitializingBean {
     private CuratorFramework curatorClient;
     @Value("${zookeeper.address:localhost:2181}")

@@ -12,9 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 
-/**
- * @author Ren, Xie
- */
 @Slf4j
 @RestController
 public class TestController {
