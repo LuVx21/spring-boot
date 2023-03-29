@@ -1,20 +1,18 @@
-package org.luvx.boot.tools.web.base.validate;
+package org.luvx.boot.web.validate;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import javax.validation.constraints.NotNull;
-
-import org.luvx.boot.tools.web.base.validate.ValidationVo.AddGroup;
-import org.luvx.boot.tools.web.base.validate.ValidationVo.UpdateGroup;
+import io.vavr.Tuple;
+import org.luvx.boot.web.validate.ValidationVo.AddGroup;
+import org.luvx.boot.web.validate.ValidationVo.UpdateGroup;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
-import io.vavr.Tuple;
 
 /**
  * <pre>

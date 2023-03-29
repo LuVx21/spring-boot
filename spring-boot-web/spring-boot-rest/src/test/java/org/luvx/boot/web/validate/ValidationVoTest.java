@@ -1,15 +1,13 @@
-package org.luvx.boot.tools.web.base.validate;
+package org.luvx.boot.web.validate;
 
-import com.alibaba.fastjson2.JSON;
-import org.hibernate.validator.HibernateValidator;
-import org.junit.jupiter.api.Test;
-
-import javax.validation.ConstraintViolation;
-import javax.validation.Validation;
-import javax.validation.Validator;
-import javax.validation.ValidatorFactory;
+import javax.validation.*;
 import java.util.Set;
 import java.util.stream.Collectors;
+
+import com.alibaba.fastjson2.JSON;
+
+import org.hibernate.validator.HibernateValidator;
+import org.junit.jupiter.api.Test;
 
 class ValidationVoTest {
     private static final ValidatorFactory VALIDATOR_FACTORY = Validation
@@ -40,14 +38,14 @@ class ValidationVoTest {
                 """;
         ValidationVo vo = JSON.parseObject(json, ValidationVo.class);
 
-        extracted(vo);
+        validate(vo);
 
         vo.setId(1);
 
-        extracted(vo);
+        validate(vo);
     }
 
-    private void extracted(ValidationVo vo) {
+    private void validate(ValidationVo vo) {
         Set<ConstraintViolation<ValidationVo>> result = validator.validate(vo);
         String collect = result.stream()
                 .map(r -> r.getPropertyPath() + ": " + r.getMessage())

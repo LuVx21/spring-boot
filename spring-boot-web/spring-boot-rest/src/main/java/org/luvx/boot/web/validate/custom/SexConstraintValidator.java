@@ -1,4 +1,4 @@
-package org.luvx.boot.tools.web.base.validate.custom;
+package org.luvx.boot.web.validate.custom;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;

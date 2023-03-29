@@ -1,25 +1,18 @@
-package org.luvx.boot.tools.web.base.validate;
+package org.luvx.boot.web.validate;
+
+import javax.validation.Valid;
+import javax.validation.constraints.*;
+import javax.validation.groups.Default;
+import java.util.Date;
+import java.util.List;
 
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.validator.constraints.Range;
 import org.hibernate.validator.group.GroupSequenceProvider;
-import org.luvx.boot.tools.web.base.validate.custom.Sex;
-import org.luvx.boot.tools.web.base.validate.custom.VoProvider;
-
-import javax.validation.Valid;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Null;
-import javax.validation.constraints.Past;
-import javax.validation.groups.Default;
-import java.util.Date;
-import java.util.List;
+import org.luvx.boot.web.validate.custom.Sex;
+import org.luvx.boot.web.validate.custom.VoProvider;
 
 @Getter
 @Setter

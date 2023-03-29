@@ -1,12 +1,8 @@
-package org.luvx.boot.tools.web.base.validate.custom;
-
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+package org.luvx.boot.web.validate.custom;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
+import java.lang.annotation.*;
 
 @Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
