@@ -8,6 +8,7 @@ import com.alibaba.fastjson2.JSON;
 
 import org.hibernate.validator.HibernateValidator;
 import org.junit.jupiter.api.Test;
+import org.luvx.boot.web.entity.validate.ValidationVo;
 
 class ValidationVoTest {
     private static final ValidatorFactory VALIDATOR_FACTORY = Validation

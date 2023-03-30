@@ -1,0 +1,41 @@
+### save
+
+POST http://localhost:8080/validate/save
+Content-Type: application/json;charset=UTF-8
+
+{
+  "username": "abcdefghi",
+  "password": "1234",
+  "email": "123456@qq.com",
+  "birthday": "2019-04-14T09:05:39.604Z",
+  "age": 20,
+  "sex": 0,
+  "sexName": "男",
+  "voList": [
+    {
+      "id": 10,
+      "vipLevel": 5
+    }
+  ]
+}
+
+### update
+
+POST http://localhost:8080/validate/update
+Content-Type: application/json;charset=UTF-8
+
+{
+  "id": 100,
+  "username": "abcdefghi",
+  "email": "123456@qq.com",
+  "birthday": "2019-04-14T09:05:39.604Z",
+  "age": 20,
+  "sex": 0,
+  "sexName": "男",
+  "voList": [
+    {
+      "id": 10,
+      "vipLevel": 5
+    }
+  ]
+}
