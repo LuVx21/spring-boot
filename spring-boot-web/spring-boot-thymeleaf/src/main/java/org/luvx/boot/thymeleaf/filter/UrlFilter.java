@@ -2,9 +2,9 @@ package org.luvx.boot.thymeleaf.filter;
 
 import org.springframework.core.annotation.Order;
 
-import javax.servlet.*;
-import javax.servlet.annotation.WebFilter;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.*;
+import jakarta.servlet.annotation.WebFilter;
+import jakarta.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
 @Order(1)

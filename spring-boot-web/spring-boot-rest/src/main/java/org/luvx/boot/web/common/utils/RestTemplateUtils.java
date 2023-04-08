@@ -32,10 +32,9 @@ public class RestTemplateUtils {
      */
     public static <T> T request(String url, HttpMethod method, HttpEntity request, Class<T> clazz) {
         ResponseEntity<T> response = restTemplate.exchange(url, method, request, clazz);
-        HttpStatus status = response.getStatusCode();
-        if (status.is2xxSuccessful()) {
-            T t = response.getBody();
-            return t;
+        HttpStatusCode statusCode = response.getStatusCode();
+        if (statusCode.is2xxSuccessful()) {
+            return response.getBody();
         } else {
             throw new RuntimeException("请求失败:" + url);
         }

@@ -1,6 +1,6 @@
 package org.luvx.boot.web.controller;
 
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotNull;
 import java.util.List;
 import java.util.stream.Collectors;
 

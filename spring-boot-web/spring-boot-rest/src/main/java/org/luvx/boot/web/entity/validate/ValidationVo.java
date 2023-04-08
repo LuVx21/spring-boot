@@ -1,8 +1,9 @@
 package org.luvx.boot.web.entity.validate;
 
-import javax.validation.Valid;
-import javax.validation.constraints.*;
-import javax.validation.groups.Default;
+import jakarta.validation.GroupSequence;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.*;
+import jakarta.validation.groups.Default;
 import java.util.Date;
 import java.util.List;
 
@@ -45,6 +46,20 @@ public class ValidationVo {
     @NotEmpty(message = "voList必须有元素")
     private List<ObjectVO> voList;
 
+
+    //region 多字段联合校验
+    @Size(min = 1, max = 3, message = "爱好名字范围在3~5")
+    @NotNull(groups = {MaleGroup.class, FemaleGroup.class}, message = "指定性别时需给出爱好")
+    private List<String> hobbies;
+    //endregion
+
+    //region 控制校验顺序
+    @GroupSequence({Default.class, AddGroup.class, UpdateGroup.class, MaleGroup.class, FemaleGroup.class})
+    public interface Group {
+    }
+    //region
+
+
     @Getter
     @Setter
     @ToString
@@ -59,5 +74,11 @@ public class ValidationVo {
     }
 
     public interface UpdateGroup extends Default {
+    }
+
+    public interface MaleGroup extends Default {
+    }
+
+    public interface FemaleGroup extends Default {
     }
 }
