@@ -4,13 +4,13 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
-import org.luvx.boot.common.exception.BizException;
 import org.luvx.boot.web.response.R;
 import org.luvx.boot.tools.service.shorturl.service.ShortenUrlService;
 import org.luvx.boot.tools.web.shorturl.entity.request.GetLongUrlReq;
 import org.luvx.boot.tools.web.shorturl.entity.request.GetShortUrlReq;
 import org.luvx.boot.tools.web.shorturl.entity.response.GetLongUrlResp;
 import org.luvx.boot.tools.web.shorturl.entity.response.GetShortUrlResp;
+import org.luvx.coding.common.exception.BizException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -47,7 +47,7 @@ public class ShortenUrlController {
     public static R processException(Exception e) {
         log.error("处理过程出现错误", e);
         if (e instanceof BizException) {
-            return R.fail(((BizException) e).getMsg(), null);
+            return R.fail(((BizException) e).getResponseCode());
         }
         return R.fail();
     }

@@ -1,20 +1,21 @@
 package org.luvx.boot.tools.web.utils;
 
+import java.io.Serializable;
+
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONObject;
+import com.google.common.collect.ImmutableMap;
+
 import org.junit.jupiter.api.Test;
 import org.luvx.coding.common.util.JsonUtils;
-import org.luvx.boot.tools.web.base.web.UserVo;
 
 class JsonXmlUtilsTest {
     @Test
     void main() throws Exception {
-        UserVo user = new UserVo();
-        user.setUserId(10000L);
-        user.setUserName("foo");
-        user.setPassword("bar");
-        user.setAge(18);
-        user.setValid(2);
+        ImmutableMap<String, ? extends Serializable> user = ImmutableMap.of(
+                "userId", 10000L,
+                "userName", "foo"
+        );
 
         String jsonStr = JsonUtils.toJson(user);
         JSONObject json1 = JSON.parseObject(jsonStr);

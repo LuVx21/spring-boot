@@ -1,0 +1,9 @@
+POST http://localhost:8080/tool/geektime
+Content-Type: application/json;charset=UTF-8
+
+{
+  "cookie": "",
+  "ids": [
+    ""
+  ]
+}

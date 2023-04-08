@@ -1,8 +1,11 @@
-package org.luvx.boot.tools.web.base.web;
+package org.luvx.boot.web.entity.json;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -27,6 +30,8 @@ public class UserVo {
     @EnumNameAnno(CommonStatusEnum.class)
     @JsonSerialize(using = EnumNameSerializer.class)
     private int              valid;
+    @JsonInclude(Include.NON_DEFAULT)
+    private Integer inValid;
     /**
      * 入出参都是直接使用枚举的 code
      */

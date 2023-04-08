@@ -1,9 +1,9 @@
 package org.luvx.boot.tools.service.shorturl.service.impl;
 
 import org.apache.commons.lang3.StringUtils;
-import org.luvx.boot.common.exception.BizException;
 import org.luvx.boot.tools.service.shorturl.converter.BaseDomainProvider;
 import org.luvx.boot.tools.service.shorturl.service.ShortenUrlService;
+import org.luvx.coding.common.exception.BizException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -1,6 +1,6 @@
 package org.luvx.boot.tools.service.shorturl.converter;
 
-import org.luvx.boot.common.exception.BizException;
+import org.luvx.coding.common.exception.BizException;
 import org.springframework.stereotype.Service;
 
 import java.util.concurrent.atomic.AtomicLong;
