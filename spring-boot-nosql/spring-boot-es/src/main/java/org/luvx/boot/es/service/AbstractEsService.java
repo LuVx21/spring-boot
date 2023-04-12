@@ -121,7 +121,9 @@ public abstract class AbstractEsService<T> {
                     .map(p -> SortBuilders.fieldSort(p.getKey()).order(p.getValue()))
                     .forEachOrdered(builder::withSorts);
         }
-        return list(builder.build());
+        NativeSearchQuery nsQuery = builder.build();
+        log.info("dsl语句:\n{}", nsQuery.getQuery());
+        return list(nsQuery);
     }
 
     public List<T> list(NativeSearchQuery query) {

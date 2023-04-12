@@ -8,6 +8,6 @@ import org.springframework.stereotype.Service;
 public class UserEsService extends AbstractEsService<User> {
     @Override
     protected String indexName() {
-        return "t_user";
+        return User.INDEX;
     }
 }

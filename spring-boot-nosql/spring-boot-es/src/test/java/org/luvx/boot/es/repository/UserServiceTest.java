@@ -1,10 +1,6 @@
 package org.luvx.boot.es.repository;
 
-import javax.annotation.Resource;
-
-import java.util.List;
-import java.util.Optional;
-
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.tuple.Pair;
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
@@ -12,19 +8,14 @@ import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;
 import org.elasticsearch.search.sort.SortOrder;
 import org.junit.jupiter.api.Test;
-import org.luvx.boot.es.ApplicationTests;
+import org.luvx.boot.es.EsAppTests;
 import org.luvx.boot.es.entity.User;
-import org.luvx.boot.es.entity.User.UserBuilder;
-import org.luvx.boot.es.service.impl.UserEsService;
-import org.springframework.data.domain.Sort.Order;
-import org.springframework.data.elasticsearch.core.query.Criteria;
-import org.springframework.data.elasticsearch.core.query.CriteriaQuery;
-import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
-import org.springframework.data.elasticsearch.core.query.SimpleField;
+import org.springframework.data.elasticsearch.core.query.*;
 
-public class UserServiceTest extends ApplicationTests {
-    @Resource
-    private UserEsService userEsService;
+import java.util.List;
+
+@Slf4j
+public class UserServiceTest extends EsAppTests {
 
     @Test
     void m1() {

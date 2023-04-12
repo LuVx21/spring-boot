@@ -1,28 +1,34 @@
 package org.luvx.boot.es.repository;
 
-import java.time.LocalDateTime;
-import java.util.stream.Stream;
-
 import org.junit.jupiter.api.Test;
-import org.luvx.boot.es.ApplicationTests;
+import org.luvx.boot.es.EsAppTests;
+import org.luvx.boot.es.entity.Article;
 import org.luvx.boot.es.entity.User;
 import org.luvx.coding.common.more.MorePrints;
-import org.springframework.beans.factory.annotation.Autowired;
 
-public class UserRepositoryTest extends ApplicationTests {
-    @Autowired
-    private UserRepository userRepository;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
+
+public class InsertTest extends EsAppTests {
 
     @Test
     void m1() {
-        for (int i = 100; i < 4000; i++) {
+        for (int i = 100; i < 120; i++) {
             int i1 = i % 10;
+
+            List<Article> articles = IntStream.range(i1, i1 + 3)
+                    .mapToObj(ii -> Article.of(ii, "articleName" + ii, "remark" + ii))
+                    .toList();
+
             User user = User.builder()
                     .id(i + 1L)
                     .userName("xie_" + i1)
                     .password("ren_" + (10 - i1))
                     .age(i % 100)
                     .birthday(LocalDateTime.now())
+                    .articles(articles)
                     .build();
             userRepository.save(user);
         }
