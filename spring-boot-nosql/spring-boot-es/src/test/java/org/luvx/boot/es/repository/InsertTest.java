@@ -28,7 +28,10 @@ public class InsertTest extends EsAppTests {
                     .password("ren_" + (10 - i1))
                     .age(i % 100)
                     .birthday(LocalDateTime.now())
-                    .articles(articles)
+                    .nestedArticle(articles.get(0))
+                    .unNestedArticle(articles.get(0))
+                    .nestedArticles(articles)
+                    .unNestedArticles(articles)
                     .build();
             userRepository.save(user);
         }

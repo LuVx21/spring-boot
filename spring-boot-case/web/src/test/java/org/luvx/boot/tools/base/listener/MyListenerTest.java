@@ -1,5 +1,6 @@
 package org.luvx.boot.tools.base.listener;
 
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.luvx.boot.tools.BaseAppTests;
 import org.luvx.boot.tools.web.base.spring.listener.enums.EventType;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.web.context.WebApplicationContext;
 
+@Slf4j
 class MyListenerTest extends BaseAppTests {
     @Autowired
     private WebApplicationContext     webApplicationContext;
@@ -21,6 +23,7 @@ class MyListenerTest extends BaseAppTests {
         data.setId(10000L);
         MyEvent1 event = new MyEvent1(EventType.CREATE, data);
         webApplicationContext.publishEvent(event);
+        log.info("主线程:{}", Thread.currentThread().getName());
     }
 
     @Test

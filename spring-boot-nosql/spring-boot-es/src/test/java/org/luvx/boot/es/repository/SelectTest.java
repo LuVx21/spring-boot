@@ -1,102 +1,132 @@
 package org.luvx.boot.es.repository;
 
-import com.alibaba.fastjson2.JSON;
-import com.alibaba.fastjson2.JSONWriter;
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.tuple.Pair;
 import org.apache.lucene.search.join.ScoreMode;
-import org.elasticsearch.index.query.BoolQueryBuilder;
-import org.elasticsearch.index.query.NestedQueryBuilder;
-import org.elasticsearch.index.query.QueryBuilders;
-import org.elasticsearch.index.query.TermQueryBuilder;
+import org.elasticsearch.index.query.*;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
 import org.elasticsearch.search.aggregations.Aggregations;
-import org.elasticsearch.search.aggregations.metrics.ParsedSum;
-import org.elasticsearch.search.aggregations.metrics.ParsedValueCount;
-import org.elasticsearch.search.aggregations.metrics.SumAggregationBuilder;
-import org.elasticsearch.search.aggregations.metrics.ValueCountAggregationBuilder;
+import org.elasticsearch.search.aggregations.bucket.filter.FilterAggregationBuilder;
+import org.elasticsearch.search.aggregations.bucket.filter.ParsedFilter;
+import org.elasticsearch.search.aggregations.bucket.nested.NestedAggregationBuilder;
+import org.elasticsearch.search.aggregations.bucket.nested.ParsedNested;
+import org.elasticsearch.search.aggregations.metrics.*;
+import org.elasticsearch.search.sort.SortOrder;
 import org.junit.jupiter.api.Test;
 import org.luvx.boot.es.EsAppTests;
 import org.luvx.boot.es.entity.User;
+import org.luvx.boot.es.utils.EsQueryUtils;
 import org.luvx.coding.common.more.MorePrints;
 import org.springframework.data.elasticsearch.core.SearchHits;
-import org.springframework.data.elasticsearch.core.mapping.IndexCoordinates;
 import org.springframework.data.elasticsearch.core.query.NativeSearchQuery;
 import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
-import org.springframework.data.elasticsearch.core.query.Query;
-import org.springframework.util.ReflectionUtils;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.util.List;
+
+import static org.elasticsearch.index.query.QueryBuilders.nestedQuery;
+import static org.elasticsearch.index.query.QueryBuilders.termQuery;
+import static org.luvx.boot.es.entity.User.*;
 
 @Slf4j
 public class SelectTest extends EsAppTests {
 
     @Test
-    void m1() {
-        TermQueryBuilder termQueryBuilder = QueryBuilders.termQuery(User.ARTICLES_ID, 1);
-        NestedQueryBuilder nestedQueryBuilder = QueryBuilders.nestedQuery(User.ARTICLES, termQueryBuilder, ScoreMode.None);
+    void unNestedTest() {
         BoolQueryBuilder bqBuilder = QueryBuilders.boolQuery()
-                .must(QueryBuilders.termQuery(User.USER_NAME, "xie_1"))
-                .must(nestedQueryBuilder);
+                // .must(termQuery(User.USER_NAME, "xie_1"))
+                .must(termQuery(UN_NESTED_ARTICLE + ARTICLE_ID, 1));
 
-        List<User> list = userEsService.list(bqBuilder);
+        List<User> list = userEsService.list(bqBuilder, Pair.of(ID, SortOrder.ASC));
+        list.forEach(System.out::println);
 
-        System.out.println(JSON.toJSONString(list, JSONWriter.Feature.PrettyFormat));
+        bqBuilder = QueryBuilders.boolQuery()
+                // .must(termQuery(User.USER_NAME, "xie_1"))
+                .must(termQuery(UN_NESTED_ARTICLES + ARTICLE_ID, 1));
+
+        list = userEsService.list(bqBuilder, Pair.of(ID, SortOrder.ASC));
+        list.forEach(System.out::println);
     }
 
-    /**
-     * https://ost.51cto.com/posts/17785
-     * 1. 嵌套对象内部求和(内部过滤后求和呢)
-     * 2. 嵌套对象内部过滤,只返回过滤到的
-     */
+    @Test
+    void nestedTest() {
+        TermQueryBuilder tqBuilder = termQuery(NESTED_ARTICLE + ARTICLE_ID, 1);
+        NestedQueryBuilder nqBuilder = nestedQuery(NESTED_ARTICLE, tqBuilder, ScoreMode.None);
+        BoolQueryBuilder bqBuilder = QueryBuilders.boolQuery()
+                .must(termQuery(User.USER_NAME, "xie_1"))
+                .must(nqBuilder);
+
+        List<User> list = userEsService.list(bqBuilder, Pair.of(ID, SortOrder.ASC));
+        list.forEach(System.out::println);
+
+        // ------------------------------------------
+
+        String nestedArticlesId = NESTED_ARTICLES + ARTICLE_ID;
+        tqBuilder = termQuery(nestedArticlesId, 8);
+        nqBuilder = nestedQuery(NESTED_ARTICLES, tqBuilder, ScoreMode.None);
+        bqBuilder = QueryBuilders.boolQuery()
+                .must(termQuery(User.USER_NAME, "xie_8"))
+                .must(nqBuilder);
+
+        list = userEsService.list(bqBuilder, Pair.of(ID, SortOrder.ASC));
+        list.forEach(System.out::println);
+    }
+
     @Test
     void m2() {
-        TermQueryBuilder termQueryBuilder = QueryBuilders.termQuery(User.ARTICLES_ID, 1);
-        NestedQueryBuilder nestedQueryBuilder = QueryBuilders.nestedQuery(User.ARTICLES, termQueryBuilder, ScoreMode.None);
+        final String nestedArticlesId = NESTED_ARTICLES + ARTICLE_ID;
+        TermQueryBuilder tqBuilder = termQuery(nestedArticlesId, 8);
+        NestedQueryBuilder nqBuilder = nestedQuery(NESTED_ARTICLES, tqBuilder, ScoreMode.None);
         BoolQueryBuilder bqBuilder = QueryBuilders.boolQuery()
-                .must(QueryBuilders.termQuery(User.USER_NAME, "xie_1"))
-//                .must(nestedQueryBuilder)
-                ;
+                .must(termQuery(User.USER_NAME, "xie_8"))
+                .must(nqBuilder);
 
-        ValueCountAggregationBuilder countBuilder = AggregationBuilders.count("cnt").field(User.ID);
-        SumAggregationBuilder sumBuilder1 = AggregationBuilders.sum("sum_age").field(User.AGE);
-        SumAggregationBuilder sumBuilder2 = AggregationBuilders.sum("sum_id").field(User.ARTICLES_ID);
-        // TermsAggregationBuilder field = AggregationBuilders.terms("sum_sales").field("goodsSales");
+        // count
+        String asCnt = "cnt";
+        ValueCountAggregationBuilder countBuilder = AggregationBuilders.count(asCnt).field(User.ID);
+
+        // sum
+        String asSumAge = "sum_age";
+        SumAggregationBuilder sumBuilder = AggregationBuilders.sum(asSumAge).field(User.AGE);
+
+        // 嵌套 sum
+        String outSumId1 = "out_sum_id", midSumId2 = "mid_sum_id", innerSumId = "inner_sum_id";
+        SumAggregationBuilder innerSumBuilder = AggregationBuilders.sum(innerSumId).field(nestedArticlesId);
+        String outSumId1_1 = "out_sum_id_1";
+        NestedAggregationBuilder naBuilder = AggregationBuilders
+                .nested(outSumId1_1, NESTED_ARTICLES)
+                .subAggregation(innerSumBuilder);
+        // 嵌套过滤后 sum
+        FilterAggregationBuilder faBuilder = AggregationBuilders
+                .filter(midSumId2, QueryBuilders.boolQuery().must(tqBuilder))
+                .subAggregation(innerSumBuilder);
+        NestedAggregationBuilder naFilterBuilder = AggregationBuilders
+                .nested(outSumId1, NESTED_ARTICLES)
+                .subAggregation(faBuilder);
 
         NativeSearchQuery nsQuery = new NativeSearchQueryBuilder()
                 .withQuery(bqBuilder)
-                .withAggregations(countBuilder, sumBuilder1, sumBuilder2)
+                .withAggregations(countBuilder, sumBuilder, naBuilder, naFilterBuilder)
                 .build();
-//        log.info("dsl语句:\n{}", nsQuery.getQuery());
-//        log.info("dsl聚合:\n{}", nsQuery.getAggregations());
-        printDsl(User.class, nsQuery);
 
+        EsQueryUtils.printDsl(userEsService.entityClass(), nsQuery, template);
+        SearchHits<User> response = template.search(nsQuery, userEsService.entityClass(), userEsService.index());
 
-        SearchHits<User> tUser = template.search(nsQuery, User.class, IndexCoordinates.of(User.INDEX));
+        Aggregations aggregations = (Aggregations) response.getAggregations().aggregations();
+        ParsedValueCount cnt = aggregations.get(asCnt);
+        ParsedSum sumAge = aggregations.get(asSumAge);
 
-        Aggregations aggregations = (Aggregations) tUser.getAggregations().aggregations();
-        ParsedValueCount cnt = aggregations.get("cnt");
-        ParsedSum sumAge = aggregations.get("sum_age");
-        ParsedSum sumId = aggregations.get("sum_id");
+        ParsedNested aggregation = aggregations.get(outSumId1_1);
+        ParsedSum sumInner = aggregation.getAggregations().get(innerSumId);
+
+        ParsedNested outSumId = aggregations.get(outSumId1);
+        ParsedFilter midSumId = outSumId.getAggregations().get(midSumId2);
+        ParsedSum sumFilterInner = midSumId.getAggregations().get(innerSumId);
 
         MorePrints.println(
                 cnt.getValue(),
                 sumAge.getValue(),
-                sumId.getValue()
+                sumInner.getValue(),
+                sumFilterInner.getValue()
         );
-    }
-
-    @SneakyThrows
-    public void printDsl(Class<?> clazz, NativeSearchQuery nsQuery) {
-        Method searchRequest = ReflectionUtils.findMethod(Class.forName("org.springframework.data.elasticsearch.core.RequestFactory"), "searchRequest", Query.class, Class.class, IndexCoordinates.class);
-        searchRequest.setAccessible(true);
-        Object o = ReflectionUtils.invokeMethod(searchRequest, template.getRequestFactory(), nsQuery, clazz, template.getIndexCoordinatesFor(clazz));
-
-        Field source = ReflectionUtils.findField(Class.forName("org.elasticsearch.action.search.SearchRequest"), "source");
-        source.setAccessible(true);
-        Object s = ReflectionUtils.getField(source, o);
-        log.info("dsl:{}", s);
     }
 }

@@ -1,24 +1,8 @@
 package org.luvx.boot.es.service;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import javax.annotation.Resource;
-import java.lang.reflect.Field;
-import java.lang.reflect.ParameterizedType;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.function.Consumer;
-import java.util.stream.Collectors;
-
+import com.github.phantomthief.util.MoreFunctions;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.beanutils.BeanMap;
@@ -32,6 +16,7 @@ import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.index.query.TermQueryBuilder;
 import org.elasticsearch.search.sort.SortBuilders;
 import org.elasticsearch.search.sort.SortOrder;
+import org.luvx.boot.es.utils.EsQueryUtils;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Order;
@@ -43,8 +28,17 @@ import org.springframework.data.elasticsearch.core.query.NativeSearchQuery;
 import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
 import org.springframework.data.elasticsearch.core.query.UpdateQuery;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import javax.annotation.Resource;
+import java.lang.reflect.Field;
+import java.lang.reflect.ParameterizedType;
+import java.util.*;
+import java.util.Map.Entry;
+import java.util.function.Consumer;
+import java.util.stream.Collectors;
+
 import static java.util.Optional.ofNullable;
-import static org.apache.commons.lang3.ObjectUtils.getIfNull;
 
 @Slf4j
 public abstract class AbstractEsService<T> {
@@ -54,17 +48,18 @@ public abstract class AbstractEsService<T> {
     private Class<T>         clazz;
     private IndexCoordinates indexCoordinates;
 
-    protected Class<T> entityClass() {
-        return (clazz = getIfNull(clazz, () -> {
+    public Class<T> entityClass() {
+        if (clazz == null) {
             ParameterizedType parameterizedType = (ParameterizedType) getClass().getGenericSuperclass();
-            return (Class<T>) parameterizedType.getActualTypeArguments()[0];
-        }));
+            clazz = (Class<T>) parameterizedType.getActualTypeArguments()[0];
+        }
+        return clazz;
     }
 
     protected abstract String indexName();
 
     public IndexCoordinates index() {
-        return (indexCoordinates = getIfNull(indexCoordinates, () -> IndexCoordinates.of(indexName())));
+        return indexCoordinates != null ? indexCoordinates : IndexCoordinates.of(indexName());
     }
 
     public void save(T obj) {
@@ -122,11 +117,11 @@ public abstract class AbstractEsService<T> {
                     .forEachOrdered(builder::withSorts);
         }
         NativeSearchQuery nsQuery = builder.build();
-        log.info("dsl语句:\n{}", nsQuery.getQuery());
         return list(nsQuery);
     }
 
     public List<T> list(NativeSearchQuery query) {
+        MoreFunctions.runCatching(() -> EsQueryUtils.printDsl(entityClass(), query, template));
         return template.search(query, entityClass(), index())
                 .stream()
                 .map(SearchHit::getContent)

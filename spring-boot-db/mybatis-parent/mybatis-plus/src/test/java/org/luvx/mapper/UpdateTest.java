@@ -8,8 +8,7 @@ import org.luvx.ApplicationTests;
 import org.luvx.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import static org.luvx.entity.User.COL_ID;
-import static org.luvx.entity.User.COL_UNAME;
+import static org.luvx.entity.User.*;
 
 @Slf4j
 class UpdateTest extends ApplicationTests {
@@ -25,7 +24,7 @@ class UpdateTest extends ApplicationTests {
     @Test
     void updateByIdTest() {
         int num = userMapper.updateById(User.builder().id(10000L).userName("LuVx1").build());
-        log.info(num + "");
+        log.info("{}", num);
     }
 
     /**
@@ -42,6 +41,7 @@ class UpdateTest extends ApplicationTests {
 
         Wrapper<User> query1 = Wrappers.<User>update()
                 .set(COL_UNAME, "LuVx3")
+                .set(COL_AGE, null)
                 .eq(COL_ID, 10000L);
         userMapper.update(null, query1);
     }

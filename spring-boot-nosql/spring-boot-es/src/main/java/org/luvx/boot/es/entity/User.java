@@ -22,14 +22,18 @@ import java.util.List;
 public class User {
     public static final String INDEX = "t_user";
 
-    public static final String ID          = "id";
-    public static final String USER_NAME   = "userName";
-    public static final String PASSWORD    = "password";
-    public static final String AGE         = "age";
-    public static final String BIRTHDAY    = "birthday";
-    public static final String REMARK      = "remark";
-    public static final String ARTICLES    = "articles";
-    public static final String ARTICLES_ID = "articles.id";
+    public static final String ID        = "id";
+    public static final String USER_NAME = "userName";
+    public static final String PASSWORD  = "password";
+    public static final String AGE       = "age";
+    public static final String BIRTHDAY  = "birthday";
+    public static final String REMARK    = "remark";
+
+    public static final String UN_NESTED_ARTICLE  = "unNestedArticle";
+    public static final String UN_NESTED_ARTICLES = "unNestedArticles";
+    public static final String NESTED_ARTICLE     = "nestedArticle";
+    public static final String NESTED_ARTICLES    = "nestedArticles";
+    public static final String ARTICLE_ID         = ".id";
 
     @Tolerate
     public User() {
@@ -45,9 +49,11 @@ public class User {
     private LocalDateTime birthday;
     @Field(type = FieldType.Keyword)
     private String        remark;
-    //    TODO
-//    @Field(type = FieldType.Nested)
-//    private Article       mainArticle;
+
+    private Article       unNestedArticle;
+    private List<Article> unNestedArticles;
     @Field(type = FieldType.Nested)
-    private List<Article> articles;
+    private Article       nestedArticle;
+    @Field(type = FieldType.Nested)
+    private List<Article> nestedArticles;
 }

@@ -5,7 +5,7 @@
 <generatorConfiguration>
 
     <classPathEntry
-            location="/Users/renxie/.m2/repository/mysql/mysql-connector-java/5.1.44/mysql-connector-java-5.1.44.jar"/>
+            location="/Users/renxie/.m2/repository/com/mysql/mysql-connector-j/8.0.32/mysql-connector-j-8.0.32.jar"/>
 
     <context id="MysqlTables" targetRuntime="MyBatis3">
         <plugin type="com.itfsw.mybatis.generator.plugins.ModelColumnPlugin"/>

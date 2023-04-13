@@ -9,17 +9,16 @@ import org.junit.jupiter.api.Test;
 import org.luvx.ApplicationTests;
 import org.luvx.coding.common.more.MorePrints;
 import org.luvx.entity.User;
+import org.luvx.enums.BizTypeEnum;
 import org.luvx.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
-import static org.luvx.entity.User.COL_AGE;
-import static org.luvx.entity.User.COL_ID;
-import static org.luvx.entity.User.COL_PWD;
-import static org.luvx.entity.User.COL_UNAME;
+import static org.luvx.entity.User.*;
 
 @Slf4j
 class SelectTest extends ApplicationTests {
@@ -27,6 +26,17 @@ class SelectTest extends ApplicationTests {
     private UserMapper  userMapper;
     @Autowired
     private UserService userService;
+
+    @Test
+    void selectTest() {
+        QueryWrapper<User> query = Wrappers.<User>query()
+                .select("distinct " + User.COL_BIZ_TYPE)
+                .isNotNull(COL_ID);
+        List<BizTypeEnum> collect = userMapper.selectList(query).stream()
+                .map(User::getBizType)
+                .collect(Collectors.toList());
+        System.out.println(collect);
+    }
 
     @Test
     void selectByIdTest() {
