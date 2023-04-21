@@ -17,7 +17,7 @@ import org.luvx.coding.common.enums.ext.EnumNameSerializer;
 @Setter
 @ToString
 public class UserVo {
-    private Long    userId;
+    private long    id;
     private String  userName;
     private String  password;
     /**
@@ -31,7 +31,7 @@ public class UserVo {
     @JsonSerialize(using = EnumNameSerializer.class)
     private int              valid;
     @JsonInclude(Include.NON_DEFAULT)
-    private Integer inValid;
+    private Integer          inValid;
     /**
      * 入出参都是直接使用枚举的 code
      */
@@ -39,5 +39,11 @@ public class UserVo {
 
     public String getTest() {
         return userName + ":" + password;
+    }
+
+    public static UserVo create(long id) {
+        UserVo vo = new UserVo();
+        vo.setId(id);
+        return vo;
     }
 }

@@ -1,59 +1,73 @@
 
 ### 增
 
-POST http://127.0.0.1:8090/v1/pet/pets HTTP/1.1
+POST http://127.0.0.1:8080/v1/user/user HTTP/1.1
 content-type: application/json
 
 {
   "id": 1,
-  "name": "foo, bar",
+  "userName": "foo, bar",
   "age": 18
 }
 
+### 2
+
+POST http://127.0.0.1:8080/v1/user/users HTTP/1.1
+content-type: application/json
+
+[
+  {
+    "id": 1
+  },
+  {
+    "id": 2
+  }
+]
+
 ### 删
 
-DELETE http://127.0.0.1:8090/v1/pet/pets/1 HTTP/1.1
+DELETE http://127.0.0.1:8080/v1/user/users/1 HTTP/1.1
 content-type: application/json
 
 ### 改1
 
-PUT http://127.0.0.1:8090/v1/pet/pets/1 HTTP/1.1
+PUT http://127.0.0.1:8080/v1/user/users/1 HTTP/1.1
 content-type: application/json
 
 {
   "id": 1,
-  "name": "foo, bar",
+  "userName": "foo, bar",
   "age": 18
 }
 
 ### 改2
 
-PATCH http://127.0.0.1:8090/v1/pet/pets/1 HTTP/1.1
+PATCH http://127.0.0.1:8080/v1/user/users/1 HTTP/1.1
 content-type: application/json
 
 {
-  "name": "foo, bar1"
+  "userName": "foo, bar1"
 }
 
 ### 查1
 
-GET http://127.0.0.1:8090/v1/pet/pets/1 HTTP/1.1
+GET http://127.0.0.1:8080/v1/user/users/1 HTTP/1.1
 content-type: application/json
 
 ### 查2
 
-GET http://127.0.0.1:8090/v1/pet/pets HTTP/1.1
+GET http://127.0.0.1:8080/v1/user/users HTTP/1.1
 content-type: application/json
 
 {
   "id": 1,
-  "name": "foo, bar",
+  "userName": "foo, bar",
   "age": 18
 }
 
 ### 上传
 
-POST http://127.0.0.1:8090/v1/pet/pets/1/upload HTTP/1.1
+POST http://127.0.0.1:8080/v1/user/users/1/upload HTTP/1.1
 Cache-Control: no-cache
 Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
 
@@ -66,7 +80,7 @@ Content-Type: image/jpeg
 
 ### 下载
 
-GET http://127.0.0.1:8090/v1/pet/pets/1/download/1.jpg HTTP/1.1
+GET http://127.0.0.1:8080/v1/user/users/1/download/1.jpg HTTP/1.1
 Cache-Control: no-cache
 Content-Type: application/octet-stream
 

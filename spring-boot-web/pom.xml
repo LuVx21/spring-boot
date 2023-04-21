@@ -14,10 +14,8 @@
     <version>0.2</version>
 
     <modules>
-        <module>spring-boot-thymeleaf</module>
         <module>spring-boot-rest</module>
-        <module>spring-boot-resteasy</module>
-        <module>spring-boot-websocket</module>
+         <module>spring-boot-websocket</module>
     </modules>
 
     <properties>

@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.junit.jupiter.api.Test;
-import org.luvx.RestAppTests;
+import org.luvx.boot.web.RestAppTests;
 import org.luvx.boot.web.entity.json.UserVo;
 import org.springframework.beans.factory.annotation.Value;
 

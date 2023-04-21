@@ -15,10 +15,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
-/**
- * @author: Ren, Xie
- * @desc:
- */
 @Service
 public class V1Service {
     private final Path location;

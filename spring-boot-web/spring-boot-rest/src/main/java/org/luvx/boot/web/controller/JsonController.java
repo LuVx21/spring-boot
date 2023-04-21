@@ -12,7 +12,7 @@ public class JsonController {
     @RequestMapping(value = {"index", "app"}, method = {RequestMethod.GET, RequestMethod.POST})
     public Object index() {
         UserVo user = new UserVo();
-        user.setUserId(10000L);
+        user.setId(10000L);
         user.setUserName("foo");
         user.setPassword("bar");
         user.setAge(18);
