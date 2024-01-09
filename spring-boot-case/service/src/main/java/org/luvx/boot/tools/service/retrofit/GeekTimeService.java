@@ -145,8 +145,6 @@ public class GeekTimeService {
     public void downloadArticle(Long courseId, Long articleId) throws IOException {
         String courseDirName = STR."\{courseId}_\{course.get(courseId)}";
         String originalJson = getArticleJson(courseId, articleId);
-        // 保存原始 json
-        write(originalJson, STR."\{jsonDir}\{courseDirName}\{File.separator}\{articleId}.json");
 
         JSONObject json = JSONObject.parseObject(originalJson);
         JSONObject data = json.getJSONObject("data");
@@ -159,10 +157,11 @@ public class GeekTimeService {
         String mp3Url = data.getString("audio_download_url");
         String articleContent = data.getString("article_content");
         if (StringUtils.isBlank(articleContent)) {
-            articleContent = "无文章内容";
-            //            throw new RuntimeException("无文章内容");
+            return;
         }
 
+        // 保存原始 json
+        write(originalJson, STR."\{jsonDir}\{courseDirName}\{File.separator}\{articleId}.json");
         genMarkdownOrHtml(STR."\{docDir}\{courseDirName}\{File.separator}\{articleId}.md", genIndex(courseId, articleId, true),
                 article_title, mp3Url, articleContent);
         genMarkdownOrHtml(STR."\{root}\{courseDirName}\{File.separator}\{article_title}.html", genIndex(courseId, articleId, false),
