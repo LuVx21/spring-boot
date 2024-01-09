@@ -1,0 +1,9 @@
+server:
+  port: 8091
+
+spring:
+  ldap:
+    embedded:
+      base-dn: dc=springframework,dc=org
+      ldif: classpath:test-server.ldif
+      port: 8389

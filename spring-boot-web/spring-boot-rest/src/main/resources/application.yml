@@ -1,0 +1,20 @@
+server:
+  port: 8080
+
+spring:
+  servlet:
+    multipart:
+      enabled: true
+      file-size-threshold: 2KB
+      max-file-size: 200MB
+      max-request-size: 215MB
+#  profiles:
+#    include: base,tome,db
+
+file:
+  upload-dir: ./upload
+
+value:
+  test-map: '{"foo": "foo", "bar": 1}'
+  test-user: '{"userName": "foo", "age": 1}'
+  test-list: foo,bar

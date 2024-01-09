@@ -1,0 +1,14 @@
+###
+GET http://localhost:8090/pulsar/sendString?message=谢忍
+
+###
+GET http://localhost:8090/pulsar/sendUser?message=谢忍
+
+###
+GET http://localhost:8090/rocket/sendString?message=谢忍
+
+###
+GET http://localhost:8090/rocket/sendDelay?message=谢忍
+
+###
+GET http://localhost:8090/rocket/sendUser?message=谢忍

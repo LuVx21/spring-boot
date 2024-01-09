@@ -1,0 +1,3 @@
+rootProject.name = 'boot-gradle'
+include 'service'
+include 'web'

@@ -1,0 +1,23 @@
+
+### 创建
+
+GET http://localhost:8080/flowable/def/list
+
+### xml 文件
+
+GET http://localhost:8080/flowable/def/readXml?deployId=xx&procDefKey=Expense
+
+### 图片
+
+GET http://localhost:8080/flowable/def/readImage?deployId=xx&procDefKey=Expense
+
+
+### updateState
+
+PUT http://localhost:8080/flowable/def/delete?deployId=xx
+
+
+### delete
+
+DELETE http://localhost:8080/flowable/def/delete?deployId=xx
+

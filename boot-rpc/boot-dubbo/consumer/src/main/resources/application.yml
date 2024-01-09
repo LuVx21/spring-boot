@@ -1,0 +1,14 @@
+server:
+  port: 8081
+spring:
+  application:
+    name: dubbo-consumer
+# dubbo 相关配置
+dubbo:
+  application:
+    name: dubbo-consumer
+  protocol:
+    name: dubbo
+    port: -1
+  registry:
+    address: zookeeper://${zookeeper.address:127.0.0.1}:2181

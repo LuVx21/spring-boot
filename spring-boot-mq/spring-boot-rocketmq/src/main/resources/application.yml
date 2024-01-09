@@ -1,0 +1,16 @@
+rocketmq:
+  name-server: 127.0.0.1:9876
+  producer:
+    group: producer-group
+    sendMessageTimeout: 10000
+    retryTimesWhenSendFailed: 2
+    retryTimesWhenSendAsyncFailed: 2
+    maxMessageSize: 4096
+    compressMessageBodyThreshold: 4096
+    retryNextServer: false
+#    customized-trace-topic: TEST__TOPIC
+  consumer:
+    group: consumer-group
+    pull-batch-size: 10
+server:
+  port: 8090

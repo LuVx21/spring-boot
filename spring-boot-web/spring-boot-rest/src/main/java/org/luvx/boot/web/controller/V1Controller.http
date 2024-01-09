@@ -1,0 +1,88 @@
+
+### 增
+
+POST http://127.0.0.1:8080/v1/user/user HTTP/1.1
+content-type: application/json
+
+{
+  "id": 1,
+  "userName": "foo, bar",
+  "age": 18
+}
+
+### 2
+
+POST http://127.0.0.1:8080/v1/user/users HTTP/1.1
+content-type: application/json
+
+[
+  {
+    "id": 1
+  },
+  {
+    "id": 2
+  }
+]
+
+### 删
+
+DELETE http://127.0.0.1:8080/v1/user/users/1 HTTP/1.1
+content-type: application/json
+
+### 改1
+
+PUT http://127.0.0.1:8080/v1/user/users/1 HTTP/1.1
+content-type: application/json
+
+{
+  "id": 1,
+  "userName": "foo, bar",
+  "age": 18
+}
+
+### 改2
+
+PATCH http://127.0.0.1:8080/v1/user/users/1 HTTP/1.1
+content-type: application/json
+
+{
+  "userName": "foo, bar1"
+}
+
+### 查1
+
+GET http://127.0.0.1:8080/v1/user/users/1 HTTP/1.1
+content-type: application/json
+
+### 查2
+
+GET http://127.0.0.1:8080/v1/user/users HTTP/1.1
+content-type: application/json
+
+{
+  "id": 1,
+  "userName": "foo, bar",
+  "age": 18
+}
+
+### 上传
+
+POST http://127.0.0.1:8080/v1/user/users/1/upload HTTP/1.1
+Cache-Control: no-cache
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="file"; filename="1.jpg"
+Content-Type: image/jpeg
+
+< /Users/root/Desktop/1.jpg
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
+
+### 下载
+
+GET http://127.0.0.1:8080/v1/user/users/1/download/1.jpg HTTP/1.1
+Cache-Control: no-cache
+Content-Type: application/octet-stream
+
+###
+

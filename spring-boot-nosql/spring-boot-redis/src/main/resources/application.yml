@@ -1,0 +1,18 @@
+spring:
+  data:
+    redis:
+      url: redis://luvx:xxx@redis-15487.c292.ap-southeast-1-1.ec2.cloud.redislabs.com:15487
+
+#    lettuce:
+#      pool:
+#        enabled: true
+#        max-active: 8
+#        max-wait: -1
+#        max-idle: 8
+#        min-idle: 0
+#  cache:
+#    type: redis
+#    redis:
+#      use-key-prefix: true
+#      key-prefix: luvx-
+#      cache-null-values: false

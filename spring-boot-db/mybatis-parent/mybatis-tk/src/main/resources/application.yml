@@ -1,0 +1,15 @@
+logging:
+  level:
+    org.luvx.db:
+      tk.mapper: debug
+
+mybatis:
+  mapper-locations: classpath:org/luvx/db/tk/mapper/*.xml
+  type-aliases-package: org.luvx.db.tk
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://luvx:53306/boot?useUnicode=true&characterEncoding=utf-8&serverTimezone=UTC&useSSL=false&allowMultiQueries=true
+    username: root
+    password: 1121

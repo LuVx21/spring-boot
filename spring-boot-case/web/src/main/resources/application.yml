@@ -1,0 +1,41 @@
+server:
+  port: 8080
+
+spring:
+  boot:
+    admin:
+      client:
+        url: http://localhost:${server.port}
+        instance:
+          service-base-url: http://localhost:${server.port}
+  jmx:
+    enabled: true
+  profiles:
+    include: base,tome,db
+
+swagger:
+  enable: true
+
+logging:
+  level:
+    root: info
+
+api:
+  baseUrl:
+    github: https://gitee.com/api/v5/
+
+management:
+  endpoints:
+    enabled-by-default: true
+    web:
+      base-path: /actuator
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+    shutdown:
+      enabled: true
+  info:
+    env:
+      enabled: true

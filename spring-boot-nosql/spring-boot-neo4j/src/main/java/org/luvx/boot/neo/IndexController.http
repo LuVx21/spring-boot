@@ -1,0 +1,14 @@
+###
+GET http://localhost:8080/movie/create
+
+###
+GET http://localhost:8080/movie/deleteAll
+
+###
+GET http://localhost:8080/person/create
+
+###
+GET http://localhost:8080/person/findMovieByActor/演员103
+
+###
+GET http://localhost:8080/person/deleteAll

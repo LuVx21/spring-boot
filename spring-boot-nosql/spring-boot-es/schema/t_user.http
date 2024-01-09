@@ -1,0 +1,172 @@
+PUT http://luvx:59200/t_user
+Content-Type: application/json
+
+{
+  "alias": {
+    "t_user_v1": {},
+    "1": {
+      "filter": {
+        "term": {
+          "id": 1
+        }
+      }
+    }
+  },
+  "settings": {
+    "index": {
+      "number_of_shards": 5,
+      "number_of_replicas": 1,
+      "refresh_interval": "500ms"
+    }
+  },
+  "mappings": {
+    "dynamic_templates": [
+      {
+        "ES_KEYWORD_*": {
+          "match": "ES_KEYWORD_*",
+          "mapping": {
+            "type": "keyword"
+          }
+        }
+      },
+      {
+        "ES_TEXT_*": {
+          "match": "ES_TEXT_*",
+          "mapping": {
+            "type": "text"
+          }
+        }
+      },
+      {
+        "ES_DOUBLE_*": {
+          "match": "ES_DOUBLE_*",
+          "mapping": {
+            "type": "double"
+          }
+        }
+      },
+      {
+        "ES_LONG_*": {
+          "match": "ES_LONG_*",
+          "mapping": {
+            "type": "double"
+          }
+        }
+      },
+      {
+        "ES_DATE_*": {
+          "match": "ES_DATE_*",
+          "mapping": {
+            "type": "date"
+          }
+        }
+      },
+      {
+        "message_full": {
+          "match": "message_full",
+          "mapping": {
+            "fields": {
+              "keyword": {
+                "ignore_above": 2048,
+                "type": "keyword"
+              }
+            },
+            "type": "text"
+          }
+        }
+      },
+      {
+        "message": {
+          "match": "message",
+          "mapping": {
+            "type": "text"
+          }
+        }
+      },
+      {
+        "strings": {
+          "match_mapping_type": "string",
+          "mapping": {
+            "type": "keyword"
+          }
+        }
+      }
+    ],
+    "properties": {
+      "id": {
+        "type": "long"
+      },
+      "userName": {
+        "type": "text",
+        "fields": {
+          "keyword": {
+            "type": "keyword",
+            "ignore_above": 256
+          }
+        }
+      },
+      "password": {
+        "type": "text",
+        "fields": {
+          "keyword": {
+            "type": "keyword",
+            "ignore_above": 256
+          }
+        }
+      },
+      "age": {
+        "type": "integer"
+      },
+      "remark": {
+        "type": "keyword"
+      },
+      "viewFormData": {
+        "properties": {
+          "ES_DATE_data": {
+            "type": "date"
+          },
+          "ES_DOUBLE_double": {
+            "type": "double"
+          },
+          "ES_KEYWORD_keyword": {
+            "type": "keyword"
+          },
+          "ES_TEXT_text": {
+            "type": "text"
+          }
+        }
+      },
+      "articles": {
+        "type": "nested",
+        "properties": {
+          "_class": {
+            "type": "keyword",
+            "index": false,
+            "doc_values": false
+          },
+          "articleName": {
+            "type": "text",
+            "fields": {
+              "keyword": {
+                "type": "keyword",
+                "ignore_above": 256
+              }
+            }
+          },
+          "id": {
+            "type": "long"
+          },
+          "remark": {
+            "type": "text",
+            "fields": {
+              "keyword": {
+                "type": "keyword",
+                "ignore_above": 256
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

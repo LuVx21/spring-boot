@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.luvx.boot</groupId>
+        <artifactId>coding-parent-boot-java</artifactId>
+        <version>0.2</version>
+    </parent>
+
+    <artifactId>spring-boot-web</artifactId>
+    <packaging>pom</packaging>
+    <version>0.2</version>
+
+    <modules>
+        <module>spring-boot-rest</module>
+        <module>spring-boot-websocket</module>
+        <module>spring-boot-websocket1</module>
+        <module>spring-boot-websocket2</module>
+    </modules>
+
+    <properties>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.luvx.boot</groupId>
+            <artifactId>boot-web</artifactId>
+        </dependency>
+    </dependencies>
+
+    <build>
+    </build>
+</project>

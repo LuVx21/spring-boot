@@ -1,0 +1,27 @@
+spring:
+  elasticsearch:
+    uris: http://luvx:59200
+#      username:
+#      password:
+#        # 链接超时时间
+#        connection-timeout:
+#        # 读取超时时间
+#        read-timeout:
+  data:
+    elasticsearch:
+      repositories:
+        enabled: true
+
+#  Webflux
+#spring:
+#  data:
+#    elasticsearch:
+#      client:
+#        reactive:
+#          endpoints:
+#          connection-timeout:
+#          max-in-memory-size:
+#          socket-timeout:
+#          use-ssl:
+#          username:
+#          password:

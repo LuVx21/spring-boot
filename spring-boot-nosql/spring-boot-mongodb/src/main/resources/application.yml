@@ -1,0 +1,10 @@
+spring:
+  data:
+    mongodb:
+      uri: mongodb+srv://xxx:xxx@cluster0.r8xxd.mongodb.net/boot
+#      host: localhost
+#      port: 27017
+#      database: boot
+#      username: boot_rw
+#      password: 1121
+#      authentication-database: boot

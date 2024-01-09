@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions
+        xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
+        xmlns:flowable="http://flowable.org/bpmn"
+        targetNamespace="Examples">
+
+    <process id="oneTaskProcess" name="串行任务流程">
+        <documentation>串行任务流程说明</documentation>
+        <extensionElements>
+            <flowable:eventListener events="TASK_CREATED,TASK_ASSIGNED,TASK_COMPLETED,PROCESS_STARTED" class="org.luvx.boot.flowable.listener.MyEventListener"/>
+        </extensionElements>
+        <startEvent id="start_1"/>
+        <sequenceFlow id="flow_1" sourceRef="start_1" targetRef="userTask_1"/>
+        <userTask id="userTask_1" name="任务1" flowable:assignee="zhangsan">
+            <extensionElements>
+                <flowable:taskListener event="create" class="org.luvx.boot.flowable.listener.MyTaskListener"/>
+            </extensionElements>
+        </userTask>
+        <sequenceFlow id="flow_2" sourceRef="userTask_1" targetRef="userTask_2"/>
+        <userTask id="userTask_2" name="任务2" flowable:assignee="lisi">
+            <extensionElements>
+                <flowable:taskListener event="create" class="org.luvx.boot.flowable.listener.MyTaskListener"/>
+            </extensionElements>
+        </userTask>
+        <sequenceFlow id="flow_3" sourceRef="userTask_2" targetRef="userTask_3"/>
+        <userTask id="userTask_3" name="任务3" flowable:assignee="wangwu">
+            <extensionElements>
+                <flowable:taskListener event="create" class="org.luvx.boot.flowable.listener.MyTaskListener"/>
+            </extensionElements>
+        </userTask>
+        <sequenceFlow id="flow_4" sourceRef="userTask_3" targetRef="end_1"/>
+        <endEvent id="end_1"/>
+    </process>
+
+</definitions>

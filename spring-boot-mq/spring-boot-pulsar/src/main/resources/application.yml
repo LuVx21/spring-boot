@@ -1,0 +1,14 @@
+spring:
+  pulsar:
+    defaults:
+      type-mappings:
+        - message-type: org.luvx.boot.mq.pulsar.config.User
+          topic-name: user-topic
+          schema-info:
+            schema-type: JSON
+    client:
+      service-url: pulsar://localhost:6650
+    admin:
+      service-url: http://localhost:8080
+server:
+  port: 8090

@@ -1,0 +1,19 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://luvx:53306/boot?useUnicode=true&characterEncoding=utf-8&serverTimezone=UTC&useSSL=true&allowMultiQueries=true
+    username: root
+    password: 1121
+  data:
+    mongodb:
+      uri: mongodb+srv://xxx:xxx@cluster0.r8xxd.mongodb.net/boot
+    redis:
+      url: redis://xxx:xxx@redis-15487.c292.ap-southeast-1-1.ec2.cloud.redislabs.com:15487
+
+logging:
+  level:
+    org.luvx.boot.tools.dao.mapper: debug
+
+mybatis:
+  mapper-locations: classpath:org/luvx/tools/dao/*/*.xml
+  type-aliases-package: org.luvx.tools.dao

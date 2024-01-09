@@ -1,0 +1,17 @@
+###
+POST http://localhost:8090/v1/createOrUpdate
+content-type: application/json
+
+{
+    "id": "_1",
+    "cron": "0/2 * * * * ?",
+    "sql": "select * from user"
+}
+
+###
+
+DELETE http://localhost:8090/v1/delete/_2
+
+###
+GET http://localhost:8090/v1/select
+

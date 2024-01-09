@@ -1,0 +1,7 @@
+POST http://localhost:8080/useful/in
+Content-Type: application/json;charset=UTF-8
+
+{
+  "left": [""],
+  "right": [""]
+}
