@@ -2,28 +2,27 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
     <parent>
         <groupId>org.luvx.boot</groupId>
-        <artifactId>spring-boot-mq</artifactId>
+        <artifactId>spring-boot-kafka</artifactId>
         <version>0.0.0</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>spring-boot-pulsar</artifactId>
+    <artifactId>kafka-streams</artifactId>
     <packaging>jar</packaging>
-
-    <properties>
-    </properties>
 
     <dependencies>
         <dependency>
-            <groupId>org.luvx.boot</groupId>
-            <artifactId>boot-web</artifactId>
+            <groupId>org.apache.kafka</groupId>
+            <artifactId>kafka-streams</artifactId>
+            <scope>compile</scope>
         </dependency>
 
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-pulsar</artifactId>
+            <groupId>org.luvx.boot</groupId>
+            <artifactId>kafka-common</artifactId>
+            <version>${project.version}</version>
         </dependency>
 
     </dependencies>
