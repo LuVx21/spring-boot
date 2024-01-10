@@ -27,6 +27,11 @@ class ApiTest extends BaseAppTests {
 
     @Test
     void m2() {
+        String cookie = "";
+        String json = weiboApi.byGroup(
+                cookie,
+                4670120389774996L, 4, 1, 25, Map.of("max_id", "4988660693075906")
+        );
+        System.out.println(json);
     }
-
 }

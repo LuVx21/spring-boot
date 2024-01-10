@@ -7,6 +7,7 @@ spring:
   data:
     mongodb:
       uri: mongodb+srv://xxx:xxx@cluster0.r8xxd.mongodb.net/boot
+      # uri: mongodb://luvx:1121@localhost:27017/boot
     redis:
       url: redis://xxx:xxx@redis-15487.c292.ap-southeast-1-1.ec2.cloud.redislabs.com:15487
 

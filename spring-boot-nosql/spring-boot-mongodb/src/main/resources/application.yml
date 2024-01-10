@@ -8,3 +8,7 @@ spring:
 #      username: boot_rw
 #      password: 1121
 #      authentication-database: boot
+
+logging:
+  level:
+    org.springframework.data.mongodb.core.MongoTemplate: DEBUG
