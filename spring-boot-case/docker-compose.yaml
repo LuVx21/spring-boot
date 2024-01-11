@@ -3,11 +3,22 @@ services:
   spring-boot-case:
     image: F.LuVx/spring-boot-case:latest
     container_name: spring-boot-case
+    networks:
+      - net_common
     build:
       dockerfile: Dockerfile
     ports:
       - "8080:8080"
-    extra_hosts:
-      - luvx:127.0.0.1
-#    depends_on:
-#      - nginx
+    environment:
+      MONGO_SERVER: mongo
+      REDIS_SERVER: redis-master
+    volumes:
+      - $HOME/docker/luvx/:/root/data/luvx
+    # extra_hosts:
+    #   - luvx:127.0.0.1
+    # depends_on:
+    #   - nginx
+
+networks:
+  net_common:
+    external: true

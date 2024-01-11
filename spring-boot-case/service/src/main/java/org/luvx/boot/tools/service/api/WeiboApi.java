@@ -25,4 +25,10 @@ public interface WeiboApi {
             @Query("fast_refresh") int fast_refresh,
             @Query("count") int count,
             @QueryMap Map<String, Object> filters);
+
+    @GET("ajax/statuses/longtext")
+    String longText(
+            @Header(HttpHeaders.COOKIE) String cookie,
+            @Query("id") String id
+    );
 }

@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import org.luvx.boot.tools.BaseAppTests;
 import org.luvx.boot.tools.dao.entity.TvboxLive;
 import org.luvx.boot.tools.dao.mapper.TvboxLiveMapper;
+import org.luvx.coding.common.net.HttpUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 
@@ -23,7 +24,6 @@ import java.util.Map;
 import java.util.stream.Stream;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
-import static org.luvx.boot.tools.service.tome.utils.HttpClientUtils.client;
 import static org.luvx.coding.common.consts.Common.SPLITTER_COMMA;
 import static org.luvx.coding.common.consts.Properties.DIR_USER_HOME;
 
@@ -47,7 +47,7 @@ class TvboxLiveMapperTest extends BaseAppTests {
                                 .uri(URI.create(path))
                                 .build();
                         lines = MoreFunctions.catching(() -> {
-                            String text = client.send(request, HttpResponse.BodyHandlers.ofString()).body();
+                            String text = HttpUtils.httpClientSupplier.get().send(request, HttpResponse.BodyHandlers.ofString()).body();
                             return CharSource.wrap(text).readLines();
                         });
                     } else {

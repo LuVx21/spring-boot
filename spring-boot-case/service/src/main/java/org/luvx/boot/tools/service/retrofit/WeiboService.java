@@ -3,28 +3,37 @@ package org.luvx.boot.tools.service.retrofit;
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONArray;
 import com.alibaba.fastjson2.JSONObject;
+import com.github.phantomthief.util.MoreFunctions;
 import com.google.common.collect.Iterators;
 import com.google.common.util.concurrent.RateLimiter;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.MapUtils;
+import org.apache.commons.lang3.ObjectUtils;
+import org.luvx.boot.common.app.AppInfo;
 import org.luvx.boot.tools.service.api.WeiboApi;
 import org.luvx.boot.tools.service.commonkv.CommonKeyValueService;
 import org.luvx.boot.tools.service.commonkv.constant.CommonKVBizType;
+import org.luvx.boot.tools.service.oss.OssScopeEnum;
+import org.luvx.coding.common.consts.Common;
 import org.luvx.coding.common.cursor.CursorIteratorEx;
+import org.luvx.coding.common.net.HttpUtils;
+import org.luvx.coding.common.net.UrlUtils;
+import org.luvx.coding.common.util.JSONPathUtils;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.io.File;
+import java.util.*;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
+
+import static org.luvx.boot.tools.service.oss.OssService.IMG_HOME;
 
 @Slf4j
 @Service
@@ -68,12 +77,12 @@ public class WeiboService {
     }
 
     private String a(JSONObject jo) {
-        String textRaw = jo.getString("text_raw");
+        String title = jo.getString("text_raw");
 
         String contentHtml = contentHtml(jo);
         JSONObject retweet = jo.getJSONObject("retweeted_status");
         if (retweet != null) {
-            contentHtml = STR."\{contentHtml}<br/>转发自<br/>\{contentHtml(retweet)}";
+            contentHtml = STR."\{contentHtml}<hr/>转发自<br/><br/><br/>\{contentHtml(retweet)}";
         }
 
         String createdAt = jo.getString("created_at");
@@ -86,7 +95,7 @@ public class WeiboService {
         return STR."""
                         <item>
                             <title>
-                                <![CDATA[ \{textRaw} ]]>
+                                <![CDATA[ \{title} ]]>
                             </title>
                             <description>
                                 <![CDATA[ \{contentHtml} ]]>
@@ -102,21 +111,48 @@ public class WeiboService {
 
     private String contentHtml(JSONObject jo) {
         String text = jo.getString("text");
+        text = text.replaceAll("//<a ", "<br/><br/>//<a ");
+        text = text.replaceAll("\n", "<br/>");
+        text = text.replaceAll("。", "。<br/>");
 
         JSONArray picIds = jo.getJSONArray("pic_ids");
         JSONObject picInfos = jo.getJSONObject("pic_infos");
 
-        String collect = "";
+        String picList = "";
         if (CollectionUtils.isNotEmpty(picIds) && picInfos != null) {
-            collect = picIds.stream()
+            picList = picIds.stream()
                     .map(pid -> {
-                        JSONObject img = picInfos.getJSONObject(pid.toString()).getJSONObject("largest");
+                        JSONObject jo1 = picInfos.getJSONObject(pid.toString());
+                        JSONObject img = ObjectUtils.getIfNull(jo1.getJSONObject("largest"), () -> jo1.getJSONObject("original"));
                         String url = img.getString("url");
+                        var fileName = UrlUtils.urlFileName(url);
+                        asyncDownload(url, fileName);
+                        url = newImgUrl(fileName);
                         return STR."<img vspace=\"8\" hspace=\"4\" style=\"\" src=\"\{url}\" referrerpolicy=\"no-referrer\">";
                     })
                     .collect(Collectors.joining("<br/>"));
         }
-        return text + collect;
+        return text + picList;
+    }
+
+    private String newImgUrl(String fileName) {
+        String ip = NetUtils.getHostInfo().get("ip");
+        Integer port = AppInfo.instance().map(AppInfo::getPort).orElse(8080);
+        return STR."http://\{ip}:\{port}/oss/\{OssScopeEnum.WEIBO.getCode()}/\{fileName}";
+    }
+
+    public void asyncDownload(String url, String fileName) {
+        String parent = STR."\{IMG_HOME}/\{OssScopeEnum.WEIBO.getCode()}/";
+        String s = STR."\{parent}\{fileName}";
+        File file = new File(s);
+        if (file.exists()) {
+            return;
+        }
+        CompletableFuture.runAsync(() -> {
+            MoreFunctions.runCatching(() -> {
+                HttpUtils.download(url, parent, fileName, 0);
+            });
+        });
     }
 
     public void pullByGroup() {
@@ -161,8 +197,28 @@ public class WeiboService {
                 return;
             }
             feed.put("_id", id);
+            aa(feed, weiboCookie);
+            aa(feed.getJSONObject("retweeted_status"), weiboCookie);
+
             mongoTemplate.save(feed.toJSONString(), TABLE_NAME_FEED);
         });
+    }
+
+    private void aa(JSONObject feed, String weiboCookie) {
+        if (feed == null) {
+            return;
+        }
+            String text = feed.getString("text");
+            if (text.contains(">展开<")) {
+                String mblogid = feed.getString("mblogid");
+                Common.RATE_LIMITER_SUPPLIER.get().acquire();
+                String json = MoreFunctions.catching(() -> weiboApi.longText(weiboCookie, mblogid));
+                text = Optional.ofNullable(json)
+                        .map(j -> JSONPathUtils.get(j, "$.data.longTextContent"))
+                        .map(Object::toString)
+                        .orElse(text);
+                feed.put("text", text);
+            }
     }
 
     public void delete(long skip) {
