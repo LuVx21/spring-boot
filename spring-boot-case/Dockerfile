@@ -14,6 +14,7 @@ ENV JAVA_OPTS="\
 -XX:MetaspaceSize=256m \
 -XX:MaxMetaspaceSize=512m \
 --enable-preview"
+ENV TZ=Asia/Shanghai
 # 空参数，方便创建容器时传参
 ENV PARAMS=""
 # 暴露端口
