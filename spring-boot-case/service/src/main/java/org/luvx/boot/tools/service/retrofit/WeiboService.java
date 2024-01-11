@@ -43,8 +43,9 @@ public class WeiboService {
     }
 
     public String rss() {
-        int i = ThreadLocalRandom.current().nextInt(0, 10);
-        if (i % 3 == 0) {
+        int bound = 4;
+        int i = ThreadLocalRandom.current().nextInt(0, bound);
+        if (i % bound == 0) {
             pullByGroup();
         }
 
