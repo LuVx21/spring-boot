@@ -233,6 +233,6 @@ public class WeiboService {
         Long id = MapUtils.getLong(map, "_id");
 
         Criteria criteria = Criteria.where("_id").lt(id);
-        mongoTemplate.remove(Query.query(criteria));
+        mongoTemplate.remove(Query.query(criteria), TABLE_NAME_FEED);
     }
 }

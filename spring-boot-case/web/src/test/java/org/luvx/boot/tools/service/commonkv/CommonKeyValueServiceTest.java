@@ -18,9 +18,9 @@ class CommonKeyValueServiceTest extends BaseAppTests {
 
     @Test
     void m1() {
-        service.setValue(CommonKVBizType.INT, "a", 11);
-        service.setOrIncrValue(CommonKVBizType.INT, "a", 11);
-        service.get(CommonKVBizType.INT, "a").ifPresent(System.out::println);
+        service.setValue(CommonKVBizType.LONG, "a", 11);
+        service.setOrIncrValue(CommonKVBizType.LONG, "a", 11);
+        service.get(CommonKVBizType.LONG, "a").ifPresent(System.out::println);
 
         service.setValue(CommonKVBizType.STRING, "a", "11");
         service.getData(CommonKVBizType.STRING, "a").ifPresent(System.out::println);

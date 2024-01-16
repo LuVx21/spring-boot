@@ -39,3 +39,9 @@ management:
   info:
     env:
       enabled: true
+
+app:
+  switch:
+    exception:
+      handler:
+        enable: true

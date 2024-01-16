@@ -1,16 +1,15 @@
 package org.luvx.boot.tools.service.commonkv.constant;
 
-import java.util.List;
-import java.util.Map;
-
+import lombok.AllArgsConstructor;
 import org.luvx.boot.tools.dao.entity.User;
 
-import lombok.AllArgsConstructor;
+import java.util.List;
+import java.util.Map;
 
 @AllArgsConstructor
 public enum CommonKVBizType implements KVBizType {
     UNKNOWN(0, Object.class),
-    INT(1, Integer.class),
+    LONG(1, Long.class),
     STRING(2, String.class),
     MAP(3, Map.class),
     BEAN(4, User.class),
@@ -24,6 +23,11 @@ public enum CommonKVBizType implements KVBizType {
     @Override
     public Integer getCode() {
         return bizType;
+    }
+
+    @Override
+    public boolean isValidBizCode() {
+        return this != UNKNOWN;
     }
 
     @Override

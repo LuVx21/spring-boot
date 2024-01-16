@@ -1,6 +1,9 @@
 package org.luvx.boot.tools.service.commonkv;
 
-import static java.util.Collections.singleton;
+import jakarta.annotation.Nonnull;
+import org.luvx.boot.tools.dao.entity.CommonKeyValue;
+import org.luvx.boot.tools.service.commonkv.constant.KVBizType;
+import org.luvx.coding.common.util.JsonUtils;
 
 import java.util.Collection;
 import java.util.Map;
@@ -8,32 +11,48 @@ import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import org.luvx.coding.common.util.JsonUtils;
-import org.luvx.boot.tools.dao.entity.CommonKeyValue;
-import org.luvx.boot.tools.service.commonkv.constant.KVBizType;
+import static java.util.Collections.singleton;
 
 public interface CommonKeyValueService {
 
     /**
      * 存在会覆盖
      */
-    <T> boolean setValue(KVBizType bizType, String key, T value);
+    default <T> boolean setValue(KVBizType bizType, String key, @Nonnull T value) {
+        return setValue(bizType, key, value, false);
+    }
 
     /**
      * 存在不覆盖, 返回 false
      */
-    <T> boolean setValueIfAbsent(KVBizType bizType, String key, T value);
+    default <T> boolean setValueIfAbsent(KVBizType bizType, String key, @Nonnull T value) {
+        return setValue(bizType, key, value, true);
+    }
+
+    /**
+     * @param onlyIfAbsent true: 不覆盖
+     */
+    <T> boolean setValue(KVBizType bizType, String key, @Nonnull T value, boolean onlyIfAbsent);
 
     /**
      * 数值类型增加计数, 仅支持 Integer 和 Long
      */
     boolean setOrIncrValue(KVBizType bizType, String key, long incr);
 
-    void remove(KVBizType bizType, String key);
+    void remove(KVBizType bizType, String... keys);
 
-    void setValueItem(KVBizType bizType, String key, Map<String, Object> kvs);
+    default void setValueItem(KVBizType bizType, String key, Map<String, Object> kvs) {
+        setValueItem(bizType, key, kvs, false);
+    }
 
-    void setValueItemIfAbsent(KVBizType bizType, String key, Map<String, Object> kvs);
+    default void setValueItemIfAbsent(KVBizType bizType, String key, Map<String, Object> kvs) {
+        setValueItem(bizType, key, kvs, true);
+    }
+
+    /**
+     * @param onlyIfAbsent true: 不覆盖
+     */
+    void setValueItem(KVBizType bizType, String key, Map<String, Object> kvs, boolean onlyIfAbsent);
 
     /**
      * 仅支持 json object的最外层 key 的删除
@@ -47,7 +66,8 @@ public interface CommonKeyValueService {
     }
 
     default <T> Map<String, T> getData(KVBizType bizType, Collection<String> keys) {
-        return get(bizType, keys).entrySet().stream()
+        return get(bizType, keys).entrySet()
+                .stream()
                 .collect(Collectors.toMap(Entry::getKey,
                         e -> (T) JsonUtils.fromJson(e.getValue().getCommonValue(), bizType.getValueClass())
                 ));
