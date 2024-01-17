@@ -1,9 +1,11 @@
 package org.luvx.boot.mongo.service;
 
 import java.util.List;
+import java.util.Map;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 
+import com.alibaba.fastjson2.JSONObject;
 import com.mongodb.client.result.DeleteResult;
 import com.mongodb.client.result.UpdateResult;
 
@@ -11,6 +13,7 @@ import org.junit.jupiter.api.Test;
 import org.luvx.boot.mongo.ApplicationTests;
 import org.luvx.boot.mongo.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -68,5 +71,16 @@ class UserServiceTest extends ApplicationTests {
         UpdateResult result = mongoTemplate.updateFirst(query, update, User.class);
         long matchedCount = result.getMatchedCount();
         log.info("update {} {}", matchedCount, result);
+    }
+
+    @Test
+    void m2() {
+        Query query = new Query().with(Sort.by(Sort.Direction.DESC, "_id")).limit(100);
+        List<JSONObject> feedList = mongoTemplate.find(query, JSONObject.class, "user");
+        System.out.println(feedList);
+        JSONObject first = feedList.getFirst();
+        System.out.println(first);
+        System.out.println(first.getClass());
+        System.out.println(first.getString("_id"));
     }
 }

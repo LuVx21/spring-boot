@@ -3,7 +3,7 @@ package org.luvx.boot.mongo.repository;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 
 import org.junit.jupiter.api.Test;
 import org.luvx.boot.mongo.ApplicationTests;

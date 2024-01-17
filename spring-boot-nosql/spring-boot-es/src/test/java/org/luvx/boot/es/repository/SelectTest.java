@@ -1,76 +1,67 @@
-//package org.luvx.boot.es.repository;
-//
-//import lombok.extern.slf4j.Slf4j;
-//import org.apache.commons.lang3.tuple.Pair;
-//import org.apache.lucene.search.join.ScoreMode;
-//import org.elasticsearch.index.query.*;
-//import org.elasticsearch.search.aggregations.AggregationBuilders;
-//import org.elasticsearch.search.aggregations.Aggregations;
-//import org.elasticsearch.search.aggregations.bucket.filter.FilterAggregationBuilder;
-//import org.elasticsearch.search.aggregations.bucket.filter.ParsedFilter;
-//import org.elasticsearch.search.aggregations.bucket.nested.NestedAggregationBuilder;
-//import org.elasticsearch.search.aggregations.bucket.nested.ParsedNested;
-//import org.elasticsearch.search.aggregations.metrics.*;
-//import org.elasticsearch.search.sort.SortOrder;
-//import org.junit.jupiter.api.Test;
-//import org.luvx.boot.es.EsAppTests;
-//import org.luvx.boot.es.entity.User;
-//import org.luvx.boot.es.utils.EsQueryUtils;
-//import org.luvx.coding.common.more.MorePrints;
-//import org.springframework.data.elasticsearch.core.SearchHits;
-//import org.springframework.data.elasticsearch.core.query.NativeSearchQuery;
-//import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
-//
-//import java.util.List;
-//
-//import static org.elasticsearch.index.query.QueryBuilders.nestedQuery;
-//import static org.elasticsearch.index.query.QueryBuilders.termQuery;
-//import static org.luvx.boot.es.entity.User.*;
-//
-//@Slf4j
-//public class SelectTest extends EsAppTests {
-//
-//    @Test
-//    void unNestedTest() {
-//        BoolQueryBuilder bqBuilder = QueryBuilders.boolQuery()
-//                // .must(termQuery(User.USER_NAME, "xie_1"))
-//                .must(termQuery(UN_NESTED_ARTICLE + ARTICLE_ID, 1));
-//
-//        List<User> list = userEsService.list(bqBuilder, Pair.of(ID, SortOrder.ASC));
-//        list.forEach(System.out::println);
-//
-//        bqBuilder = QueryBuilders.boolQuery()
-//                // .must(termQuery(User.USER_NAME, "xie_1"))
-//                .must(termQuery(UN_NESTED_ARTICLES + ARTICLE_ID, 1));
-//
-//        list = userEsService.list(bqBuilder, Pair.of(ID, SortOrder.ASC));
-//        list.forEach(System.out::println);
-//    }
-//
-//    @Test
-//    void nestedTest() {
-//        TermQueryBuilder tqBuilder = termQuery(NESTED_ARTICLE + ARTICLE_ID, 1);
-//        NestedQueryBuilder nqBuilder = nestedQuery(NESTED_ARTICLE, tqBuilder, ScoreMode.None);
-//        BoolQueryBuilder bqBuilder = QueryBuilders.boolQuery()
-//                .must(termQuery(User.USER_NAME, "xie_1"))
-//                .must(nqBuilder);
-//
-//        List<User> list = userEsService.list(bqBuilder, Pair.of(ID, SortOrder.ASC));
-//        list.forEach(System.out::println);
-//
-//        // ------------------------------------------
-//
-//        String nestedArticlesId = NESTED_ARTICLES + ARTICLE_ID;
-//        tqBuilder = termQuery(nestedArticlesId, 8);
-//        nqBuilder = nestedQuery(NESTED_ARTICLES, tqBuilder, ScoreMode.None);
-//        bqBuilder = QueryBuilders.boolQuery()
-//                .must(termQuery(User.USER_NAME, "xie_8"))
-//                .must(nqBuilder);
-//
-//        list = userEsService.list(bqBuilder, Pair.of(ID, SortOrder.ASC));
-//        list.forEach(System.out::println);
-//    }
-//
+package org.luvx.boot.es.repository;
+
+import co.elastic.clients.elasticsearch._types.query_dsl.*;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.tuple.Pair;
+import org.junit.jupiter.api.Test;
+import org.luvx.boot.es.EsAppTests;
+import org.luvx.boot.es.entity.User;
+import org.springframework.data.domain.Sort.Direction;
+
+import java.util.List;
+
+import static co.elastic.clients.elasticsearch._types.query_dsl.QueryBuilders.nested;
+import static co.elastic.clients.elasticsearch._types.query_dsl.QueryBuilders.term;
+import static org.luvx.boot.es.entity.User.*;
+import static org.springframework.data.elasticsearch.client.elc.Queries.termQuery;
+
+@Slf4j
+public class SelectTest extends EsAppTests {
+
+    @Test
+    void unNestedTest() {
+        BoolQuery.Builder bqBuilder = QueryBuilders.bool()
+                // .must(termQuery(User.USER_NAME, "xie_1")._toQuery())
+                .must(termQuery(UN_NESTED_ARTICLE + ARTICLE_ID, "1")._toQuery());
+
+        List<User> list = userEsService.list(bqBuilder, Pair.of(ID, Direction.ASC));
+        list.forEach(System.out::println);
+
+        System.out.println("------------------------------------------");
+
+        bqBuilder = QueryBuilders.bool()
+                // .must(termQuery(User.USER_NAME, "xie_1")._toQuery())
+                .must(termQuery(UN_NESTED_ARTICLES + ARTICLE_ID, "1")._toQuery());
+
+        list = userEsService.list(bqBuilder, Pair.of(ID, Direction.ASC));
+        list.forEach(System.out::println);
+    }
+
+    @Test
+    void nestedTest() {
+        TermQuery.Builder tqBuilder = term().field(NESTED_ARTICLE + ARTICLE_ID).value(1);
+        NestedQuery.Builder nqBuilder = nested().path(NESTED_ARTICLE)
+                .query(tqBuilder.build()._toQuery()).scoreMode(ChildScoreMode.None);
+        BoolQuery.Builder bqBuilder = QueryBuilders.bool()
+                // .must(termQuery(User.USER_NAME, "xie_1")._toQuery())
+                .must(nqBuilder.build().query());
+
+        List<User> list = userEsService.list(bqBuilder, Pair.of(ID, Direction.ASC));
+        list.forEach(System.out::println);
+
+        System.out.println("------------------------------------------");
+
+        tqBuilder = term().field(NESTED_ARTICLES + ARTICLE_ID).value(1);
+        nqBuilder = nested().path(NESTED_ARTICLES)
+                .query(tqBuilder.build()._toQuery()).scoreMode(ChildScoreMode.None);
+        bqBuilder = QueryBuilders.bool()
+                // .must(termQuery(User.USER_NAME, "xie_1")._toQuery())
+                .must(nqBuilder.build().query());
+
+        list = userEsService.list(bqBuilder, Pair.of(ID, Direction.ASC));
+        list.forEach(System.out::println);
+    }
+
 //    @Test
 //    void m2() {
 //        final String nestedArticlesId = NESTED_ARTICLES + ARTICLE_ID;
@@ -129,4 +120,4 @@
 //                sumFilterInner.getValue()
 //        );
 //    }
-//}
+}

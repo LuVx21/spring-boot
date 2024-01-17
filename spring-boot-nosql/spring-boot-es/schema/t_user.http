@@ -117,6 +117,9 @@ Content-Type: application/json
       "age": {
         "type": "integer"
       },
+      "birthday": {
+        "type": "date"
+      },
       "remark": {
         "type": "keyword"
       },
@@ -136,13 +139,10 @@ Content-Type: application/json
           }
         }
       },
-      "articles": {
-        "type": "nested",
+      "unNestedArticle": {
         "properties": {
-          "_class": {
-            "type": "keyword",
-            "index": false,
-            "doc_values": false
+          "id": {
+            "type": "long"
           },
           "articleName": {
             "type": "text",
@@ -153,8 +153,82 @@ Content-Type: application/json
               }
             }
           },
+          "remark": {
+            "type": "text",
+            "fields": {
+              "keyword": {
+                "type": "keyword",
+                "ignore_above": 256
+              }
+            }
+          }
+        }
+      },
+      "unNestedArticles": {
+        "properties": {
           "id": {
             "type": "long"
+          },
+          "articleName": {
+            "type": "text",
+            "fields": {
+              "keyword": {
+                "type": "keyword",
+                "ignore_above": 256
+              }
+            }
+          },
+          "remark": {
+            "type": "text",
+            "fields": {
+              "keyword": {
+                "type": "keyword",
+                "ignore_above": 256
+              }
+            }
+          }
+        }
+      },
+      "nestedArticle": {
+        "type": "nested",
+        "properties": {
+          "id": {
+            "type": "long"
+          },
+          "articleName": {
+            "type": "text",
+            "fields": {
+              "keyword": {
+                "type": "keyword",
+                "ignore_above": 256
+              }
+            }
+          },
+          "remark": {
+            "type": "text",
+            "fields": {
+              "keyword": {
+                "type": "keyword",
+                "ignore_above": 256
+              }
+            }
+          }
+        }
+      },
+      "nestedArticles": {
+        "type": "nested",
+        "properties": {
+          "id": {
+            "type": "long"
+          },
+          "articleName": {
+            "type": "text",
+            "fields": {
+              "keyword": {
+                "type": "keyword",
+                "ignore_above": 256
+              }
+            }
           },
           "remark": {
             "type": "text",
