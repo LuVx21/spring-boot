@@ -16,6 +16,7 @@ import org.luvx.boot.tools.service.api.WeiboApi;
 import org.luvx.boot.tools.service.commonkv.CommonKeyValueService;
 import org.luvx.boot.tools.service.commonkv.constant.CommonKVBizType;
 import org.luvx.boot.tools.service.oss.OssScopeEnum;
+import org.luvx.boot.tools.service.oss.OssService;
 import org.luvx.coding.common.consts.Common;
 import org.luvx.coding.common.cursor.CursorIteratorEx;
 import org.luvx.coding.common.net.HttpUtils;
@@ -44,6 +45,8 @@ public class WeiboService {
     private WeiboApi              weiboApi;
     @Resource
     private CommonKeyValueService keyValueService;
+    @Resource
+    private OssService            ossService;
     @Resource
     private MongoTemplate         mongoTemplate;
 
@@ -151,8 +154,9 @@ public class WeiboService {
         CompletableFuture.runAsync(() -> {
             MoreFunctions.runCatching(() -> {
                 HttpUtils.download(url, parent, fileName, 0);
+                ossService.add(OssScopeEnum.WEIBO, fileName);
             });
-        });
+        }, Common.THREAD_POOL_EXECUTOR_SUPPLIER.get());
     }
 
     public void pullByGroup() {
@@ -208,17 +212,17 @@ public class WeiboService {
         if (feed == null) {
             return;
         }
-            String text = feed.getString("text");
-            if (text.contains(">展开<")) {
-                String mblogid = feed.getString("mblogid");
-                Common.RATE_LIMITER_SUPPLIER.get().acquire();
-                String json = MoreFunctions.catching(() -> weiboApi.longText(weiboCookie, mblogid));
-                text = Optional.ofNullable(json)
-                        .map(j -> JSONPathUtils.get(j, "$.data.longTextContent"))
-                        .map(Object::toString)
-                        .orElse(text);
-                feed.put("text", text);
-            }
+        String text = feed.getString("text");
+        if (text.contains(">展开<")) {
+            String mblogid = feed.getString("mblogid");
+            Common.RATE_LIMITER_SUPPLIER.get().acquire();
+            String json = MoreFunctions.catching(() -> weiboApi.longText(weiboCookie, mblogid));
+            text = Optional.ofNullable(json)
+                    .map(j -> JSONPathUtils.get(j, "$.data.longTextContent"))
+                    .map(Object::toString)
+                    .orElse(text);
+            feed.put("text", text);
+        }
     }
 
     public void delete(long skip) {

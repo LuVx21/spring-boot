@@ -2,6 +2,7 @@ package org.luvx.boot.tools.service.commonkv;
 
 import io.mybatis.mapper.example.Example;
 import jakarta.annotation.Nonnull;
+import jakarta.annotation.Resource;
 import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.ObjectUtils;
@@ -27,7 +28,7 @@ import static com.google.common.base.Preconditions.checkArgument;
 public class CommonKeyValueServiceImpl implements CommonKeyValueService {
     private final String ssss = "common_value = %s(common_value, %s)";
 
-    @Autowired
+    @Resource
     private CommonKeyValueMapper mapper;
 
     @Override
