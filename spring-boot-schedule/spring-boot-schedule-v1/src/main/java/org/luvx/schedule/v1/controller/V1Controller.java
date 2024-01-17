@@ -6,7 +6,7 @@ import org.luvx.schedule.v1.entity.TaskEntity;
 import org.luvx.schedule.v1.serivce.Service1;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 import java.util.Set;
 
 /**

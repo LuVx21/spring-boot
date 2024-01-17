@@ -7,7 +7,7 @@ import org.luvx.schedule.v2.mapper.TaskMapper;
 import org.luvx.schedule.v2.service.TaskServiceImpl;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 import java.util.List;
 import java.util.Set;
 

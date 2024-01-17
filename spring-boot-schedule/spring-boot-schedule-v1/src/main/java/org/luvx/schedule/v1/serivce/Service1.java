@@ -8,7 +8,7 @@ import org.luvx.schedule.v1.entity.TaskEntity;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 
 /**
  * @author Ren, Xie

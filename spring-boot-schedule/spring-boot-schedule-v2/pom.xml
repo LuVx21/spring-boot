@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.luvx.boot</groupId>
         <artifactId>spring-boot-schedule</artifactId>
-        <version>0.1</version>
+        <version>0.0.0</version>
     </parent>
 
     <artifactId>spring-boot-schedule-v2</artifactId>
@@ -14,15 +14,16 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
+            <groupId>org.luvx.boot</groupId>
+            <artifactId>boot-web</artifactId>
         </dependency>
 
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-boot-starter</artifactId>
-            <version>3.4.2</version>
+            <version>3.5.5</version>
         </dependency>
+
         <dependency>
             <groupId>com.mysql</groupId>
             <artifactId>mysql-connector-j</artifactId>

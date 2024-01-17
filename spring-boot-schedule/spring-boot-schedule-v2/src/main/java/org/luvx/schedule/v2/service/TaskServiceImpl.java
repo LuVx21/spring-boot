@@ -10,7 +10,7 @@ import org.luvx.schedule.v2.pojo.WaitScheduledTask;
 import org.luvx.schedule.v2.utils.CornUtils;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 import java.time.Instant;
 
 /**

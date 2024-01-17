@@ -1,5 +1,6 @@
 package org.luvx.app.service.impl;
 
+import lombok.extern.slf4j.Slf4j;
 import org.luvx.app.entity.TaskEntity;
 import org.luvx.app.repository.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import java.util.List;
  * @author: Ren, Xie
  * @desc:
  */
+@Slf4j
 @Service
 public class TaskServiceImpl {
     @Autowired
