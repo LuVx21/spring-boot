@@ -138,6 +138,7 @@ public class CommonKeyValueServiceImpl implements CommonKeyValueService {
         Example<CommonKeyValue> example = new Example<>();
         example.createCriteria()
                 .andEqualTo(CommonKeyValue::getBizType, bizType.getBizType())
+                .andEqualTo(CommonKeyValue::getInvalid, 0)
                 .andIn(CommonKeyValue::getCommonKey, keys);
         return mapper.selectByExample(example).stream()
                 .collect(Collectors.toMap(CommonKeyValue::getCommonKey, Function.identity(), (a, b) -> b));

@@ -15,6 +15,8 @@ public enum CommonKVBizType implements KVBizType {
     BEAN(4, User.class),
     LIST(5, List.class),
     ARRAY(6, String[].class),
+
+    INDEX_SPIDER(7, Map.class),
     ;
 
     private final int      bizType;

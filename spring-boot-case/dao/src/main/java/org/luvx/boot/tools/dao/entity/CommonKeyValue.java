@@ -16,6 +16,7 @@ public class CommonKeyValue {
     private int    bizType;
     private String commonKey;
     private String commonValue;
-    private long   createTime;
-    private long   updateTime;
+    private int    invalid;
+    private Long   createTime;
+    private Long   updateTime;
 }

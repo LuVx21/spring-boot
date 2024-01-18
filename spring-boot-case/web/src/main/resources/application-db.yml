@@ -15,7 +15,8 @@ spring:
 logging:
   level:
     org.luvx.boot.tools.dao.mapper: debug
+    # org.springframework.data.mongodb.core.MongoTemplate: DEBUG
 
 mybatis:
   mapper-locations: classpath:org/luvx/tools/dao/*/*.xml
-  type-aliases-package: org.luvx.tools.dao
+  type-aliases-package: org.luvx.boot.tools.dao
