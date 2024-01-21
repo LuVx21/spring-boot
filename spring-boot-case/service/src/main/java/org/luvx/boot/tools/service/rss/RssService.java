@@ -45,6 +45,8 @@ public class RssService {
                 .with(Sort.by(Sort.Direction.DESC, "pubDate"))
                 .with(Sort.by(Sort.Direction.DESC, "_id"))
                 .limit(500);
+        // 日期和map不匹配
+        query.fields().exclude("createTime");
         List<JSONObject> list = mongoTemplate.find(query, JSONObject.class, TABLE_NAME_FEED);
         String s = list.stream()
                 .map(this::img2XmlItem)
@@ -141,8 +143,10 @@ public class RssService {
      * </pre>
      */
     private List<JSONObject> spiderIndexPage(String key, String paramJson) throws IOException {
-        Criteria criteria = Criteria.where(columnName).is(key);
-        Query query = Query.query(criteria).with(Sort.by(Sort.Direction.DESC, "_id")).limit(500);
+        Criteria criteria = Criteria.where(columnName).is(key)
+                .and("content").exists(true).not().size(0);
+        Query query = Query.query(criteria).with(Sort.by(Sort.Direction.DESC, "_id")).limit(2000);
+        query.fields().include("url", "content");
         List<JSONObject> list = mongoTemplate.find(query, JSONObject.class, TABLE_NAME_FEED);
         Set<String> ignoreIndexItemUrlSet = list.stream()
                 .filter(jo -> CollectionUtils.isNotEmpty(jo.getJSONArray("content")))

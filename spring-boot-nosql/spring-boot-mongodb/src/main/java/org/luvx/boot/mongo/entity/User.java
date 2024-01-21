@@ -1,13 +1,13 @@
 package org.luvx.boot.mongo.entity;
 
-import java.time.LocalDateTime;
-
-import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.MongoId;
-
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.MongoId;
+
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -20,4 +20,5 @@ public class User {
     private String        password;
     private int           age;
     private LocalDateTime birthday;
+    private List<String>  addressList;
 }

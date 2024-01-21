@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -58,7 +59,7 @@ public class PageContentSpider {
         for (int i = 0; isNotBlank(pageUrl); i++) {
             log.info("解析内容页: No.{} {}-{}", i + 1, title, URLDecoder.decode(pageUrl, StandardCharsets.UTF_8));
             RATE_LIMITER_SUPPLIER.get().acquire();
-            Connection connect = Jsoup.connect(pageUrl);
+            Connection connect = Jsoup.connect(pageUrl).timeout(60_000);
             Document doc = supplyWithRetry("解析内容页重试", connect::get, null, 5, Duration.ofSeconds(5), alwaysFalse());
             if (doc == null) {
                 break;
@@ -91,7 +92,7 @@ public class PageContentSpider {
                     .filter(u -> !finalPageUrl.equals(u))
                     .orElse(null);
         }
-        PageContent page = new PageContent(url, title, pubDate, categorySet, contentList);
+        PageContent page = new PageContent(url, title, pubDate, categorySet, contentList, LocalDateTime.now());
         return param.getContentPostProcessor().apply(page);
     }
 
@@ -108,7 +109,7 @@ public class PageContentSpider {
         for (int i = 0; i < param.getPageCount() && isNotBlank(pageUrl); i++) {
             log.info("解析目录页: {}", pageUrl);
             RATE_LIMITER_SUPPLIER.get().acquire();
-            Connection connect = Jsoup.connect(pageUrl);
+            Connection connect = Jsoup.connect(pageUrl).timeout(60_000);
             Document doc = supplyWithRetry("解析目录页重试", connect::get, null, 5, Duration.ofSeconds(5), alwaysFalse());
             if (doc == null) {
                 return result;
@@ -132,6 +133,7 @@ public class PageContentSpider {
                 if (CollectionUtils.isEmpty(content.getContent())) {
                     continue;
                 }
+                param.getIgnoreIndexItemUrlSet().add(content.getUrl());
                 result.add(content);
             }
 

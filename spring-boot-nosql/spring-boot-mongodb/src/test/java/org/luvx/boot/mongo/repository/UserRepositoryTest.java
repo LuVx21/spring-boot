@@ -1,21 +1,30 @@
 package org.luvx.boot.mongo.repository;
 
-import java.time.LocalDateTime;
-import java.util.Optional;
-
-import jakarta.annotation.Resource;
-
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
-import org.luvx.boot.mongo.ApplicationTests;
+import org.luvx.boot.mongo.MongoAppTests;
 import org.luvx.boot.mongo.entity.User;
 import org.springframework.data.domain.Example;
 
-import lombok.extern.slf4j.Slf4j;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
 
 @Slf4j
-class UserRepositoryTest extends ApplicationTests {
-    @Resource
-    private UserRepository userRepository;
+class UserRepositoryTest extends MongoAppTests {
+    @Test
+    void m0() {
+        for (int i = 0; i < 100; i++) {
+            User user = new User();
+            user.setId((long) i);
+            user.setUserName(STR."foo_\{i}");
+            user.setPassword(STR."bar_\{i}");
+            user.setAge(i);
+            user.setBirthday(LocalDateTime.now());
+            user.setAddressList(List.of(STR."北京_\{i}", STR."上海_\{i}"));
+            userRepository.save(user);
+        }
+    }
 
     @Test
     void m1() {

@@ -2,7 +2,7 @@
 FROM openjdk:21-slim
 # 设置工作目录
 WORKDIR /app
-RUN mkdir -p ~/data/luvx/oss/{weibo}
+RUN mkdir -p ~/data/luvx/oss
 # 指定存储卷, 任何向/tmp写入的信息都不会记录到容器存储层
 # VOLUME /tmp
 # 拷贝运行JAR包
