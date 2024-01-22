@@ -1,6 +1,7 @@
 package org.luvx.boot.tools.service.jsoup;
 
 import org.jsoup.nodes.Element;
+import org.luvx.boot.tools.dao.mongo.rss.PageContent;
 
 import java.util.List;
 import java.util.Map;

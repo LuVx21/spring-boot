@@ -1,9 +1,9 @@
-package org.luvx.boot.tools.service.jsoup;
+package org.luvx.boot.tools.dao.mongo.rss;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
+import org.springframework.data.mongodb.core.mapping.MongoId;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -13,13 +13,20 @@ import java.util.Set;
 @Getter
 @Setter
 @ToString
+@Document("rss_feed")
+@NoArgsConstructor
 @AllArgsConstructor
 public class PageContent {
+    @MongoId
+    private Long          id;
+    @Field("spider_key")
+    private String        spiderKey;
     private String        url;
     private String        title;
     private String        pubDate;
     private Set<String>   categorySet;
     private List<String>  content;
+    private int           invalid;
     private LocalDateTime createTime;
 
     @Override

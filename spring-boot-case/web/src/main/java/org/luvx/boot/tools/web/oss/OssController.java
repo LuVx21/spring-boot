@@ -8,10 +8,7 @@ import org.luvx.boot.web.response.R;
 import org.springframework.http.MediaType;
 import org.springframework.http.MediaTypeFactory;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -33,8 +30,9 @@ public class OssController {
     }
 
     @RequestMapping(value = {"delete"}, method = {RequestMethod.GET})
-    public R<List<OssFile>> delete(long count) throws Exception {
-        List<OssFile> ossFiles = ossService.deleteByVisitCount(count);
+    public R<List<OssFile>> delete(@RequestParam(value = "count", required = false) Long count,
+                                   @RequestParam(value = "fileName", required = false) String fileName) throws Exception {
+        List<OssFile> ossFiles = ossService.deleteByVisitCount(count, fileName);
         return R.success(ossFiles);
     }
 }

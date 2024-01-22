@@ -10,10 +10,10 @@ import java.io.Serializable;
 @Getter
 public class GetShortUrlResp implements Serializable {
 
-    @ApiModelProperty(value="短域名", example="AcI15A")
+    @ApiModelProperty(value = "短域名", example = "AcI15A")
     private String shortUrl;
 
-    public GetShortUrlResp(String shortUrl){
+    public GetShortUrlResp(String shortUrl) {
         this.shortUrl = shortUrl;
     }
 

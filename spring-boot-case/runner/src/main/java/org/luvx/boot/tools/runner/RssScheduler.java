@@ -15,10 +15,10 @@ public class RssScheduler {
     @Resource
     private RssService   rssService;
 
-    @Scheduled(cron = "0 0/10 9-23 * * ?")
-    public void exec() throws Exception {
-        weiboService.pullByGroup();
-    }
+    // @Scheduled(cron = "0 0/10 9-23 * * ?")
+    // public void exec() throws Exception {
+    //     weiboService.pullByGroup();
+    // }
 
     @Scheduled(cron = "0 0/60 * * * ?")
     public void delete() throws Exception {

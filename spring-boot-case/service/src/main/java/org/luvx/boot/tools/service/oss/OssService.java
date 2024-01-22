@@ -4,6 +4,7 @@ import com.github.phantomthief.util.MoreFunctions;
 import com.google.common.io.ByteStreams;
 import io.mybatis.mapper.example.Example;
 import jakarta.annotation.Resource;
+import org.apache.commons.lang3.StringUtils;
 import org.luvx.boot.tools.dao.entity.OssFile;
 import org.luvx.boot.tools.dao.mapper.OssFileMapper;
 import org.luvx.coding.common.consts.Common;
@@ -15,6 +16,7 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
@@ -46,10 +48,16 @@ public class OssService {
         return ByteStreams.toByteArray(inputStream);
     }
 
-    public List<OssFile> deleteByVisitCount(long count) {
+    public List<OssFile> deleteByVisitCount(Long count, String fileName) {
         Example<OssFile> example = new Example<>();
-        example.createCriteria()
-                .andLessThanOrEqualTo(OssFile::getVisitCount, count);
+        Example.Criteria<OssFile> criteria = example.createCriteria();
+        if (StringUtils.isNotEmpty(fileName)) {
+            criteria.andEqualTo(OssFile::getFile, fileName);
+        } else {
+            criteria.andLessThanOrEqualTo(OssFile::getVisitCount, count)
+                    .andLessThan(OssFile::getCreateTime, LocalDateTime.now().plusDays(-7));
+        }
+
         List<OssFile> ossFiles = ossFileMapper.selectByExample(example);
         ossFiles.forEach(f -> {
             ossFileMapper.deleteByPrimaryKey(f.getId());

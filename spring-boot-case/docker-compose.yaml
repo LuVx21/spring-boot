@@ -8,10 +8,12 @@ services:
     build:
       dockerfile: Dockerfile
     ports:
-      - "8080:8080"
+      - "${EXPOSE_POST}:8080"
     environment:
       MONGO_SERVER: mongo
       REDIS_SERVER: redis-master
+      APP_RUN_IN_HOST: "192.168.2.131"
+      APP_RUN_IN_PORT: ${EXPOSE_POST}
     volumes:
       - $HOME/docker/luvx/:/root/data/luvx
     # extra_hosts:

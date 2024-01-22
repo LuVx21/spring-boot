@@ -21,7 +21,7 @@ public class AppController {
     @Resource
     private UserMapper    mapper;
 
-    @RequestMapping(value = {"/info"}, method = {RequestMethod.GET})
+    @RequestMapping(value = {"/", "/info"}, method = {RequestMethod.GET})
     public R<Object> index() {
         return R.success("ok!");
     }

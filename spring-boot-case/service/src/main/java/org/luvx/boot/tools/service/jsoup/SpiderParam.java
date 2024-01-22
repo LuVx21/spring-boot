@@ -10,6 +10,7 @@ import lombok.ToString;
 import lombok.experimental.Accessors;
 import org.apache.commons.lang3.StringUtils;
 import org.jsoup.nodes.Element;
+import org.luvx.boot.tools.dao.mongo.rss.PageContent;
 
 import java.io.IOException;
 import java.util.List;
@@ -51,6 +52,7 @@ import static org.luvx.boot.tools.service.jsoup.SpiderProcessorHolder.*;
 @ToString
 @Accessors(chain = true)
 public class SpiderParam {
+    private String spiderKey;
     @Nullable
     private String startUrl;
     /**
@@ -95,6 +97,11 @@ public class SpiderParam {
 
     // ----------------------------------------------------------
 
+    /**
+     * 用于覆盖indexItemTitleRule的结果
+     */
+    @Nullable
+    private QueryRule                          contentTitleRule;
     /**
      * 内容发布日期
      */

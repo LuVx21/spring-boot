@@ -3,6 +3,7 @@ package org.luvx.boot.tools.service.jsoup;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
+import com.google.common.util.concurrent.RateLimiter;
 import jakarta.annotation.Nonnull;
 import lombok.ToString;
 import lombok.experimental.Accessors;
@@ -14,6 +15,8 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.luvx.boot.tools.common.CCC;
+import org.luvx.boot.tools.dao.mongo.rss.PageContent;
 import org.luvx.boot.tools.service.jsoup.SpiderParam.QueryRule;
 import org.luvx.coding.common.net.UrlUtils;
 import org.luvx.coding.common.util.Asserts;
@@ -32,7 +35,6 @@ import static com.google.common.base.Preconditions.checkNotNull;
 import static org.apache.commons.lang3.ObjectUtils.isNotEmpty;
 import static org.apache.commons.lang3.StringUtils.isBlank;
 import static org.apache.commons.lang3.StringUtils.isNotBlank;
-import static org.luvx.coding.common.consts.Common.RATE_LIMITER_SUPPLIER;
 import static org.luvx.coding.common.retryer.RetryUtils.supplyWithRetry;
 import static org.luvx.coding.common.util.Predicates.alwaysFalse;
 
@@ -40,6 +42,8 @@ import static org.luvx.coding.common.util.Predicates.alwaysFalse;
 @ToString
 @Accessors(fluent = true)
 public class PageContentSpider {
+    private final RateLimiter limiter = RateLimiter.create(1);
+
     @Nonnull
     private final SpiderParam param;
 
@@ -58,13 +62,17 @@ public class PageContentSpider {
         String pageUrl = url;
         for (int i = 0; isNotBlank(pageUrl); i++) {
             log.info("解析内容页: No.{} {}-{}", i + 1, title, URLDecoder.decode(pageUrl, StandardCharsets.UTF_8));
-            RATE_LIMITER_SUPPLIER.get().acquire();
+            limiter.acquire();
             Connection connect = Jsoup.connect(pageUrl).timeout(60_000);
             Document doc = supplyWithRetry("解析内容页重试", connect::get, null, 5, Duration.ofSeconds(5), alwaysFalse());
             if (doc == null) {
                 break;
             }
             if (i == 0) {
+                QueryRule contentTitleRule = param.getContentTitleRule();
+                if (contentTitleRule != null) {
+                    title = getValue(doc, contentTitleRule);
+                }
                 QueryRule rule = param.getContentPubDateRule();
                 if (rule != null) {
                     pubDate = getValue(doc, rule);
@@ -92,7 +100,10 @@ public class PageContentSpider {
                     .filter(u -> !finalPageUrl.equals(u))
                     .orElse(null);
         }
-        PageContent page = new PageContent(url, title, pubDate, categorySet, contentList, LocalDateTime.now());
+        PageContent page = new PageContent(
+                CCC.defaultIdWorker.nextId(), param.getSpiderKey(),
+                url, title, pubDate, categorySet, contentList, 0, LocalDateTime.now()
+        );
         return param.getContentPostProcessor().apply(page);
     }
 
@@ -108,7 +119,7 @@ public class PageContentSpider {
         String pageUrl = url;
         for (int i = 0; i < param.getPageCount() && isNotBlank(pageUrl); i++) {
             log.info("解析目录页: {}", pageUrl);
-            RATE_LIMITER_SUPPLIER.get().acquire();
+            limiter.acquire();
             Connection connect = Jsoup.connect(pageUrl).timeout(60_000);
             Document doc = supplyWithRetry("解析目录页重试", connect::get, null, 5, Duration.ofSeconds(5), alwaysFalse());
             if (doc == null) {

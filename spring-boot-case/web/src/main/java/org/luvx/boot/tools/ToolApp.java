@@ -27,6 +27,6 @@ public class ToolApp {
     public static void main(String[] args) {
         log.info("starting");
         SpringApplication.run(ToolApp.class, args);
-        log.info("starting success");
+        log.info("(*^▽^*) 启动成功... (〃'▽'〃)");
     }
 }
