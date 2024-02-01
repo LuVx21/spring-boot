@@ -22,7 +22,7 @@ public class RssScheduler {
 
     @Scheduled(cron = "0 0/60 * * * ?")
     public void delete() throws Exception {
-        weiboService.delete(2_000);
+        weiboService.delete(8_000);
     }
 
     @Scheduled(cron = "0 11 0/2 * * ?")

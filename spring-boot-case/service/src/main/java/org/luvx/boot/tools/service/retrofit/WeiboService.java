@@ -7,7 +7,6 @@ import com.github.phantomthief.util.MoreFunctions;
 import com.google.common.collect.Iterators;
 import com.google.common.util.concurrent.RateLimiter;
 import com.mongodb.client.result.DeleteResult;
-import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.MapUtils;
@@ -29,6 +28,7 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
+import jakarta.annotation.Resource;
 import java.io.File;
 import java.util.Collections;
 import java.util.List;
@@ -174,7 +174,8 @@ public class WeiboService {
 
     public void pullByGroup() {
         log.info("拉取微博feed流");
-        String weiboCookie = keyValueService.<String>getData(CommonKVBizType.STRING, "weibo_cookie")
+        String commonKey = "weibo_cookie";
+        String weiboCookie = keyValueService.<String>getData(CommonKVBizType.STRING, commonKey)
                 .orElseThrow(() -> new RuntimeException("微博cookie过期,使用key: weibo_cookie更新cookie"));
 
         Query query = new Query().with(Sort.by(Sort.Direction.DESC, "_id")).skip(0).limit(1);
@@ -189,6 +190,9 @@ public class WeiboService {
                 .withDataAccessor((Long _cursor) -> {
                     Map<String, Object> queryMap = _cursor != null ? Map.of("max_id", _cursor) : Collections.emptyMap();
                     String json = weiboApi.byGroup(weiboCookie, 4670120389774996L, 4, 1, limit, queryMap);
+                    if (!JSON.isValid(json)) {
+                        keyValueService.disable(CommonKVBizType.STRING, commonKey);
+                    }
                     return JSON.parseObject(json);
                 })
                 .withDataExtractor(root -> {

@@ -1,8 +1,6 @@
 package org.luvx.boot.tools.service.commonkv;
 
 import io.mybatis.mapper.example.Example;
-import jakarta.annotation.Nonnull;
-import jakarta.annotation.Resource;
 import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.ObjectUtils;
@@ -12,9 +10,10 @@ import org.luvx.boot.tools.dao.entity.CommonKeyValue;
 import org.luvx.boot.tools.dao.mapper.CommonKeyValueMapper;
 import org.luvx.boot.tools.service.commonkv.constant.KVBizType;
 import org.luvx.coding.common.util.JsonUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Resource;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Map;
@@ -142,5 +141,24 @@ public class CommonKeyValueServiceImpl implements CommonKeyValueService {
                 .andIn(CommonKeyValue::getCommonKey, keys);
         return mapper.selectByExample(example).stream()
                 .collect(Collectors.toMap(CommonKeyValue::getCommonKey, Function.identity(), (a, b) -> b));
+    }
+
+    @Override
+    public void enable(KVBizType bizType, String key) {
+        onOff(bizType, key, true);
+    }
+
+    @Override
+    public void disable(KVBizType bizType, String key) {
+        onOff(bizType, key, false);
+    }
+
+    private void onOff(KVBizType bizType, String key, boolean valid) {
+        int invalid = valid ? 0 : 1;
+        Example<CommonKeyValue> example = new Example<>();
+        example.set(STR."invalid = \{invalid}").createCriteria()
+                .andEqualTo(CommonKeyValue::getBizType, bizType.getBizType())
+                .andEqualTo(CommonKeyValue::getCommonKey, key);
+        mapper.updateByExampleSetValues(example);
     }
 }

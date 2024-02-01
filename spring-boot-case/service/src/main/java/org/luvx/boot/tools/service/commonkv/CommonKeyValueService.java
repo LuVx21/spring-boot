@@ -1,10 +1,10 @@
 package org.luvx.boot.tools.service.commonkv;
 
-import jakarta.annotation.Nonnull;
 import org.luvx.boot.tools.dao.entity.CommonKeyValue;
 import org.luvx.boot.tools.service.commonkv.constant.KVBizType;
 import org.luvx.coding.common.util.JsonUtils;
 
+import jakarta.annotation.Nonnull;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -77,4 +77,8 @@ public interface CommonKeyValueService {
         return get(bizType, key)
                 .map(kv -> (T) JsonUtils.fromJson(kv.getCommonValue(), bizType.getValueClass()));
     }
+
+    void enable(KVBizType bizType, String key);
+
+    void disable(KVBizType bizType, String key);
 }
