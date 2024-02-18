@@ -1,0 +1,119 @@
+.jun-meter {
+    position: relative;
+    width: 256px;
+    height: 256px;
+    margin: auto;
+    margin-top: 7%;
+    background-image: url(../img/ring.svg);
+    background-repeat: no-repeat;
+    background-size: 100%
+}
+
+.jun-time-rect {
+    position: absolute;
+    top: 72px;
+    left: 110px;
+    width: 12px;
+    height: 32px;
+    background-image: url(../img/rect.svg);
+    background-size: 20px 20px
+}
+
+.jun-time-h-h {
+    position: absolute;
+    top: 68px;
+    left: 56px;
+    width: 40px;
+    height: 40px;
+    background-image: url(../img/8.svg);
+    background-repeat: no-repeat;
+    background-size: 100%
+}
+
+.jun-time-h-l {
+    position: absolute;
+    top: 68px;
+    left: 80px;
+    width: 40px;
+    height: 40px;
+    background-image: url(../img/8.svg);
+    background-repeat: no-repeat;
+    background-size: 100%
+}
+
+.jun-time-m-h {
+    position: absolute;
+    top: 68px;
+    left: 116px;
+    width: 40px;
+    height: 40px;
+    background-image: url(../img/8.svg);
+    background-repeat: no-repeat;
+    background-size: 100%
+}
+
+.jun-time-m-l {
+    position: absolute;
+    top: 68px;
+    left: 140px;
+    width: 40px;
+    height: 40px;
+    background-image: url(../img/8.svg);
+    background-repeat: no-repeat;
+    background-size: 100%
+}
+
+.jun-time-s-h {
+    position: absolute;
+    top: 83.2px;
+    left: 172px;
+    width: 24px;
+    height: 24px;
+    background-image: url(../img/8.svg);
+    background-repeat: no-repeat;
+    background-size: 100%
+}
+
+.jun-time-s-l {
+    position: absolute;
+    top: 83.2px;
+    left: 188px;
+    width: 24px;
+    height: 24px;
+    background-image: url(../img/8.svg);
+    background-repeat: no-repeat;
+    background-size: 100%
+}
+
+.jun-calendar-date {
+    position: absolute;
+    top: 124px;
+    left: 160px;
+    width: 76px;
+    height: 12px;
+    font-size: 6px;
+    line-height: 30px;
+    text-align: center
+}
+
+.jun-date {
+    position: absolute;
+    top: 138px;
+    left: 164px;
+    width: 68px;
+    height: 12px;
+    font-size: 6px;
+    line-height: 30px;
+    text-align: center
+}
+
+.jun-human {
+    position: absolute;
+    top: 112px;
+    left: 100px;
+    width: 60px;
+    height: 60px;
+    background-image: url(../img/human.gif);
+    background-repeat: no-repeat;
+    background-size: 100%
+}

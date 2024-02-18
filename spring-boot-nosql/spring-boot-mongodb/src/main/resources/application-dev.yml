@@ -2,3 +2,4 @@ spring:
   data:
     mongodb:
       uri: mongodb://luvx:1121@localhost:27017/boot
+      auto-index-creation: true

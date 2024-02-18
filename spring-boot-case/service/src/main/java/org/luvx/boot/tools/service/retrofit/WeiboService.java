@@ -12,6 +12,8 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.lang3.ObjectUtils;
 import org.luvx.boot.tools.common.CCC;
+import org.luvx.boot.tools.dao.mongo.weibo.HotBand;
+import org.luvx.boot.tools.dao.mongo.weibo.HotBandRepository;
 import org.luvx.boot.tools.service.api.WeiboApi;
 import org.luvx.boot.tools.service.commonkv.CommonKeyValueService;
 import org.luvx.boot.tools.service.commonkv.constant.CommonKVBizType;
@@ -22,6 +24,7 @@ import org.luvx.coding.common.cursor.CursorIteratorEx;
 import org.luvx.coding.common.net.HttpUtils;
 import org.luvx.coding.common.net.UrlUtils;
 import org.luvx.coding.common.util.JSONPathUtils;
+import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -30,10 +33,8 @@ import org.springframework.stereotype.Service;
 
 import jakarta.annotation.Resource;
 import java.io.File;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.time.LocalDate;
+import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
@@ -54,9 +55,43 @@ public class WeiboService {
     private OssService            ossService;
     @Resource
     private MongoTemplate         mongoTemplate;
+    @Resource
+    private HotBandRepository     hotBandRepository;
 
-    public void hotBand() {
-        String s = weiboApi.hotBand();
+    public void pullHotBand() {
+        log.info("拉取微博热搜");
+        String json = weiboApi.hotBand();
+        JSONObject jo = JSON.parseObject(json);
+        JSONObject data = jo.getJSONObject("data");
+        JSONArray bandList = data.getJSONArray("band_list");
+
+        final LocalDate now = LocalDate.now();
+        for (Object o : bandList) {
+            JSONObject oo = (JSONObject) o;
+            String word = oo.getString("word");
+            // Long onboardTime = oo.getLong("onboard_time");
+            // LocalDate now = DateUtils.dateOfTimestamp(onboardTime * 1000);
+            String rank = oo.getString("realpos");
+            if (rank == null) {
+                continue;
+            }
+            HotBand record = new HotBand();
+            record.setWord(word);
+            Optional<HotBand> op = hotBandRepository.findOne(Example.of(record));
+            if (op.isPresent()) {
+                HotBand hotBand = op.get();
+                Map<LocalDate, String> rankMap = hotBand.getRankMap();
+                String oldRank = rankMap.getOrDefault(now, "99");
+                if (oldRank.compareTo(rank) > 0) {
+                    rankMap.put(now, rank);
+                    hotBandRepository.save(hotBand);
+                }
+            } else {
+                record.setRankMap(Map.of(now, rank));
+                record.setId(CCC.defaultIdWorker.nextId());
+                hotBandRepository.insert(record);
+            }
+        }
     }
 
     public String rss() {

@@ -3,6 +3,8 @@ package org.luvx.boot.mongo.entity;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.data.mongodb.core.index.GeoSpatialIndexType;
+import org.springframework.data.mongodb.core.index.GeoSpatialIndexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.MongoId;
 
@@ -21,4 +23,7 @@ public class User {
     private int           age;
     private LocalDateTime birthday;
     private List<String>  addressList;
+
+    @GeoSpatialIndexed(type = GeoSpatialIndexType.GEO_2DSPHERE)
+    private double[] location;
 }

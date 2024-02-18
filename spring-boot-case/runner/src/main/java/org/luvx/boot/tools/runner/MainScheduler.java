@@ -1,6 +1,5 @@
 package org.luvx.boot.tools.runner;
 
-import jakarta.annotation.Resource;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.luvx.boot.tools.service.retrofit.WeiboService;
@@ -9,6 +8,8 @@ import org.springframework.scheduling.annotation.SchedulingConfigurer;
 import org.springframework.scheduling.config.ScheduledTaskRegistrar;
 import org.springframework.scheduling.support.CronTrigger;
 import org.springframework.stereotype.Component;
+
+import jakarta.annotation.Resource;
 
 @Slf4j
 @Component

@@ -4,18 +4,20 @@ spring:
     url: jdbc:mysql://luvx:53306/boot?useUnicode=true&characterEncoding=utf-8&serverTimezone=UTC&useSSL=true&allowMultiQueries=true
     username: root
     password: 1121
+    hikari:
+      max-lifetime: 600000
   data:
     mongodb:
       uri: mongodb+srv://xxx:xxx@cluster0.r8xxd.mongodb.net/boot
       # uri: mongodb://luvx:1121@${MONGO_SERVER:localhost}:27017/boot
     redis:
-      url: redis://xxx:xxx@redis-15487.c292.ap-southeast-1-1.ec2.cloud.redislabs.com:15487
+      url: redis://xxx:xxx@redis-16127.c294.ap-northeast-1-2.ec2.cloud.redislabs.com:16127
       # url: redis://xxx:xxx@${REDIS_SERVER:localhost}:6379
 
-logging:
-  level:
-    org.luvx.boot.tools.dao.mapper: debug
-    # org.springframework.data.mongodb.core.MongoTemplate: DEBUG
+# logging:
+#   level:
+#     org.luvx.boot.tools.dao.mapper: debug
+#     # org.springframework.data.mongodb.core.MongoTemplate: DEBUG
 
 mybatis:
   mapper-locations: classpath:org/luvx/tools/dao/*/*.xml

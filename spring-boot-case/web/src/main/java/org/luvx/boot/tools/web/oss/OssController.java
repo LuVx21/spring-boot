@@ -23,16 +23,16 @@ public class OssController {
     public ResponseEntity oss(@PathVariable("scope") String scope, @PathVariable("fileName") String fileName) throws Exception {
         byte[] bytes = ossService.get(scope, fileName);
 
-        MediaType mediaType = MediaTypeFactory.getMediaType(fileName).orElse(MediaType.ALL);
+        MediaType mediaType = MediaTypeFactory.getMediaType(fileName).orElse(MediaType.APPLICATION_OCTET_STREAM);
         return ResponseEntity.ok()
                 .contentType(mediaType)
                 .body(bytes);
     }
 
     @RequestMapping(value = {"delete"}, method = {RequestMethod.GET})
-    public R<List<OssFile>> delete(@RequestParam(value = "count", required = false) Long count,
+    public R<List<Long>> delete(@RequestParam(value = "count", required = false) Long count,
                                    @RequestParam(value = "fileName", required = false) String fileName) throws Exception {
-        List<OssFile> ossFiles = ossService.deleteByVisitCount(count, fileName);
+        List<Long> ossFiles = ossService.deleteByVisitCount(count, fileName);
         return R.success(ossFiles);
     }
 }
