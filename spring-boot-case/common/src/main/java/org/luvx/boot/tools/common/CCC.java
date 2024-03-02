@@ -1,5 +1,6 @@
 package org.luvx.boot.tools.common;
 
+import org.apache.commons.lang3.ObjectUtils;
 import org.luvx.boot.common.app.AppInfo;
 import org.luvx.coding.common.consts.Systems;
 import org.luvx.coding.common.id.SnowflakeIdWorker;
@@ -14,9 +15,7 @@ public class CCC {
         String ip = ofNullable(Systems.appRunInHost())
                 .orElseGet(() -> NetUtils.getHostInfo().get("ip"));
         // String ip = "192.168.2.131";
-        Integer port = ofNullable(Systems.appRunInPort())
-                .flatMap(o -> AppInfo.instance().map(AppInfo::getPort))
-                .orElse(8080);
+        Integer port = ObjectUtils.getIfNull(Systems.appRunInPort(), () -> AppInfo.instance().map(AppInfo::getPort).orElse(8080));
         return STR."\{ip}:\{port}";
     }
 }
