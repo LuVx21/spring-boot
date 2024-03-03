@@ -1,4 +1,4 @@
-package org.luvx.boot.tools.service.api.interceptor;
+package org.luvx.boot.tools.service.api.interceptor.sign;
 
 import java.io.IOException;
 

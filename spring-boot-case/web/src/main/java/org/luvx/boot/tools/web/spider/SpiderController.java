@@ -1,6 +1,7 @@
 package org.luvx.boot.tools.web.spider;
 
 import jakarta.annotation.Resource;
+
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.MapUtils;
 import org.luvx.boot.tools.service.api.interceptor.GeekTimeInterceptor;
@@ -42,9 +43,13 @@ public class SpiderController {
         } else if (type == 1) {
             // 指定文章
             for (Long courseId : set) {
-                List<Long> ids = geekTimeService.getUpdateArticleIds(courseId);
-                for (Long articleId : ids) {
-                    geekTimeService.downloadArticle(courseId, articleId);
+                try {
+                    List<Long> ids = geekTimeService.getUpdateArticleIds(courseId);
+                    for (Long articleId : ids) {
+                        geekTimeService.downloadArticle(courseId, articleId);
+                    }
+                } catch (Exception ignore) {
+                    log.warn("当前课程异常,忽略后继续下一课程", ignore);
                 }
             }
         }

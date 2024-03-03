@@ -10,12 +10,14 @@ import com.github.lianjiatech.retrofit.spring.boot.interceptor.Intercept;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.luvx.boot.tools.service.api.interceptor.common.RateLimiterInterceptor;
 import org.luvx.boot.tools.service.api.interceptor.common.UserAgentInterceptor;
 import retrofit2.http.Body;
 import retrofit2.http.POST;
 
 @Intercept(handler = GeekTimeInterceptor.class)
 @Intercept(handler = UserAgentInterceptor.class)
+@Intercept(handler = RateLimiterInterceptor.class)
 @RetrofitClient(baseUrl = "https://time.geekbang.org")
 public interface GeekTimeApi {
     @POST("serv/v3/learn/product")

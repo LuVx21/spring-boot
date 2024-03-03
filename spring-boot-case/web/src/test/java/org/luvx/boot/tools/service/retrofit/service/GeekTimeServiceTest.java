@@ -14,7 +14,7 @@ class GeekTimeServiceTest extends BaseAppTests {
     private GeekTimeService geekTimeService;
 
     @Test
-    void main() throws Exception {
+    void mainTest() throws Exception {
         geekTimeService.allCourse();
         List<Long> set = Stream.of(
                 )

@@ -11,7 +11,9 @@ import com.google.common.io.Files;
 import com.google.common.util.concurrent.RateLimiter;
 import com.google.common.util.concurrent.Uninterruptibles;
 import io.vavr.Tuple2;
+
 import jakarta.annotation.Resource;
+
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -157,7 +159,8 @@ public class GeekTimeService {
         String mp3Url = data.getString("audio_download_url");
         String articleContent = data.getString("article_content");
         if (StringUtils.isBlank(articleContent)) {
-            return;
+            // return;
+            throw new RuntimeException("空");
         }
 
         // 保存原始 json
@@ -380,7 +383,6 @@ public class GeekTimeService {
         File[] files = doc.listFiles();
         // Arrays.sort(files, Comparator.comparing(f -> f.getName().substring(10)));
         Arrays.sort(files, Comparator.comparing(f -> f.getName().substring(0, 9)));
-        String s = "| `{0}` | [{1}](./doc/{2}/README.md)";
         for (int i = 0; i < files.length; i++) {
             File f = files[i];
             if (!f.isDirectory()) {
@@ -390,9 +392,9 @@ public class GeekTimeService {
                 continue;
             }
             String fileName = f.getName(), prefix = fileName.substring(0, 9), postfix = fileName.substring(10);
-            String format = MessageFormat.format(s, prefix, postfix, fileName);
+            String format = STR."| `\{prefix}` | [\{postfix}](./doc/\{fileName}/README.md)";
 
-            if ((i) % 3 == 0) {
+            if ((i + 1) % 3 == 0) {
                 System.out.println(STR."\{format}|");
             } else {
                 System.out.print(format);

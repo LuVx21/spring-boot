@@ -1,4 +1,4 @@
-package org.luvx.boot.tools.service.api.interceptor;
+package org.luvx.boot.tools.service.api.interceptor.sign;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
