@@ -1,0 +1,7 @@
+{
+  "name": "spring-boot-case",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "app",
+  "workspaceFolder": "/workspace",
+  "postCreateCommand": "java -version"
+}

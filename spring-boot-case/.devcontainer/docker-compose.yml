@@ -1,0 +1,25 @@
+version: "3.9"
+
+services:
+  app:
+    build:
+      context: ..
+      dockerfile: .devcontainer/Dockerfile
+    volumes:
+      - ..:/workspace:cached
+      - $HOME/go/pkg/mod:/go/pkg/mod
+    networks:
+      - net_common
+    ports:
+      - "8080:8080"
+    environment:
+      TZ: Asia/Shanghai
+      MONGO_SERVER: mongo
+      REDIS_SERVER: redis-master
+      APP_RUN_IN_HOST: "192.168.2.131"
+      APP_RUN_IN_PORT: 8080
+    command: sleep infinity
+
+networks:
+  net_common:
+    external: true

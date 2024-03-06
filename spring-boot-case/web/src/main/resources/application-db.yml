@@ -22,3 +22,16 @@ spring:
 mybatis:
   mapper-locations: classpath:org/luvx/tools/dao/*/*.xml
   type-aliases-package: org.luvx.boot.tools.dao
+
+debezium.source:
+  serverId: 223344
+  serverName: debezium_01
+  hostname: luvx
+  port: 53306
+  user: root
+  password: 1121
+  databaseIncludeList: boot
+#  tableIncludeList: boot.user
+  storageFile: /tmp/offsets.dat
+  historyFile: /tmp/custom-file-db-history.dat
+  flushInterval: 10000
