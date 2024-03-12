@@ -11,13 +11,13 @@ services:
     networks:
       - net_common
     ports:
-      - "8080:8080"
+      - "9999:9999"
     environment:
       TZ: Asia/Shanghai
       MONGO_SERVER: mongo
       REDIS_SERVER: redis-master
       APP_RUN_IN_HOST: "192.168.2.131"
-      APP_RUN_IN_PORT: 8080
+      APP_RUN_IN_PORT: 9999
     command: sleep infinity
 
 networks:

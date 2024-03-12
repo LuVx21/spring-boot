@@ -3,6 +3,7 @@ package org.luvx.boot.tools;
 // import de.codecentric.boot.admin.server.config.EnableAdminServer;
 import lombok.extern.slf4j.Slf4j;
 import org.luvx.boot.tools.dao.config.DaoConfig;
+import org.luvx.boot.tools.runner.cdc.enable.EnableCdc;
 import org.luvx.boot.tools.runner.config.RunnerConfig;
 import org.luvx.boot.tools.service.config.ServiceConfig;
 import org.luvx.boot.tools.web.config.WebConfig;
@@ -22,6 +23,7 @@ import org.springframework.context.annotation.Import;
         ServiceConfig.class
 })
 // @EnableAdminServer
+// @EnableCdc
 @SpringBootApplication
 public class ToolApp {
     public static void main(String[] args) {

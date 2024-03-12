@@ -20,6 +20,7 @@ public class HotBand {
 
     private String                 word;
     private Map<LocalDate, String> rankMap;
+    private String                 category;
 
     @Override
     public boolean equals(Object o) {

@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.concurrent.Executor;
 
 @Slf4j
-@org.springframework.context.annotation.Configuration
+// @org.springframework.context.annotation.Configuration
 public class MysqlBinlogListener implements SmartLifecycle {
     @Resource
     private Executor         taskExecutor;

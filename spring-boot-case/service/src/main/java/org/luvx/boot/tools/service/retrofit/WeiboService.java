@@ -84,9 +84,11 @@ public class WeiboService {
                 String oldRank = rankMap.getOrDefault(now, "99");
                 if (oldRank.compareTo(rank) > 0) {
                     rankMap.put(now, rank);
+                    hotBand.setCategory(oo.getString("category"));
                     hotBandRepository.save(hotBand);
                 }
             } else {
+                record.setCategory(oo.getString("category"));
                 record.setRankMap(Map.of(now, rank));
                 record.setId(CCC.defaultIdWorker.nextId());
                 hotBandRepository.insert(record);
