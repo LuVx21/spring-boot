@@ -10,8 +10,8 @@
     </parent>
 
     <artifactId>spring-boot-case</artifactId>
+    <version>0.0.0</version>
     <packaging>pom</packaging>
-    <version>0.1</version>
 
     <properties>
     </properties>

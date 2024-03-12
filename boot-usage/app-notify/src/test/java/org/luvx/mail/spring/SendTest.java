@@ -1,13 +1,10 @@
 package org.luvx.mail.spring;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.luvx.ApplicationTest;
+import org.luvx.boot.mail.spring.Send;
 import org.springframework.beans.factory.annotation.Autowired;
 
-/**
- * @author: Ren, Xie
- * @desc:
- */
 public class SendTest extends ApplicationTest {
     @Autowired
     Send send;
