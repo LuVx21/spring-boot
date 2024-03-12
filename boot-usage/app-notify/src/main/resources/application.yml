@@ -1,0 +1,14 @@
+server:
+  port: 8090
+
+spring.mail
+  host: smtp.office365.com
+  port: 587
+  protocol: smtp
+  default-encoding: UTF-8
+  username: foobar@hotmail.com
+  password: foobar
+  properties.mail.smtp.auth: true
+  properties.mail.smtp.starttls.enable: true
+  properties.mail.smtp.starttls.required: true
+

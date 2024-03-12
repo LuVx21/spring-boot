@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+</head>
+<body>
+<h1>spring 邮件测试</h1>
+<br/>
+您好,这是验证邮件,请点击下面的链接完成验证,<br/><br/>
+<a href="#" th:href="@{ http://www.luvx.zyx/{id}(id=${id}) }">激活账号</a>
+</body>
+</html>
