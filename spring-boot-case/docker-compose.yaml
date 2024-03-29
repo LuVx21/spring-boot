@@ -1,21 +1,22 @@
-version: '3'
+version: "3.9"
 services:
   spring-boot-case:
     image: luvx/spring-boot-case:latest
     container_name: spring-boot-case
-    networks:
-      - net_common
     build:
       dockerfile: Dockerfile
+    networks:
+      - net_common
     ports:
       - "${EXPOSE_POST}:9999"
     environment:
+      TZ: Asia/Shanghai
       MONGO_SERVER: mongo
       REDIS_SERVER: redis-master
       APP_RUN_IN_HOST: "192.168.2.131"
       APP_RUN_IN_PORT: ${EXPOSE_POST}
     volumes:
-      - $HOME/docker/luvx/:/root/data/luvx
+      - $HOME/data:/root/data
     # extra_hosts:
     #   - luvx:127.0.0.1
     # depends_on:

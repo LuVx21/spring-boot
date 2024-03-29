@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.lang3.ObjectUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.luvx.boot.tools.common.CCC;
 import org.luvx.boot.tools.dao.mongo.weibo.HotBand;
 import org.luvx.boot.tools.dao.mongo.weibo.HotBandRepository;
@@ -19,6 +20,7 @@ import org.luvx.boot.tools.service.commonkv.CommonKeyValueService;
 import org.luvx.boot.tools.service.commonkv.constant.CommonKVBizType;
 import org.luvx.boot.tools.service.oss.OssScopeEnum;
 import org.luvx.boot.tools.service.oss.OssService;
+import org.luvx.boot.tools.service.sqlite.ChromeCookieService;
 import org.luvx.coding.common.consts.Common;
 import org.luvx.coding.common.cursor.CursorIteratorEx;
 import org.luvx.coding.common.net.HttpUtils;
@@ -57,6 +59,8 @@ public class WeiboService {
     private MongoTemplate         mongoTemplate;
     @Resource
     private HotBandRepository     hotBandRepository;
+    @Resource
+    private ChromeCookieService   chromeCookieService;
 
     public void pullHotBand() {
         log.info("拉取微博热搜");
@@ -213,7 +217,10 @@ public class WeiboService {
         log.info("拉取微博feed流");
         String commonKey = "weibo_cookie";
         String weiboCookie = keyValueService.<String>getData(CommonKVBizType.STRING, commonKey)
-                .orElseThrow(() -> new RuntimeException("微博cookie过期,使用key: weibo_cookie更新cookie"));
+                .orElseGet(() -> chromeCookieService.getCookieStrByHost(List.of(".weibo.com", "weibo.com"), null));
+        if (StringUtils.isEmpty(weiboCookie)) {
+            throw new RuntimeException("微博cookie过期,使用key: weibo_cookie更新cookie");
+        }
 
         Query query = new Query().with(Sort.by(Sort.Direction.DESC, "_id")).skip(0).limit(1);
         Map<String, Object> map = (Map<String, Object>) mongoTemplate.findOne(query, Object.class, TABLE_NAME_FEED);

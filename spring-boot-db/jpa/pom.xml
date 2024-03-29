@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.luvx.boot</groupId>
         <artifactId>spring-boot-db</artifactId>
-        <version>0.2</version>
+        <version>0.0.0</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
@@ -14,9 +14,7 @@
     <packaging>jar</packaging>
 
     <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <querydsl.version>5.0.0</querydsl.version>
+        <querydsl.version>5.1.0</querydsl.version>
     </properties>
 
     <dependencies>
@@ -33,22 +31,10 @@
             <classifier>jakarta</classifier>
         </dependency>
 
-        <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-            <version>2.1.210</version>
-        </dependency>
     </dependencies>
 
     <build>
         <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <configuration>
-                    <fork>true</fork>
-                </configuration>
-            </plugin>
             <plugin>
                 <groupId>com.mysema.maven</groupId>
                 <artifactId>apt-maven-plugin</artifactId>

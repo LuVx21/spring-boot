@@ -3,10 +3,10 @@ package org.luvx.boot.jdbc;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.luvx.boot.jdbc.entity.User;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 
 import java.util.ArrayList;
@@ -14,9 +14,8 @@ import java.util.List;
 import java.util.Map;
 
 @Slf4j
-public class TemplateTest extends ApplicationTests {
-    @Autowired
-    private JdbcTemplate jdbcTemplate;
+public class TemplateTest extends JdbcAppTests {
+    RowMapper<User> rowMapper = new BeanPropertyRowMapper<>(User.class);
 
     @Test
     public void insertTest() {
@@ -45,9 +44,23 @@ public class TemplateTest extends ApplicationTests {
     }
 
     @Test
+    void testType() {
+        final int id = 1_0000;
+        String sql = "select user_name from user where id = ?";
+        // 不支持自定义类型,只能使用Integer,String.class等类型
+        List<String> users1 = jdbcTemplate.queryForList(sql, String.class, id);
+        System.out.println(users1);
+        // 不支持自定义类型,只能使用Integer,String.class等类型
+        String user = jdbcTemplate.queryForObject(sql, String.class, id);
+        System.out.println(user);
+    }
+
+    @Test
     public void queryTest() {
+        final int id = 1_0000;
         String sql = "select * from user where id = ?";
-        SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, 1_0000);
+
+        SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, id);
         while (rowSet.next()) {
             log.info("id:{},userName:{},password:{},age:{}",
                     rowSet.getLong("id"),
@@ -57,28 +70,43 @@ public class TemplateTest extends ApplicationTests {
             );
         }
 
-        List<Map<String, Object>> users = jdbcTemplate.queryForList(sql, 1_0000);
+        List<Map<String, Object>> users = jdbcTemplate.queryForList(sql, id);
         System.out.println(users);
 
-        Map<String, Object> map = jdbcTemplate.queryForMap(sql, 1_0000);
+        Map<String, Object> map = jdbcTemplate.queryForMap(sql, id);
         System.out.println(map);
+
+        jdbcTemplate.queryForStream(sql, rowMapper, id).forEachOrdered(u -> System.out.println(u));
     }
 
     /**
      * 直接转成自定义类型
      */
     @Test
-    public void queryObjectTest() {
+    public void testRowMapper() {
+        int id = 1_0000;
         String sql = "select * from user where id = ?";
-        RowMapper<User> rowMapper = new BeanPropertyRowMapper<>(User.class);
 
-        User user = jdbcTemplate.queryForObject(sql, rowMapper, 1_0000);
+        User user = jdbcTemplate.queryForObject(sql, rowMapper, id);
         System.out.println(user);
 
-        List<User> users = jdbcTemplate.query(sql, rowMapper, 1_0000);
+        List<User> users = jdbcTemplate.query(sql, rowMapper, id);
         System.out.println(users);
+    }
 
-        // 不支持自定义类型, 仅仅支持单列
-        // List<User> users1 = jdbcTemplate.queryForList(sql, User.class, 1_0000);
+    @Test
+    void testIn() {
+        final List<Integer> ids = List.of(1, 1_0000);
+        String sql = "select * from user where id in (:ids)";
+
+        NamedParameterJdbcTemplate givenParamJdbcTemp = new NamedParameterJdbcTemplate(jdbcTemplate);
+        Map<String, List<Integer>> args = Map.of("ids", ids);
+        List<Map<String, Object>> maps = givenParamJdbcTemp.queryForList(sql, args);
+        System.out.println(maps);
+
+        MapSqlParameterSource parameters = new MapSqlParameterSource();
+        parameters.addValue("ids", ids);
+        List<User> data = givenParamJdbcTemp.query(sql, parameters, rowMapper);
+        System.out.println(data);
     }
 }

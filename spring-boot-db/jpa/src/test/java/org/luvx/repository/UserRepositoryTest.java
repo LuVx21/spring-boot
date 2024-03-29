@@ -1,21 +1,18 @@
 package org.luvx.repository;
 
 import org.junit.jupiter.api.Test;
-import org.luvx.ApplicationTests;
+import org.luvx.JpaAppTests;
 import org.luvx.entity.User;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Optional;
 
-public class UserRepositoryTest extends ApplicationTests {
-    @Autowired
-    UserRepository userRepository;
-
+class UserRepositoryTest extends JpaAppTests {
     @Test
-    public void insertTest() {
-        User user = User.builder()
-                // .id(10034L)
-                .userName("foo").password("bar").age(18).build();
+    void insertTest() {
+        User user = new User()
+                .setUserName("foo")
+                .setPassword("bar")
+                .setAge(18);
         user = userRepository.save(user);
         System.out.println(user);
         // user.setAge(19);
@@ -30,13 +27,17 @@ public class UserRepositoryTest extends ApplicationTests {
     }
 
     @Test
-    public void deleteTest() {
-        User user = User.builder().id(10044L).userName("foo").password("bar").age(18).build();
+    void deleteTest() {
+        User user = new User()
+                .setId(10044L)
+                .setUserName("foo")
+                .setPassword("bar")
+                .setAge(18);
         userRepository.delete(user);
     }
 
     @Test
-    public void selectTest() {
+    void selectTest() {
         Optional<User> user = userRepository.findById(1L);
         System.out.println(user);
     }

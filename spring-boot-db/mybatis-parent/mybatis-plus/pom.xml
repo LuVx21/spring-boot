@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.luvx.boot</groupId>
         <artifactId>mybatis-parent</artifactId>
-        <version>0.2</version>
+        <version>0.0.0</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
@@ -25,15 +25,6 @@
     </dependencies>
 
     <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <configuration>
-                    <fork>true</fork>
-                </configuration>
-            </plugin>
-        </plugins>
     </build>
 
 </project>

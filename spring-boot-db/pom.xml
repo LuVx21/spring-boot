@@ -6,10 +6,11 @@
     <parent>
         <groupId>org.luvx.boot</groupId>
         <artifactId>coding-parent-boot-java</artifactId>
-        <version>0.2</version>
+        <version>0.3</version>
     </parent>
 
     <artifactId>spring-boot-db</artifactId>
+    <version>0.0.0</version>
     <packaging>pom</packaging>
 
     <modules>

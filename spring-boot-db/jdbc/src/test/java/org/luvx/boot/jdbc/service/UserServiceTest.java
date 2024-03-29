@@ -1,14 +1,10 @@
 package org.luvx.boot.jdbc.service;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
+import org.luvx.boot.jdbc.JdbcAppTests;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-@ExtendWith(SpringExtension.class)
-@SpringBootTest
-public class UserServiceTest {
+public class UserServiceTest extends JdbcAppTests {
     @Autowired
     UserService service;
 

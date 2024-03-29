@@ -1,6 +1,3 @@
-server:
-  port: 8090
-
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -10,25 +7,16 @@ spring:
   jpa:
     properties:
       hibernate:
-        # dialect: org.hibernate.dialect.MySQL8Dialect
+#        dialect: org.hibernate.dialect.MySQL8Dialect
         format_sql: true
-        # show_sql: true
-        # use_sql_comments: true
+#        show_sql: true
+#        use_sql_comments: true
         hbm2ddl:
           auto: update
     show-sql: true
 
 logging:
   level:
-    org:
-      hibernate:
-        SQL: debug
-        type:
-          descriptor:
-            sql:
-              BasicBinder: trace
-#        engine:
-#          QueryParameters: debug
-#          query:
-#            HQLQueryPlan: debug
-
+#    org.hibernate.SQL: debug
+    org.hibernate.orm.jdbc.bind: trace
+#    org.hibernate.type.descriptor.sql.BasicBinder: trace

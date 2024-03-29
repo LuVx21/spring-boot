@@ -14,10 +14,10 @@ spring:
       url: redis://xxx:xxx@redis-16127.c294.ap-northeast-1-2.ec2.cloud.redislabs.com:16127
       # url: redis://xxx:xxx@${REDIS_SERVER:localhost}:6379
 
-# logging:
-#   level:
-#     org.luvx.boot.tools.dao.mapper: debug
-#     # org.springframework.data.mongodb.core.MongoTemplate: DEBUG
+#  logging:
+#    level:
+#      org.luvx.boot.tools.dao.mapper: debug
+#      org.springframework.data.mongodb.core.MongoTemplate: DEBUG
 
 mybatis:
   mapper-locations: classpath:org/luvx/tools/dao/*/*.xml
@@ -31,7 +31,7 @@ debezium.source:
   user: root
   password: 1121
   databaseIncludeList: boot
-#  tableIncludeList: boot.user
+  #  tableIncludeList: boot.user
   storageFile: /tmp/offsets.dat
   historyFile: /tmp/custom-file-db-history.dat
   flushInterval: 10000

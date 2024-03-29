@@ -2,11 +2,12 @@ package org.luvx.repository;
 
 import com.alibaba.fastjson2.JSON;
 import com.querydsl.core.types.Projections;
+import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
-import org.luvx.ApplicationTests;
+import org.luvx.JpaAppTests;
 import org.luvx.entity.QArticle;
 import org.luvx.entity.QUser;
 import org.luvx.entity.User;
@@ -14,38 +15,37 @@ import org.luvx.entity.dto.UserArticleVo;
 
 import jakarta.annotation.Resource;
 import java.util.List;
-import java.util.Optional;
 
 @Slf4j
-public class UserRepositoryTest1 extends ApplicationTests {
+class DslTest extends JpaAppTests {
     @Resource
-    UserRepository    userRepository;
-    @Resource
-    ArticleRepository articleRepository;
-    @Resource
-    JPAQueryFactory   queryFactory;
+    JPAQueryFactory queryFactory;
 
     @Test
-    public void select1() {
+    void testUser() {
         QUser user = QUser.user;
-        Iterable<User> all = userRepository.findAll(user.id.eq(1L));
-        Optional<User> one = userRepository.findOne(user.id.eq(1L));
+        BooleanExpression eq = user.id.eq(1L);
+        userRepository.findAll(eq).forEach(System.out::println);
+
+        BooleanExpression in = user.id.in(1L, 10000L);
+        userRepository.findAll(in).forEach(System.out::println);
+
+        List<String> nameList = queryFactory.select(user.userName)
+                .from(user)
+                .where(eq, user.password.eq("bar"))
+                .fetch();
+        log.info("name:{}", nameList);
+        List<User> memberList = queryFactory.selectFrom(user)
+                .where(eq)
+                .orderBy(user.id.asc())
+                .offset(0L).limit(3L)
+                .fetch();
+        log.info("b:{}", JSON.toJSONString(memberList));
     }
 
     @Test
-    public void select() {
+    void testJoin() {
         QUser user = QUser.user;
-        List<String> nameList = queryFactory.select(user.userName)
-                .from(user)
-                .where(user.id.eq(1L), user.password.eq("bar"))
-                .fetch();
-        log.info("a:{}", nameList);
-
-        List<User> memberList = queryFactory.selectFrom(user)
-                .where(user.id.eq(1L))
-                .fetch();
-        log.info("b:{}", JSON.toJSONString(memberList));
-
         QArticle article = QArticle.article;
 
         List<UserArticleVo> dtoList = queryFactory
@@ -59,24 +59,14 @@ public class UserRepositoryTest1 extends ApplicationTests {
                 .fetch();
         log.info("c:{}", JSON.toJSONString(dtoList));
 
-        User user1 = queryFactory
-                .selectFrom(user)
-                .fetchFirst();
-
-        User user2 = queryFactory
-                .selectFrom(user)
-                .orderBy(user.id.asc())
-                .offset(1L).limit(1L)
-                .fetchOne();
-
         List<User> subList = queryFactory.selectFrom(user)
                 .where(user.id.in(JPAExpressions.selectDistinct(article.userId).from(article)))
                 .fetch();
     }
 
     @Test
-    // @Transactional(rollbackFor = Exception.class)
-    public void update() {
+        // @Transactional(rollbackFor = Exception.class)
+    void update() {
         QUser user = QUser.user;
         queryFactory.update(user).set(user.age, 11)
                 .where(user.id.eq(1L))

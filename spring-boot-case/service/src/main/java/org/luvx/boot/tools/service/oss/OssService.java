@@ -5,6 +5,7 @@ import com.google.common.io.ByteStreams;
 import io.mybatis.mapper.example.Example;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.luvx.boot.tools.common.Consts;
 import org.luvx.boot.tools.dao.entity.OssFile;
 import org.luvx.boot.tools.dao.mapper.OssFileMapper;
 import org.luvx.coding.common.consts.Common;
@@ -24,7 +25,7 @@ import java.util.concurrent.CompletableFuture;
 
 @Service
 public class OssService {
-    public static final String IMG_HOME = STR."\{Properties.DIR_USER_HOME}/data/luvx/oss";
+    public static final String IMG_HOME = STR."\{Consts.DATA_HOME}/luvx/oss";
 
     @Resource
     private OssFileMapper ossFileMapper;

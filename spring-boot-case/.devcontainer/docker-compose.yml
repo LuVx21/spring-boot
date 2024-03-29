@@ -1,13 +1,9 @@
 version: "3.9"
-
 services:
   app:
     build:
       context: ..
       dockerfile: .devcontainer/Dockerfile
-    volumes:
-      - ..:/workspace:cached
-      - $HOME/go/pkg/mod:/go/pkg/mod
     networks:
       - net_common
     ports:
@@ -18,6 +14,10 @@ services:
       REDIS_SERVER: redis-master
       APP_RUN_IN_HOST: "192.168.2.131"
       APP_RUN_IN_PORT: 9999
+    volumes:
+      - ..:/workspace:cached
+      - $HOME/.m2:/root/.m2
+      - $HOME/data:/root/data
     command: sleep infinity
 
 networks:

@@ -1,12 +1,11 @@
-package org.luvx.boot.jdbc;
+package org.luvx;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class Application {
-
+public class JpaApp {
     public static void main(String[] args) {
-        SpringApplication.run(Application.class, args);
+        SpringApplication.run(JpaApp.class, args);
     }
 }

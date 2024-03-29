@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.luvx.boot</groupId>
         <artifactId>spring-boot-db</artifactId>
-        <version>0.2</version>
+        <version>0.0.0</version>
     </parent>
 
     <artifactId>jdbc</artifactId>
@@ -23,15 +23,6 @@
     </dependencies>
 
     <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <configuration>
-                    <fork>true</fork>
-                </configuration>
-            </plugin>
-        </plugins>
     </build>
 
 </project>

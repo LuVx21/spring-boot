@@ -6,7 +6,8 @@ CREATE TABLE `user`
     `age`         TINYINT UNSIGNED    NULL     DEFAULT 0,
     `birthday`    TIMESTAMP           NULL,
     `update_time` TIMESTAMP           NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    biz_type      SMALLINT            NULL     DEFAULT 0 COMMENT '场景',
     PRIMARY KEY (`id`) USING BTREE,
-    KEY `idx_user_name_age` (`user_name`, `age`) USING BTREE
+    KEY           `idx_user_name_age` (`user_name`, `age`) USING BTREE
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4;
