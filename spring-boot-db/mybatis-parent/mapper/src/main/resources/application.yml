@@ -1,0 +1,16 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://luvx:53306/boot?useUnicode=true&characterEncoding=utf-8&serverTimezone=UTC&useSSL=true&allowMultiQueries=true
+    username: root
+    password: 1121
+
+mybatis:
+  mapper-locations: classpath:org/luvx/boot/mybatis/mapper/mapper/*/*.xml
+  type-aliases-package: org.luvx.boot.mybatis.mapper.mapper
+  # 以下在不使用注解的情况下使用
+#  config-location: classpath:mybatis/mybatis-config.xml
+
+logging:
+  level:
+    org.luvx.boot.mybatis.mapper.mapper: debug
