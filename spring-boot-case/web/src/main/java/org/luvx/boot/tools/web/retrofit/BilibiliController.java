@@ -20,8 +20,12 @@ public class BilibiliController {
 
     @GetMapping(value = "pull/season")
     public R<Object> rss(@RequestParam(value = "seasonId") Long seasonId) {
-        if (seasonId == null || seasonId <= 0) {
+        if (seasonId == null || seasonId < 0) {
             return R.fail();
+        }
+        if (seasonId == 0) {
+            service.pullAll();
+            return R.success("all ok!");
         }
         List<String> result = service.pullSeasonList(seasonId);
         return R.success(result);

@@ -7,6 +7,8 @@ import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.luvx.boot.tools.service.api.BilibiliApi;
+import org.luvx.boot.tools.service.commonkv.CommonKeyValueService;
+import org.luvx.boot.tools.service.commonkv.constant.CommonKVBizType;
 import org.luvx.coding.common.cursor.CursorIteratorEx;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
@@ -24,11 +26,25 @@ public class BilibiliService {
     private static final String TABLE_NAME_VIDEO = "bili_video";
 
     @Resource
-    private BilibiliApi   api;
+    private BilibiliApi           api;
     @Resource
-    private MongoTemplate mongoTemplate;
+    private MongoTemplate         mongoTemplate;
+    @Resource
+    private CommonKeyValueService keyValueService;
 
     private final Set<String> keys = Set.of("_id", "title", "pubtime", "bvid", "upper");
+
+    public void pullAll() {
+        Map<String, Boolean> biliSeason = keyValueService.<Map<String, Boolean>>getData(CommonKVBizType.MAP, "bili_season")
+                .orElse(Collections.emptyMap());
+        for (Map.Entry<String, Boolean> entry : biliSeason.entrySet()) {
+            if (!Boolean.TRUE.equals(entry.getValue())) {
+                continue;
+            }
+            List<String> bvIds = pullSeasonList(toLong(entry.getKey()));
+            log.info("bvids: {}", bvIds);
+        }
+    }
 
     public List<String> pullSeasonList(long seasonId) {
         AtomicInteger cursor = new AtomicInteger(1);

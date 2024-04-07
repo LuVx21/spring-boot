@@ -3,6 +3,7 @@ package org.luvx.boot.tools.web;
 import lombok.extern.slf4j.Slf4j;
 import org.luvx.boot.tools.dao.entity.User;
 import org.luvx.boot.tools.dao.mapper.UserMapper;
+import org.luvx.boot.tools.service.sqlite.ChromeCookieService;
 import org.luvx.boot.web.response.R;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.annotation.Resource;
+import java.util.List;
 import java.util.Map;
 
 @Slf4j
@@ -30,14 +32,16 @@ public class AppController {
     private   UserMapper                    mapper;
     @Resource(name = "sqliteJdbcTemplate")
     private   JdbcTemplate                  jdbcTemplate;
+    @Resource
+    private   ChromeCookieService           cookieService;
 
     @RequestMapping(value = {"/", "/info"}, method = {RequestMethod.GET})
     public R<Object> index() {
         return R.success("ok!");
     }
 
-    @RequestMapping(value = {"/healthyCheck"}, method = {RequestMethod.GET})
-    public R<Object> index1() {
+    @RequestMapping(value = {"/app/healthyCheck"}, method = {RequestMethod.GET})
+    public R<Object> index1() throws Exception {
         final long id = 1L;
 
         User u1 = mapper.selectByPrimaryKey(id).orElse(null);
@@ -48,7 +52,9 @@ public class AppController {
         Object o = stringRedisTemplate.opsForValue().get("foo");
 
         Map<String, Object> map = jdbcTemplate.queryForMap("select * from user where id = ?", id);
-
-        return R.success(Map.of("mysql", u1, "mongo", u2, "redis", o, "sqlite", map));
+        Map<String, String> cookie = cookieService.getCookieByHost(List.of(".weibo.com", "weibo.com"), null);
+        return R.success(Map.of("mysql", u1, "mongo", u2, "redis", o, "sqlite", map,
+                "cookie", cookie
+        ));
     }
 }

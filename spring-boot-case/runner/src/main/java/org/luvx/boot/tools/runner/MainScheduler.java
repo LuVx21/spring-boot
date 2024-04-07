@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 import jakarta.annotation.Resource;
 
 @Slf4j
-@Component
+// @Component
 public class MainScheduler implements SchedulingConfigurer {
     @Setter
     private String cron  = "0 3/10 9-23 * * ?";
