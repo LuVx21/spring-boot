@@ -1,5 +1,8 @@
 # 设置JAVA版本
-FROM openjdk:21-slim
+#FROM openjdk:21-slim
+ARG JRE_VERSION=21-jre-alpine
+#ARG JRE_VERSION=21-jre
+FROM eclipse-temurin:${JRE_VERSION}
 # 设置工作目录
 WORKDIR /app
 RUN mkdir -p ~/data/luvx/oss

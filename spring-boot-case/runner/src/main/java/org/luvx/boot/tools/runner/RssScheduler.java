@@ -21,12 +21,12 @@ public class RssScheduler {
     //     weiboService.pullByGroup();
     // }
 
-    @Scheduled(cron = "0 1/10 * * * ?")
+    // @Scheduled(cron = "0 1/10 * * * ?")
     public void pullHotBandTask() throws Exception {
         weiboService.pullHotBand();
     }
 
-    @Scheduled(cron = "0 0/60 * * * ?")
+    // @Scheduled(cron = "0 0/60 * * * ?")
     public void delete() throws Exception {
         weiboService.delete(8_000);
     }

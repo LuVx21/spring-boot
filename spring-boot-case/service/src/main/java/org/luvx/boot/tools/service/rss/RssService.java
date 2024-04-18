@@ -14,6 +14,7 @@ import org.luvx.boot.tools.dao.mongo.rss.PageContent;
 import org.luvx.boot.tools.service.commonkv.CommonKeyValueService;
 import org.luvx.boot.tools.service.commonkv.constant.CommonKVBizType;
 import org.luvx.boot.tools.service.jsoup.SpiderParam;
+import org.luvx.coding.common.more.MoreRuns;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -46,10 +47,10 @@ public class RssService {
         Query query = Query.query(criteria)
                 .with(Sort.by(Sort.Direction.DESC, "pubDate"))
                 .with(Sort.by(Sort.Direction.DESC, "_id"))
-                .limit(800);
+                .limit(30);
         // 日期和map不匹配
         query.fields().exclude("createTime");
-        List<JSONObject> list = mongoTemplate.find(query, JSONObject.class, TABLE_NAME_FEED);
+        List<JSONObject> list = MoreRuns.runWithTime(() -> mongoTemplate.find(query, JSONObject.class, TABLE_NAME_FEED));
         String domain = CCC.exposeDomain();
         String s = list.stream()
                 .map(jo -> img2XmlItem(jo, domain))
