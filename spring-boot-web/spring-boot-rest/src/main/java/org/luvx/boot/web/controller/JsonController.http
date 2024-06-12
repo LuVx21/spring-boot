@@ -1,0 +1,16 @@
+@host = localhost:8080
+
+###
+GET http://{{host}}/json/app
+
+###
+POST http://{{host}}/json/post
+Content-Type: application/json
+
+{
+  "id": 1,
+  "userName": "foo",
+  "password": "bar",
+  "age": 18,
+  "valid": 2
+}

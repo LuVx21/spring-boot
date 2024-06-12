@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.luvx.boot</groupId>
         <artifactId>coding-parent-spring-boot-java</artifactId>
-        <version>0.1</version>
+        <version>0.3</version>
     </parent>
     <artifactId>config-center</artifactId>
     <packaging>jar</packaging>

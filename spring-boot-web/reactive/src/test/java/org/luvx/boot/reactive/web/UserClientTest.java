@@ -1,13 +1,13 @@
-package org.luvx.boot.web;
+package org.luvx.boot.reactive.web;
 
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
-import org.luvx.boot.web.exchange.UserClient;
+import org.luvx.boot.reactive.web.exchange.UserClient;
 import org.luvx.coding.common.util.JsonUtils;
 
 @Slf4j
-public class UserClientTest extends RestAppTests {
+public class UserClientTest extends ReactiveAppTests {
     @Resource
     private UserClient service;
 

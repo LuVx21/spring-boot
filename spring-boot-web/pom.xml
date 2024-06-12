@@ -14,6 +14,7 @@
     <packaging>pom</packaging>
 
     <modules>
+        <module>reactive</module>
         <module>spring-boot-rest</module>
         <module>spring-boot-websocket</module>
         <module>spring-boot-websocket1</module>
@@ -24,10 +25,6 @@
     </properties>
 
     <dependencies>
-        <dependency>
-            <groupId>org.luvx.boot</groupId>
-            <artifactId>boot-web</artifactId>
-        </dependency>
     </dependencies>
 
     <build>

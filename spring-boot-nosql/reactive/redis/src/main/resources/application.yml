@@ -1,0 +1,4 @@
+spring:
+  data:
+    redis:
+      url: redis://luvx:xxx@redis-15487.c292.ap-southeast-1-1.ec2.cloud.redislabs.com:15487

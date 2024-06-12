@@ -1,0 +1,4 @@
+@host = localhost:8081
+
+###
+GET http://{{host}}/reactive/index

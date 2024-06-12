@@ -1,4 +1,4 @@
-package org.luvx.boot.web.exchange;
+package org.luvx.boot.reactive.web.exchange;
 
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.service.annotation.GetExchange;

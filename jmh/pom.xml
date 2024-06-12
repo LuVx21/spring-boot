@@ -5,7 +5,7 @@
 
     <groupId>org.luvx.boot</groupId>
     <artifactId>jmh</artifactId>
-    <version>0.1</version>
+    <version>0.3</version>
     <packaging>jar</packaging>
 
     <name>jmh</name>
@@ -49,7 +49,7 @@
         <dependency>
             <groupId>org.luvx.boot</groupId>
             <artifactId>sample_luvx_commons</artifactId>
-            <version>0.1</version>
+            <version>0.3</version>
         </dependency>
 
         <dependency>
