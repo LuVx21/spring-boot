@@ -10,6 +10,7 @@
 
     <artifactId>spring-boot-redis</artifactId>
     <packaging>jar</packaging>
+
     <properties>
     </properties>
 
@@ -26,14 +27,8 @@
         <dependency>
             <groupId>org.redisson</groupId>
             <artifactId>redisson-spring-boot-starter</artifactId>
-            <version>3.24.3</version>
+            <version>${redisson.boot}</version>
         </dependency>
-
-        <!--<dependency>-->
-        <!--    <groupId>org.springframework.boot</groupId>-->
-        <!--    <artifactId>spring-boot-starter-data-redis-reactive</artifactId>-->
-        <!--</dependency>-->
-
     </dependencies>
 
     <build>

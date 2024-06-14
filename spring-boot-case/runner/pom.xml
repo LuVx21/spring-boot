@@ -13,7 +13,7 @@
     <packaging>jar</packaging>
 
     <properties>
-        <debezium.version>2.5.2.Final</debezium.version>
+        <debezium.version>2.7.0.Beta2</debezium.version>
     </properties>
 
     <dependencies>

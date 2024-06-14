@@ -14,11 +14,11 @@
     <packaging>pom</packaging>
 
     <properties>
-        <grpc.version>1.51.0</grpc.version>
+        <grpc.version>1.64.0</grpc.version>
         <protoc.version>3.21.9</protoc.version>
         <protobuf.plugin.version>0.6.1</protobuf.plugin.version>
         <os.plugin.version>1.7.1</os.plugin.version>
-        <grpc.starter.version>2.14.0.RELEASE</grpc.starter.version>
+        <grpc.starter.version>3.1.0.RELEASE</grpc.starter.version>
     </properties>
 
     <modules>
