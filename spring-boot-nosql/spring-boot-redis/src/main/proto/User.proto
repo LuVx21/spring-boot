@@ -1,0 +1,13 @@
+syntax = "proto3";
+option java_package = "org.luvx.boot.redis.protobuf";
+option java_outer_classname = "UsersProto";
+
+message Users {
+  repeated User users = 1;
+}
+
+message User{
+  string id = 1;
+  string name = 2;
+  string sex = 3;
+}

@@ -1,0 +1,8 @@
+syntax = "proto3";
+option java_package = "org.luvx.boot.redis.protobuf";
+option java_outer_classname = "ProtoWrapperProto";
+
+message ProtoWrapper {
+  string _class = 1;
+  bytes data = 2;
+}

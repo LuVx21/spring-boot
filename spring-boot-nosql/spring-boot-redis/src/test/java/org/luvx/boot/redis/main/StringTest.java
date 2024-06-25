@@ -3,6 +3,7 @@ package org.luvx.boot.redis.main;
 import org.junit.jupiter.api.Test;
 import org.luvx.boot.redis.RedisAppTests;
 import org.luvx.boot.redis.entity.User;
+import org.luvx.boot.redis.protobuf.UsersProto;
 import org.luvx.coding.common.more.MorePrints;
 import org.springframework.data.redis.core.ValueOperations;
 
@@ -59,5 +60,17 @@ public class StringTest extends RedisAppTests {
                 stringRedisTemplate.delete("mykey"),
                 stringRedisTemplate.opsForValue().get("mykey")
         );
+    }
+
+    @Test
+    void testProto() {
+        final String key = "s-key-proto";
+
+        UsersProto.User.Builder u1 = UsersProto.User.newBuilder().setId("100").setName("foo").setSex("男");
+        UsersProto.Users u = UsersProto.Users.newBuilder().addUsers(u1).build();
+        valueOps.set(key, u);
+
+        UsersProto.Users o = (UsersProto.Users) valueOps.get(key);
+        println(o, o.getClass().getName(), o.getUsers(0).getSex());
     }
 }

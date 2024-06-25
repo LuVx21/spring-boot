@@ -6,8 +6,8 @@ import io.lettuce.core.api.StatefulRedisConnection;
 import io.lettuce.core.api.sync.RedisCommands;
 import org.junit.jupiter.api.Test;
 import org.luvx.boot.redis.entity.User;
-import org.luvx.boot.redis.other.SerializeUtil;
 import org.luvx.boot.redis.other.StringByteCodec;
+import org.luvx.coding.common.SerializeUtil;
 
 class LettuceTest {
 
