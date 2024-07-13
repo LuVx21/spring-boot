@@ -1,8 +1,18 @@
+@host = localhost:9090
+
+### 0
+#io.grpc.protobuf.services.HealthServiceImpl
+GRPC grpc://{{host}}/grpc.health.v1.Health
+
+### 0
+#io.grpc.protobuf.services.ProtoReflectionService
+GRPC grpc://{{host}}/grpc.reflection.v1alpha.ServerReflection
+
 ### 1
-GRPC grpc://localhost:9090/luvx.user.UserInfo/selectUserInfo
+GRPC grpc://{{host}}/luvx.user.UserInfo/oneToOne
 
 {
-  "name": "test"
+  "name": "张三"
 }
 
 ### 2

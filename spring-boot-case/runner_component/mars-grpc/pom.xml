@@ -4,13 +4,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>org.luvx.boot</groupId>
-        <artifactId>boot-rpc</artifactId>
+        <groupId>org.luvx.boot.mars</groupId>
+        <artifactId>runner_component</artifactId>
         <version>0.0.0</version>
-        <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>boot-grpc</artifactId>
+    <artifactId>mars-grpc</artifactId>
     <packaging>pom</packaging>
 
     <properties>
@@ -23,9 +22,8 @@
     </properties>
 
     <modules>
-        <module>service-sdk</module>
-        <module>service-impl</module>
-        <module>service-client</module>
+        <module>mars-grpc-sdk</module>
+        <module>mars-grpc-service</module>
     </modules>
 
     <dependencies>
@@ -34,8 +32,8 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>org.luvx.boot</groupId>
-                <artifactId>service-sdk</artifactId>
+                <groupId>org.luvx.boot.mars</groupId>
+                <artifactId>mars-grpc-sdk</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
@@ -49,8 +47,8 @@
     </dependencyManagement>
 
     <build>
-        <pluginManagement>
-        </pluginManagement>
+        <plugins>
+        </plugins>
     </build>
 
 </project>

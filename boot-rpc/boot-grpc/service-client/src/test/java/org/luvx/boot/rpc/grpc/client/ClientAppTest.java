@@ -17,6 +17,6 @@ class ClientAppTest {
 
     @Test
     void m1() {
-        grpcClientService.selectUserInfo("name");
+        grpcClientService.oneToOne("name");
     }
 }

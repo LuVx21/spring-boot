@@ -16,7 +16,7 @@ public class UserOperateGrpcImpl extends UserOperateImplBase {
     public void updatePassword(UserRequest request, StreamObserver<UserResponse> responseObserver) {
         long id = request.getId();
         String password = request.getPassword();
-        String msg = "用户:%d 更新密码为%s".formatted(id, password);
+        String msg = "用户:%d 更新密码为:%s".formatted(id, password);
         UserResponse response = UserResponse.newBuilder()
                 .setMessage(msg)
                 .build();

@@ -8,10 +8,10 @@ option java_outer_classname = "UserProto";
 //option objc_class_prefix = "HLW";
 
 service UserInfo {
-  rpc selectUserInfo (UserRequest) returns (UserResponse) {}
-  rpc selectUserInfo1 (UserRequest) returns (stream UserResponse) {}
-  rpc selectUserInfo2 (stream UserRequest) returns (UserResponseList) {}
-  rpc selectUserInfo3 (stream UserRequest) returns (stream UserResponse) {}
+  rpc oneToOne (UserRequest) returns (UserResponse) {}
+  rpc oneToMany (UserRequest) returns (stream UserResponse) {}
+  rpc manyToOne (stream UserRequest) returns (UserResponseList) {}
+  rpc manyToMany (stream UserRequest) returns (stream UserResponse) {}
 }
 
 service UserOperate {

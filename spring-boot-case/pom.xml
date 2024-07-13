@@ -9,7 +9,8 @@
         <version>0.3</version>
     </parent>
 
-    <artifactId>spring-boot-case</artifactId>
+    <groupId>org.luvx.boot.mars</groupId>
+    <artifactId>mars-root</artifactId>
     <version>0.0.0</version>
     <packaging>pom</packaging>
 
@@ -21,28 +22,29 @@
         <module>dao</module>
         <module>service</module>
         <module>runner</module>
+        <module>runner_component</module>
         <module>web</module>
     </modules>
 
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>org.luvx.boot</groupId>
+                <groupId>org.luvx.boot.mars</groupId>
                 <artifactId>common</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.luvx.boot</groupId>
+                <groupId>org.luvx.boot.mars</groupId>
                 <artifactId>dao</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.luvx.boot</groupId>
+                <groupId>org.luvx.boot.mars</groupId>
                 <artifactId>service</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.luvx.boot</groupId>
+                <groupId>org.luvx.boot.mars</groupId>
                 <artifactId>runner</artifactId>
                 <version>${project.version}</version>
             </dependency>

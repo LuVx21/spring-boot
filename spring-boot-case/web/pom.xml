@@ -4,8 +4,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>org.luvx.boot</groupId>
-        <artifactId>spring-boot-case</artifactId>
+        <groupId>org.luvx.boot.mars</groupId>
+        <artifactId>mars-root</artifactId>
         <version>0.0.0</version>
     </parent>
 
@@ -21,6 +21,10 @@
         <dependency>
             <groupId>org.luvx.boot</groupId>
             <artifactId>boot-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
         <!--        <dependency>-->
@@ -38,11 +42,11 @@
         <!--        </dependency>-->
 
         <dependency>
-            <groupId>org.luvx.boot</groupId>
+            <groupId>org.luvx.boot.mars</groupId>
             <artifactId>service</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.luvx.boot</groupId>
+            <groupId>org.luvx.boot.mars</groupId>
             <artifactId>runner</artifactId>
         </dependency>
         <dependency>

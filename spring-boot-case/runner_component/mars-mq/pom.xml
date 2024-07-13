@@ -5,21 +5,21 @@
 
     <parent>
         <groupId>org.luvx.boot.mars</groupId>
-        <artifactId>mars-root</artifactId>
+       <artifactId>runner_component</artifactId>
         <version>0.0.0</version>
     </parent>
 
-    <artifactId>common</artifactId>
-    <packaging>jar</packaging>
+    <artifactId>mars-mq</artifactId>
+    <packaging>pom</packaging>
 
     <properties>
     </properties>
 
+    <modules>
+        <!--<module></module>-->
+    </modules>
+
     <dependencies>
-        <dependency>
-            <groupId>org.luvx.boot</groupId>
-            <artifactId>boot-common</artifactId>
-        </dependency>
     </dependencies>
 
     <build>

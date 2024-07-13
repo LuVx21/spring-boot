@@ -16,9 +16,9 @@ public class UserInfoGrpcImpl extends UserInfoImplBase {
      * one - one
      */
     @Override
-    public void selectUserInfo(UserRequest request, StreamObserver<UserResponse> responseObserver) {
+    public void oneToOne(UserRequest request, StreamObserver<UserResponse> responseObserver) {
         UserResponse response = UserResponse.newBuilder()
-                .setMessage("selectUserInfo: " + request.getName())
+                .setMessage("one2one: " + request.getName())
                 .build();
         responseObserver.onNext(response);
         responseObserver.onCompleted();
@@ -28,11 +28,11 @@ public class UserInfoGrpcImpl extends UserInfoImplBase {
      * one - many
      */
     @Override
-    public void selectUserInfo1(UserRequest request, StreamObserver<UserResponse> responseObserver) {
+    public void oneToMany(UserRequest request, StreamObserver<UserResponse> responseObserver) {
         Builder builder = UserResponse.newBuilder();
         for (int i = 0; i < 3; i++) {
             UserResponse response = builder
-                    .setMessage("selectUserInfo1: " + request.getName() + i)
+                    .setMessage("one2many: " + request.getName() + "_" + i)
                     .build();
             responseObserver.onNext(response);
         }
@@ -40,18 +40,18 @@ public class UserInfoGrpcImpl extends UserInfoImplBase {
     }
 
     @Override
-    public StreamObserver<UserRequest> selectUserInfo2(StreamObserver<UserResponseList> responseObserver) {
-        return new StreamObserver<UserRequest>() {
+    public StreamObserver<UserRequest> manyToOne(StreamObserver<UserResponseList> responseObserver) {
+        return new StreamObserver<>() {
             private int cnt;
 
             @Override
             public void onNext(UserRequest request) {
-                log.info("请求No:{} {}", ++cnt, request.getName());
+                log.info("manyToOne 请求No:{} {}", ++cnt, request.getName());
                 UserResponseList.Builder builder = UserResponseList.newBuilder();
                 for (int i = 0; i < 3; i++) {
                     builder.addUsers(
                             UserResponse.newBuilder()
-                                    .setMessage("返回=" + request.getName() + "-" + i + "请求参数cnt:" + cnt)
+                                    .setMessage("manyToOne 返回=" + request.getName() + "-" + i + "请求参数cnt:" + cnt)
                                     .build());
                 }
                 responseObserver.onNext(builder.build());
@@ -70,14 +70,14 @@ public class UserInfoGrpcImpl extends UserInfoImplBase {
     }
 
     @Override
-    public StreamObserver<UserRequest> selectUserInfo3(StreamObserver<UserResponse> responseObserver) {
-        return new StreamObserver<UserRequest>() {
+    public StreamObserver<UserRequest> manyToMany(StreamObserver<UserResponse> responseObserver) {
+        return new StreamObserver<>() {
             private int cnt;
 
             @Override
             public void onNext(UserRequest request) {
-                log.info("请求No:{} {}", ++cnt, request.getName());
-                responseObserver.onNext(UserResponse.newBuilder().setMessage("请求参数cnt:" + cnt).build());
+                log.info("manyToMany请求No:{} {}", ++cnt, request.getName());
+                responseObserver.onNext(UserResponse.newBuilder().setMessage("manyToMany请求参数cnt:" + cnt).build());
             }
 
             @Override
