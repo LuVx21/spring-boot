@@ -8,7 +8,6 @@ import org.apache.zookeeper.server.ZooKeeperServerMain;
 import org.apache.zookeeper.server.quorum.QuorumPeerConfig;
 import org.springframework.context.SmartLifecycle;
 import org.springframework.util.ErrorHandler;
-import org.springframework.util.SocketUtils;
 
 import java.io.File;
 import java.lang.reflect.Method;
@@ -18,19 +17,15 @@ import java.util.UUID;
 @Slf4j
 public class EmbeddedZooKeeper implements SmartLifecycle {
     @Getter
-    private final int clientPort;
+    private final    int                 clientPort;
     @Setter
     @Getter
-    private int phase = 0;
-    private volatile Thread zkServerThread;
+    private          int                 phase  = 0;
+    private volatile Thread              zkServerThread;
     private volatile ZooKeeperServerMain zkServer;
     @Setter
-    private ErrorHandler errorHandler;
-    private boolean daemon = true;
-
-    public EmbeddedZooKeeper() {
-        clientPort = SocketUtils.findAvailableTcpPort();
-    }
+    private          ErrorHandler        errorHandler;
+    private          boolean             daemon = true;
 
     public EmbeddedZooKeeper(int clientPort, boolean daemon) {
         this.clientPort = clientPort;

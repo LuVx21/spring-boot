@@ -32,11 +32,6 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>org.luvx.boot.mars</groupId>
-                <artifactId>mars-grpc-sdk</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
                 <groupId>com.google.protobuf</groupId>
                 <artifactId>protobuf-bom</artifactId>
                 <version>${protoc.version}</version>

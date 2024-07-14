@@ -16,9 +16,9 @@ message MutableMapRequest {
   map<string, bytes> data = 1;
 }
 
-message Id {
-  int64 id = 1;
+message Int64 {
+  int64 data = 1;
 }
-message String {
-  string id = 1;
+message Str {
+  string data = 1;
 }

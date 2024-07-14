@@ -55,16 +55,17 @@ public class UserInfoGrpcImpl extends UserInfoImplBase {
                                     .build());
                 }
                 responseObserver.onNext(builder.build());
-                responseObserver.onCompleted();
             }
 
             @Override
             public void onError(Throwable throwable) {
                 log.error("", throwable);
+                responseObserver.onError(throwable);
             }
 
             @Override
             public void onCompleted() {
+                responseObserver.onCompleted();
             }
         };
     }

@@ -1,0 +1,52 @@
+syntax = "proto3";
+
+package luvx.count;
+
+option java_multiple_files = true;
+option java_package = "org.luvx.boot.mars.grpc.proto.count";
+option java_outer_classname = "CountProto";
+
+import "luvx/common/common.proto";
+import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
+
+service CountRpc {
+    rpc getByType (GetByTypeCountRequest) returns (GetByTypeCountResponse);
+    rpc getByIds (GetByIdsCountRequest) returns (GetByIdsCountResponse);
+    rpc operate (CountRequest) returns (google.protobuf.Empty);
+    rpc asyncOperate (CountRequest) returns (google.protobuf.Empty);
+    rpc batchSet(BatchSetCountRequest) returns (google.protobuf.Empty);
+}
+
+message GetByIdsCountResponse {
+    map<uint64, CountsMapProto> response = 1;
+}
+
+message CountsMapProto {
+    map<uint32, uint32> counts = 1;
+}
+
+message CountRequest {
+    uint32 event = 1;
+    uint64 count_id = 2;
+    repeated uint32 count_types = 3;
+    uint32 value = 4;
+}
+
+message GetByIdsCountRequest {
+    repeated uint64 ids = 1;
+}
+
+message GetByTypeCountRequest {
+    repeated uint64 count_ids = 1;
+    uint32 count_types = 2;
+}
+
+message GetByTypeCountResponse {
+    map<uint64, uint32> count_map = 1;
+}
+
+message BatchSetCountRequest {
+    uint64 count_id = 1;
+    CountsMapProto count_map = 2;
+}

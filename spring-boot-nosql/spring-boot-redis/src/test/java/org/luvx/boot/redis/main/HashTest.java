@@ -3,7 +3,10 @@ package org.luvx.boot.redis.main;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.luvx.boot.redis.RedisAppTests;
+import org.luvx.coding.common.more.MorePrints;
+import org.springframework.data.redis.connection.RedisHashCommands;
 import org.springframework.data.redis.core.HashOperations;
+import org.springframework.data.redis.core.RedisCallback;
 
 import java.util.List;
 import java.util.Map;
@@ -52,5 +55,21 @@ public class HashTest extends RedisAppTests {
 
         Object o = FLATTEN_MAPPER.fromHash(map);
         System.out.println(o);
+    }
+
+    @Test
+    void m3() {
+        // List<String> list = List.of("hash:101", "hash:102", "hash:103");
+        byte[][] array = {"hash:101".getBytes(), "hash:102".getBytes(), "hash:103".getBytes()};
+        List<Object> objects = redisTemplate.executePipelined((RedisCallback<Map<byte[], byte[]>>) conn -> {
+                    RedisHashCommands redisHashCommands = conn.hashCommands();
+                    for (byte[] bytes : array) {
+                        // redisHashCommands.hGetAll(bytes);
+                        redisHashCommands.hGet(bytes, "a".getBytes());
+                    }
+                    return null;
+                }
+        );
+        MorePrints.println(objects, objects.getFirst().getClass());
     }
 }

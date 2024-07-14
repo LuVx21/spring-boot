@@ -15,6 +15,8 @@
     <packaging>pom</packaging>
 
     <properties>
+        <protoc.version>3.25.3</protoc.version>
+        <os.plugin.version>1.7.1</os.plugin.version>
     </properties>
 
     <modules>

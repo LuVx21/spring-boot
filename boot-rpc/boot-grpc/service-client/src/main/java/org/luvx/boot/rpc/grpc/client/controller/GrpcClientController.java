@@ -28,6 +28,19 @@ public class GrpcClientController {
         return R.success(list1);
     }
 
+
+    @RequestMapping("/manyToOne")
+    public R<Object> manyToOne() {
+        grpcClientService.manyToOne();
+        return R.success("ok");
+    }
+
+    @RequestMapping("/manyToMany")
+    public R<Object> manyToMany() {
+        grpcClientService.manyToMany();
+        return R.success("ok");
+    }
+
     @RequestMapping("/updatePassword")
     public R<Object> updatePassword(
             long id,

@@ -12,7 +12,7 @@ import "google/protobuf/timestamp.proto";
 
 service UserInfo {
   rpc run (google.protobuf.Empty) returns (google.protobuf.Empty) {}
-  rpc getById (common.Id) returns (UserResponse) {}
+  rpc getById (common.Int64) returns (UserResponse) {}
 }
 
 message UserResponse {

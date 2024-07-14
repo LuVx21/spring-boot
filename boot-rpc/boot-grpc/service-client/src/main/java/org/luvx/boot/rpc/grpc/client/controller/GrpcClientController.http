@@ -6,5 +6,11 @@ GET http://{{host}}/oneToOne?name={{$random.alphanumeric(8)}}
 ### 1
 GET http://{{host}}/oneToMany?name={{$random.alphanumeric(8)}}
 
+### 1
+GET http://{{host}}/manyToOne
+
+### 1
+GET http://{{host}}/manyToMany
+
 ### 2
 GET http://{{host}}/updatePassword?id=100&password={{$random.alphanumeric(8)}}

@@ -15,7 +15,8 @@
     <packaging>pom</packaging>
 
     <properties>
-        <dubbo.version>3.3.0-beta.4</dubbo.version>
+        <!--<dubbo.version>3.3.0-beta.4</dubbo.version>-->
+        <dubbo.version>3.2.14</dubbo.version>
     </properties>
 
     <modules>
@@ -33,14 +34,10 @@
             </dependency>
             <dependency>
                 <groupId>org.apache.dubbo</groupId>
-                <artifactId>dubbo-spring-boot-starter</artifactId>
-                <version>${dubbo.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.dubbo</groupId>
-                <artifactId>dubbo-dependencies-zookeeper-curator5</artifactId>
+                <artifactId>dubbo-bom</artifactId>
                 <version>${dubbo.version}</version>
                 <type>pom</type>
+                <scope>import</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>

@@ -17,9 +17,6 @@
         <grpc.starter.version>3.1.0.RELEASE</grpc.starter.version>
         <!-- 和boot-start保持一致 -->
         <grpc.version>1.63.0</grpc.version>
-        <protoc.version>3.25.3</protoc.version>
-
-        <os.plugin.version>1.7.1</os.plugin.version>
     </properties>
 
     <modules>
