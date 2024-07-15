@@ -4,33 +4,23 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>org.luvx.boot</groupId>
-        <artifactId>boot-dubbo</artifactId>
+        <groupId>org.luvx.boot.mars</groupId>
+        <artifactId>mars-rpc</artifactId>
         <version>0.0.0</version>
-        <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>sdk</artifactId>
+    <artifactId>mars-rpc-sdk</artifactId>
     <packaging>jar</packaging>
-
-    <description>外部使用, 正常情况下pom中无多余内容, dependency, extension, plugin都是使用.proto(IDL:接口描述语言)所依赖的</description>
 
     <properties>
     </properties>
 
     <dependencies>
-        <!-- 使用protobuf序列化 -->
-        <!--<dependency>-->
-        <!--    <groupId>org.apache.dubbo.extensions</groupId>-->
-        <!--    <artifactId>dubbo-serialization-protobuf</artifactId>-->
-        <!--    <version>3.2.0</version>-->
-        <!--</dependency>-->
         <dependency>
             <groupId>com.google.protobuf</groupId>
             <artifactId>protobuf-java</artifactId>
         </dependency>
 
-        <!--Dubbo服务名Triple.java中需要-->
         <dependency>
             <groupId>org.apache.dubbo</groupId>
             <artifactId>dubbo</artifactId>
@@ -53,9 +43,10 @@
                 <artifactId>protobuf-maven-plugin</artifactId>
                 <version>${protobuf.plugin.version}</version>
                 <configuration>
+                    <protoSourceRoot>${project.basedir}/src/main/proto</protoSourceRoot>
                     <protocArtifact>com.google.protobuf:protoc:${protoc.version}:exe:${os.detected.classifier}
                     </protocArtifact>
-                    <protoSourceRoot>${project.basedir}/src/main/proto</protoSourceRoot>
+                 <protoSourceRoot>${project.basedir}/src/main/proto</protoSourceRoot>
                     <protocPlugins>
                         <protocPlugin>
                             <id>dubbo</id>
@@ -75,23 +66,7 @@
                     </execution>
                 </executions>
             </plugin>
-            <!--<plugin>-->
-            <!--    <groupId>org.codehaus.mojo</groupId>-->
-            <!--    <artifactId>build-helper-maven-plugin</artifactId>-->
-            <!--    <executions>-->
-            <!--        <execution>-->
-            <!--            <phase>generate-sources</phase>-->
-            <!--            <goals>-->
-            <!--                <goal>add-source</goal>-->
-            <!--            </goals>-->
-            <!--            <configuration>-->
-            <!--                <sources>-->
-            <!--                    <source>src/main/java</source>-->
-            <!--                </sources>-->
-            <!--            </configuration>-->
-            <!--        </execution>-->
-            <!--    </executions>-->
-            <!--</plugin>-->
         </plugins>
     </build>
+
 </project>

@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+package luvx.common;
+
+option java_multiple_files = true;
+option java_package = "org.luvx.boot.mars.rpc.proto.common";
+option java_outer_classname = "CommonProto";
+
+import "google/protobuf/struct.proto";
+
+message MutableRequest {
+  bytes data = 1;
+}
+
+message MutableMapRequest {
+  map<string, bytes> data = 1;
+}
+
+message Int64 {
+  int64 data = 1;
+}
+message Str {
+  string data = 1;
+}

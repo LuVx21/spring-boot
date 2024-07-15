@@ -1,0 +1,9 @@
+dubbo:
+  application:
+    name: ${spring.application.name}
+    protocol: tri
+  registry:
+    address: zookeeper://${zookeeper.address:macbook.rx}:2181
+  protocol:
+    name: tri
+    port: -1

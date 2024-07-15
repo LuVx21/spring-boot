@@ -5,21 +5,18 @@
 
     <parent>
         <groupId>org.luvx.boot.mars</groupId>
-        <artifactId>mars-root</artifactId>
+        <artifactId>runner_component</artifactId>
         <version>0.0.0</version>
     </parent>
 
-    <artifactId>runner_component</artifactId>
+    <artifactId>mars-cdc</artifactId>
     <packaging>pom</packaging>
 
     <properties>
     </properties>
 
     <modules>
-        <module>mars-job</module>
-        <module>mars-cdc</module>
-        <module>mars-rpc</module>
-        <module>mars-mq</module>
+        <!--<module></module>-->
     </modules>
 
     <dependencies>

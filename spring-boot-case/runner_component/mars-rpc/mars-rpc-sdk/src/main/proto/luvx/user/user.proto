@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+package luvx.user;
+
+option java_multiple_files = true;
+option java_package = "org.luvx.boot.mars.rpc.proto.user";
+option java_outer_classname = "UserProto";
+
+import "luvx/common/common.proto";
+import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
+
+service UserRpcService {
+  rpc run (google.protobuf.Empty) returns (google.protobuf.Empty) {}
+  rpc getById (common.Int64) returns (UserResponse) {}
+}
+
+message UserResponse {
+  int64 id = 1;
+  string userName = 2;
+  string password = 3;
+  int32 age = 4;
+  google.protobuf.Timestamp birthday = 5;
+}
+
+message UserResponseList {
+  repeated UserResponse users = 1;
+}

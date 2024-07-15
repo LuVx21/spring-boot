@@ -1,7 +1,0 @@
-server:
-  http2:
-    enabled: true
-
-grpc:
-  server:
-    port: 9090

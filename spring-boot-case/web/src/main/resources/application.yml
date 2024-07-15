@@ -11,7 +11,7 @@ spring:
   jmx:
     enabled: true
   profiles:
-    include: base,tome,db
+    include: base,tome,db,dubbo
   threads:
     virtual:
       enabled: true

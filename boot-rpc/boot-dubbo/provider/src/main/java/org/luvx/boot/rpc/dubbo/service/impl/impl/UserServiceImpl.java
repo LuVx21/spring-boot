@@ -6,6 +6,9 @@ import org.luvx.boot.rpc.dubbo.service.UserService;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * POJO 方式调用服务
+ */
 @DubboService(version = "1.0.0")
 public class UserServiceImpl implements UserService {
     @Override

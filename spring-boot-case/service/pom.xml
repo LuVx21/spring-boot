@@ -53,7 +53,7 @@
 
         <dependency>
             <groupId>org.luvx.boot.mars</groupId>
-            <artifactId>mars-grpc-sdk</artifactId>
+            <artifactId>mars-rpc-sdk</artifactId>
             <version>${project.version}</version>
         </dependency>
     </dependencies>

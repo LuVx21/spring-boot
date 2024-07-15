@@ -2,22 +2,24 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+
     <parent>
-        <groupId>org.luvx.boot</groupId>
-        <artifactId>boot-dubbo</artifactId>
+        <groupId>org.luvx.boot.mars</groupId>
+        <artifactId>mars-rpc</artifactId>
         <version>0.0.0</version>
-        <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>provider</artifactId>
+    <artifactId>mars-rpc-service</artifactId>
     <packaging>jar</packaging>
+
+    <properties>
+    </properties>
 
     <dependencies>
         <dependency>
-            <groupId>org.luvx.boot</groupId>
-            <artifactId>sdk</artifactId>
+            <groupId>org.luvx.boot.mars</groupId>
+            <artifactId>service</artifactId>
         </dependency>
-
         <dependency>
             <groupId>org.apache.dubbo</groupId>
             <artifactId>dubbo-spring-boot-starter</artifactId>
@@ -34,5 +36,10 @@
             <artifactId>protobuf-java</artifactId>
         </dependency>
     </dependencies>
+
+    <build>
+        <plugins>
+        </plugins>
+    </build>
 
 </project>
