@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import jakarta.annotation.Resource;
 
 @Slf4j
-@Service
+// @Service
 public class RssScheduler {
     @Resource
     private WeiboService weiboService;

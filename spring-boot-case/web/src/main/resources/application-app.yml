@@ -1,0 +1,34 @@
+spring:
+  application:
+    name: mars
+  boot:
+    admin:
+      client:
+        url: http://localhost:${server.port}
+        instance:
+          service-base-url: http://localhost:${server.port}
+  jmx:
+    enabled: true
+  threads:
+    virtual:
+      enabled: true
+
+logging:
+  level:
+    root: info
+
+management:
+  endpoints:
+    enabled-by-default: true
+    web:
+      base-path: /actuator
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+    shutdown:
+      enabled: true
+  info:
+    env:
+      enabled: true

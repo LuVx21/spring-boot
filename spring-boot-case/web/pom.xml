@@ -47,6 +47,10 @@
         </dependency>
         <dependency>
             <groupId>org.luvx.boot.mars</groupId>
+            <artifactId>mars-rpc-service</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.luvx.boot.mars</groupId>
             <artifactId>runner</artifactId>
         </dependency>
         <dependency>

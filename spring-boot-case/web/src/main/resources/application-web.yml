@@ -1,0 +1,20 @@
+server:
+  port: 9999
+
+swagger:
+  enable: true
+
+api:
+  baseUrl:
+    github: https://gitee.com/api/v5/
+org:
+  luvx:
+    description: case0 case1
+    title: LuVx
+    map: '{home:"home"}'
+
+app:
+  switch:
+    exception:
+      handler:
+        enable: true

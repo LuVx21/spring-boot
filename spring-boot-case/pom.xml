@@ -24,6 +24,7 @@
         <module>runner</module>
         <module>runner_component</module>
         <module>web</module>
+        <module>mars-test</module>
     </modules>
 
     <dependencyManagement>
@@ -41,6 +42,11 @@
             <dependency>
                 <groupId>org.luvx.boot.mars</groupId>
                 <artifactId>service</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.luvx.boot.mars</groupId>
+                <artifactId>mars-rpc-service</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
