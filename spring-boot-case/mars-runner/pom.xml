@@ -10,36 +10,19 @@
     </parent>
 
     <artifactId>mars-runner</artifactId>
-    <packaging>jar</packaging>
+    <packaging>pom</packaging>
 
     <properties>
-        <debezium.version>3.0.0.Alpha1</debezium.version>
     </properties>
 
+    <modules>
+        <module>mars-job</module>
+        <module>mars-cdc</module>
+        <module>mars-rpc</module>
+        <module>mars-mq</module>
+    </modules>
+
     <dependencies>
-        <dependency>
-            <groupId>org.luvx.boot.mars</groupId>
-            <artifactId>mars-service</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>io.debezium</groupId>
-            <artifactId>debezium-api</artifactId>
-            <version>${debezium.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>io.debezium</groupId>
-            <artifactId>debezium-embedded</artifactId>
-            <version>${debezium.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>io.debezium</groupId>
-            <artifactId>debezium-connector-mysql</artifactId>
-            <version>${debezium.version}</version>
-        </dependency>
-
     </dependencies>
 
     <build>

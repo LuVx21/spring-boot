@@ -8,7 +8,6 @@ dubbo:
     name: ${spring.application.name}
     protocol: tri
     qos-enable: false
-    serialize-check-status: DISABLE
   registry:
     address: zookeeper://${zookeeper.address:macbook.rx}:2181
   protocol:

@@ -15,6 +15,7 @@
     <packaging>pom</packaging>
 
     <properties>
+        <dubbo.version>3.2.14</dubbo.version>
     </properties>
 
     <modules>
@@ -22,7 +23,6 @@
         <module>mars-dao</module>
         <module>mars-service</module>
         <module>mars-runner</module>
-        <module>runner_component</module>
         <module>mars-web</module>
         <module>mars-test</module>
     </modules>
@@ -46,7 +46,32 @@
             </dependency>
             <dependency>
                 <groupId>org.luvx.boot.mars</groupId>
+                <artifactId>mars-rpc-common</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.luvx.boot.mars</groupId>
+                <artifactId>mars-rpc-sdk</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.luvx.boot.mars</groupId>
                 <artifactId>mars-rpc-service</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.luvx.boot.mars</groupId>
+                <artifactId>mars-cdc</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.luvx.boot.mars</groupId>
+                <artifactId>mars-job</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.luvx.boot.mars</groupId>
+                <artifactId>mars-mq</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>

@@ -22,13 +22,19 @@
             <groupId>io.mybatis</groupId>
             <artifactId>mybatis-service</artifactId>
             <version>${mapper.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.mybatis</groupId>
+                    <artifactId>mybatis-spring</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <!-- 使用 ActiveRecord 模式时 -->
-        <dependency>
-            <groupId>io.mybatis</groupId>
-            <artifactId>mybatis-activerecord</artifactId>
-            <version>${mapper.version}</version>
-        </dependency>
+        <!--<dependency>-->
+        <!--    <groupId>io.mybatis</groupId>-->
+        <!--    <artifactId>mybatis-activerecord</artifactId>-->
+        <!--    <version>${mapper.version}</version>-->
+        <!--</dependency>-->
     </dependencies>
 
     <build>

@@ -1,10 +1,10 @@
 package org.luvx.boot.mars.service.count.impl;
 
 import lombok.extern.slf4j.Slf4j;
-import org.luvx.boot.mars.rpc.sdk.CountType;
-import org.luvx.boot.mars.rpc.sdk.count.CountEvent;
 import org.luvx.boot.mars.dao.entity.Count;
 import org.luvx.boot.mars.dao.mapper.CountMapper;
+import org.luvx.boot.mars.rpc.common.count.CountEvent;
+import org.luvx.boot.mars.rpc.common.count.CountType;
 import org.luvx.coding.infra.retrieve.RetrieveIdUtils;
 import org.luvx.coding.infra.retrieve.base.MultiDataRetrievable;
 import org.luvx.coding.infra.retrieve.retriever.CacheBasedDataRetriever;

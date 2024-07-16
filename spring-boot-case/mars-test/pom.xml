@@ -19,26 +19,18 @@
     <dependencies>
         <dependency>
             <groupId>org.luvx.boot.mars</groupId>
-            <artifactId>mars-web</artifactId>
-            <version>${project.version}</version>
+            <artifactId>mars-rpc-sdk</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.luvx.boot.mars</groupId>
-            <artifactId>mars-service</artifactId>
+            <groupId>org.apache.dubbo</groupId>
+            <artifactId>dubbo-spring-boot-starter</artifactId>
+            <version>${dubbo.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.luvx.boot.mars</groupId>
-            <artifactId>mars-rpc-service</artifactId>
+            <groupId>org.apache.dubbo</groupId>
+            <artifactId>dubbo-zookeeper-curator5-spring-boot-starter</artifactId>
+            <version>${dubbo.version}</version>
         </dependency>
-        <dependency>
-            <groupId>org.luvx.boot.mars</groupId>
-            <artifactId>mars-runner</artifactId>
-        </dependency>
-        <!--<dependency>-->
-        <!--    <groupId>org.apache.dubbo</groupId>-->
-        <!--    <artifactId>dubbo-zookeeper-curator5-spring-boot-starter</artifactId>-->
-        <!--    <version>${dubbo.version}</version>-->
-        <!--</dependency>-->
     </dependencies>
 
     <build>

@@ -51,6 +51,10 @@
         </dependency>
         <dependency>
             <groupId>org.luvx.boot.mars</groupId>
+            <artifactId>mars-job</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.luvx.boot.mars</groupId>
             <artifactId>mars-runner</artifactId>
         </dependency>
         <dependency>

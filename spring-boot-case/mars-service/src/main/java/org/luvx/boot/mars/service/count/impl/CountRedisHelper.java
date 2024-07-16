@@ -3,7 +3,7 @@ package org.luvx.boot.mars.service.count.impl;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.math.NumberUtils;
-import org.luvx.boot.mars.rpc.sdk.CountType;
+import org.luvx.boot.mars.rpc.common.count.CountType;
 import org.luvx.boot.nosql.redis.RedisHashAccessor;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;

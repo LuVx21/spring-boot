@@ -23,4 +23,14 @@ class UserMapperTest {
                 .list();
         System.out.println(list);
     }
+
+    @Test
+    void m2() {
+        List<User> list = mapper.selectCustom("""
+                select * from user
+                where id = 10000
+                limit 2
+                """);
+        System.out.println(list);
+    }
 }
