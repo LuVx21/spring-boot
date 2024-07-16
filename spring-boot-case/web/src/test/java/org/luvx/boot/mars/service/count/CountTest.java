@@ -5,8 +5,8 @@ import org.junit.jupiter.api.Test;
 import org.luvx.boot.mars.rpc.sdk.user.UserCountType;
 import org.luvx.boot.mars.service.count.impl.CountRedisHelper;
 import org.luvx.boot.mars.service.count.impl.CountService;
-import org.luvx.boot.tools.BaseAppTests;
-import org.luvx.boot.tools.dao.mapper.CountMapper;
+import org.luvx.boot.mars.BaseAppTests;
+import org.luvx.boot.mars.dao.mapper.CountMapper;
 
 import jakarta.annotation.Resource;
 import java.util.List;

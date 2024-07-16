@@ -7,8 +7,8 @@ import org.apache.dubbo.config.annotation.DubboService;
 import org.luvx.boot.mars.rpc.proto.common.Int64;
 import org.luvx.boot.mars.rpc.proto.user.DubboUserRpcServiceTriple;
 import org.luvx.boot.mars.rpc.proto.user.UserResponse;
-import org.luvx.boot.tools.dao.entity.User;
-import org.luvx.boot.tools.dao.mapper.UserMapper;
+import org.luvx.boot.mars.dao.entity.User;
+import org.luvx.boot.mars.dao.mapper.UserMapper;
 import org.luvx.coding.common.util.DateUtils;
 
 import jakarta.annotation.Resource;
