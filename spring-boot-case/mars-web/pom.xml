@@ -55,7 +55,11 @@
         </dependency>
         <dependency>
             <groupId>org.luvx.boot.mars</groupId>
-            <artifactId>mars-runner</artifactId>
+            <artifactId>mars-cdc</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.luvx.boot.mars</groupId>
+            <artifactId>mars-mq</artifactId>
         </dependency>
         <dependency>
             <groupId>io.springfox</groupId>

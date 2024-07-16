@@ -10,7 +10,7 @@
     </parent>
 
     <artifactId>mars-cdc</artifactId>
-    <packaging>pom</packaging>
+    <packaging>jar</packaging>
 
     <properties>
         <debezium.version>3.0.0.Alpha1</debezium.version>

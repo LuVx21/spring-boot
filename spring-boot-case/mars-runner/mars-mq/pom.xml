@@ -10,14 +10,10 @@
     </parent>
 
     <artifactId>mars-mq</artifactId>
-    <packaging>pom</packaging>
+    <packaging>jar</packaging>
 
     <properties>
     </properties>
-
-    <modules>
-        <!--<module></module>-->
-    </modules>
 
     <dependencies>
     </dependencies>
