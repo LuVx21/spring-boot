@@ -19,12 +19,12 @@
     <dependencies>
         <dependency>
             <groupId>org.luvx.boot.mars</groupId>
-            <artifactId>web</artifactId>
+            <artifactId>mars-web</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>org.luvx.boot.mars</groupId>
-            <artifactId>service</artifactId>
+            <artifactId>mars-service</artifactId>
         </dependency>
         <dependency>
             <groupId>org.luvx.boot.mars</groupId>
@@ -32,7 +32,7 @@
         </dependency>
         <dependency>
             <groupId>org.luvx.boot.mars</groupId>
-            <artifactId>runner</artifactId>
+            <artifactId>mars-runner</artifactId>
         </dependency>
         <!--<dependency>-->
         <!--    <groupId>org.apache.dubbo</groupId>-->

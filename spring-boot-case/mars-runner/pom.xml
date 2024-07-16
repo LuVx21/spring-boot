@@ -9,7 +9,7 @@
         <version>0.0.0</version>
     </parent>
 
-    <artifactId>runner</artifactId>
+    <artifactId>mars-runner</artifactId>
     <packaging>jar</packaging>
 
     <properties>
@@ -19,7 +19,7 @@
     <dependencies>
         <dependency>
             <groupId>org.luvx.boot.mars</groupId>
-            <artifactId>service</artifactId>
+            <artifactId>mars-service</artifactId>
         </dependency>
 
         <dependency>

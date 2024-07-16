@@ -18,7 +18,7 @@
     <dependencies>
         <dependency>
             <groupId>org.luvx.boot.mars</groupId>
-            <artifactId>service</artifactId>
+            <artifactId>mars-service</artifactId>
         </dependency>
         <dependency>
             <groupId>org.apache.dubbo</groupId>

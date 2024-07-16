@@ -28,7 +28,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class ChromeCookieService {
-    private String password = "xxx";
+    private String password = "";
 
     // @Resource(name = "sqliteJdbcTemplate")
     // private JdbcTemplate jdbcTemplate;

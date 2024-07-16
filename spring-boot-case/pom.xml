@@ -18,12 +18,12 @@
     </properties>
 
     <modules>
-        <module>common</module>
-        <module>dao</module>
-        <module>service</module>
-        <module>runner</module>
+        <module>mars-common</module>
+        <module>mars-dao</module>
+        <module>mars-service</module>
+        <module>mars-runner</module>
         <module>runner_component</module>
-        <module>web</module>
+        <module>mars-web</module>
         <module>mars-test</module>
     </modules>
 
@@ -31,17 +31,17 @@
         <dependencies>
             <dependency>
                 <groupId>org.luvx.boot.mars</groupId>
-                <artifactId>common</artifactId>
+                <artifactId>mars-common</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.luvx.boot.mars</groupId>
-                <artifactId>dao</artifactId>
+                <artifactId>mars-dao</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.luvx.boot.mars</groupId>
-                <artifactId>service</artifactId>
+                <artifactId>mars-service</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
@@ -51,7 +51,7 @@
             </dependency>
             <dependency>
                 <groupId>org.luvx.boot.mars</groupId>
-                <artifactId>runner</artifactId>
+                <artifactId>mars-runner</artifactId>
                 <version>${project.version}</version>
             </dependency>
         </dependencies>

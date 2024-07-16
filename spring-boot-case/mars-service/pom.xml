@@ -9,7 +9,7 @@
         <version>0.0.0</version>
     </parent>
 
-    <artifactId>service</artifactId>
+    <artifactId>mars-service</artifactId>
     <packaging>jar</packaging>
 
     <properties>
@@ -18,7 +18,7 @@
     <dependencies>
         <dependency>
             <groupId>org.luvx.boot.mars</groupId>
-            <artifactId>dao</artifactId>
+            <artifactId>mars-dao</artifactId>
         </dependency>
 
         <dependency>
