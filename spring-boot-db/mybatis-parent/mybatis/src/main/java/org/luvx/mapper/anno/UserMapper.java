@@ -217,4 +217,16 @@ public interface UserMapper {
     @ResultMap(key)
     @SelectProvider(type = UserSqlProvider.class, method = "selectSelectiveList")
     List<User> selectSelectiveList(@Param("records") Collection<User> records);
+
+    @Insert("${paramSQL}")
+    void dynamicsInsert(@Param("paramSQL") String sql);
+
+    @Update("${paramSQL}")
+    void dynamicsUpdate(@Param("paramSQL") String sql);
+
+    @Delete("${paramSQL}")
+    void dynamicsDelete(@Param("paramSQL") String sql);
+
+    @Select("${paramSQL}")
+    List<User> dynamicsSelect(@Param("paramSQL") String sql);
 }

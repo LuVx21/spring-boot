@@ -130,4 +130,13 @@ public class UserMapperTest extends ApplicationTests {
         List<User> users = userMapper.selectSelectiveList(Arrays.asList(user1, user2));
         System.out.println(users);
     }
+
+    @Test
+    void dynamicsTest() {
+        userMapper.dynamicsInsert("insert into user(id, user_name, password) values(2, 'haha', 'hehe');");
+        userMapper.dynamicsUpdate("update user set password = 'hehehehe' where id = 2;");
+        List<User> users = userMapper.dynamicsSelect("select * from user where id = 2 limit 2");
+        System.out.println(users);
+        userMapper.dynamicsDelete("delete from user where id = 2;");
+    }
 }
