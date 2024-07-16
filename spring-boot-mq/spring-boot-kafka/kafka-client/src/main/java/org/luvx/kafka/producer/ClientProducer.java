@@ -4,34 +4,24 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.luvx.kafka.common.config.KafkaConfig;
 import org.luvx.kafka.common.entity.User;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.SendResult;
 import org.springframework.stereotype.Service;
 
+import jakarta.annotation.Resource;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
 @Slf4j
 @Service
 public class ClientProducer {
-    private KafkaTemplate kafkaTemplate;
-    private String[]      kafkaTopicName;
-
-    @Autowired
-    public void setKafkaTemplate(KafkaTemplate kafkaTemplate) {
-        this.kafkaTemplate = kafkaTemplate;
-    }
-
-    @Autowired
-    public void setKafkaTopicName(String[] kafkaTopicName) {
-        this.kafkaTopicName = kafkaTopicName;
-    }
+    @Resource
+    private KafkaTemplate<String, User> kafkaTemplate;
+    @Resource
+    private String[]                    kafkaTopicName;
 
     /**
      * 同步生产
-     *
-     * @param user
      */
     public void send(User user) {
         ProducerRecord<String, User> producerRecord = new ProducerRecord<>(
@@ -43,9 +33,9 @@ public class ClientProducer {
                 user
         );
 
-        SendResult<Integer, User> sendResult = null;
+        SendResult<String, User> sendResult = null;
         try {
-            sendResult = (SendResult<Integer, User>) kafkaTemplate.send(producerRecord).get();
+            sendResult = kafkaTemplate.send(producerRecord).get();
         } catch (InterruptedException | ExecutionException ex) {
             log.error("发送消息异常 ex:{} topic: {}, msg: {}", ex, KafkaConfig.TOPIC_SIMPLE, user);
         }

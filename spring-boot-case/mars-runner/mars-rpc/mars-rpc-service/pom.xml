@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.luvx.boot.mars</groupId>
         <artifactId>mars-rpc</artifactId>
-        <version>${revision}</version>
+        <version>${app}</version>
     </parent>
 
     <artifactId>mars-rpc-service</artifactId>

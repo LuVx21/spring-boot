@@ -11,11 +11,11 @@
 
     <groupId>org.luvx.boot.mars</groupId>
     <artifactId>mars-root</artifactId>
-    <version>${revision}</version>
+    <version>${app}</version>
     <packaging>pom</packaging>
 
     <properties>
-        <revision>0.0.0</revision>
+        <app>0.0.0</app>
         <dubbo.version>3.2.14</dubbo.version>
     </properties>
 
@@ -85,31 +85,6 @@
 
     <build>
         <plugins>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>flatten-maven-plugin</artifactId>
-                <version>1.6.0</version>
-                <configuration>
-                    <updatePomFile>true</updatePomFile>
-                    <flattenMode>resolveCiFriendliesOnly</flattenMode>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>flatten</id>
-                        <phase>process-resources</phase>
-                        <goals>
-                            <goal>flatten</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>flatten-clean</id>
-                        <phase>clean</phase>
-                        <goals>
-                            <goal>clean</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
         </plugins>
     </build>
 

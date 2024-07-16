@@ -6,12 +6,17 @@ server:
 # 指定kafka 代理地址，可以多个
 spring:
   kafka:
-    bootstrap-servers: localhost:59092
+    bootstrap-servers: mini.rx:19092,mini.rx:29092,mini.rx:39092
+    template:
+      default-topic: topic-spring
     producer:
-      retries: 0
+      retries: 3
       # 每次批量发送消息的数量
       batch-size: 16384
+      # 32M批处理缓冲区
       buffer-memory: 33554432
+      properties:
+        linger-ms: 1
       # 指定消息key和消息体的编解码方式
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
@@ -19,11 +24,18 @@ spring:
       # 指定默认消费者group id
       group-id: consumer-group-spring
       auto-offset-reset: earliest
+      max-poll-records: 5
+      fetch-max-wait: 10000
       enable-auto-commit: true
-      auto-commit-interval: 100
+      auto-commit-interval: 1000
       # 指定消息key和消息体的编解码方式
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    listener:
+      # listener容器中的线程数，用于提高并发量
+      concurrency: 1
+      # 轮询消费者时使用的超时（以毫秒为单位）
+      poll-timeout: 50000
 
 kafka:
   topic:

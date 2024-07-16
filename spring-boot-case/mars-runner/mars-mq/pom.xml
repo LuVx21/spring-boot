@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.luvx.boot.mars</groupId>
         <artifactId>mars-runner</artifactId>
-        <version>${revision}</version>
+        <version>${app}</version>
     </parent>
 
     <artifactId>mars-mq</artifactId>

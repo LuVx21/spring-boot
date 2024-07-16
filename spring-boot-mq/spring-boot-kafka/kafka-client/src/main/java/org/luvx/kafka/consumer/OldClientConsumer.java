@@ -1,25 +1,19 @@
 package org.luvx.kafka.consumer;
 
-import java.time.Duration;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
-import java.util.Properties;
-
-import org.apache.kafka.clients.consumer.Consumer;
-import org.apache.kafka.clients.consumer.ConsumerConfig;
-import org.apache.kafka.clients.consumer.ConsumerRebalanceListener;
-import org.apache.kafka.clients.consumer.ConsumerRecords;
-import org.apache.kafka.clients.consumer.KafkaConsumer;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.kafka.clients.consumer.*;
 import org.apache.kafka.common.PartitionInfo;
 import org.apache.kafka.common.TopicPartition;
 import org.luvx.kafka.common.config.KafkaConfig;
 import org.luvx.kafka.common.utils.KafkaUtils;
 import org.springframework.stereotype.Service;
 
-import lombok.extern.slf4j.Slf4j;
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Properties;
 
 /**
  * @ClassName: org.luvx._new
@@ -80,40 +74,35 @@ public class OldClientConsumer {
             // 1. 不监听再平衡
             // consumer.subscribe(Arrays.asList(KafkaConfig.topic));
             // 2. 监听再平衡
-            consumer.subscribe(Arrays.asList(KafkaConfig.TOPIC_SIMPLE), new ConsumerRebalanceListener() {
-                        /**
-                         * 停止消费消息后, 再均衡前调用
-                         * @param partitions
-                         */
-                        @Override
-                        public void onPartitionsRevoked(Collection<TopicPartition> partitions) {
-                            log.info("再均衡开始:{}", LocalDateTime.now());
-                            consumer.commitSync();
-                        }
+            consumer.subscribe(List.of(KafkaConfig.TOPIC_SIMPLE), new ConsumerRebalanceListener() {
+                /**
+                 * 停止消费消息后, 再均衡前调用
+                 */
+                @Override
+                public void onPartitionsRevoked(Collection<TopicPartition> partitions) {
+                    log.info("再均衡开始:{}", LocalDateTime.now());
+                    consumer.commitSync();
+                }
 
-                        /**
-                         * 再均衡, 开始消费消息前调用
-                         * @param partitions
-                         */
-                        @Override
-                        public void onPartitionsAssigned(Collection<TopicPartition> partitions) {
-                            log.info("再均衡结束:{}", LocalDateTime.now());
-                        }
-                    }
-            );
+                /**
+                 * 再均衡, 开始消费消息前调用
+                 */
+                @Override
+                public void onPartitionsAssigned(Collection<TopicPartition> partitions) {
+                    log.info("再均衡结束:{}", LocalDateTime.now());
+                }
+            });
 
             // 1. 不指定offset,默认提交最大 offset
             try {
                 while (true) {
                     ConsumerRecords<String, String> records = consumer.poll(Duration.ofMillis(100));
                     KafkaUtils.print(records);
-                    consumer.commitAsync(
-                            (offsets, exception) -> {
-                                if (exception != null) {
-                                    log.error("commit exception! offset:{}", offsets);
-                                }
-                            }
-                    );
+                    consumer.commitAsync((offsets, exception) -> {
+                        if (exception != null) {
+                            log.error("commit exception! offset:{}", offsets);
+                        }
+                    });
                 }
             } finally {
                 consumer.commitSync();
@@ -133,9 +122,7 @@ public class OldClientConsumer {
                 consumer.commitAsync(offsets, null);
             }
             */
-
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Exception _) {
         }
     }
 

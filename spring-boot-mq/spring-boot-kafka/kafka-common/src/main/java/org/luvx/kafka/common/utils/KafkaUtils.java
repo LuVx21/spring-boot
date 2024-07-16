@@ -1,29 +1,19 @@
 package org.luvx.kafka.common.utils;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
-import java.util.Set;
-import java.util.regex.Pattern;
-import java.util.stream.Collectors;
-
 import com.alibaba.fastjson2.JSONObject;
 import com.google.common.collect.Streams;
-
 import lombok.extern.slf4j.Slf4j;
-import org.apache.kafka.clients.consumer.ConsumerRebalanceListener;
-import org.apache.kafka.clients.consumer.ConsumerRecord;
-import org.apache.kafka.clients.consumer.ConsumerRecords;
-import org.apache.kafka.clients.consumer.KafkaConsumer;
-import org.apache.kafka.clients.consumer.OffsetAndMetadata;
-import org.apache.kafka.clients.consumer.OffsetCommitCallback;
+import org.apache.kafka.clients.consumer.*;
 import org.apache.kafka.common.TopicPartition;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.util.Assert;
 import org.springframework.util.ClassUtils;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
+
+import java.util.*;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 @Slf4j
 public class KafkaUtils {
@@ -44,8 +34,6 @@ public class KafkaUtils {
 
     /**
      * 测试用: 格式化显示消息
-     *
-     * @param records
      */
     public static void print(ConsumerRecords<?, ?> records) {
         for (ConsumerRecord<?, ?> record : records) {
@@ -55,8 +43,6 @@ public class KafkaUtils {
 
     /**
      * 测试用: 格式化显示消息
-     *
-     * @param record
      */
     public static void print(ConsumerRecord<?, ?> record) {
         String topic = record.topic();
@@ -136,10 +122,6 @@ public class KafkaUtils {
 
     /**
      * 简化配置
-     *
-     * @param properties
-     * @param otherPrefix
-     * @return
      */
     public static Properties retrieveProperties(Properties properties, String otherPrefix) {
         Properties p = new Properties();
@@ -170,7 +152,7 @@ public class KafkaUtils {
     }
 
     private static class DefaultConsumerRebalanceListener<K, V> implements ConsumerRebalanceListener {
-        private MessageConsumer<K, V> consumer;
+        private final MessageConsumer<K, V> consumer;
 
         public DefaultConsumerRebalanceListener(MessageConsumer<K, V> consumer) {
             this.consumer = consumer;
@@ -196,8 +178,6 @@ public class KafkaUtils {
     public interface MessageConsumer<K, V> extends InitializingBean {
         /**
          * 获取消费者
-         *
-         * @return
          */
         KafkaConsumer<K, V> getNativeConsumer();
 
@@ -207,16 +187,11 @@ public class KafkaUtils {
 
         /**
          * 拉取数据
-         *
-         * @return
          */
         ConsumerRecords<K, V> poll();
 
         /**
          * 拉取数据
-         *
-         * @param timeout
-         * @return
          */
         ConsumerRecords<K, V> poll(long timeout);
 
