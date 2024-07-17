@@ -1,6 +1,7 @@
 package org.luvx.kafka.controller;
 
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.luvx.kafka.common.entity.User;
 import org.luvx.kafka.config.KafkaConsumerContext;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import jakarta.annotation.Resource;
 import java.time.LocalDateTime;
 
+@Slf4j
 @RestController
 @RequestMapping("/kafka")
 public class KafkaController {
@@ -36,8 +38,9 @@ public class KafkaController {
     }
 
     @GetMapping("/create/{groupId}")
-    public String create(@PathVariable String groupId) throws ClassNotFoundException {
+    public String create(@PathVariable String groupId) {
         KafkaConsumer<String, String> consumer = factory.createConsumer(kafkaTopicName[0], groupId);
+        log.info("创建消费者: {}", consumer.hashCode());
         KafkaConsumerContext.addConsumerTask(groupId, consumer);
         return "创建成功！";
     }
