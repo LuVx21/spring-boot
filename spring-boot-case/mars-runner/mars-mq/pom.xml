@@ -16,6 +16,10 @@
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>org.luvx.boot.mars</groupId>
+            <artifactId>mars-service</artifactId>
+        </dependency>
     </dependencies>
 
     <build>

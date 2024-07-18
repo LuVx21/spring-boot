@@ -1,10 +1,10 @@
 package org.luvx.boot.mars.rpc.common.count;
 
 import lombok.AllArgsConstructor;
-import org.luvx.coding.common.enums.EnumHasCode;
+import org.luvx.coding.common.enums.primitives.EnumHasIntCode;
 
 @AllArgsConstructor
-public enum CountEvent implements EnumHasCode<Integer> {
+public enum CountEvent implements EnumHasIntCode {
     SET_COUNT(1),
     INC_COUNT(2),
     DEC_COUNT(3),
@@ -13,7 +13,7 @@ public enum CountEvent implements EnumHasCode<Integer> {
     private final int code;
 
     @Override
-    public Integer getCode() {
+    public int intCode() {
         return code;
     }
 }

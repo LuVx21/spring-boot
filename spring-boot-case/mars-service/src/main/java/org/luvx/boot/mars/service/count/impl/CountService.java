@@ -1,5 +1,6 @@
 package org.luvx.boot.mars.service.count.impl;
 
+import com.google.common.collect.Maps;
 import lombok.extern.slf4j.Slf4j;
 import org.luvx.boot.mars.dao.entity.Count;
 import org.luvx.boot.mars.dao.mapper.CountMapper;
@@ -8,7 +9,9 @@ import org.luvx.boot.mars.rpc.common.count.CountType;
 import org.luvx.coding.infra.retrieve.RetrieveIdUtils;
 import org.luvx.coding.infra.retrieve.base.MultiDataRetrievable;
 import org.luvx.coding.infra.retrieve.retriever.CacheBasedDataRetriever;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.jdbc.core.simple.JdbcClient;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 import jakarta.annotation.Resource;
@@ -25,11 +28,39 @@ public class CountService {
     private final CacheBasedDataRetriever<Long, Map<Integer, Integer>> requestCache = CacheBasedDataRetriever.of(null);
 
     @Resource
-    private CountMapper      countMapper;
+    private CountMapper                   countMapper;
+    @Lazy
     @Resource
-    private CountRedisHelper countRedisHelper;
+    private CountRedisHelper              countRedisHelper;
     @Resource
-    private JdbcClient       jdbcClient;
+    private JdbcClient                    jdbcClient;
+    @Resource
+    private KafkaTemplate<String, Object> kafkaTemplate;
+
+    public Map<Long, Map<Integer, Integer>> getByIdsFromDB(Collection<Long> ids) {
+        List<Count> list = countMapper.wrapper()
+                .in(Count::getCountId, ids)
+                .list();
+        return list2Map(list);
+    }
+
+    public Map<Long, Map<Integer, Integer>> getByIdsFromDB(Collection<Long> ids, Collection<Integer> types) {
+        List<Count> list = countMapper.wrapper()
+                .in(Count::getCountId, ids)
+                .in(Count::getCountType, types)
+                .list();
+        return list2Map(list);
+    }
+
+    public Map<Long, Map<Integer, Integer>> list2Map(List<Count> list) {
+        Map<Long, Map<Integer, Integer>> result = Maps.newHashMapWithExpectedSize(list.size());
+        for (Count count : list) {
+            long countId = count.getCountId();
+            Map<Integer, Integer> m = result.computeIfAbsent(countId, _ -> Maps.newHashMap());
+            m.put(count.getCountType(), count.getCountValue());
+        }
+        return result;
+    }
 
     public Map<Long, Map<Integer, Integer>> getByIds(Collection<Long> ids) {
         List<MultiDataRetrievable<Long, Map<Integer, Integer>>> list = List.of(requestCache, new MultiDataRetrievable<>() {

@@ -7,7 +7,7 @@ import org.luvx.coding.common.enums.EnumHasCode;
 @Getter
 @AllArgsConstructor
 public enum RedisKeyPrefix implements EnumHasCode<String> {
-    COUNT("c:", "计数服务"),
+    COUNT("cnt:", "计数服务"),
     ;
 
     private final String prefix;

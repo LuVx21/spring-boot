@@ -63,6 +63,7 @@ public class KafkaConsumerContext {
             ConsumerRecords<K, V> records = consumer.poll(Duration.ofMillis(3000));
             for (ConsumerRecord<K, V> record : records) {
                 KafkaUtils.print(record);
+                consumer.commitAsync();
             }
         }, 0, 1, TimeUnit.SECONDS);
         scheduleMap.put(groupId, future);

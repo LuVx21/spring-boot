@@ -1,19 +1,29 @@
 package org.luvx.kafka.config;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
 import org.springframework.kafka.config.KafkaListenerContainerFactory;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
+import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.kafka.listener.ConsumerRecordRecoverer;
 import org.springframework.kafka.listener.ContainerProperties;
+import org.springframework.kafka.listener.DeadLetterPublishingRecoverer;
+import org.springframework.kafka.listener.DefaultErrorHandler;
+import org.springframework.util.backoff.BackOff;
+import org.springframework.util.backoff.FixedBackOff;
 
 import jakarta.annotation.Resource;
+import java.net.SocketTimeoutException;
 import java.util.HashMap;
 import java.util.Map;
 
+@Slf4j
 @Configuration
 public class KafkaConsumerConfig {
 
@@ -45,6 +55,9 @@ public class KafkaConsumerConfig {
             factory.getContainerProperties().setPollTimeout(listener.getPollTimeout().toMillis());
         }
         factory.getContainerProperties().setAckMode(ContainerProperties.AckMode.MANUAL_IMMEDIATE);
+        // 阻塞式重试
+        factory.setCommonErrorHandler(errorHandler());
+
         return factory;
     }
 
@@ -75,4 +88,33 @@ public class KafkaConsumerConfig {
         props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
         return props;
     }
+
+    /**
+     * 阻塞式重试: 消息处理失败时，消费者会阻塞，直到重试机制完成重试或达到最大重试次数
+     */
+    @Bean
+    public DefaultErrorHandler errorHandler() {
+        long interval = 5000L, maxAttempts = 5L;
+        BackOff fixedBackOff = new FixedBackOff(interval, maxAttempts);
+        DefaultErrorHandler errorHandler = new DefaultErrorHandler((consumerRecord, exception) -> {
+            log.warn("消费重试结束仍失败:{}", consumerRecord, exception);
+            // 当所有重试尝试都用尽时执行的逻辑
+        }, fixedBackOff);
+
+        // 可重试的异常
+        errorHandler.addRetryableExceptions(SocketTimeoutException.class);
+        // 不可重试的异常
+        errorHandler.addNotRetryableExceptions(NullPointerException.class);
+
+        return errorHandler;
+    }
+
+    // @Bean
+    // public DefaultErrorHandler kafkaErrorHandler(KafkaTemplate<?, ?> template) {
+    //     log.warn("kafkaErrorHandler begin to Handle");
+    //
+    //     ConsumerRecordRecoverer recoverer = new DeadLetterPublishingRecoverer(template);
+    //     BackOff backOff = new FixedBackOff(10 * 1000L, 3L);
+    //     return new DefaultErrorHandler(recoverer, backOff);
+    // }
 }

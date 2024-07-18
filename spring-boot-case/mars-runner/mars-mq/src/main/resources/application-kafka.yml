@@ -1,14 +1,8 @@
-#============== app ===================
-server:
-  port: 8090
-
-#============== kafka ===================
-# 指定kafka 代理地址，可以多个
 spring:
   kafka:
     bootstrap-servers: mini.rx:19092,mini.rx:29092,mini.rx:39092
     template:
-      default-topic: default-topic
+      default-topic: mars-topic
     producer:
       acks: 1 # 0-不应答。1-leader 应答。all-所有 leader 和 follower 应答。
       retries: 3
@@ -23,13 +17,13 @@ spring:
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
     consumer:
       # 指定默认消费者group id
-      group-id: consumer-group-spring
-      auto-offset-reset: latest # earliest
+      group-id: consumer-group-mars
+      auto-offset-reset: latest
       max-poll-records: 500
       fetch-max-wait: 10000
       # fetch-min-size: 1
       enable-auto-commit: true
-      auto-commit-interval: 1000
+      auto-commit-interval: 500
       # 指定消息key和消息体的编解码方式
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
@@ -38,12 +32,3 @@ spring:
       concurrency: 1
       # 轮询消费者时使用的超时（以毫秒为单位）
       poll-timeout: 50000
-
-kafka:
-  topic:
-    topic-name: default-topic
-
-#=============== log =======================
-logging:
-  level:
-    org.apache.kafka: off
