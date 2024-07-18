@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import org.luvx.coding.common.enums.primitives.EnumHasIntCode;
 
 @AllArgsConstructor
-public enum CountEvent implements EnumHasIntCode {
+public enum CountOperateType implements EnumHasIntCode {
     SET_COUNT(1),
     INC_COUNT(2),
     DEC_COUNT(3),

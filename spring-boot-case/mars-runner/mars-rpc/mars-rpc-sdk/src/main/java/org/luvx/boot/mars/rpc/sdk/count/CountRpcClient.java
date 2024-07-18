@@ -1,6 +1,6 @@
 package org.luvx.boot.mars.rpc.sdk.count;
 
-import org.luvx.boot.mars.rpc.common.count.CountEvent;
+import org.luvx.boot.mars.rpc.common.count.CountOperateType;
 import org.luvx.boot.mars.rpc.common.count.CountType;
 
 import java.util.Collection;
@@ -38,16 +38,16 @@ public interface CountRpcClient {
      * 增、减、赋值操作
      * 必须统一用operate 或 asyncOperate, 保证顺序性
      */
-    void operate(CountEvent event, long countId, Collection<CountType> types, int value);
+    void operate(CountOperateType event, long countId, Collection<CountType> types, int value);
 
-    default void operate(CountEvent event, long countId, CountType type, int value) {
+    default void operate(CountOperateType event, long countId, CountType type, int value) {
         operate(event, countId, singleton(type), value);
     }
 
     /**
      * 增、减、赋值操作必须统一用operate 或 asyncOperate, 保证顺序性
      */
-    void asyncOperate(CountEvent event, long countId, Collection<CountType> types, int value);
+    void asyncOperate(CountOperateType event, long countId, Collection<CountType> types, int value);
 
     void batchSet(long countId, Map<CountType, Integer> countMap);
 }

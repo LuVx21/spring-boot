@@ -4,14 +4,14 @@ import com.alibaba.fastjson2.JSONObject;
 import com.alibaba.fastjson2.annotation.JSONField;
 import io.debezium.data.Envelope;
 import lombok.*;
-import org.luvx.boot.common.listener.base.BaseEventData;
 
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class DebeziumEventData extends BaseEventData {
+public class DebeziumEventData // extends BaseEventData
+{
     /**
      * 以下为io.debezium.engine.ChangeEvent的key部分
      */

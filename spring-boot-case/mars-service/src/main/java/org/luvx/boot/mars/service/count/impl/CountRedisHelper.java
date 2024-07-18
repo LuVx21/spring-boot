@@ -48,10 +48,10 @@ public class CountRedisHelper implements RedisHashAccessor<Long, Integer, Intege
     }
 
     public void setValue(long countId, Collection<CountType> types, int value) {
-        Map<String, Integer> map = types.stream()
+        Map<Integer, Integer> map = types.stream()
                 .map(CountType::getType)
-                .collect(Collectors.toMap(String::valueOf, _ -> value));
-        redisTemplate.opsForHash().putAll(redisKey(countId), map);
+                .collect(Collectors.toMap(e -> e, _ -> value));
+        set(countId, map);
     }
 
     @Override

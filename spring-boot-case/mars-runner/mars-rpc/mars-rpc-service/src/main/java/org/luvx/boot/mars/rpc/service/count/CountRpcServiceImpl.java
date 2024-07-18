@@ -2,7 +2,7 @@ package org.luvx.boot.mars.rpc.service.count;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.dubbo.config.annotation.DubboService;
-import org.luvx.boot.mars.rpc.common.count.CountEvent;
+import org.luvx.boot.mars.rpc.common.count.CountOperateType;
 import org.luvx.boot.mars.rpc.common.count.CountType;
 import org.luvx.boot.mars.rpc.sdk.count.CountRpcClient;
 import org.luvx.boot.mars.service.count.impl.CountService;
@@ -28,12 +28,12 @@ public class CountRpcServiceImpl implements CountRpcClient {
     }
 
     @Override
-    public void operate(CountEvent event, long countId, Collection<CountType> types, int value) {
+    public void operate(CountOperateType event, long countId, Collection<CountType> types, int value) {
         countService.operate(event, countId, types, value);
     }
 
     @Override
-    public void asyncOperate(CountEvent event, long countId, Collection<CountType> types, int value) {
+    public void asyncOperate(CountOperateType event, long countId, Collection<CountType> types, int value) {
         countService.asyncOperate(event, countId, types, value);
     }
 

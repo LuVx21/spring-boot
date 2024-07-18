@@ -1,0 +1,42 @@
+@host = localhost:9999
+
+###
+GET http://{{host}}/mars/count/10000,10001,10002
+
+###
+GET http://{{host}}/mars/count/1/10000,10001,10002
+
+###
+POST http://{{host}}/mars/count/operate/10000
+Content-Type: application/json;charset=UTF-8
+
+{
+  "event": 2,
+  "types": [
+    1,
+    2
+  ],
+  "value": 1
+}
+
+###
+POST http://{{host}}/mars/count/asyncOperate/10000
+Content-Type: application/json;charset=UTF-8
+
+{
+  "event": 2,
+  "types": [
+    1,
+    2
+  ],
+  "value": 1
+}
+
+###
+POST http://{{host}}/mars/count/batchSet/10000
+Content-Type: application/json;charset=UTF-8
+
+{
+  "1": 22,
+  "2": 33
+}

@@ -6,6 +6,8 @@ server:
 # 指定kafka 代理地址，可以多个
 spring:
   kafka:
+#    security:
+#      protocol: SASL_SSL
     bootstrap-servers: mini.rx:19092,mini.rx:29092,mini.rx:39092
     template:
       default-topic: default-topic
@@ -18,6 +20,8 @@ spring:
       buffer-memory: 33554432
       properties:
         linger-ms: 1
+#        sasl.mechanism: SCRAM-SHA-256
+#        sasl.jaas.config: org.apache.kafka.common.security.scram.ScramLoginModule required username="xxx" password="xxx";
       # 指定消息key和消息体的编解码方式
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer

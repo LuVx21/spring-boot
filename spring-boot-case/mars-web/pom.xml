@@ -59,6 +59,10 @@
         </dependency>
         <dependency>
             <groupId>org.luvx.boot.mars</groupId>
+            <artifactId>mars-rpc-sdk</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.luvx.boot.mars</groupId>
             <artifactId>mars-mq</artifactId>
         </dependency>
         <dependency>
