@@ -32,6 +32,11 @@
             <artifactId>resilience4j-circuitbreaker</artifactId>
             <version>${resilience4j.version}</version>
         </dependency>
+
+<!-- resilience4j-retry -->
+<!-- resilience4j-ratelimiter -->
+<!-- resilience4j-bulkhead -->
+
     </dependencies>
 
     <build>
