@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.luvx.boot</groupId>
+        <artifactId>coding-parent-boot-java</artifactId>
+        <version>0.3</version>
+    </parent>
+
+    <artifactId>boot-resilience4j</artifactId>
+    <version>0.0.0</version>
+    <packaging>jar</packaging>
+
+    <properties>
+        <resilience4j.version>2.2.0</resilience4j.version>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.luvx.boot</groupId>
+            <artifactId>boot-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>io.github.resilience4j</groupId>
+            <artifactId>resilience4j-circuitbreaker</artifactId>
+            <version>${resilience4j.version}</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+        </plugins>
+    </build>
+</project>
