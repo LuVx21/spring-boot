@@ -165,7 +165,7 @@ public class ProviderUtils {
         String[] allField = cacheEntry.getAllField();
         Map<String, String> fieldColumnMap = cacheEntry.getFieldColumnMap();
         return Arrays.stream(allField)
-                .map(n -> STR."`\{fieldColumnMap.get(n)}` as \{n}")
+                .map(n -> "`" + fieldColumnMap.get(n) + "` as " + n)
                 .toArray(String[]::new);
     }
 
@@ -190,10 +190,10 @@ public class ProviderUtils {
 
             String fieldName = (char) (name.charAt(3) - 'A' + 'a') + name.substring(4);
             if (queryObj.get(fieldName) != null) {
-                wheres.add(STR."`\{toUnderscore(fieldName)}` = #{\{fieldName}}");
+                wheres.add("`" + toUnderscore(fieldName) + "` = #{" + fieldName + "}");
             }
-            if (method.getReturnType().equals(String.class) && queryObj.get(STR."\{fieldName}Like") != null) {
-                wheres.add(STR."`\{toUnderscore(fieldName)}` like CONCAT('%', #{\{fieldName}Like}, '%')");
+            if (method.getReturnType().equals(String.class) && queryObj.get(fieldName + "Like") != null) {
+                wheres.add("`" + toUnderscore(fieldName) + "` like CONCAT('%', #{" + fieldName + "Like}, '%')");
             }
         }
         return wheres.toArray(new String[]{});

@@ -68,7 +68,7 @@ public class BaseInsertProvider {
             }
             for (int k = 0; k < allFields.length; k++) {
                 String field = allFields[k];
-                String value = STR."#{records[\{i}].\{field}}";
+                String value = "#{records[" + i + "]." + field + "}";
                 if (i == 0) {
                     sql.INTO_VALUES(value);
                 } else {
@@ -105,7 +105,7 @@ public class BaseInsertProvider {
             if (selective && map.get(field) == null) {
                 continue;
             }
-            sql.VALUES(STR."`\{fieldColumnMap.get(field)}`", STR."#{record.\{field}}");
+            sql.VALUES("`" + fieldColumnMap.get(field) + "`", "#{record." + field + "}");
         }
         return sql.toString();
     }

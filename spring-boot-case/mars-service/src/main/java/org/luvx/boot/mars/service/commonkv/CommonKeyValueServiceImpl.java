@@ -104,7 +104,7 @@ public class CommonKeyValueServiceImpl implements CommonKeyValueService {
         checkArgument(MapUtils.isNotEmpty(kvs), "itemKey不可为空");
 
         String collect = kvs.entrySet().stream()
-                .map(e -> STR."'$.\{e.getKey()}', \{JsonUtils.toJson(e.getValue())}")
+                .map(e -> "'$." + e.getKey() + "', " + JsonUtils.toJson(e.getValue()))
                 .collect(Collectors.joining(", "));
 
         String s = onlyIfAbsent ? "JSON_INSERT" : "JSON_SET";
@@ -122,7 +122,7 @@ public class CommonKeyValueServiceImpl implements CommonKeyValueService {
         checkArgument(ArrayUtils.isNotEmpty(itemKey), "itemKey不可为空");
 
         String keys = Arrays.stream(itemKey)
-                .map(k -> STR."'$.\{k}'")
+                .map(k -> "'$." + k + "'")
                 .collect(Collectors.joining(", "));
         String setSql = ssss.formatted("JSON_REMOVE", keys);
         Example<CommonKeyValue> example = new Example<>();
@@ -156,7 +156,7 @@ public class CommonKeyValueServiceImpl implements CommonKeyValueService {
     private void onOff(KVBizType bizType, String key, boolean valid) {
         int invalid = valid ? 0 : 1;
         Example<CommonKeyValue> example = new Example<>();
-        example.set(STR."invalid = \{invalid}").createCriteria()
+        example.set("invalid = " + invalid).createCriteria()
                 .andEqualTo(CommonKeyValue::getBizType, bizType.getBizType())
                 .andEqualTo(CommonKeyValue::getCommonKey, key);
         mapper.updateByExampleSetValues(example);

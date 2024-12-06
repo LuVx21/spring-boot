@@ -11,13 +11,13 @@ import java.util.concurrent.ConcurrentMap;
 
 @Configuration
 public class SqliteConfig {
-    public static final String SQLITE_HOME = STR."\{Consts.DATA_HOME}/sqlite";
+    public static final String SQLITE_HOME = Consts.DATA_HOME + "/sqlite";
 
     public static final ConcurrentMap<String, JdbcTemplate> map = Maps.newConcurrentMap();
 
     @Bean("sqliteJdbcTemplate")
     public JdbcTemplate jdbcTemplate() {
-        String path = STR."\{SQLITE_HOME}/main.db";
+        String path = SQLITE_HOME + "/main.db";
         JdbcTemplate jdbcTemplate = sqliteUrl(path);
         String ddl = """
                 create table if not exists user
@@ -35,7 +35,7 @@ public class SqliteConfig {
     }
 
     public static JdbcTemplate sqliteUrl(String path) {
-        String url = STR."jdbc:sqlite:\{path}";
+        String url = "jdbc:sqlite:" + path;
         JdbcTemplate jdbcTemplate = new JdbcTemplate(new DriverManagerDataSource(url));
         map.put(path, jdbcTemplate);
         return jdbcTemplate;

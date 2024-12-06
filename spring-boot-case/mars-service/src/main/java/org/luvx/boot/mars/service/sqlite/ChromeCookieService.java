@@ -33,13 +33,13 @@ public class ChromeCookieService {
     // @Resource(name = "sqliteJdbcTemplate")
     // private JdbcTemplate jdbcTemplate;
 
-    private final JdbcTemplate jdbcTemplate = SqliteConfig.sqliteUrl(STR."\{SqliteConfig.SQLITE_HOME}/Cookies");
+    private final JdbcTemplate jdbcTemplate = SqliteConfig.sqliteUrl(SqliteConfig.SQLITE_HOME + "/Cookies");
 
     public String getCookieStrByHost(@Nonnull Collection<String> hosts, @Nullable String name) {
         String cookie = "";
         try {
             cookie = getCookieByHost(hosts, name).entrySet().stream()
-                .map(e -> STR."\{e.getKey()}=\{e.getValue()}")
+                    .map(e -> e.getKey() + "=" + e.getValue())
                 .collect(Collectors.joining("; "));
         } catch (Exception ignore) {
         }
@@ -47,15 +47,16 @@ public class ChromeCookieService {
     }
 
     public Map<String, String> getCookieByHost(@Nonnull Collection<String> hosts, @Nullable String name) throws Exception {
-        String sql = STR."""
+        String sql = """
                 select *
                 from cookies
                 where true
                   and host_key in (:hosts)
-                  \{StringUtils.isEmpty(name) ? "" : STR."and name = '\{name}'"}
+                  %s
                 order by host_key, name
                 ;
                 """;
+        sql = String.format(sql, StringUtils.isEmpty(name) ? "" : "and name = '" + name + "'");
         Map<String, Object> args = Map.of("hosts", hosts);
         NamedParameterJdbcTemplate givenParamJdbcTemp = new NamedParameterJdbcTemplate(jdbcTemplate);
         List<Map<String, Object>> maps = givenParamJdbcTemp.queryForList(sql, args);
@@ -67,7 +68,7 @@ public class ChromeCookieService {
             byte[] byEnd = decrypt(masterKey, encryptedCookie, null);
             String s = new String(byEnd);
             result.put(_name, s);
-            // System.out.println(STR."\{host_key}|\{_name}|\{s}");
+            // System.out.println(host_key + "|" + _name + "|" + s);
         }
         return result;
     }

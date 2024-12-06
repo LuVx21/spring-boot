@@ -30,11 +30,11 @@ class UserRepositoryTest extends MongoAppTests {
         for (int i = 0; i < 8; i++) {
             User user = new User();
             user.setId((long) i);
-            user.setUserName(STR."foo_\{i}");
-            user.setPassword(STR."bar_\{i}");
+            user.setUserName("foo_" + i);
+            user.setPassword("bar_" + i);
             user.setAge(i);
             user.setBirthday(LocalDateTime.now());
-            user.setAddressList(List.of(STR."北京_\{i}", STR."上海_\{i}"));
+            user.setAddressList(List.of("北京_" + i, "上海_" + i));
             user.setLocation(map.get(i));
             userRepository.save(user);
         }

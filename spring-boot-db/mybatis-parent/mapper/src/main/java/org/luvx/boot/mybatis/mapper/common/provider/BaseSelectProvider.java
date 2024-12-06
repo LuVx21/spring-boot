@@ -38,7 +38,7 @@ public class BaseSelectProvider extends BaseProvider {
         return new SQL()
                 .SELECT(ProviderUtils.getSelectColumns(clazz))
                 .FROM(ProviderUtils.getTableName(clazz))
-                .WHERE(STR."`\{pk}` = #{id}")
+                .WHERE("`" + pk + "` = #{id}")
                 .toString();
     }
 
@@ -117,7 +117,7 @@ public class BaseSelectProvider extends BaseProvider {
         BiMap<String, String> columnFieldMap = cacheEntry.getFieldColumnMap().inverse();
         String selectColumn = Arrays.stream(selectColumns.split(","))
                 .map(String::trim)
-                .map(c -> STR."`\{c}` as \{columnFieldMap.get(c)}")
+                .map(c -> "`" + c + "` as " + columnFieldMap.get(c))
                 .collect(Collectors.joining(", "));
 
         SQL sql = new SQL();

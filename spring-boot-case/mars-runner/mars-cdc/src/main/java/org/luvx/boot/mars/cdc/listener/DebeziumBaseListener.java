@@ -21,7 +21,7 @@ public abstract class DebeziumBaseListener extends BaseEventListener<DebeziumEve
 
         DebeziumEventData.ChangeData cdcData = data.getCdcData();
         JSONObject source = cdcData.getSource();
-        String table = STR."\{source.getString("db")}.\{source.getString("table")}";
+        String table = source.getString("db") + "." + source.getString("table");
         Set<String> listenTables = listenTables();
         if (!listenTables.isEmpty() && !listenTables.contains(table)) {
             return;

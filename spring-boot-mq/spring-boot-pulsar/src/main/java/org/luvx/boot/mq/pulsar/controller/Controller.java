@@ -18,7 +18,7 @@ public class Controller {
 
     @GetMapping("/sendString")
     public String sendString(@RequestParam("message") String message) throws Exception {
-        producer.sendString2Topic(STR."\{message} + this is renxie + \{LocalDateTime.now()}");
+        producer.sendString2Topic(message + " + this is renxie + " + LocalDateTime.now());
 
         return "消息发送完成";
     }

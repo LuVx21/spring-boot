@@ -18,13 +18,13 @@ public class InsertTest extends EsAppTests {
             int i1 = i % 10;
 
             List<Article> articles = IntStream.range(i1, i1 + 3)
-                    .mapToObj(ii -> Article.of(ii, STR."articleName\{ii}", STR."remark\{ii}"))
+                    .mapToObj(ii -> Article.of(ii, "articleName" + ii, "remark" + ii))
                     .toList();
 
             User user = User.builder()
                     .id(i + 1L)
-                    .userName(STR."xie_\{i1}")
-                    .password(STR."ren_\{10 - i1}")
+                    .userName("xie_" + i1)
+                    .password("ren_" + (10 - i1))
                     .age(i % 100)
                     .birthday(LocalDateTime.now())
                     .nestedArticle(articles.get(0))

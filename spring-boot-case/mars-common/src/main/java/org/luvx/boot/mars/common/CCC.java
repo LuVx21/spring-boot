@@ -16,6 +16,6 @@ public class CCC {
                 .orElseGet(() -> NetUtils.getHostInfo().get("ip"));
         // String ip = "192.168.2.131";
         Integer port = ObjectUtils.getIfNull(Systems.appRunInPort(), () -> AppInfo.instance().map(AppInfo::getPort).orElse(8080));
-        return STR."\{ip}:\{port}";
+        return ip + ":" + port;
     }
 }

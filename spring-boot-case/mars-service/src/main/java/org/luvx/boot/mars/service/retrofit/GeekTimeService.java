@@ -11,9 +11,6 @@ import com.google.common.io.Files;
 import com.google.common.util.concurrent.RateLimiter;
 import com.google.common.util.concurrent.Uninterruptibles;
 import io.vavr.Tuple2;
-
-import jakarta.annotation.Resource;
-
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -30,6 +27,7 @@ import org.luvx.coding.common.util.JSONPathUtils;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
 
+import jakarta.annotation.Resource;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
@@ -45,9 +43,9 @@ public class GeekTimeService {
 
     public static       String root    =
             !"Mac OS X".equals(System.getProperty("os.name")) ? "D:\\code\\" : "/Users/renxie/";
-    public static final String geek    = STR."\{root}code/geek-time/";
-    public static final String docDir  = STR."\{geek}doc/";
-    public static final String jsonDir = STR."\{geek}json/";
+    public static final String geek    = root + "code/geek-time/";
+    public static final String docDir  = geek + "doc/";
+    public static final String jsonDir = geek + "json/";
 
     public static final String INDEX_JSON = "README.json";
     public static final String INDEX_MD   = "README.md";
@@ -68,7 +66,7 @@ public class GeekTimeService {
             for (Tuple2<Long, String> article : articles) {
                 downloadArticle(courseId, article._1());
             }
-            System.out.println(STR."\{courseId}_\{course.get(courseId)} -> 结束");
+            System.out.println(courseId + "_" + course.get(courseId) + " -> 结束");
         }
     }
 
@@ -91,9 +89,9 @@ public class GeekTimeService {
             Map<String, Object> response = geekTimeApi.articles(body2);
             json = JSON.parseObject(JSON.toJSONString(response));
         } else {
-            File file = new File(STR."\{jsonDir}\{courseId}_\{course.get(courseId)}");
+            File file = new File(jsonDir + courseId + "_" + course.get(courseId));
             if (!file.exists() || !file.isDirectory()) {
-                System.out.println(STR."\{file.getPath()} -> 没有本地课程目录");
+                System.out.println(file.getPath() + " -> 没有本地课程目录");
                 return Collections.emptyList();
             }
 
@@ -111,11 +109,11 @@ public class GeekTimeService {
                 })
                 .collect(Collectors.toList());
 
-        String courseDirName = STR."\{courseId}_\{course.get(courseId)}";
+        String courseDirName = courseId + "_" + course.get(courseId);
         write(json.toJSONString(), jsonDir + courseDirName + File.separator + INDEX_JSON);
         String prefix = "←←[课程目录](../../README.md)\n\n\n\n";
         String indexContent = result.stream()
-                .map(p -> STR."* [\{p._2()}](./\{p._1()}.md)")
+                .map(p -> "* [" + p._2() + "](./" + p._1() + ".md)")
                 .collect(Collectors.joining("\n"));
         write(prefix + indexContent, docDir + courseDirName + File.separator + INDEX_MD);
 
@@ -131,7 +129,7 @@ public class GeekTimeService {
         return all.stream()
                 .map(Tuple2::_1)
                 .filter(articleId -> {
-                    String mdFile = STR."\{docDir}\{courseId}_\{course.get(courseId)}\{File.separator}\{articleId}.md";
+                    String mdFile = docDir + courseId + "_" + course.get(courseId) + File.separator + articleId + ".md";
                     return !new File(mdFile).exists();
                 })
                 .collect(Collectors.toList());
@@ -144,7 +142,7 @@ public class GeekTimeService {
      * @param articleId 文章id
      */
     public void downloadArticle(Long courseId, Long articleId) throws IOException {
-        String courseDirName = STR."\{courseId}_\{course.get(courseId)}";
+        String courseDirName = courseId + "_" + course.get(courseId);
         String originalJson = getArticleJson(courseId, articleId);
 
         JSONObject json = JSONObject.parseObject(originalJson);
@@ -163,21 +161,21 @@ public class GeekTimeService {
         }
 
         // 保存原始 json
-        write(originalJson, STR."\{jsonDir}\{courseDirName}\{File.separator}\{articleId}.json");
-        genMarkdownOrHtml(STR."\{docDir}\{courseDirName}\{File.separator}\{articleId}.md", genIndex(courseId, articleId, true),
+        write(originalJson, jsonDir + courseDirName + File.separator + articleId + ".json");
+        genMarkdownOrHtml(docDir + courseDirName + File.separator + articleId + ".md", genIndex(courseId, articleId, true),
                 article_title, mp3Url, articleContent);
-        genMarkdownOrHtml(STR."\{root}\{courseDirName}\{File.separator}\{article_title}.html", genIndex(courseId, articleId, false),
+        genMarkdownOrHtml(root + courseDirName + File.separator + article_title + ".html", genIndex(courseId, articleId, false),
                 article_title, mp3Url, articleContent);
 
         /// 保存音频文件
         if (GeekSwitch.saveMap3.isOn()) {
             /// String name = mp3Url.substring(mp3Url.lastIndexOf("/") + 1);
             /// 和文档同名
-            String name = STR."\{articleId}.mp3";
-            mp3Download(mp3Url, STR."\{docDir}\{courseDirName}\{File.separator}video/\{name}");
+            String name = articleId + ".mp3";
+            mp3Download(mp3Url, docDir + courseDirName + File.separator + "video/" + name);
         }
 
-        System.out.println(STR."\{courseId}:\{article_title} -> OK");
+        System.out.println(courseId + ":" + article_title + " -> OK");
         if (GeekSwitch.online) {
             Uninterruptibles.sleepUninterruptibly(6, TimeUnit.SECONDS);
         }
@@ -214,7 +212,7 @@ public class GeekTimeService {
             body.setId(articleId + "");
             json = geekTimeApi.article(body);
         } else {
-            String path = STR."\{jsonDir}\{courseId}_\{course.get(courseId)}\{File.separator}\{articleId}.json";
+            String path = jsonDir + courseId + "_" + course.get(courseId) + File.separator + articleId + ".json";
             json = read(path);
         }
         return json;
@@ -307,7 +305,7 @@ public class GeekTimeService {
             } while (array.size() != 0);
             System.out.println(course);
         } else {
-            String json = read(STR."\{geek}t.csv");
+            String json = read(geek + "t.csv");
             String[] lines = json.split("\n");
 
             IntStream.range(1, lines.length).forEach(i -> {
@@ -391,10 +389,10 @@ public class GeekTimeService {
                 continue;
             }
             String fileName = f.getName(), prefix = fileName.substring(0, 9), postfix = fileName.substring(10);
-            String format = STR."| `\{prefix}` | [\{postfix}](./doc/\{fileName}/README.md)";
+            String format = "| `" + prefix + "` | [" + postfix + "](./doc/" + fileName + "/README.md)";
 
             if ((i + 1) % 3 == 0) {
-                System.out.println(STR."\{format}|");
+                System.out.println(format + "|");
             } else {
                 System.out.print(format);
             }

@@ -24,7 +24,7 @@ import java.util.concurrent.CompletableFuture;
 
 @Service
 public class OssService {
-    public static final String IMG_HOME = STR."\{Consts.DATA_HOME}/luvx/oss";
+    public static final String IMG_HOME = Consts.DATA_HOME + "/luvx/oss";
 
     @Resource
     private OssFileMapper ossFileMapper;

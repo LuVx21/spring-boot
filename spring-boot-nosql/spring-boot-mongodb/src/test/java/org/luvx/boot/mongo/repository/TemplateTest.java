@@ -60,7 +60,7 @@ class TemplateTest extends MongoAppTests {
         for (GeoResult<User> result : results) {
             User u = result.getContent();
             double value = result.getDistance().getValue();
-            System.out.println(STR."\{u.getUserName()} 距离给定点：\{(int) (value * 1000)} 米");
+            System.out.println(u.getUserName() + " 距离给定点：" + (int) (value * 1000) + " 米");
         }
     }
 

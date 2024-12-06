@@ -29,7 +29,7 @@ public class BaseDeleteProvider extends BaseProvider {
         String pk = FIELD_COLUMN_CACHE.get(clazz).getPkColumn();
         return new SQL()
                 .DELETE_FROM(ProviderUtils.getTableName(clazz))
-                .WHERE(STR."\{pk} = #{id}")
+                .WHERE(pk + " = #{id}")
                 .toString();
     }
 

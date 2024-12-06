@@ -3,7 +3,6 @@ package org.luvx.boot.mars.service.rss;
 import com.alibaba.fastjson2.JSONObject;
 import com.github.phantomthief.util.MoreFunctions;
 import com.mongodb.client.result.UpdateResult;
-import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.MapUtils;
@@ -22,6 +21,7 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 
+import jakarta.annotation.Resource;
 import java.io.IOException;
 import java.util.List;
 import java.util.Set;
@@ -55,16 +55,17 @@ public class RssService {
         String s = list.stream()
                 .map(jo -> img2XmlItem(jo, domain))
                 .collect(Collectors.joining());
-        return STR."""
+        String r = """
                 <?xml version="1.0" encoding="UTF-8"?>
                 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
                     <channel>
-                        <title><![CDATA[美图-\{spiderKey}]]></title>
+                        <title><![CDATA[美图-%s]]></title>
 
-                \{s}
+                %s
                     </channel>
                 </rss>
                 """;
+        return String.format(r, spiderKey, s);
     }
 
     private String img2XmlItem(JSONObject jo, String domain) {
@@ -74,32 +75,33 @@ public class RssService {
         String contentHtml = list.stream()
                 .map(c -> {
                     if (c.startsWith("http")) {
-                        return STR."<img vspace=\"8\" hspace=\"4\" style=\"\" src=\"\{c}\" referrerpolicy=\"no-referrer\">";
+                        return "<img vspace=\"8\" hspace=\"4\" style=\"\" src=\"" + c + "\" referrerpolicy=\"no-referrer\">";
                     } else {
-                        return STR."<div>\{c}</div>";
+                        return "<div>" + c + "</div>";
                     }
                 })
                 .collect(Collectors.joining());
 
-        String deleteUrl = STR."<a href=\"http://\{domain}/rss/delete/\{_id}\">删除<a/>";
-        contentHtml = STR."\{deleteUrl}<br/>\{contentHtml}<br/>\{deleteUrl}";
+        String deleteUrl = "<a href=\"http://" + domain + "/rss/delete/" + _id + "\">删除<a/>";
+        contentHtml = deleteUrl + "<br/>" + contentHtml + "<br/>" + deleteUrl;
 
-        return STR."""
+        String r = """
                         <item>
                             <title>
-                                <![CDATA[ \{pageContent.getTitle()} ]]>
+                                <![CDATA[ %s ]]>
                             </title>
                             <description>
-                                <![CDATA[ \{contentHtml} ]]>
+                                <![CDATA[ %s ]]>
                             </description>
-                            <pubDate>\{pageContent.getPubDate()}</pubDate>
-                            <link>\{pageContent.getUrl()}</link>
-                            <guid>\{_id}</guid>
+                            <pubDate>%s</pubDate>
+                            <link>%s</link>
+                            <guid>%s</guid>
                             <author>
                                 <![CDATA[ 未知 ]]>
                             </author>
                         </item>\n
                 """;
+        return String.format(r, pageContent.getTitle(), contentHtml, pageContent.getPubDate(), pageContent.getUrl(), _id);
     }
 
     public boolean deleteById(Long id) {

@@ -30,14 +30,14 @@ public class Producer {
     }
 
     public void sendDelay(String topic, String payload) {
-        Map<String, Object> headers = Map.of(RocketMQHeaders.KEYS, STR."uuid:\{UUID.randomUUID()}");
+        Map<String, Object> headers = Map.of(RocketMQHeaders.KEYS, "uuid:" + UUID.randomUUID());
         Message<String> message = MessageBuilder
-                .withPayload(STR."延迟消息:\{payload} 时间:\{LocalDateTime.now()}")
+                .withPayload("延迟消息:" + payload + "" 时间:" + LocalDateTime.now())
                 .copyHeaders(headers)
                 .build();
         // 延迟级别 1-18
         // 1s 5s 10s 30s 1m 2m 3m 4m 5m 6m 7m 8m 9m 10m 20m 30m 1h 2h
-        SendResult sendResult = rocketmqTemplate.syncSend(STR."\{topic}:tag", message, 60_000, 2);
+        SendResult sendResult = rocketmqTemplate.syncSend(topic + ":tag", message, 60_000, 2);
         if (SendStatus.SEND_OK == sendResult.getSendStatus()) {
             log.info("发送延迟消息成功,返回结果:{}", JSON.toJSONString(sendResult));
         } else {
@@ -48,8 +48,8 @@ public class Producer {
     public void sendUser(String topic, String msg) {
         User user = new User();
         user.setId(10000L)
-                .setUserName(STR."\{msg}:userName")
-                .setPassword(STR."\{msg}:password")
+                .setUserName(msg + ":userName")
+                .setPassword(msg + ":password")
                 .setBirthday(LocalDateTime.now());
 
         rocketmqTemplate.convertAndSend(topic, user);

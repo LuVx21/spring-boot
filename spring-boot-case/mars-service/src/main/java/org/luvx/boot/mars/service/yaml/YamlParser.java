@@ -276,7 +276,7 @@
 //     }
 //
 //     public static void main(String[] args) throws IOException {
-//         File file = new File(STR."\{YamlParser.class.getResource("/").getFile()}test.yml");
+//         File file = new File(YamlParser.class.getResource("/").getFile() + "test.yml");
 //         String content = Files.toString(file, Charsets.UTF_8);
 //         Map<String, Object> a = YamlParser.yamlToFlattenedMap(content);
 //         System.out.println(a);

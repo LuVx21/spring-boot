@@ -15,12 +15,12 @@ import org.apache.commons.lang3.StringUtils;
 import org.luvx.boot.mars.common.CCC;
 import org.luvx.boot.mars.dao.mongo.weibo.HotBand;
 import org.luvx.boot.mars.dao.mongo.weibo.HotBandRepository;
+import org.luvx.boot.mars.service.api.WeiboApi;
+import org.luvx.boot.mars.service.commonkv.CommonKeyValueService;
 import org.luvx.boot.mars.service.commonkv.constant.CommonKVBizType;
 import org.luvx.boot.mars.service.oss.OssScopeEnum;
 import org.luvx.boot.mars.service.oss.OssService;
 import org.luvx.boot.mars.service.sqlite.ChromeCookieService;
-import org.luvx.boot.mars.service.api.WeiboApi;
-import org.luvx.boot.mars.service.commonkv.CommonKeyValueService;
 import org.luvx.coding.common.consts.Common;
 import org.luvx.coding.common.cursor.CursorIteratorEx;
 import org.luvx.coding.common.net.HttpUtils;
@@ -114,16 +114,17 @@ public class WeiboService {
                 .map(jo -> a(jo, domain))
                 .collect(Collectors.joining());
 
-        return STR."""
+        String r = """
                 <?xml version="1.0" encoding="UTF-8"?>
                 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
                     <channel>
                         <title><![CDATA[网络傻事]]></title>
 
-                \{s}
+                %s
                     </channel>
                 </rss>
                 """;
+        return String.format(r, s);
     }
 
     private String a(JSONObject jo, String domain) {
@@ -136,34 +137,35 @@ public class WeiboService {
             String uName = ofNullable(retweet.getJSONObject("user"))
                     .map(user -> user.getString("screen_name"))
                     .orElse("");
-            contentHtml = STR."\{contentHtml}<hr/>转发自:\{uName}<br/><br/><br/>\{contentHtml(retweet, domain)}";
+            contentHtml = contentHtml + "<hr/>转发自:" + uName + "<br/><br/><br/>" + contentHtml(retweet, domain);
         }
-        String deleteUrl = STR."<a href=\"http://\{domain}/weibo/rss/delete/\{_id}\">删除<a/>";
-        contentHtml = STR."\{deleteUrl}<br/><br/>\{contentHtml}<br/><br/>\{deleteUrl}";
+        String deleteUrl = "<a href=\"http://" + domain + "/weibo/rss/delete/" + _id + "\">删除<a/>";
+        contentHtml = deleteUrl + "<br/><br/>" + contentHtml + "<br/><br/>" + deleteUrl;
 
         String createdAt = jo.getString("created_at");
 
         JSONObject user = jo.getJSONObject("user");
         String screenName = user.getString("screen_name");
         String userId = user.getString("idstr");
-        String url = STR."https://weibo.com/\{userId}/\{jo.getString("mblogid")}";
+        String url = "https://weibo.com/" + userId + "/" + jo.getString("mblogid");
 
-        return STR."""
+        String r = """
                         <item>
                             <title>
-                                <![CDATA[ \{title} ]]>
+                                <![CDATA[ %s ]]>
                             </title>
                             <description>
-                                <![CDATA[ \{contentHtml} ]]>
+                                <![CDATA[ %s ]]>
                             </description>
-                            <pubDate>\{createdAt}</pubDate>
-                            <link>\{url}</link>
-                            <guid>\{_id}</guid>
+                            <pubDate>%s</pubDate>
+                            <link>%s</link>
+                            <guid>%s</guid>
                             <author>
-                                <![CDATA[ \{screenName} ]]>
+                                <![CDATA[ %s ]]>
                             </author>
                         </item>\n
                 """;
+        return String.format(r, title, contentHtml, createdAt, url, _id, screenName);
     }
 
     private String contentHtml(JSONObject jo, String domain) {
@@ -184,8 +186,8 @@ public class WeiboService {
                         String url = img.getString("url");
                         var fileName = UrlUtils.urlFileName(url);
                         asyncDownload(url, fileName);
-                        url = STR."http://\{domain}/oss/\{OssScopeEnum.WEIBO.getCode()}/\{fileName}";
-                        return STR."<img vspace=\"8\" hspace=\"4\" style=\"\" src=\"\{url}\" referrerpolicy=\"no-referrer\">";
+                        url = "http://" + domain + "/oss/" + OssScopeEnum.WEIBO.getCode() + "/" + fileName;
+                        return "<img vspace=\"8\" hspace=\"4\" style=\"\" src=\"" + url + "\" referrerpolicy=\"no-referrer\">";
                     })
                     .collect(Collectors.joining("<br/>"));
         }
@@ -199,8 +201,8 @@ public class WeiboService {
     }
 
     public void asyncDownload(String url, String fileName) {
-        String parent = STR."\{IMG_HOME}/\{OssScopeEnum.WEIBO.getCode()}/";
-        String s = STR."\{parent}\{fileName}";
+        String parent = IMG_HOME + "/" + OssScopeEnum.WEIBO.getCode() + "/";
+        String s = parent + fileName;
         File file = new File(s);
         if (file.exists()) {
             return;

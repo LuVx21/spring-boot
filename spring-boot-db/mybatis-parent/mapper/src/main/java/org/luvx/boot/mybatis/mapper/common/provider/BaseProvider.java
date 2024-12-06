@@ -28,13 +28,13 @@ public abstract class BaseProvider {
 
         // in语句
         String s = IntStream.range(0, ids.size())
-                .mapToObj(i -> STR."#{ids[\{i}]}")
-                .collect(Collectors.joining(", ", STR."\{pk} in (", ")"));
+                .mapToObj(i -> "#{ids[" + i + "]}")
+                .collect(Collectors.joining(", ", pk + " in (", ")"));
         sql.WHERE(s);
 
         // or语句
         // for (int i = 0; i < ids.size(); i++) {
-        //     sql.WHERE(STR."\{pk} = #{ids[\{i}]}");
+        //     sql.WHERE(pk + " = #{ids["+i+"]}");
         //     if (i < ids.size() - 1) {
         //         sql.OR();
         //     }
@@ -56,7 +56,7 @@ public abstract class BaseProvider {
             if (value == null) {
                 continue;
             }
-            sql.WHERE(STR."`\{field2ColumnMap.get(key)}` = #{record.\{key}}");
+            sql.WHERE("`" + field2ColumnMap.get(key) + "` = #{record." + key + "}");
         }
 
         return sql;
@@ -80,7 +80,7 @@ public abstract class BaseProvider {
                 if (value == null) {
                     continue;
                 }
-                String where = STR."`\{field2ColumnMap.get(key)}` = #{records[\{i}].\{key}}";
+                String where = "`" + field2ColumnMap.get(key) + "` = #{records[" + i + "]." + key + "}";
                 sql.WHERE(where);
             }
             if (iterator.hasNext()) {

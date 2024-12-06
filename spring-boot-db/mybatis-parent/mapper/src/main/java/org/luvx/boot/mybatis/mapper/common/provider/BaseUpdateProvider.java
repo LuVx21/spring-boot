@@ -60,7 +60,7 @@ public class BaseUpdateProvider extends BaseProvider {
 
         SQL sql = new SQL().UPDATE(ProviderUtils.getTableName(clazz));
         sql = makeSet(sql, record, clazz, true, selective);
-        sql.WHERE(STR."`\{pkColumn}` = #{record.\{pkField}}");
+        sql.WHERE("`" + pkColumn + "` = #{record." + pkField + "}");
         return sql.toString();
     }
 
