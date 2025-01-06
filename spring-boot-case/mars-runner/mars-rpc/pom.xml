@@ -13,7 +13,7 @@
     <packaging>pom</packaging>
 
     <properties>
-        <protoc.version>3.25.3</protoc.version>
+        <protoc.version>4.29.3</protoc.version>
         <os.plugin.version>1.7.1</os.plugin.version>
     </properties>
 
@@ -34,18 +34,18 @@
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.apache.dubbo</groupId>
-                <artifactId>dubbo-bom</artifactId>
-                <version>${dubbo.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-            <dependency>
                 <groupId>com.google.protobuf</groupId>
                 <artifactId>protobuf-bom</artifactId>
                 <version>${protoc.version}</version>
                 <scope>import</scope>
                 <type>pom</type>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.dubbo</groupId>
+                <artifactId>dubbo-bom</artifactId>
+                <version>${dubbo.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>

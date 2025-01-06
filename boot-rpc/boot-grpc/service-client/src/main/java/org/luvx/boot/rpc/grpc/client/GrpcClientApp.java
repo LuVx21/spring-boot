@@ -1,11 +1,11 @@
-package org.luvx.boot.rpc.grpc.service;
+package org.luvx.boot.rpc.grpc.client;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class ServiceApp {
+public class GrpcClientApp {
     public static void main(String[] args) {
-        SpringApplication.run(ServiceApp.class, args);
+        SpringApplication.run(GrpcClientApp.class, args);
     }
 }

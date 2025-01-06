@@ -15,8 +15,7 @@
     <packaging>pom</packaging>
 
     <properties>
-        <!--<dubbo.version>3.3.0-beta.4</dubbo.version>-->
-        <dubbo.version>3.2.14</dubbo.version>
+        <dubbo.version>3.3.2</dubbo.version>
     </properties>
 
     <modules>
@@ -27,6 +26,13 @@
 
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>org.luvx.boot</groupId>
+                <artifactId>coding-parent-boot-dependencies</artifactId>
+                <version>${spring.boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
             <dependency>
                 <groupId>org.luvx.boot</groupId>
                 <artifactId>sdk</artifactId>

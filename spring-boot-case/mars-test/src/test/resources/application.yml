@@ -9,7 +9,7 @@ dubbo:
     protocol: tri
     qos-enable: false
   registry:
-    address: zookeeper://${zookeeper.address:macbook.rx}:2181
+    address: zookeeper://${zookeeper.address:127.0.0.1}:2181
   protocol:
     name: tri
     port: -1

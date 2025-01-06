@@ -1,7 +1,5 @@
-ARG IMAGE_VERSION=21-slim
-FROM openjdk:${IMAGE_VERSION}
-
-WORKDIR /workspace
+ARG IMAGE_VERSION=23-jre-alpine
+FROM eclipse-temurin:${IMAGE_VERSION}
 
 ENV TZ=Asia/Shanghai
 

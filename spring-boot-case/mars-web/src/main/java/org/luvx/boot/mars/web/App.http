@@ -1,0 +1,13 @@
+@host = localhost:9999
+
+### 1
+GET http://{{host}}
+
+### 2
+GET http://{{host}}/app/healthyCheck
+
+### 3
+GET http://{{host}}/app/healthyCheck/kafka
+
+### 3
+GET http://{{host}}/app/healthyCheck/dubbo

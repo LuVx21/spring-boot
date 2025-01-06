@@ -6,9 +6,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @EnableDubbo(scanBasePackages = {"org.luvx.boot.rpc.dubbo.service.impl"})
 @SpringBootApplication
-public class ProviderApplication {
+public class DubboProviderApp {
     public static void main(String[] args) {
-        new EmbeddedZooKeeper(2181, false).start();
-        SpringApplication.run(ProviderApplication.class, args);
+        // new EmbeddedZooKeeper(2181, false).start();
+        SpringApplication.run(DubboProviderApp.class, args);
     }
 }

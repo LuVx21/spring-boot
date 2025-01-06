@@ -16,7 +16,7 @@
 
     <properties>
         <app>0.0.0</app>
-        <dubbo.version>3.2.14</dubbo.version>
+        <dubbo.version>3.3.2</dubbo.version>
     </properties>
 
     <modules>

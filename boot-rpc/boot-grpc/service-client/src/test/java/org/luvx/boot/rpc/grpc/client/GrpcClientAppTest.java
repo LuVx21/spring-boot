@@ -10,8 +10,8 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @Slf4j
 @ExtendWith(SpringExtension.class)
-@SpringBootTest(classes = {ClientApp.class})
-class ClientAppTest {
+@SpringBootTest(classes = {GrpcClientApp.class})
+class GrpcClientAppTest {
     @Autowired
     private GrpcClientService grpcClientService;
 

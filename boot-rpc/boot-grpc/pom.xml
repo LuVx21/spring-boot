@@ -15,7 +15,7 @@
 
     <properties>
         <grpc.starter.version>3.1.0.RELEASE</grpc.starter.version>
-        <!-- 和boot-start保持一致 -->
+        <!-- 和boot-start中使用的保持一致 -->
         <grpc.version>1.63.0</grpc.version>
     </properties>
 

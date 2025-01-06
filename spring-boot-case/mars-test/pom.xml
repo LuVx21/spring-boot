@@ -13,7 +13,6 @@
     <packaging>jar</packaging>
 
     <properties>
-        <dubbo.version>3.2.14</dubbo.version>
     </properties>
 
     <dependencies>

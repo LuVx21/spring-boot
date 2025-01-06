@@ -1,0 +1,7 @@
+@host = localhost:8081
+
+### 1
+GET http://{{host}}/index
+
+### 1
+GET http://{{host}}/index1
