@@ -15,7 +15,7 @@
     <packaging>pom</packaging>
 
     <properties>
-        <dubbo.version>3.3.2</dubbo.version>
+        <dubbo.version>3.3.4</dubbo.version>
     </properties>
 
     <modules>

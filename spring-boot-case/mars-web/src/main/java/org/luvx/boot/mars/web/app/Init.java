@@ -11,6 +11,7 @@ import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.stream.Stream;
 
+import static org.luvx.boot.mars.dao.config.DuckDBConfig.DUCKDB_HOME;
 import static org.luvx.boot.mars.dao.config.SqliteConfig.SQLITE_HOME;
 
 @Slf4j
@@ -18,7 +19,7 @@ import static org.luvx.boot.mars.dao.config.SqliteConfig.SQLITE_HOME;
 public class Init implements SmartLifecycle {
     @Override
     public void start() {
-        Stream<Path> pathStream = Stream.of(SQLITE_HOME).map(Path::of);
+        Stream<Path> pathStream = Stream.of(SQLITE_HOME, DUCKDB_HOME).map(Path::of);
         Stream<Path> pathStream1 = Arrays.stream(OssScopeEnum.values())
                 .map(e -> Path.of(OssService.IMG_HOME, e.getCode()));
         Streams.concat(pathStream, pathStream1)

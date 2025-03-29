@@ -13,7 +13,7 @@
     <packaging>pom</packaging>
 
     <properties>
-        <protoc.version>4.29.3</protoc.version>
+        <protoc.version>4.30.2</protoc.version>
         <os.plugin.version>1.7.1</os.plugin.version>
     </properties>
 

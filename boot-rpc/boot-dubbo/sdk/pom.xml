@@ -23,11 +23,12 @@
         <!--<dependency>-->
         <!--    <groupId>org.apache.dubbo.extensions</groupId>-->
         <!--    <artifactId>dubbo-serialization-protobuf</artifactId>-->
-        <!--    <version>3.2.0</version>-->
+        <!--    <version>3.3.1</version>-->
         <!--</dependency>-->
         <dependency>
             <groupId>com.google.protobuf</groupId>
             <artifactId>protobuf-java</artifactId>
+            <version>${protoc.version}</version>
         </dependency>
 
         <!--Dubbo服务名Triple.java中需要-->

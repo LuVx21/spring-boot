@@ -24,7 +24,7 @@ public class UserServiceConsumer {
 
     @GetMapping("/index1")
     public String index1() {
-        UserRequest r = UserRequest.newBuilder().setName("proto生成").build();
+        UserRequest r = UserRequest.newBuilder().setName("foo-bar").build();
         UserResponse userResponse = protoUserService.oneToOne(r);
         return userResponse.getMessage();
     }

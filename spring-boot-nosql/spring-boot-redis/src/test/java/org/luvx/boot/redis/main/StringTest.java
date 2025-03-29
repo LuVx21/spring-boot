@@ -13,7 +13,7 @@ public class StringTest extends RedisAppTests {
     @Test
     void m0() {
         ValueOperations<String, String> valueOps = stringRedisTemplate.opsForValue();
-        String key = "s-key";
+        String key = "s:key-0";
         valueOps.set(key, "haha1");
         Object haha = valueOps.get(key);
         println(haha);
@@ -21,7 +21,7 @@ public class StringTest extends RedisAppTests {
 
     @Test
     void m1() {
-        String key = "s-key-1";
+        String key = "s:key-1";
         valueOps.set(key, "haha1");
         Object o = valueOps.get(key);
         println(o);
@@ -29,7 +29,7 @@ public class StringTest extends RedisAppTests {
 
     @Test
     void m2() {
-        String key = "increment-key";
+        String key = "s:increment-key";
         valueOps.set(key, 1);
         Object value = valueOps.get(key);
         MorePrints.println(value, value.getClass());
@@ -40,7 +40,7 @@ public class StringTest extends RedisAppTests {
 
     @Test
     void m11() {
-        String key = "s-key-2";
+        String key = "s:key-2";
         User u = User.of(1, "foo-bar");
         valueOps.set(key, u);
         Object o = valueOps.get(key);
@@ -64,7 +64,8 @@ public class StringTest extends RedisAppTests {
 
     @Test
     void testProto() {
-        final String key = "s-key-proto";
+        final String key = "s:key-proto-0";
+        valueOps = protoRedisTemplate.opsForValue();
 
         UsersProto.User.Builder u1 = UsersProto.User.newBuilder().setId("100").setName("foo").setSex("男");
         UsersProto.Users u = UsersProto.Users.newBuilder().addUsers(u1).build();

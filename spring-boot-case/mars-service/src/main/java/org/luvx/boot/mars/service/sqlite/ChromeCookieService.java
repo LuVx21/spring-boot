@@ -5,6 +5,7 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.luvx.boot.mars.common.Consts;
 import org.luvx.boot.mars.dao.config.SqliteConfig;
 import org.luvx.coding.common.CallCmd;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -28,7 +29,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class ChromeCookieService {
-    private String password = "";
+    private String password = Consts.ENV_COOKIE_PWD;
 
     // @Resource(name = "sqliteJdbcTemplate")
     // private JdbcTemplate jdbcTemplate;
@@ -40,7 +41,7 @@ public class ChromeCookieService {
         try {
             cookie = getCookieByHost(hosts, name).entrySet().stream()
                     .map(e -> e.getKey() + "=" + e.getValue())
-                .collect(Collectors.joining("; "));
+                    .collect(Collectors.joining("; "));
         } catch (Exception ignore) {
         }
         return cookie;

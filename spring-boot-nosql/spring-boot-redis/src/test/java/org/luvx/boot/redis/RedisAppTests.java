@@ -1,12 +1,13 @@
 package org.luvx.boot.redis;
 
-import jakarta.annotation.Resource;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.redisson.api.RedissonClient;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.redis.core.*;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+
+import jakarta.annotation.Resource;
 
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
@@ -15,6 +16,9 @@ public class RedisAppTests {
     protected RedisTemplate<String, Object> redisTemplate;
     @Resource
     protected StringRedisTemplate           stringRedisTemplate;
+
+    @Resource(name = "protoRedisTemplate")
+    protected RedisTemplate<String, Object> protoRedisTemplate;
 
     @Resource(name = "redisTemplate")
     protected ValueOperations<String, Object>        valueOps;

@@ -1,5 +1,6 @@
 package org.luvx.boot.redis.config;
 
+import org.luvx.boot.redis.serializer.ProtobufRedisSerializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
@@ -16,6 +17,22 @@ public class RedisConfig {
         template.setEnableDefaultSerializer(false);
 
         RedisSerializer<?> json = serializer();
+
+        template.setKeySerializer(RedisSerializer.string());
+        template.setValueSerializer(json);
+        template.setHashKeySerializer(RedisSerializer.string());
+        template.setHashValueSerializer(json);
+        template.afterPropertiesSet();
+        return template;
+    }
+
+    @Bean
+    public RedisTemplate<String, Object> protoRedisTemplate(final RedisConnectionFactory factory) {
+         final RedisTemplate<String, Object> template = new RedisTemplate<>();
+        template.setConnectionFactory(factory);
+        template.setEnableDefaultSerializer(false);
+
+        RedisSerializer<?> json = new ProtobufRedisSerializer();
 
         template.setKeySerializer(RedisSerializer.string());
         template.setValueSerializer(json);

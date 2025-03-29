@@ -3,6 +3,7 @@ package org.luvx.boot.redis.main;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.luvx.boot.redis.RedisAppTests;
+import org.luvx.boot.redis.protobuf.UsersProto;
 import org.luvx.coding.common.more.MorePrints;
 import org.springframework.data.redis.connection.RedisHashCommands;
 import org.springframework.data.redis.core.HashOperations;
@@ -19,7 +20,7 @@ public class HashTest extends RedisAppTests {
     @Test
     void m0() {
         HashOperations<String, Object, Object> hashOps = stringRedisTemplate.opsForHash();
-        String key = "hash-key";
+        String key = "hash:key-0";
         hashOps.putAll(key, Map.of(
                 "a", "aa",
                 "b", "bb",
@@ -31,7 +32,7 @@ public class HashTest extends RedisAppTests {
 
     @Test
     void m1() {
-        String key = "hash-key-1";
+        String key = "hash:key-1";
         hashOps.putAll(key, Map.of(
                 "a", "aa",
                 "b", "bb",
@@ -43,7 +44,7 @@ public class HashTest extends RedisAppTests {
 
     @Test
     void m2() {
-        String key = "hash-key-2";
+        String key = "hash:key-2";
         // User u = User.of(1, "foo-bar");
         // u.setFriend(User.of(2, "222"));
         // hashOps.putAll(key, FLATTEN_MAPPER.toHash(u));
@@ -71,5 +72,15 @@ public class HashTest extends RedisAppTests {
                 }
         );
         MorePrints.println(objects, objects.getFirst().getClass());
+    }
+
+    @Test
+    void testProto() {
+        final String key = "hash:key-proto-0";
+        hashOps = protoRedisTemplate.opsForHash();
+
+        UsersProto.User.Builder u1 = UsersProto.User.newBuilder().setId("100").setName("foo").setSex("男");
+        UsersProto.Users u = UsersProto.Users.newBuilder().addUsers(u1).build();
+        hashOps.put(key, "u", u);
     }
 }
